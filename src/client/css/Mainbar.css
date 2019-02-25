@@ -1,3 +1,15 @@
-#mainBar {
+.mainBar {
+  padding: 10px 0;
   background-color: #2185d0;
+  display: flex;
+  justify-content: center;
+}
+
+.mainBar-input {
+  flex: 0.66;
+}
+
+.mainBar-input > i.search.icon {
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
