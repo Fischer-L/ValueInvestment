@@ -10,7 +10,7 @@ function resolve(pathFromRoot) {
 }
 
 module.exports = {
-  entry: resolve('./src/client/index.jsx'),
+  entry: ['@babel/polyfill', resolve('./src/client/index.jsx')],
 
   resolve: {
     extensions: ['.jsx', '.js', '.json'],

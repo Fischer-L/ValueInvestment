@@ -1,1 +1,9 @@
 @import "./normalize.css";
+
+.app {
+  --app-max-width: 640px;
+}
+
+.appConent {
+  padding: 0 10px 66px 10px;
+}

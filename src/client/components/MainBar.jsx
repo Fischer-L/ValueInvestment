@@ -38,7 +38,7 @@ class MainBar extends Component {
         <Input
           className="mainBar-input"
           icon="search"
-          size="large"
+          size="small"
           placeholder="Search..."
           onChange={this.onInputChange}
         />

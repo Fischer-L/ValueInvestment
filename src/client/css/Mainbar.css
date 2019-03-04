@@ -6,6 +6,7 @@
 }
 
 .mainBar-input {
+  max-width: var(--app-max-width);
   flex: 0.66;
 }
 
