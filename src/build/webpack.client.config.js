@@ -1,15 +1,12 @@
-
-const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const utils = require('./utils');
+const config = require('./config');
 
-const rootDir = path.resolve(__dirname, '../../../');
+const { resolve } = utils;
+const { env, host, port, publicDir } = config;
 
-function resolve(pathFromRoot) {
-  return path.resolve(rootDir, pathFromRoot);
-}
-
-module.exports = {
+const webpackConfig = {
   entry: ['@babel/polyfill', resolve('./src/client/index.jsx')],
 
   resolve: {
@@ -66,15 +63,19 @@ module.exports = {
   ],
 
   output: {
-    path: resolve('public'),
+    path: publicDir,
     publicPath: '/',
     filename: '[name].[hash].js',
   },
-
-  devServer: {
-    contentBase: resolve('public'),
-    port: 9000,
-    publicPath: 'http://localhost:9000/',
-    watchContentBase: true,
-  },
 };
+
+if (env === 'local-dev-svr') {
+  webpackConfig.devServer = {
+    contentBase: publicDir,
+    port: port,
+    publicPath: `${host}:${port}/`,
+    watchContentBase: true,
+  };
+}
+
+module.exports = webpackConfig;
