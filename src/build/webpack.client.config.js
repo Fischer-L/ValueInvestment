@@ -4,9 +4,11 @@ const utils = require('./utils');
 const config = require('./config');
 
 const { resolve } = utils;
-const { env, host, port, publicDir } = config;
+const { env, host, port, publicDir, webpackMode } = config;
 
 const webpackConfig = {
+  mode: webpackMode,
+
   entry: ['@babel/polyfill', resolve('./src/client/index.jsx')],
 
   resolve: {
@@ -71,17 +73,18 @@ const webpackConfig = {
 
 switch (env) {
   case 'local-dev':
+    const liveReloadDelay = 200;
     const LiveReloadPlugin = require('webpack-livereload-plugin');
-    webpackConfig.plugins.push(new LiveReloadPlugin({ appendScriptTag: true, delay: 300 }));
+    webpackConfig.plugins.push(new LiveReloadPlugin({ appendScriptTag: true, delay: liveReloadDelay }));
 
     webpackConfig.watch = true;
     webpackConfig.watchOptions = {
-      aggregateTimeout: 50,
+      aggregateTimeout: liveReloadDelay,
       ignored: /node_modules/,
     };
     break;
 
-  case 'local-dev-svr':
+  case 'webpack-dev-svr':
     webpackConfig.devServer = {
       contentBase: publicDir,
       port: port,

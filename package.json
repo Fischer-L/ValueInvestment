@@ -6,10 +6,13 @@
   "author": "fischer.json <fischer.json@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev-svr": "yarn clean && npm-run-all -p build-dev-svr webpack-dev-svr",
+    "dev": "yarn clean && yarn open-tab-build-local && yarn run-svr",
+    "run-svr": "nodemon ./src/server/server.js",
+    "build-local": "webpack --config src/build/webpack.client.config.js",
+    "open-tab-build-local": "osascript -e 'tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down' -e 'tell application \"Terminal\" to do script with command \"yarn build-local\" in window 1'",
+    "dev-svr": "yarn clean && yarn run-webpack-svr",
+    "run-webpack-svr": "ENV=webpack-dev-svr webpack-dev-server --mode development --config src/build/webpack.client.config.js",
     "clean": "rimraf ./public",
-    "build-dev-svr": "webpack --config src/build/webpack.client.config.js",
-    "webpack-dev-svr": "webpack-dev-server --mode development --config src/build/webpack.client.config.js",
     "lint": "./node_modules/.bin/eslint src/client/ --ext .jsx --ext .js",
     "lint-fix": "./node_modules/.bin/eslint src/client/ --ext .jsx --ext .js --fix"
   },
@@ -27,12 +30,14 @@
     "eslint-plugin-react": "7.11.0",
     "file-loader": "^3.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.18.10",
     "npm-run-all": "^4.1.5",
     "rimraf": "^2.6.3",
     "style-loader": "0.23.0",
     "webpack": "4.19.1",
     "webpack-cli": "3.1.1",
-    "webpack-dev-server": "3.1.11"
+    "webpack-dev-server": "3.1.11",
+    "webpack-livereload-plugin": "^2.2.0"
   },
   "browserslist": [
     "node 10",
@@ -76,5 +81,9 @@
   },
   "eslintIgnore": [
     "./src/client/build"
-  ]
+  ],
+  "nodemonConfig": {
+    "delay": 200,
+    "ignore": ["/node_modules/"]
+  }
 }

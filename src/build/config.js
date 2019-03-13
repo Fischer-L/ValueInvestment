@@ -1,9 +1,11 @@
 const utils = require('./utils');
 
-// 'local-dev-svr': Run with the Webpack dev server in the dev mode
+// 'webpack-dev-svr': Run with the Webpack dev server in the dev mode
 // 'local-dev': Run with the local server in the dev mode
 // 'production': Run in the priduction mode
-const env = process.env.ENV || 'local-dev-svr';
+const env = process.env.ENV || 'local-dev';
+
+const webpackMode = env === 'production' ? 'production' : 'development';
 
 const publicDir = utils.resolve('public');
 
@@ -16,4 +18,5 @@ module.exports = {
   host,
   port,
   publicDir,
+  webpackMode,
 };
