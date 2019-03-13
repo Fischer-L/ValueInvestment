@@ -69,13 +69,28 @@ const webpackConfig = {
   },
 };
 
-if (env === 'local-dev-svr') {
-  webpackConfig.devServer = {
-    contentBase: publicDir,
-    port: port,
-    publicPath: `${host}:${port}/`,
-    watchContentBase: true,
-  };
+switch (env) {
+  case 'local-dev':
+    const LiveReloadPlugin = require('webpack-livereload-plugin');
+    webpackConfig.plugins.push(new LiveReloadPlugin({ appendScriptTag: true, delay: 300 }));
+
+    webpackConfig.watch = true;
+    webpackConfig.watchOptions = {
+      aggregateTimeout: 50,
+      ignored: /node_modules/,
+    };
+    break;
+
+  case 'local-dev-svr':
+    webpackConfig.devServer = {
+      contentBase: publicDir,
+      port: port,
+      publicPath: `${host}:${port}/`,
+      watchContentBase: true,
+      // Workaround for https://github.com/webpack/webpack-dev-server/issues/1604
+      disableHostCheck: true,
+    };
+    break;
 }
 
 module.exports = webpackConfig;
