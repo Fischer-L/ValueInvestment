@@ -1,24 +1,24 @@
 const express = require('express');
 const http = require('http');
 const utils = require('../build/utils');
-const config = require('../build/config');
-
-const { resolve } = utils;
-const { port, publicDir } = config;
+const { env, port, publicDir } = require('../build/config');
+const axios = require('axios');
+const stockProvider = require('./stockProvider')({ env, axios });
 
 const PUBLIC_DIR = publicDir;
 const PORT = process.env.PORT || port;
 
 const app = express();
-const httpSvr = http.Server(app);
 
 // Server static files
 app.use(express.static(PUBLIC_DIR));
 
-app.get("/tmp/", (req, res) => {
-  res.json({ tmp: 1234 });
+app.get("/stockdata/:id", async (req, res) => {
+  const data = await stockProvider.get(req.params.id)
+  res.json(data);
 });
 
+const httpSvr = http.Server(app);
 httpSvr.listen(PORT, function(){
   console.log('listening on port:', PORT, __dirname);
 });
