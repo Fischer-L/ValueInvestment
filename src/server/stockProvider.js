@@ -11,7 +11,7 @@ const stockProvider = {
         this._getPage('dividends', id),
       ]);
       return { espPage, pbsPage, dividendsPage };
-    } catch(e) {
+    } catch (e) {
       return this._handleError(e);
     }
   },

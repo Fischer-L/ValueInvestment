@@ -1,5 +1,5 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack'); // eslint-disable-line import/no-extraneous-dependencies
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const utils = require('./utils');
 const config = require('./config');
 
@@ -74,6 +74,7 @@ const webpackConfig = {
 switch (env) {
   case 'local-dev':
     const liveReloadDelay = 200;
+    // eslint-disable-next-line import/no-extraneous-dependencies, import/order, global-require
     const LiveReloadPlugin = require('webpack-livereload-plugin');
     webpackConfig.plugins.push(new LiveReloadPlugin({ appendScriptTag: true, delay: liveReloadDelay }));
 
@@ -86,8 +87,8 @@ switch (env) {
 
   case 'webpack-dev-svr':
     webpackConfig.devServer = {
+      port,
       contentBase: publicDir,
-      port: port,
       publicPath: `${host}:${port}/`,
       watchContentBase: true,
       // Workaround for https://github.com/webpack/webpack-dev-server/issues/1604

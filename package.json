@@ -13,8 +13,8 @@
     "dev-svr": "yarn clean && yarn run-webpack-svr",
     "run-webpack-svr": "ENV=webpack-dev-svr webpack-dev-server --mode development --config src/build/webpack.client.config.js",
     "clean": "rimraf ./public",
-    "lint": "./node_modules/.bin/eslint src/client/ --ext .jsx --ext .js",
-    "lint-fix": "./node_modules/.bin/eslint src/client/ --ext .jsx --ext .js --fix"
+    "lint": "./node_modules/.bin/eslint src/ --ext .jsx --ext .js",
+    "lint-fix": "./node_modules/.bin/eslint src/ --ext .jsx --ext .js --fix"
   },
   "devDependencies": {
     "@babel/cli": "7.1.0",
