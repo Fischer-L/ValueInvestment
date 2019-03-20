@@ -55,8 +55,8 @@ class TableByDividends extends Component {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell />
-            <Table.HeaderCell>If 6.25%</Table.HeaderCell>
-            <Table.HeaderCell>If 4%</Table.HeaderCell>
+            <Table.HeaderCell>Low if 6.25%</Table.HeaderCell>
+            <Table.HeaderCell>Top if 4%</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 

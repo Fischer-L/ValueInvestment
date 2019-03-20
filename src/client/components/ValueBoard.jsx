@@ -9,29 +9,29 @@ class ValueBoard extends Component {
   constructor(props) {
     super(props);
 
-    this.calcPricesByEPS = () => {
-      const { price, eps } = this.props.stockData;
-      return ['in5yrs', 'in3yrs'].reduce((pricesByEPS, period) => {
-        const { top, mid, low } = eps[period];
-        pricesByEPS[period] = [
-          [price * top, top],
-          [price * mid, mid],
-          [price * low, low],
+    this.calcPricesByPE = () => {
+      const { eps, pe } = this.props.stockData;
+      return ['in5yrs', 'in3yrs'].reduce((pricesByPE, period) => {
+        const { top, mid, low } = pe[period];
+        pricesByPE[period] = [
+          [eps * top, top],
+          [eps * mid, mid],
+          [eps * low, low],
         ];
-        return pricesByEPS;
+        return pricesByPE;
       }, {});
     };
 
-    this.calcPricesByPBS = () => {
-      const { netValue, pbs } = this.props.stockData;
-      return ['in5yrs', 'in3yrs'].reduce((pricesByPBS, period) => {
-        const { top, mid, low } = pbs[period];
-        pricesByPBS[period] = [
+    this.calcPricesByPB = () => {
+      const { netValue, pb } = this.props.stockData;
+      return ['in5yrs', 'in3yrs'].reduce((pricesByPB, period) => {
+        const { top, mid, low } = pb[period];
+        pricesByPB[period] = [
           [netValue * top, top],
           [netValue * mid, mid],
           [netValue * low, low],
         ];
-        return pricesByPBS;
+        return pricesByPB;
       }, {});
     };
 
@@ -47,26 +47,29 @@ class ValueBoard extends Component {
   }
 
   render() {
-    const { price, netValue } = this.props.stockData;
-    const pricesByEPS = this.calcPricesByEPS();
-    const pricesByPBS = this.calcPricesByPBS();
+    const { name, eps, price, netValue } = this.props.stockData;
+    const pricesByPE = this.calcPricesByPE();
+    const pricesByPB = this.calcPricesByPB();
     const pricesByDividends = this.calcPricesByDividends();
     return (
       <section className="valueBoard">
-        <Header as="h2" dividing>{this.props.stockId}</Header>
+        <Header as="h2" dividing>{name} {this.props.stockId}</Header>
         <List horizontal size="big">
           <List.Item>
             <List.Header>Current price</List.Header>{price}
           </List.Item>
           <List.Item>
+            <List.Header>Current EPS</List.Header>{eps}
+          </List.Item>
+          <List.Item>
             <List.Header>Current net value</List.Header>{netValue}
           </List.Item>
         </List>
-        <Header as="h3">Values By EPS</Header>
-        <TableByYears prices5yrs={pricesByEPS.in5yrs} prices3yrs={pricesByEPS.in3yrs} color="blue" />
-        <Header as="h3">Values By PBS</Header>
-        <TableByYears prices5yrs={pricesByPBS.in5yrs} prices3yrs={pricesByPBS.in3yrs} color="teal" />
-        <Header as="h3">Values By Dividends</Header>
+        <Header as="h3">Values By PE</Header>
+        <TableByYears prices5yrs={pricesByPE.in5yrs} prices3yrs={pricesByPE.in3yrs} color="blue" />
+        <Header as="h3">Values By PB</Header>
+        <TableByYears prices5yrs={pricesByPB.in5yrs} prices3yrs={pricesByPB.in3yrs} color="teal" />
+        <Header as="h3">Values By Dividend</Header>
         <TableByDividends priceByCurrDividend={pricesByDividends.current} priceByAvgDividend={pricesByDividends.average} color="green" />
       </section>
     );

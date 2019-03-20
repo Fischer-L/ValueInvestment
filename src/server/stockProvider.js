@@ -4,12 +4,12 @@ let crawler = null;
 const stockProvider = {
   async get(id) {
     try {
-      const [ espPage, pbsPage, dividendsPage ] = await Promise.all([
-        this._getPage('eps', id),
-        this._getPage('pbs', id),
-        this._getPage('dividends', id),
+      const [ pePage, pbPage, dividendPage ] = await Promise.all([
+        this._getPage('pe', id),
+        this._getPage('pb', id),
+        this._getPage('dividend', id),
       ]);
-      return { espPage, pbsPage, dividendsPage };
+      return { pePage, pbPage, dividendPage };
     } catch (e) {
       return this._handleError(e);
     }
@@ -18,16 +18,16 @@ const stockProvider = {
   async _getPage(pageType, id) {
     let path = '';
     switch (pageType) {
-      case 'eps':
+      case 'pe':
         path = `/stock/report/value?types=1&stockno=${id}`;
         break;
 
-      case 'pbs':
+      case 'pb':
         path = `/stock/report/value?types=2&stockno=${id}`;
         break;
 
-      case 'dividends':
-        path = `/stock/report/value?types=2&stockno=${id}`;
+      case 'dividend':
+        path = `/stock/report/basic_dp?stockno=${id}`;
         break;
     }
     const { data } = await crawler.get(path);

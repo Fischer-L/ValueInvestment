@@ -4,7 +4,7 @@ const utils = require('./utils');
 const config = require('./config');
 
 const { resolve } = utils;
-const { env, host, port, publicDir } = config;
+const { env, url, port, publicDir } = config;
 
 const webpackConfig = {
   mode: env === 'production' ? 'production' : 'development',
@@ -14,6 +14,7 @@ const webpackConfig = {
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
     alias: {
+      '~': resolve('./src'),
       '@': resolve('./src/client'),
     },
   },
@@ -73,14 +74,13 @@ const webpackConfig = {
 
 switch (env) {
   case 'local-dev':
-    const liveReloadDelay = 200;
     // eslint-disable-next-line import/no-extraneous-dependencies, import/order, global-require
     const LiveReloadPlugin = require('webpack-livereload-plugin');
-    webpackConfig.plugins.push(new LiveReloadPlugin({ appendScriptTag: true, delay: liveReloadDelay }));
+    webpackConfig.plugins.push(new LiveReloadPlugin({ appendScriptTag: true, delay: 600 }));
 
     webpackConfig.watch = true;
     webpackConfig.watchOptions = {
-      aggregateTimeout: liveReloadDelay,
+      aggregateTimeout: 50,
       ignored: /node_modules/,
     };
     break;
@@ -88,8 +88,8 @@ switch (env) {
   case 'webpack-dev-svr':
     webpackConfig.devServer = {
       port,
+      publicPath: url,
       contentBase: publicDir,
-      publicPath: `${host}:${port}/`,
       watchContentBase: true,
       // Workaround for https://github.com/webpack/webpack-dev-server/issues/1604
       disableHostCheck: true,

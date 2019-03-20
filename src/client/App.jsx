@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
-import stockProvider, { getFakeData } from '@/api/index';
+import StockProvider, { getFakeData } from '@/api/index';
 import MainBar from '@/components/MainBar';
 import ValueBoard from '@/components/ValueBoard';
 
 import '@/css/App.css';
 import 'semantic-ui-css/semantic.min.css';
+
+const stockProvider = new StockProvider({ axios, DOMParser });
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +21,7 @@ class App extends Component {
 
     this.onRequestStockValue = async ({ stockId }) => {
       const stockData = await stockProvider.get(stockId);
-      this.setState({ stockId, stockData });
+      if (stockData) this.setState({ stockId, stockData });
     };
   }
 

@@ -9,11 +9,11 @@ const publicDir = utils.resolve('public');
 
 const port = process.env.PORT || 9000;
 
-const host = 'http://localhost';
+const url = `http://localhost:${port}`;
 
 module.exports = {
   env,
-  host,
+  url,
   port,
   publicDir,
 };
