@@ -4,10 +4,10 @@ const utils = require('./utils');
 const config = require('./config');
 
 const { resolve } = utils;
-const { env, host, port, publicDir, webpackMode } = config;
+const { env, host, port, publicDir } = config;
 
 const webpackConfig = {
-  mode: webpackMode,
+  mode: env === 'production' ? 'production' : 'development',
 
   entry: ['@babel/polyfill', resolve('./src/client/index.jsx')],
 

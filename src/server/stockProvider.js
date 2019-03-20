@@ -1,7 +1,6 @@
 let isProd = false;
 let crawler = null;
 
-
 const stockProvider = {
   async get(id) {
     try {

@@ -5,8 +5,6 @@ const utils = require('./utils');
 // 'production': Run in the priduction mode
 const env = process.env.ENV || 'local-dev';
 
-const webpackMode = env === 'production' ? 'production' : 'development';
-
 const publicDir = utils.resolve('public');
 
 const port = process.env.PORT || 9000;
@@ -18,5 +16,4 @@ module.exports = {
   host,
   port,
   publicDir,
-  webpackMode,
 };
