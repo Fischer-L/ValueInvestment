@@ -11,6 +11,7 @@ module.exports = {
     "import/no-unresolved": "off",
     "array-bracket-spacing": "off",
     "class-methods-use-this": "off",
+    "import/prefer-default-export": "off",
     "react/no-multi-comp": "off",
     "react/forbid-prop-types": "warn",
     "react/require-default-props": "off",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Header, List } from 'semantic-ui-react';
+import { round } from '@/utils/index';
 import { TableByYears, TableByDividends } from '@/components/Table';
 
 import '@/css/ValueBoard.css';
@@ -9,15 +10,20 @@ class ValueBoard extends Component {
   constructor(props) {
     super(props);
 
+    this._round = values => values.map((v) => {
+      if (v instanceof Array) return this._round(v);
+      return round(v);
+    });
+
     this.calcPricesByPE = () => {
       const { eps, pe } = this.props.stockData;
       return ['in5yrs', 'in3yrs'].reduce((pricesByPE, period) => {
         const { top, mid, low } = pe[period];
-        pricesByPE[period] = [
+        pricesByPE[period] = this._round([
           [eps * top, top],
           [eps * mid, mid],
           [eps * low, low],
-        ];
+        ]);
         return pricesByPE;
       }, {});
     };
@@ -26,11 +32,11 @@ class ValueBoard extends Component {
       const { netValue, pb } = this.props.stockData;
       return ['in5yrs', 'in3yrs'].reduce((pricesByPB, period) => {
         const { top, mid, low } = pb[period];
-        pricesByPB[period] = [
+        pricesByPB[period] = this._round([
           [netValue * top, top],
           [netValue * mid, mid],
           [netValue * low, low],
-        ];
+        ]);
         return pricesByPB;
       }, {});
     };
@@ -40,8 +46,8 @@ class ValueBoard extends Component {
       const currDividend = dividends[0];
       const avgDividend = dividends.reduce((sum, v) => sum + v, 0) / dividends.length;
       return {
-        current: [ currDividend, currDividend * 25, currDividend * 16 ],
-        average: [ avgDividend, avgDividend * 25, avgDividend * 16 ],
+        current: this._round([ currDividend, currDividend * 25, currDividend * 16 ]),
+        average: this._round([ avgDividend, avgDividend * 25, avgDividend * 16 ]),
       };
     };
   }
@@ -56,13 +62,13 @@ class ValueBoard extends Component {
         <Header as="h2" dividing>{name} {this.props.stockId}</Header>
         <List horizontal size="big">
           <List.Item>
-            <List.Header>Current price</List.Header>{price}
+            <List.Header>Current price</List.Header>{round(price)}
           </List.Item>
           <List.Item>
-            <List.Header>Current EPS</List.Header>{eps}
+            <List.Header>Current EPS</List.Header>{round(eps)}
           </List.Item>
           <List.Item>
-            <List.Header>Current net value</List.Header>{netValue}
+            <List.Header>Current net value</List.Header>{round(netValue)}
           </List.Item>
         </List>
         <Header as="h3">Values By PE</Header>
