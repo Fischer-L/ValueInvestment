@@ -1,5 +1,3 @@
-import { url } from '~/build/config';
-
 export function getFakeData() {
   return {
     id: '1234',
@@ -40,7 +38,7 @@ class StockProvider {
     this._stockData = {};
     this._domParser = new DOMParser();
     this._api = axios.create({
-      baseURL: `${url}/stockdata`,
+      baseURL: `${window.location.origin}/stockdata`,
       timeout: 10000,
     });
   }

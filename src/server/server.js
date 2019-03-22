@@ -4,11 +4,11 @@ const express = require('express');
 const compression = require('compression');
 
 const { env, port, publicDir } = require('../build/config');
-const CacheProvider = require('./CacheProvider');
+const CacheProvider = require('./cacheProvider');
 const stockProvider = require('./stockProvider')({ env, axios });
 
 const PUBLIC_DIR = publicDir;
-const PORT = process.env.PORT || port;
+const PORT = port;
 const cache = new CacheProvider({
   maxAge: 10 * 60 * 1000, // 10 mins
   shouldForceUpdate(req) {

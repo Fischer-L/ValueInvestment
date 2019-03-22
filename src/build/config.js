@@ -2,18 +2,22 @@ const utils = require('./utils');
 
 // 'webpack-dev-svr': Run with the Webpack dev server in the dev mode
 // 'local-dev': Run with the local server in the dev mode
+// 'docker-dev': Run with the docker server in the dev mode
 // 'production': Run in the priduction mode
 const env = process.env.ENV || 'local-dev';
 
 const publicDir = utils.resolve('public');
 
-const port = process.env.PORT || 9000;
-
-const url = `http://localhost:${port}`;
+let port = 9000;
+if (env === 'production') {
+  port = 443;
+}
+if (process.env.PORT) {
+  port = process.env.PORT;
+}
 
 module.exports = {
   env,
-  url,
   port,
   publicDir,
 };

@@ -4,7 +4,7 @@ const utils = require('./utils');
 const config = require('./config');
 
 const { resolve } = utils;
-const { env, url, port, publicDir } = config;
+const { env, port, publicDir } = config;
 
 const webpackConfig = {
   mode: env === 'production' ? 'production' : 'development',
@@ -88,7 +88,7 @@ switch (env) {
   case 'webpack-dev-svr':
     webpackConfig.devServer = {
       port,
-      publicPath: url,
+      publicPath: `http://localhost:${port}`,
       contentBase: publicDir,
       watchContentBase: true,
       // Workaround for https://github.com/webpack/webpack-dev-server/issues/1604
