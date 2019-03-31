@@ -15,7 +15,6 @@ class MainBar extends Component {
     };
 
     this.onClick = (e) => {
-
       let submit = false;
       switch (e.type) {
         case 'click':

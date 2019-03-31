@@ -71,11 +71,11 @@ class ValueBoard extends Component {
             <List.Header>Current net value</List.Header>{round(netValue)}
           </List.Item>
         </List>
-        <Header as="h3">Values By PE</Header>
+        <Header as="h3">Costs By PE</Header>
         <TableByYears prices5yrs={pricesByPE.in5yrs} prices3yrs={pricesByPE.in3yrs} color="blue" />
-        <Header as="h3">Values By PB</Header>
+        <Header as="h3">Costs By PB</Header>
         <TableByYears prices5yrs={pricesByPB.in5yrs} prices3yrs={pricesByPB.in3yrs} color="teal" />
-        <Header as="h3">Values By Dividend</Header>
+        <Header as="h3">Costs By Dividend</Header>
         <TableByDividends priceByCurrDividend={pricesByDividends.current} priceByAvgDividend={pricesByDividends.average} color="green" />
       </section>
     );
