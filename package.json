@@ -14,12 +14,11 @@
     "clean": "rimraf ./public",
     "lint": "./node_modules/.bin/eslint src/ --ext .jsx --ext .js",
     "lint-fix": "./node_modules/.bin/eslint src/ --ext .jsx --ext .js --fix",
-    "build-prod": "yarn clean && ENV=production webpack --config src/build/webpack.client.config.js",
+    "build-prod": "yarn clean; ENV=production webpack --config src/build/webpack.client.config.js",
     "build-docker-dev": "yarn clean && ENV=docker-dev webpack --config src/build/webpack.client.config.js",
-    "docker-run-dev": "yarn docker-stop-dev; docker image rm value/investment:dev; docker build -t value/investment:dev -f Dockerfile-Local .; docker run -p 9000:9000 --name value-investment value/investment:dev",
+    "docker-run-dev": "yarn docker-stop-dev; docker image rm local/value-investment:dev; yarn build-docker-dev && docker build --build-arg arg_env=docker-dev --force-rm -t local/value-investment:dev .; docker run -p 9000:9000 --name value-investment local/value-investment:dev",
     "docker-stop-dev": "docker stop value-investment; docker container rm value-investment",
-    "docker-run-test": "yarn docker-stop-dev; docker image rm value/investment:dev; docker build -t value/investment:dev .; docker run -p 9000:9000 --name value-investment value/investment:dev",
-    "deploy": "heroku container:login && heroku container:push web && heroku container:release web"
+    "deploy": "yarn build-prod && . ./src/build/heroku_release.sh"
   },
   "devDependencies": {
     "@babel/cli": "7.1.0",
