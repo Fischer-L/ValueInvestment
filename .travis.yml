@@ -19,4 +19,4 @@ deploy:
   provider: script
   script: bash src/build/heroku_release.sh
   on:
-    branch: release
+    branch: master
