@@ -52,9 +52,10 @@ class StockProvider {
         this._stockData[id].id = id;
       } catch (e) {
         console.error(e);
+        throw e;
       }
     }
-    return this._stockData[id] || null;
+    return this._stockData[id];
   }
 
   _extractData({ pePage, pbPage, dividendPage }) {
@@ -74,7 +75,7 @@ class StockProvider {
   }
 
   _parseDomFromString(htmlString) {
-    return this._domParser.parseFromString(htmlString, 'text/html');
+    return this._domParser.parseFromString(htmlString, "text/html");
   }
 
   _extractBasicInfo(page) {
