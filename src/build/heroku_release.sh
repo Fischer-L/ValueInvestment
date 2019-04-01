@@ -6,7 +6,6 @@ docker build --force-rm -t registry.heroku.com/value-investment/web:latest .
 docker push registry.heroku.com/value-investment/web:latest
 
 image_id=$(docker inspect registry.heroku.com/value-investment/web:latest --format={{.Id}})
-
 echo Releasing image to Heroku: $image_id
 
 get_msg()
@@ -26,4 +25,5 @@ EOF
 curl -n -X PATCH https://api.heroku.com/apps/value-investment/formation \
 -d "$(get_msg)" \
 -H "Content-Type: application/json" \
--H "Accept: application/vnd.heroku+json; version=3.docker-releases"
+-H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+-H "Authorization: Bearer $HEROKU_API_KEY"
