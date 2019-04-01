@@ -15,22 +15,42 @@ class App extends Component {
     super(props);
 
     this.state = {
+      error: null,
       stockId: getFakeData().id,
       stockData: getFakeData(),
     };
 
     this.onRequestStockValue = async ({ stockId }) => {
-      const stockData = await stockProvider.get(stockId);
-      if (stockData) this.setState({ stockId, stockData });
+      try {
+        const stockData = await stockProvider.get(stockId);
+        this.setState({ stockId, stockData, error: null });
+      } catch (e) {
+        this.setState({ stockId, stockData: null, error: e.toString() });
+      }
     };
+
+    this.renderErrorComponent = msg => (
+      <div className="appContent-error">
+        <h3>Oops~something wrong. Please search again</h3>
+        <p>{msg}</p>
+      </div>
+    );
   }
 
   render() {
+    let appContent = null;
+    const { stockId, stockData, error } = this.state;
+    if (this.state.error) {
+      appContent = this.renderErrorComponent(error);
+    } else if (stockId && stockData) {
+      appContent = (<ValueBoard stockId={stockId} stockData={stockData} />);
+    }
+
     return (
       <div className="app">
         <MainBar onRequestStockValue={this.onRequestStockValue} />
-        <section className="appConent">
-          <ValueBoard stockId={this.state.stockId} stockData={this.state.stockData} />
+        <section className="appContent">
+          {appContent}
         </section>
       </div>
     );
