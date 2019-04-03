@@ -12,10 +12,11 @@ install:
 
 script:
   - yarn build-prod
+  - yarn lint
 
 deploy:
   skip_cleanup: true
   provider: script
   script: bash src/build/heroku_release.sh
   on:
-    branch: master
+    branch: release
