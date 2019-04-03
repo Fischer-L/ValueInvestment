@@ -75,7 +75,7 @@ class StockProvider {
   }
 
   _parseDomFromString(htmlString) {
-    return this._domParser.parseFromString(htmlString, "text/html");
+    return this._domParser.parseFromString(htmlString, 'text/html');
   }
 
   _extractBasicInfo(page) {
