@@ -62,10 +62,7 @@ class App extends Component {
     return (
       <div className="app">
         <MainBar onRequestStockValue={this.onRequestStockValue} />
-        <section className="appContent">
-          {appContent}
-          {this.renderLoadingComponent()}
-        </section>
+        <section className="appContent">{appContent}</section>
       </div>
     );
   }
