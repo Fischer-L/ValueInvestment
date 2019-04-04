@@ -10,13 +10,20 @@
   margin: 0 auto;
 }
 
-.appContent-error {
-  width: 80%;
+.appContent-error,
+.appContent-loading {
   margin: 30px auto;
   text-align: center;
-  color: #777;
+}
+
+.appContent-loading {
+  margin-top: 50%;
 }
 
 .appContent-error > h3 {
   color: #ea4848;
+}
+
+.appContent-error > p {
+  color: #777;
 }

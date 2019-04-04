@@ -8,6 +8,8 @@ import ValueBoard from '@/components/ValueBoard';
 import '@/css/App.css';
 import 'semantic-ui-css/semantic.min.css';
 
+import icoLoading from '@/assets/ico_loading.svg';
+
 const stockProvider = new StockProvider({ axios, DOMParser });
 
 class App extends Component {
@@ -21,11 +23,14 @@ class App extends Component {
     };
 
     this.onRequestStockValue = async ({ stockId }) => {
+      this.setState({ stockId, stockData: null, error: null });
       try {
         const stockData = await stockProvider.get(stockId);
-        this.setState({ stockId, stockData, error: null });
+        if (stockId === stockData.id) {
+          this.setState({ stockData });
+        }
       } catch (e) {
-        this.setState({ stockId, stockData: null, error: e.toString() });
+        this.setState({ stockId: null, error: e.toString() });
       }
     };
 
@@ -35,13 +40,21 @@ class App extends Component {
         <p>{msg}</p>
       </div>
     );
+
+    this.renderLoadingComponent = () => (
+      <div className="appContent-loading">
+        <img src={icoLoading} width="52px" alt="Loading..." />
+      </div>
+    );
   }
 
   render() {
     let appContent = null;
     const { stockId, stockData, error } = this.state;
-    if (this.state.error) {
+    if (error) {
       appContent = this.renderErrorComponent(error);
+    } else if (stockId && !stockData) {
+      appContent = this.renderLoadingComponent();
     } else if (stockId && stockData) {
       appContent = (<ValueBoard stockId={stockId} stockData={stockData} />);
     }
@@ -51,6 +64,7 @@ class App extends Component {
         <MainBar onRequestStockValue={this.onRequestStockValue} />
         <section className="appContent">
           {appContent}
+          {this.renderLoadingComponent()}
         </section>
       </div>
     );
