@@ -1,38 +1,36 @@
-export function getFakeData() {
-  return {
-    id: '1234',
-    name: 'Stock',
-    price: 100,
-    eps: 12,
-    netValue: 30,
-    dividends: [5, 4.5, 4.8, 4.2, 4],
-    pe: {
-      in5yrs: {
-        top: 50,
-        mid: 30,
-        low: 10,
-      },
-      in3yrs: {
-        top: 30,
-        mid: 25,
-        low: 20,
-      },
-    },
-    pb: {
-      in5yrs: {
-        top: 1.5,
-        mid: 1.2,
-        low: 0.8,
-      },
-      in3yrs: {
-        top: 1.2,
-        mid: 1.1,
-        low: 1,
-      },
-    },
-  };
-}
-
+// The stock data format
+// {
+//   id: '1234',
+//   name: 'Stock',
+//   price: 100,
+//   eps: 12,
+//   netValue: 30,
+//   dividends: [5, 4.5, 4.8, 4.2, 4],
+//   pe: {
+//     in5yrs: {
+//       top: 50,
+//       mid: 30,
+//       low: 10,
+//     },
+//     in3yrs: {
+//       top: 30,
+//       mid: 25,
+//       low: 20,
+//     },
+//   },
+//   pb: {
+//     in5yrs: {
+//       top: 1.5,
+//       mid: 1.2,
+//       low: 0.8,
+//     },
+//     in3yrs: {
+//       top: 1.2,
+//       mid: 1.1,
+//       low: 1,
+//     },
+//   },
+// }
 class StockProvider {
   constructor({ axios, DOMParser }) {
     this._stockData = {};
