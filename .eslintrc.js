@@ -2,6 +2,7 @@ module.exports = {
   "extends": "airbnb",
   "rules": {
     "max-len": "off",
+    "no-console": "off",
     "default-case": "off",
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
