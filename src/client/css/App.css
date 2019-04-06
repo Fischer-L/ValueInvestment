@@ -2,6 +2,7 @@
 
 .app {
   --app-max-width: 640px;
+  --app-sub-line-color: #567890;
 }
 
 .appContent {
@@ -10,20 +11,28 @@
   margin: 0 auto;
 }
 
+.appContent-begin,
 .appContent-error,
 .appContent-loading {
   margin: 30px auto;
   text-align: center;
 }
 
+.appContent-begin,
 .appContent-loading {
   margin-top: 50%;
 }
 
+.appContent-begin > p {
+  font-size: 1.15em;
+  font-weight: bold;
+  color: var(--app-sub-line-color);
+}
+
 .appContent-error > h3 {
-  color: #ea4848;
+  color: #ed5c5c;
 }
 
 .appContent-error > p {
-  color: #777;
+  color: var(--app-sub-line-color);
 }
