@@ -19,7 +19,12 @@ const cache = new CacheProvider({
 const app = express();
 
 app.use(compression());
-app.use(express.static(PUBLIC_DIR));
+app.use(express.static(PUBLIC_DIR, {
+  setHeaders(res, path) {
+    if (path.includes('/index.html')) return;
+    res.set('Cache-Control', 'public, max-age=31536000');
+  },
+}));
 
 app.get('/stockdata/:id', async (req, res) => {
   let data = cache.get(req);
