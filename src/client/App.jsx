@@ -9,7 +9,7 @@ import '@/css/App.css';
 import 'semantic-ui-css/semantic.min.css';
 
 import icoDuck from '@/assets/ico_duck.jpg';
-import icoCoffe from '@/assets/ico_coffe.png';
+import icoHen from '@/assets/ico_hen.svg';
 import icoLoading from '@/assets/ico_loading.svg';
 
 const stockProvider = new StockProvider({ axios, DOMParser });
@@ -38,9 +38,9 @@ class App extends Component {
 
     this.renderErrorComponent = msg => (
       <div className="appContent-error">
-        <h3>Oops~something wrong.<br />Please search again</h3>
+        <h3>Quack~something wrong.<br />Please search again</h3>
         <p>{msg}</p>
-        <img src={icoDuck} width="32px" alt="duck..." />
+        <img src={icoDuck} width="32px" alt="Duck..." />
       </div>
     );
 
@@ -52,7 +52,7 @@ class App extends Component {
 
     this.renderBeginComponent = () => (
       <div className="appContent-begin">
-        <img src={icoCoffe} width="68px" alt="coffe..." />
+        <img src={icoHen} width="88px" alt="Hen..." />
         <p>Enter the number of the stock to look up</p>
       </div>
     );
