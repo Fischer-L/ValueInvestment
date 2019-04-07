@@ -1,5 +1,5 @@
-const webpack = require('webpack'); // eslint-disable-line import/no-extraneous-dependencies
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const utils = require('./utils');
 const config = require('./config');
 
@@ -19,6 +19,12 @@ const webpackConfig = {
     },
   },
 
+  output: {
+    path: publicDir,
+    publicPath: '/',
+    filename: '[name].[contenthash:8].js',
+  },
+
   devtool: 'inline-source-map',
 
   module: {
@@ -31,14 +37,17 @@ const webpackConfig = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
       },
       {
         test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         use: [{
           loader: 'file-loader',
           options: {
-            name: '[name].[ext]',
+            name: '[name].[contenthash:8].[ext]',
             outputPath: 'fonts/',
           },
         }],
@@ -49,7 +58,7 @@ const webpackConfig = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[ext]',
+              name: '[name].[contenthash:8].[ext]',
               outputPath: 'imgs/',
             },
           },
@@ -65,14 +74,10 @@ const webpackConfig = {
       minify: true,
     }),
 
-    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash:8].css',
+    }),
   ],
-
-  output: {
-    path: publicDir,
-    publicPath: '/',
-    filename: '[name].[hash].js',
-  },
 };
 
 switch (env) {

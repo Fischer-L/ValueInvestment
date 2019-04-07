@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import 'semantic-ui-css/semantic.min.css';
+import '@/css/App.css';
+
 import StockProvider from '@/api/index';
 import MainBar from '@/components/MainBar';
 import ValueBoard from '@/components/ValueBoard';
-
-import '@/css/App.css';
-import 'semantic-ui-css/semantic.min.css';
 
 import icoDuck from '@/assets/ico_duck.jpg';
 import icoHen from '@/assets/ico_hen.svg';
