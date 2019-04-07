@@ -1,5 +1,3 @@
-@import "./normalize.css";
-
 .app {
   --app-max-width: 640px;
   --app-sub-line-color: #567890;

@@ -17,8 +17,10 @@ class MainBar extends Component {
     this.onClick = (e) => {
       let submit = false;
       switch (e.type) {
-        case 'click':
         case 'touchend':
+          e.preventDefault();
+          e.stopPropagation();
+        case 'click':
           submit = e.target.classList.contains('search') && e.target.classList.contains('icon');
           break;
 
@@ -28,8 +30,6 @@ class MainBar extends Component {
       }
       const { stockId } = this.state;
       if (submit && stockId) {
-        e.preventDefault();
-        e.stopPropagation();
         this.props.onRequestStockValue({ stockId });
       }
     };

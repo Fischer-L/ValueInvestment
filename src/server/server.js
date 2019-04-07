@@ -12,7 +12,7 @@ const PORT = port;
 const cache = new CacheProvider({
   maxAge: 10 * 60 * 1000, // 10 mins
   shouldForceUpdate(req) {
-    const noCache = req.param('noCache');
+    const { noCache } = req.query;
     return noCache ? noCache.toLowerCase() === 'true' : false;
   },
 });
