@@ -25,9 +25,14 @@ class App extends Component {
     };
 
     this.onRequestStockValue = async ({ stockId }) => {
+      let noCache;
+      if (stockId.toLowerCase().startsWith('n')) {
+        noCache = true;
+        stockId = stockId.substr(1);
+      }
       this.setState({ stockId, stockData: null, error: null });
       try {
-        const stockData = await stockProvider.get(stockId);
+        const stockData = await stockProvider.get(stockId, noCache);
         if (stockId === stockData.id) {
           this.setState({ stockData });
         }

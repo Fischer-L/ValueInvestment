@@ -41,10 +41,15 @@ class StockProvider {
     });
   }
 
-  async get(id) {
+  async get(id, noCache = false) {
+    let params;
+    if (noCache === true) {
+      params = { noCache };
+      this._stockData[id] = null;
+    }
     if (!this._stockData[id]) {
       try {
-        const { data } = await this._api.get(`/${id}`);
+        const { data } = await this._api.get(`/${id}`, { params });
         if (data.error) throw data.error;
         this._stockData[id] = this._extractData(data);
         this._stockData[id].id = id;
