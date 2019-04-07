@@ -8,6 +8,7 @@ import ValueBoard from '@/components/ValueBoard';
 import '@/css/App.css';
 import 'semantic-ui-css/semantic.min.css';
 
+import icoDuck from '@/assets/ico_duck.jpg';
 import icoCoffe from '@/assets/ico_coffe.png';
 import icoLoading from '@/assets/ico_loading.svg';
 
@@ -39,6 +40,7 @@ class App extends Component {
       <div className="appContent-error">
         <h3>Oops~something wrong.<br />Please search again</h3>
         <p>{msg}</p>
+        <img src={icoDuck} width="32px" alt="duck..." />
       </div>
     );
 
