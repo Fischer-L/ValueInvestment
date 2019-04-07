@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const TerserJSPlugin = require('terser-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const utils = require('./utils');
 const config = require('./config');
 
@@ -71,13 +73,28 @@ const webpackConfig = {
   plugins: [
     new HtmlWebpackPlugin({
       template: resolve('./src/client/index.html'),
-      minify: true,
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+      },
     }),
 
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
     }),
   ],
+
+
+  optimization: {
+    minimizer: [
+      new TerserJSPlugin({}),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+  },
 };
 
 switch (env) {
