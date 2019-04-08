@@ -12,7 +12,7 @@ import icoDuck from '@/assets/ico_duck.jpg';
 import icoHen from '@/assets/ico_hen.svg';
 import icoLoading from '@/assets/ico_loading.svg';
 
-const stockProvider = new StockProvider({ axios, DOMParser });
+const stockProvider = new StockProvider({ axios, domParser: new DOMParser() });
 
 class App extends Component {
   constructor(props) {
