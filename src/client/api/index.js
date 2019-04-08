@@ -32,33 +32,37 @@
 //   },
 // }
 class StockProvider {
-  constructor({ axios, DOMParser }) {
-    this._stockData = {};
-    this._domParser = new DOMParser();
+  constructor({ axios, domParser }) {
+    this._stocks = {};
+    this._domParser = domParser;
     this._api = axios.create({
       baseURL: `${window.location.origin}/stockdata`,
       timeout: 10000,
     });
   }
 
-  async get(id, noCache = false) {
+  get(id, noCache = false) {
     let params;
     if (noCache === true) {
       params = { noCache };
-      this._stockData[id] = null;
+      this._stocks[id] = null;
     }
-    if (!this._stockData[id]) {
-      try {
-        const { data } = await this._api.get(`/${id}`, { params });
-        if (data.error) throw data.error;
-        this._stockData[id] = this._extractData(data);
-        this._stockData[id].id = id;
-      } catch (e) {
-        console.error(e);
-        throw e;
-      }
+    if (!this._stocks[id]) {
+      this._stocks[id] = {};
+      this._stocks[id].promise = new Promise(async (resolve, reject) => {
+        try {
+          const { data } = await this._api.get(`/${id}`, { params });
+          if (data.error) throw data.error;
+          this._stocks[id].data = this._extractData(data);
+          this._stocks[id].data.id = id;
+          resolve(this._stocks[id].data);
+        } catch (e) {
+          console.error(e);
+          reject(e);
+        }
+      });
     }
-    return this._stockData[id];
+    return this._stocks[id].promise;
   }
 
   _extractData({ pePage, pbPage, dividendPage }) {
