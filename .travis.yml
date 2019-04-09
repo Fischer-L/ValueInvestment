@@ -13,7 +13,7 @@ install:
 script:
   - yarn build-prod
   - yarn lint
-  - yarn test-client
+  - yarn test
 
 deploy:
   skip_cleanup: true
