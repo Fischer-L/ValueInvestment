@@ -12,7 +12,7 @@
     "open-tab-build-local": "osascript -e 'tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down' -e 'tell application \"Terminal\" to do script with command \"yarn build-local\" in window 1'",
     "webpack": "yarn clean && ENV=webpack-dev-svr webpack-dev-server --mode development --config src/build/webpack.client.config.js",
     "clean": "rimraf ./public",
-    "test-client": "jest src/client/test",
+    "test": "jest src/client/test src/server/test",
     "lint": "./node_modules/.bin/eslint src/ --ext .jsx --ext .js",
     "lint-fix": "./node_modules/.bin/eslint src/ --ext .jsx --ext .js --fix",
     "build-prod": "yarn clean; ENV=production webpack --config src/build/webpack.client.config.js",

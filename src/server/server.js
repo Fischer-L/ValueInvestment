@@ -11,7 +11,7 @@ const PUBLIC_DIR = publicDir;
 const PORT = port;
 const cache = new CacheProvider({
   maxAge: 10 * 60 * 1000, // 10 mins
-  shouldForceUpdate(req) {
+  shouldInvalidateCache(req) {
     const { noCache } = req.query;
     return noCache ? noCache.toLowerCase() === 'true' : false;
   },

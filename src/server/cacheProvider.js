@@ -1,8 +1,8 @@
 class CacheProvider {
-  constructor({ maxAge, shouldForceUpdate }) {
+  constructor({ maxAge, shouldInvalidateCache }) {
     this._cache = {};
     this._maxAge = maxAge;
-    this._shouldForceUpdate = shouldForceUpdate;
+    this._shouldInvalidateCache = shouldInvalidateCache;
   }
 
   get(req) {
@@ -10,7 +10,7 @@ class CacheProvider {
     const cache = this._cache[key];
     let hasCache = !!cache;
     if (hasCache) hasCache = Date.now() - cache.updateTime <= this._maxAge;
-    if (hasCache) hasCache = this._shouldForceUpdate ? !this._shouldForceUpdate(req) : hasCache;
+    if (hasCache) hasCache = this._shouldInvalidateCache ? !this._shouldInvalidateCache(req) : hasCache;
     if (hasCache) return cache.data;
     return null;
   }
