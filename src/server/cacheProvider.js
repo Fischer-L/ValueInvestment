@@ -7,12 +7,14 @@ class CacheProvider {
 
   get(req) {
     const key = req.path;
-    const cache = this._cache[key];
-    let hasCache = !!cache;
-    if (hasCache) hasCache = Date.now() - cache.updateTime <= this._maxAge;
-    if (hasCache) hasCache = this._shouldInvalidateCache ? !this._shouldInvalidateCache(req) : hasCache;
-    if (hasCache) return cache.data;
-    return null;
+    this._removeCacheIfExpired(key);
+
+    let cache = this._cache[key];
+    if (cache && this._shouldInvalidateCache && this._shouldInvalidateCache(req)) {
+      cache = null;
+      delete this._cache[key];
+    }
+    return cache ? cache.data : null;
   }
 
   set(req, data) {
@@ -21,6 +23,22 @@ class CacheProvider {
       data,
       updateTime: Date.now(),
     };
+    this._scheduleCacheCleanUp();
+  }
+
+  _scheduleCacheCleanUp() {
+    if (this._cleanUpTimer) return;
+    this._cleanUpTimer = setTimeout(() => {
+      Object.keys(this._cache).forEach(key => this._removeCacheIfExpired(key));
+      this._cleanUpTimer = null;
+      this._scheduleCacheCleanUp();
+    }, this._maxAge + 1);
+  }
+
+  _removeCacheIfExpired(key) {
+    const cache = this._cache[key];
+    if (!cache) return;
+    if (Date.now() - cache.updateTime >= this._maxAge) delete this._cache[key];
   }
 }
 
