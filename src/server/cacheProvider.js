@@ -29,7 +29,9 @@ class CacheProvider {
   _scheduleCacheCleanUp() {
     if (this._cleanUpTimer) return;
     this._cleanUpTimer = setTimeout(() => {
-      Object.keys(this._cache).forEach(key => this._removeCacheIfExpired(key));
+      const keys = Object.keys(this._cache);
+      if (!keys.length) return;
+      keys.forEach(key => this._removeCacheIfExpired(key));
       this._cleanUpTimer = null;
       this._scheduleCacheCleanUp();
     }, this._maxAge + 1);
