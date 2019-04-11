@@ -62,13 +62,13 @@ class ValueBoard extends Component {
         <Header as="h2" dividing>{name} {this.props.stockId}</Header>
         <List horizontal size="big">
           <List.Item>
-            <List.Header>Current price</List.Header>{round(price)}
+            <List.Header>Price</List.Header>{round(price)}
           </List.Item>
           <List.Item>
-            <List.Header>Current EPS</List.Header>{round(eps)}
+            <List.Header>EPS</List.Header>{round(eps)}
           </List.Item>
           <List.Item>
-            <List.Header>Current net value</List.Header>{round(netValue)}
+            <List.Header>Net value</List.Header>{round(netValue)}
           </List.Item>
         </List>
         <Header as="h3">Costs By PE</Header>

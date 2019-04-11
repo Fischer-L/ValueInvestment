@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
+import { round } from '@/utils/index';
 
 import '@/css/Table.css';
 
@@ -14,7 +15,9 @@ class TableByYears extends Component {
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell>Low</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>Mid</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>Top</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -23,13 +26,17 @@ class TableByYears extends Component {
           <Table.Row>
             <Table.Cell>5 Years</Table.Cell>
             <Table.Cell>{ low5Price }<p className="table-subText">({ low5Eps })</p></Table.Cell>
+            <Table.Cell className="table-subText">{ round((low5Price + mid5Price) / 2) }</Table.Cell>
             <Table.Cell>{ mid5Price }<p className="table-subText">({ mid5Eps })</p></Table.Cell>
+            <Table.Cell className="table-subText">{ round((mid5Price + top5Price) / 2) }</Table.Cell>
             <Table.Cell>{ top5Price }<p className="table-subText">({ top5Eps })</p></Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>3 Years</Table.Cell>
             <Table.Cell>{ low3Price }<p className="table-subText">({ low3Eps })</p></Table.Cell>
+            <Table.Cell className="table-subText">{ round((low3Price + mid3Price) / 2) }</Table.Cell>
             <Table.Cell>{ mid3Price }<p className="table-subText">({ mid3Eps })</p></Table.Cell>
+            <Table.Cell className="table-subText">{ round((top3Price + mid3Price) / 2) }</Table.Cell>
             <Table.Cell>{ top3Price }<p className="table-subText">({ top3Eps })</p></Table.Cell>
           </Table.Row>
         </Table.Body>
@@ -56,6 +63,7 @@ class TableByDividends extends Component {
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell>Low<p className="table-subText">(6.25%)</p></Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>Top<p className="table-subText">(4%)</p></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -64,11 +72,13 @@ class TableByDividends extends Component {
           <Table.Row>
             <Table.Cell>Current Dividends<p className="table-subText">({ currDividend })</p></Table.Cell>
             <Table.Cell>{ lowCurrPrice }</Table.Cell>
+            <Table.Cell className="table-subText">{ round((topCurrPrice + lowCurrPrice) / 2) }</Table.Cell>
             <Table.Cell>{ topCurrPrice }</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>Average Dividends<p className="table-subText">({ AvgDividend })</p></Table.Cell>
             <Table.Cell>{ lowAvgPrice }</Table.Cell>
+            <Table.Cell className="table-subText">{ round((topAvgPrice + lowAvgPrice) / 2) }</Table.Cell>
             <Table.Cell>{ topAvgPrice }</Table.Cell>
           </Table.Row>
         </Table.Body>
