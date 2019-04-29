@@ -5,22 +5,31 @@ import { round } from '@/utils/index';
 
 import '@/css/Table.css';
 
+const subTextClass = subText => `table-subText ${subText ? '' : 'app-none'}`;
+
+function renderHeader(headerSubText = {}) {
+  const { low, mid, top } = headerSubText;
+  return (
+    <Table.Header>
+      <Table.Row>
+        <Table.HeaderCell />
+        <Table.HeaderCell>Low<p className={subTextClass(low)}>({ low })</p></Table.HeaderCell>
+        <Table.HeaderCell></Table.HeaderCell>
+        <Table.HeaderCell>Mid<p className={subTextClass(mid)}>({ mid })</p></Table.HeaderCell>
+        <Table.HeaderCell></Table.HeaderCell>
+        <Table.HeaderCell>Top<p className={subTextClass(top)}>({ top })</p></Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+  );
+}
+
 class TableByYears extends Component {
   render() {
     const [ [top5Price, top5Eps], [mid5Price, mid5Eps], [low5Price, low5Eps] ] = this.props.prices5yrs;
     const [ [top3Price, top3Eps], [mid3Price, mid3Eps], [low3Price, low3Eps] ] = this.props.prices3yrs;
     return (
       <Table unstackable selectable color={this.props.color} className="table">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell />
-            <Table.HeaderCell>Low</Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>Mid</Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>Top</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+        { renderHeader() }
 
         <Table.Body>
           <Table.Row>
@@ -53,32 +62,30 @@ TableByYears.propTypes = {
   prices3yrs: PropTypes.arrayOf(arrayOfPriceEps).isRequired,
 };
 
+
 class TableByDividends extends Component {
   render() {
-    const [ currDividend, topCurrPrice, lowCurrPrice ] = this.props.priceByCurrDividend;
-    const [ AvgDividend, topAvgPrice, lowAvgPrice ] = this.props.priceByAvgDividend;
+    const [ currDividend, topCurrPrice, midCurrPrice, lowCurrPrice ] = this.props.priceByCurrDividend;
+    const [ AvgDividend, topAvgPrice, midAvgPrice, lowAvgPrice ] = this.props.priceByAvgDividend;
     return (
       <Table unstackable selectable color={this.props.color} className="table">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell />
-            <Table.HeaderCell>Low<p className="table-subText">(6.25%)</p></Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>Top<p className="table-subText">(4%)</p></Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+        { renderHeader({ low: '6.25%', mid: '4%', top: '2.5%' }) }
 
         <Table.Body>
           <Table.Row>
             <Table.Cell>Current Dividends<p className="table-subText">({ currDividend })</p></Table.Cell>
             <Table.Cell>{ lowCurrPrice }</Table.Cell>
-            <Table.Cell className="table-subText">{ round((topCurrPrice + lowCurrPrice) / 2) }</Table.Cell>
+            <Table.Cell className="table-subText">{ round((lowCurrPrice + midCurrPrice) / 2) }</Table.Cell>
+            <Table.Cell>{ midCurrPrice }</Table.Cell>
+            <Table.Cell className="table-subText">{ round((midCurrPrice + topCurrPrice) / 2) }</Table.Cell>
             <Table.Cell>{ topCurrPrice }</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>Average Dividends<p className="table-subText">({ AvgDividend })</p></Table.Cell>
             <Table.Cell>{ lowAvgPrice }</Table.Cell>
-            <Table.Cell className="table-subText">{ round((topAvgPrice + lowAvgPrice) / 2) }</Table.Cell>
+            <Table.Cell className="table-subText">{ round((lowAvgPrice + midAvgPrice) / 2) }</Table.Cell>
+            <Table.Cell>{ midAvgPrice }</Table.Cell>
+            <Table.Cell className="table-subText">{ round((midAvgPrice + topAvgPrice) / 2) }</Table.Cell>
             <Table.Cell>{ topAvgPrice }</Table.Cell>
           </Table.Row>
         </Table.Body>
