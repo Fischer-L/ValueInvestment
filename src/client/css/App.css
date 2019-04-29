@@ -30,3 +30,7 @@
 .appContent-error > p {
   color: var(--app-sub-line-color);
 }
+
+.app-none {
+  display: none;
+}

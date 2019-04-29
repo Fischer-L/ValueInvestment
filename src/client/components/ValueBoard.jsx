@@ -46,8 +46,8 @@ class ValueBoard extends Component {
       const currDividend = dividends[0];
       const avgDividend = dividends.reduce((sum, v) => sum + v, 0) / dividends.length;
       return {
-        current: this._round([ currDividend, currDividend * 25, currDividend * 16 ]),
-        average: this._round([ avgDividend, avgDividend * 25, avgDividend * 16 ]),
+        current: this._round([ currDividend, currDividend * 40, currDividend * 25, currDividend * 16 ]),
+        average: this._round([ avgDividend, avgDividend * 40, avgDividend * 25, avgDividend * 16 ]),
       };
     };
   }

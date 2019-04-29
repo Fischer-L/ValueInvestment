@@ -10,7 +10,7 @@ const stockProvider = require('./stockProvider')({ env, axios });
 const PUBLIC_DIR = publicDir;
 const PORT = port;
 const cache = new CacheProvider({
-  maxAge: 10 * 60 * 1000, // 10 mins
+  maxAge: 20 * 60 * 1000, // 20 mins
   shouldInvalidateCache(req) {
     const { noCache } = req.query;
     return noCache ? noCache.toLowerCase() === 'true' : false;
