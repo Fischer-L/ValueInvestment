@@ -3,17 +3,18 @@ import { JSDOM } from 'jsdom';
 
 import pePage from './data/pePage';
 import pbPage from './data/pbPage';
+import epsPage from './data/epsPage';
 import dividendPage from './data/dividendPage';
 
 import StockProvider from '../api/index';
 
-const EXPECTED_STOCK_DATA = { pe: { in5yrs: { top: 19.37, mid: 15.754999999999999, low: 10.63 }, in3yrs: { top: 19.37, mid: 16.68, low: 14.66 } }, pb: { in5yrs: { top: 4.7, mid: 3.67, low: 3.13 }, in3yrs: { top: 4.7, mid: 3.775, low: 3.5 } }, dividends: [8, 8, 7, 6, 4.5], name: '台積電', price: 253, eps: 13.893465129049972, netValue: 66.40419947506561, id: '2330' };
+const EXPECTED_STOCK_DATA = { pe: { in5yrs: { top: 19.37, mid: 15.754999999999999, low: 10.63 }, in3yrs: { top: 19.37, mid: 16.68, low: 14.66 } }, pb: { in5yrs: { top: 4.7, mid: 3.67, low: 3.13 }, in3yrs: { top: 4.7, mid: 3.775, low: 3.5 } }, dividends: [8, 8, 7, 6, 4.5], name: '台積電', price: 282, eps: 12.229999999999999, netValue: 59.87261146496815, id: '2330' };
 
 function fakeAxios() {
   const axios = {
     create: () => axios,
     get: jest.fn(() => (new Promise((resolve) => {
-      setTimeout(() => resolve({ data: { pePage, pbPage, dividendPage } }), axios.delay || 0);
+      setTimeout(() => resolve({ data: { pePage, pbPage, epsPage, dividendPage } }), axios.delay || 0);
     }))),
   };
   return axios;

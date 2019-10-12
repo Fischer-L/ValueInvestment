@@ -65,11 +65,11 @@ class StockProvider {
     return this._stocks[id].promise;
   }
 
-  _extractData({ pePage, pbPage, dividendPage }) {
+  _extractData({ pePage, pbPage, epsPage, dividendPage }) {
     const pe = this._extractPEorPB(pePage);
     const pb = this._extractPEorPB(pbPage);
     const dividends = this._extractDividends(dividendPage).slice(0, 5);
-    const { name, price, eps, netValue } = this._extractBasicInfo(pePage);
+    const { name, price, eps, netValue } = this._extractBasicInfo(epsPage);
     return {
       pe,
       pb,
@@ -85,18 +85,24 @@ class StockProvider {
     return this._domParser.parseFromString(htmlString, 'text/html');
   }
 
-  _extractBasicInfo(page) {
-    const doc = this._parseDomFromString(page);
+  _extractBasicInfo(epsPage) {
+    const doc = this._parseDomFromString(epsPage);
     const price = +doc.querySelector('.price').textContent;
     const name = doc.querySelector('.idx-name').childNodes[0].textContent.trim();
     const currentPB = +doc.querySelector('ul.idx-data-pri').children[6].textContent.substr(3);
-    const currentPE = +doc.querySelector('ul.idx-data-pri').children[7].textContent.substr(3);
     return {
       name,
       price,
-      eps: price / currentPE,
+      eps: this._extractEPS(doc),
       netValue: price / currentPB,
     };
+  }
+
+  _extractEPS(epsPageDoc) {
+    const table = epsPageDoc.querySelector('table.tb.tbhl');
+    const rows = Array.from(table.querySelectorAll('tr'))
+      .slice(1, 10).filter(row => !row.classList.contains('tal'));
+    return rows.slice(0, 4).reduce((eps, row) => eps + parseFloat(row.children[1].textContent), 0);
   }
 
   _extractPEorPB(page) {
