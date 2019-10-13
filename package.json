@@ -6,9 +6,10 @@
   "author": "fischer.json <fischer.json@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn open-tab-build-local && yarn run-svr",
+    "dev": "yarn open-tab-build-local && yarn open-tab-run-svr",
     "run-svr": "nodemon ./src/server/server.js",
     "build-local": "yarn clean && webpack --config src/build/webpack.client.config.js",
+    "open-tab-run-svr": "osascript -e 'tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down' -e 'tell application \"Terminal\" to do script with command \"yarn run-svr\" in window 1'",
     "open-tab-build-local": "osascript -e 'tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down' -e 'tell application \"Terminal\" to do script with command \"yarn build-local\" in window 1'",
     "webpack": "yarn clean && ENV=webpack-dev-svr webpack-dev-server --mode development --config src/build/webpack.client.config.js",
     "clean": "rimraf ./public",

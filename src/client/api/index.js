@@ -112,7 +112,7 @@ class StockProvider {
     const values = rows.map(tr => +tr.children[1].textContent).filter(v => !Number.isNaN(v));
     return {
       in5yrs: this._getFeaturedValues(values.slice(0, 60)),
-      in3yrs: this._getFeaturedValues(values.slice(0, 30)),
+      in3yrs: this._getFeaturedValues(values.slice(0, 36)),
     };
   }
 
