@@ -1,9 +1,10 @@
-const http = require('http');
 const axios = require('axios');
 const express = require('express');
 const compression = require('compression');
+const cookieParser = require('cookie-parser');
 
 const { env, port, publicDir } = require('../build/config');
+const middlewares = require('./middlewares');
 const CacheProvider = require('./cacheProvider');
 const stockProvider = require('./stockProvider')({ env, axios });
 
@@ -19,6 +20,8 @@ const cache = new CacheProvider({
 const app = express();
 
 app.use(compression());
+app.use(cookieParser());
+
 app.use(express.static(PUBLIC_DIR, {
   setHeaders(res, path) {
     if (path.includes('/index.html')) return;
@@ -35,7 +38,10 @@ app.get('/stockdata/:id', async (req, res) => {
   res.json(data);
 });
 
-const httpSvr = http.Server(app);
-httpSvr.listen(PORT, function () {
+app.post('/login', middlewares.login);
+app.get('/logout', middlewares.logout);
+app.post('/logout', middlewares.logout);
+
+app.listen(PORT, function () {
   console.log('listening on port:', PORT, __dirname);
 });

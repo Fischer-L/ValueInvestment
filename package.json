@@ -87,6 +87,7 @@
     "@babel/polyfill": "^7.2.5",
     "axios": "^0.18.0",
     "compression": "^1.7.3",
+    "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
     "font-awesome": "^4.7.0",
     "prop-types": "^15.7.2",
