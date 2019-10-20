@@ -14,3 +14,11 @@
   cursor: pointer !important;
   pointer-events: auto !important;
 }
+
+.mainBar-loginBtn.ui.animated.button {
+  margin: 0;
+  position: absolute;
+  right: 0;
+  background: transparent;
+  color: #fff;
+}

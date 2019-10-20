@@ -21,6 +21,7 @@ const app = express();
 
 app.use(compression());
 app.use(cookieParser());
+app.use(express.json());
 
 app.use(express.static(PUBLIC_DIR, {
   setHeaders(res, path) {

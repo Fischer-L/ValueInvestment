@@ -1,4 +1,5 @@
 import axios from 'axios';
+import loginManager from './loginManager';
 import StockProvider from './StockProvider';
 
 const apiClient = axios.create({
@@ -8,5 +9,6 @@ const apiClient = axios.create({
 
 export {
   apiClient,
+  loginManager,
   StockProvider,
 };
