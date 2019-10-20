@@ -31,7 +31,7 @@
     "@babel/preset-react": "7.0.0",
     "babel-loader": "8.0.2",
     "css-loader": "1.0.0",
-    "eslint": "5.3.0",
+    "eslint": "6.5.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.1",
@@ -86,7 +86,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
