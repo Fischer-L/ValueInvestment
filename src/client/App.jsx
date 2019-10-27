@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import '@/css/App.css';
 
-import { apiClient, StockProvider } from '@/api/index';
+import { apiClient, StockProvider, loginManager } from '@/api/index';
 import MainBar from '@/components/MainBar';
 import ValueBoard from '@/components/ValueBoard';
 
@@ -21,10 +21,18 @@ class App extends Component {
       error: null,
       stockId: null,
       stockData: null,
+      isLogin: loginManager.isLogin(),
+      allowLogin: loginManager.allowLogin(),
+    };
+
+    this.onMainBarEvent = (name, payload) => {
+      if (typeof this[name] === 'function') {
+        this[name](payload);
+      }
     };
 
     this.onRequestStockValue = async ({ stockId }) => {
-      let noCache;
+      let noCache = false;
       if (stockId.toLowerCase().startsWith('n')) {
         noCache = true;
         stockId = stockId.substr(1);
@@ -38,6 +46,18 @@ class App extends Component {
       } catch (e) {
         this.setState({ stockId: null, error: e.toString() });
       }
+    };
+
+    this.onRequestLogin = async () => {
+      if (this.state.isLogin || !this.state.allowLogin) {
+        await loginManager.logout();
+      } else if (this.state.allowLogin) {
+        await loginManager.login();
+      }
+      this.setState({
+        isLogin: loginManager.isLogin(),
+        allowLogin: loginManager.allowLogin(),
+      });
     };
 
     this.renderErrorComponent = msg => (
@@ -64,7 +84,7 @@ class App extends Component {
 
   render() {
     let appContent = null;
-    const { stockId, stockData, error } = this.state;
+    const { stockId, stockData, error, isLogin, allowLogin } = this.state;
     if (error) {
       appContent = this.renderErrorComponent(error);
     } else if (stockId && !stockData) {
@@ -77,7 +97,7 @@ class App extends Component {
 
     return (
       <div className="app">
-        <MainBar onRequestStockValue={this.onRequestStockValue} />
+        <MainBar onEvent={this.onMainBarEvent} isLogin={isLogin} allowLogin={allowLogin} />
         <section className="appContent">{appContent}</section>
       </div>
     );

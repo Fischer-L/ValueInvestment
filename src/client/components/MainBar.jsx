@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button } from 'semantic-ui-react';
 
-import { loginManager } from '@/api/index';
-
 import '@/css/MainBar.css';
 
 class MainBar extends Component {
@@ -12,8 +10,6 @@ class MainBar extends Component {
 
     this.state = {
       stockId: '',
-      isLogin: loginManager.isLogin(),
-      allowLogin: loginManager.allowLogin(),
     };
 
     this.onInputChange = (e) => {
@@ -31,21 +27,20 @@ class MainBar extends Component {
         target = target.parentElement;
       }
     };
+
+    this.fireEvent = (e, name, payload) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.props.onEvent(name, payload);
+    };
   }
 
   async handleLogin(e, target) {
-    if (!target.classList.contains('mainBar-loginBtn')) return false;
-
-    if (this.state.isLogin || !this.state.allowLogin) {
-      await loginManager.logout();
-    } else if (this.state.allowLogin) {
-      await loginManager.login();
+    if (target.classList.contains('mainBar-loginBtn')) {
+      this.fireEvent(e, 'onRequestLogin');
+      return true;
     }
-    this.setState({
-      isLogin: loginManager.isLogin(),
-      allowLogin: loginManager.allowLogin(),
-    });
-    return true;
+    return false;
   }
 
   handleSubmit(e, target) {
@@ -64,15 +59,13 @@ class MainBar extends Component {
 
     const { stockId } = this.state;
     if (stockId) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.props.onRequestStockValue({ stockId });
+      this.fireEvent(e, 'onRequestStockValue', { stockId });
     }
     return true;
   }
 
   renderLoginButton() {
-    const { isLogin, allowLogin } = this.state;
+    const { isLogin, allowLogin } = this.props;
     if (!allowLogin) {
       return null;
     }
@@ -101,7 +94,9 @@ class MainBar extends Component {
 }
 
 MainBar.propTypes = {
-  onRequestStockValue: PropTypes.func.isRequired,
+  isLogin: PropTypes.bool,
+  allowLogin: PropTypes.bool,
+  onEvent: PropTypes.func.isRequired,
 };
 
 export default MainBar;
