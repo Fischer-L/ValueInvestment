@@ -4,7 +4,7 @@ import { Header, List } from 'semantic-ui-react';
 import { round } from '@/utils/index';
 import { TableByYears, TableByDividends } from '@/components/Table';
 
-import '@/css/ValueBoard.css';
+import '@/css/ValueBoard.scss';
 
 class ValueBoard extends Component {
   constructor(props) {

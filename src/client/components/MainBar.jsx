@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button } from 'semantic-ui-react';
 
-import '@/css/MainBar.css';
+import '@/css/MainBar.scss';
 
 class MainBar extends Component {
   constructor(props) {
