@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
 import { round } from '@/utils/index';
 
-import '@/css/Table.css';
+import '@/css/Table.scss';
 
 const subTextClass = subText => `table-subText ${subText ? '' : 'app-none'}`;
 

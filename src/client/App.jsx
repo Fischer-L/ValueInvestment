@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 import 'semantic-ui-css/semantic.min.css';
-import '@/css/App.css';
+import '@/css/App.scss';
 
 import { apiClient, StockProvider, loginManager } from '@/api/index';
 import MainBar from '@/components/MainBar';
+import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 
 import icoDuck from '@/assets/ico_duck.jpg';
@@ -80,6 +81,14 @@ class App extends Component {
         <p>Enter the number of the stock to look up</p>
       </div>
     );
+
+    this.renderBoards = ({ stockId, stockData, isLogin, allowLogin }) => {
+      const boards = [ <ValueBoard stockId={stockId} stockData={stockData} key="ValueBoard" /> ];
+      if (allowLogin && isLogin && false) {
+        boards.push(<NoteBoard key="NoteBoard" />);
+      }
+      return boards;
+    };
   }
 
   render() {
@@ -90,7 +99,7 @@ class App extends Component {
     } else if (stockId && !stockData) {
       appContent = this.renderLoadingComponent();
     } else if (stockId && stockData) {
-      appContent = (<ValueBoard stockId={stockId} stockData={stockData} />);
+      appContent = this.renderBoards(this.state);
     } else {
       appContent = this.renderBeginComponent();
     }
