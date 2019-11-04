@@ -1,0 +1,7 @@
+$input-max-width: 640px;
+$large-screen-width: 1180px;
+
+.app {
+  --input-max-width: #{$input-max-width};
+  --app-sub-line-color: #567890;
+}
