@@ -1,3 +1,5 @@
+@import './Variables.scss';
+
 .mainBar {
   padding: 10px 0;
   background-color: #2185d0;
@@ -5,9 +7,13 @@
   justify-content: center;
 }
 
+.mainBar-inputHolder {
+  width: 100%;
+  max-width: calc(var(--input-max-width));
+}
+
 .mainBar-input {
-  max-width: var(--input-max-width);
-  flex: 0.66;
+  width: 100%;
 }
 
 .mainBar-input > i.search.icon {
@@ -21,4 +27,25 @@
   right: 0;
   background: transparent;
   color: #fff;
+}
+
+@media only screen and (max-width: 800px) {
+  .mainBar-inputHolder {
+    width: calc(var(--input-max-width));
+    max-width: 100%;
+  }
+
+  .mainBar-input {
+    width: 88%;
+  }
+}
+
+@media only screen and (max-width: $input-max-width + 10px) {
+  .mainBar {
+    padding-left: 6px;
+  }
+
+  .mainBar-input {
+    width: 80%;
+  }
 }

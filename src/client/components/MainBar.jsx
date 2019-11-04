@@ -80,13 +80,15 @@ class MainBar extends Component {
   render() {
     return (
       <div className="mainBar" onClick={this.onClick} onKeyPress={this.onClick} onTouchEnd={this.onClick}>
-        <Input
-          className="mainBar-input"
-          icon="search"
-          size="small"
-          placeholder="Search..."
-          onChange={this.onInputChange}
-        />
+        <section className="mainBar-inputHolder">
+          <Input
+            className="mainBar-input"
+            icon="search"
+            size="small"
+            placeholder="Search..."
+            onChange={this.onInputChange}
+          />
+        </section>
         { this.renderLoginButton() }
       </div>
     );
