@@ -17,14 +17,17 @@ class MainBar extends Component {
     };
 
     this.onClick = async (e) => {
-      const handlers = [ 'handleLogin', 'handleSubmit' ];
+      const handlers = [ 'onClickBookmarkBtn', 'onRequestLogin', 'onRequestStockValue' ];
       let { target } = e;
       e.persist();
       while (target) {
         for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
           if (await this[handler](e, target)) return; // eslint-disable-line no-await-in-loop
         }
-        target = target.parentElement;
+        if (target.classList.contains('mainBar')) {
+          target = null;
+        }
+        target = target && target.parentElement;
       }
     };
 
@@ -35,7 +38,15 @@ class MainBar extends Component {
     };
   }
 
-  async handleLogin(e, target) {
+  onClickBookmarkBtn(e, target) {
+    if (target.classList.contains('mainBar-bookmarkBtn')) {
+      this.fireEvent(e, 'onClickBookmarkBtn');
+      return true;
+    }
+    return false;
+  }
+
+  async onRequestLogin(e, target) {
     if (target.classList.contains('mainBar-loginBtn')) {
       this.fireEvent(e, 'onRequestLogin');
       return true;
@@ -43,7 +54,7 @@ class MainBar extends Component {
     return false;
   }
 
-  handleSubmit(e, target) {
+  onRequestStockValue(e, target) {
     let submit = false;
     switch (e.type) {
       case 'click':
@@ -89,6 +100,7 @@ class MainBar extends Component {
             onChange={this.onInputChange}
           />
         </section>
+        <Button className="mainBar-bookmarkBtn" icon="bookmark" />
         { this.renderLoginButton() }
       </div>
     );

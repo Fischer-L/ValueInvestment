@@ -5,6 +5,8 @@
   background-color: #2185d0;
   display: flex;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .mainBar-inputHolder {
@@ -19,6 +21,11 @@
 .mainBar-input > i.search.icon {
   cursor: pointer !important;
   pointer-events: auto !important;
+}
+
+.mainBar-bookmarkBtn.ui.button {
+  margin-left: 6px;
+  transform: scale(0.95);
 }
 
 .mainBar-loginBtn.ui.animated.button {
