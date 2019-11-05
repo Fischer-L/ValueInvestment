@@ -7,6 +7,7 @@ import { apiClient, StockProvider, loginManager } from '@/api/index';
 import MainBar from '@/components/MainBar';
 import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
+import BookmarkBoard from '@/components/BookmarkBoard';
 
 import icoDuck from '@/assets/ico_duck.jpg';
 import icoHen from '@/assets/ico_hen.svg';
@@ -22,6 +23,7 @@ class App extends Component {
       error: null,
       stockId: null,
       stockData: null,
+      showBookmarkBoard: false,
       isLogin: loginManager.isLogin(),
       allowLogin: loginManager.allowLogin(),
     };
@@ -30,6 +32,10 @@ class App extends Component {
       if (typeof this[name] === 'function') {
         this[name](payload);
       }
+    };
+
+    this.onClickBookmarkBtn = () => {
+      this.setState(prevState => ({ showBookmarkBoard: !prevState.showBookmarkBoard }));
     };
 
     this.onRequestStockValue = async ({ stockId }) => {
@@ -62,7 +68,7 @@ class App extends Component {
     };
 
     this.renderErrorComponent = msg => (
-      <div className="appContent-error">
+      <div className="appContent-error" key="appContent-error">
         <h3>Quack~something wrong.<br />Please search again</h3>
         <p>{msg}</p>
         <img src={icoDuck} width="32px" alt="Duck..." />
@@ -70,13 +76,13 @@ class App extends Component {
     );
 
     this.renderLoadingComponent = () => (
-      <div className="appContent-loading">
+      <div className="appContent-loading" key="appContent-loading">
         <img src={icoLoading} width="52px" alt="Loading..." />
       </div>
     );
 
     this.renderBeginComponent = () => (
-      <div className="appContent-begin">
+      <div className="appContent-begin" key="appContent-begin">
         <img src={icoHen} width="88px" alt="Hen..." />
         <p>Enter the number of the stock to look up</p>
       </div>
@@ -92,17 +98,18 @@ class App extends Component {
   }
 
   render() {
-    let appContent = null;
+    let appContent = [];
     const { stockId, stockData, error, isLogin, allowLogin } = this.state;
     if (error) {
-      appContent = this.renderErrorComponent(error);
+      appContent.push(this.renderErrorComponent(error));
     } else if (stockId && !stockData) {
-      appContent = this.renderLoadingComponent();
+      appContent.push(this.renderLoadingComponent());
     } else if (stockId && stockData) {
       appContent = this.renderBoards(this.state);
     } else {
-      appContent = this.renderBeginComponent();
+      appContent.push(this.renderBeginComponent());
     }
+    appContent.push(<BookmarkBoard key="BookmarkBoard" show={this.state.showBookmarkBoard} />);
 
     return (
       <div className="app">

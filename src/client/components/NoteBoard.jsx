@@ -10,7 +10,7 @@ class noteBoard extends Component {
 
   render() {
     return (
-      <section className="noteBoard" key="noteBoard">
+      <section className="noteBoard">
         noteBoard
       </section>
     );
