@@ -4,18 +4,9 @@
   padding: 10px 0;
   background-color: #2185d0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   z-index: 1;
-}
-
-.mainBar-inputHolder {
-  width: 100%;
-  max-width: calc(var(--input-max-width));
-}
-
-.mainBar-input {
-  width: 100%;
 }
 
 .mainBar-input > i.search.icon {
@@ -36,23 +27,55 @@
   color: #fff;
 }
 
-@media only screen and (max-width: 800px) {
-  .mainBar-inputHolder {
-    width: calc(var(--input-max-width));
-    max-width: 100%;
+.mainBar::before,
+.mainBar::after {
+  content: ' ';
+  display: block;
+  flex: 1;
+}
+
+.mainBar-inputHolder,
+.mainBar-input {
+  width: calc(var(--input-max-width));
+}
+
+.mainBar-buttonsArea {
+  width: calc((100% - var(--input-max-width)) / 2);
+  position: absolute;
+  right: 0;
+}
+
+@media only screen and (max-width: $input-max-width + 160px) {
+  .mainBar-input {
+    width: calc(var(--input-max-width) * 0.88);
   }
 
-  .mainBar-input {
-    width: 88%;
+  .mainBar-buttonsArea {
+    width: calc(var(--input-max-width) * 0.12 + (100% - var(--input-max-width)) / 2);
   }
 }
 
-@media only screen and (max-width: $input-max-width + 10px) {
-  .mainBar {
-    padding-left: 6px;
+@media only screen and (max-width: $input-max-width + 130px) {
+  .mainBar::before {
+    flex: unset;
+    width: 6px;
+  }
+
+  .mainBar::after {
+    display: none;
+  }
+
+  .mainBar-inputHolder {
+    width: 66%;
   }
 
   .mainBar-input {
-    width: 80%;
+    width: 100%;
+  }
+
+  .mainBar-buttonsArea {
+    position: relative;
+    width: auto;
+    flex: 1
   }
 }
