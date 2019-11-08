@@ -100,8 +100,10 @@ class MainBar extends Component {
             onChange={this.onInputChange}
           />
         </section>
-        <Button className="mainBar-bookmarkBtn" icon="bookmark" />
-        { this.renderLoginButton() }
+        <section className="mainBar-buttonsArea">
+          <Button className="mainBar-bookmarkBtn" icon="bookmark" />
+          { this.renderLoginButton() }
+        </section>
       </div>
     );
   }
