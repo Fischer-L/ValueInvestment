@@ -17,10 +17,26 @@
 .bookmarkBoard-content {
   width: 80%;
   min-height: 100vh;
+  padding: 28px;
   background: #fff;
   position: absolute;
   right: 0;
 }
 
+.bookmark-item {
+  margin-bottom: 16px;
+}
+
+.bookmark-itemHeader {
+  margin-bottom: 6px;
+}
+
+.bookmark-itemLinks.ui.list {
+  padding-left: 0;
+}
+
 @media only screen and (max-width: $large-screen-width) {
+  .bookmarkBoard-content {
+    padding: 18px 8px;
+  }
 }

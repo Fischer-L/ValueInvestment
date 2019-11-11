@@ -16,13 +16,21 @@ class MainBar extends Component {
       this.setState({ stockId: e.target.value });
     };
 
-    this.onClick = async (e) => {
+    this.onClick = (e) => {
+      if (e.type === 'touchend') {
+        this._isTouchHandled = true;
+      }
+      if (e.type === 'click' && this._isTouchHandled) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      e.persist();
       const handlers = [ 'onClickBookmarkBtn', 'onRequestLogin', 'onRequestStockValue' ];
       let { target } = e;
-      e.persist();
       while (target) {
         for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
-          if (await this[handler](e, target)) return; // eslint-disable-line no-await-in-loop
+          if (this[handler](e, target)) return; // eslint-disable-line no-await-in-loop
         }
         if (target.classList.contains('mainBar')) {
           target = null;
@@ -46,7 +54,7 @@ class MainBar extends Component {
     return false;
   }
 
-  async onRequestLogin(e, target) {
+  onRequestLogin(e, target) {
     if (target.classList.contains('mainBar-loginBtn')) {
       this.fireEvent(e, 'onRequestLogin');
       return true;
