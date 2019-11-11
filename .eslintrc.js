@@ -3,12 +3,14 @@ module.exports = {
   "rules": {
     "max-len": "off",
     "no-console": "off",
+    "no-plusplus": "off",
     "default-case": "off",
     "no-fallthrough": "off",
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
     "no-case-declarations": "off",
     "object-curly-newline": "off",
+    "prefer-destructuring": "off",
     "prefer-arrow-callback": "off",
     "import/no-unresolved": "off",
     "array-bracket-spacing": "off",
@@ -21,6 +23,7 @@ module.exports = {
     "react/prefer-stateless-function": "warn",
     "react/jsx-one-expression-per-line": "off",
     "jsx-a11y/no-static-element-interactions": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
   },
   "env": {
     "browser": true,
