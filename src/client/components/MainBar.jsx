@@ -30,7 +30,7 @@ class MainBar extends Component {
       let { target } = e;
       while (target) {
         for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
-          if (this[handler](e, target)) return; // eslint-disable-line no-await-in-loop
+          if (this[handler](e, target)) return;
         }
         if (target.classList.contains('mainBar')) {
           target = null;

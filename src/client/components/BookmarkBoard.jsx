@@ -1,10 +1,91 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List } from 'semantic-ui-react';
+import { List, Icon, Input } from 'semantic-ui-react';
+
+import bookmarkProvider from '@/api/bookmarkProvider';
 
 import '@/css/BookmarkBoard.scss';
 
 class BookmarkBoard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      bookmarks: [],
+      bookmarkInputString: '',
+    };
+    this.populateBookmarks();
+
+    this.onClick = (e) => {
+      if (e.type === 'touchend') {
+        this._isTouchHandled = true;
+      }
+      if (e.type === 'click' && this._isTouchHandled) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      const handlers = [ 'onBookmarkStock', 'onClickRemoveBookmarkBtn' ];
+      const { target } = e;
+      e.persist();
+      for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
+        if (this[handler](e, target)) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+      }
+    };
+
+    this.onInputChange = (e) => {
+      this.setState({ bookmarkInputString: e.target.value });
+    };
+  }
+
+  onClickRemoveBookmarkBtn(e, target) {
+    if (target.classList.contains('bookmark-removeItemBtn')) {
+      bookmarkProvider.remove(e.target.dataset.id);
+      this.populateBookmarks();
+      return true;
+    }
+    return false;
+  }
+
+  onBookmarkStock(e, target) {
+    let submit = false;
+    switch (e.type) {
+      case 'click':
+      case 'touchend':
+        submit = target.classList.contains('save') && target.classList.contains('icon');
+        break;
+
+      case 'keypress':
+        submit = e.key.toLowerCase() === 'enter';
+        break;
+    }
+    if (!submit) return false;
+
+    const values = this.state.bookmarkInputString.trim().split(' ');
+    if (values.length > 1) {
+      const bookmarkPayload = {};
+      if (Number.isNaN(parseInt(values[1], 10))) {
+        bookmarkPayload.id = values[0];
+        bookmarkPayload.name = values[1];
+      } else {
+        bookmarkPayload.id = values[1];
+        bookmarkPayload.name = values[0];
+      }
+      bookmarkProvider.put(bookmarkPayload.id, bookmarkPayload);
+      this.populateBookmarks();
+    }
+    return true;
+  }
+
+  populateBookmarks() {
+    bookmarkProvider.toArray().then(bookmarks => this.setState({ bookmarks }));
+  }
+
   renderItemSaved(stock) {
     const nameEncoded = encodeURIComponent(stock.name);
     const urls = [
@@ -16,6 +97,7 @@ class BookmarkBoard extends Component {
     ];
     return (
       <List.Item className="bookmark-item" key={stock.id}>
+        <Icon className="bookmark-removeItemBtn" name="trash alternate" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
         <List.Header className="bookmark-itemHeader">{stock.name} {stock.id}</List.Header>
         <List className="bookmark-itemLinks" bulleted horizontal size="large">
           <List.Item as="a" target="_blank" href={urls[0]}>技術</List.Item>
@@ -37,14 +119,18 @@ class BookmarkBoard extends Component {
 
     return (
       <section className={className.join(' ')}>
+        <div className="bookmarkBoard-background" />
         <div className="bookmarkBoard-content">
-          { this.renderItemsSaved([
-            { id: 2317, name: '鴻海' },
-            { id: 2474, name: '可成' },
-            { id: 3227, name: '原相' },
-            { id: 2352, name: '佳世達' },
-            { id: 2492, name: '華新科' },
-          ]) }
+          <section className="bookmarkBoard-inputSection" onClick={this.onClick} onKeyPress={this.onClick}>
+            <Input
+              className="bookmarkBoard-input"
+              size="small"
+              icon="save"
+              placeholder="2330 台積電"
+              onChange={this.onInputChange}
+            />
+          </section>
+          { this.renderItemsSaved(this.state.bookmarks) }
         </div>
       </section>
     );

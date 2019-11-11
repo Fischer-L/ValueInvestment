@@ -2,9 +2,7 @@
 
 .bookmarkBoard {
   width: 100vw;
-  min-height: 100vh;
-  border-top: 1px solid #888;
-  background: rgba(0, 0, 0, 0.5);
+  height: 100vh;
   position: fixed;
   top: $main-bar-height;
   display: none;
@@ -14,8 +12,18 @@
   display: block;
 }
 
+.bookmarkBoard-background {
+  width: 100vw;
+  height: 100vh;
+  border-top: 1px solid #888;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .bookmarkBoard-content {
-  width: 80%;
+  width: 36%;
   min-height: 100vh;
   padding: 28px;
   background: #fff;
@@ -23,8 +31,32 @@
   right: 0;
 }
 
+.bookmarkBoard-inputSection {
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(34, 36, 38, 0.15)
+}
+
+.bookmarkBoard-inputSection,
+.bookmarkBoard-input {
+  width: 100%;
+}
+
+.bookmarkBoard-input > i.save.icon {
+  transform: scale(1.5);
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
 .bookmark-item {
   margin-bottom: 16px;
+  position: relative;
+}
+
+.bookmark-removeItemBtn {
+  position: absolute;
+  top: 6px;
+  right: 0;
+  cursor: pointer;
 }
 
 .bookmark-itemHeader {
@@ -37,6 +69,15 @@
 
 @media only screen and (max-width: $large-screen-width) {
   .bookmarkBoard-content {
+    width: 80%;
+  }
+
+  .bookmarkBoard-content {
     padding: 18px 8px;
+  }
+
+  .bookmark-removeItemBtn {
+    top: 3px;
+    right: 6px;
   }
 }
