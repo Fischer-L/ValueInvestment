@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button } from 'semantic-ui-react';
 
+import EventDispatcher from '@/components/subcomponents/EventDispatcher';
 import '@/css/MainBar.scss';
 
-class MainBar extends Component {
+class MainBar extends EventDispatcher {
   constructor(props) {
     super(props);
 
@@ -37,12 +38,6 @@ class MainBar extends Component {
         }
         target = target && target.parentElement;
       }
-    };
-
-    this.fireEvent = (e, name, payload) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.props.onEvent(name, payload);
     };
   }
 
@@ -120,7 +115,6 @@ class MainBar extends Component {
 MainBar.propTypes = {
   isLogin: PropTypes.bool,
   allowLogin: PropTypes.bool,
-  onEvent: PropTypes.func.isRequired,
 };
 
 export default MainBar;

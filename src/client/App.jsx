@@ -28,13 +28,13 @@ class App extends Component {
       allowLogin: loginManager.allowLogin(),
     };
 
-    this.onMainBarEvent = (name, payload) => {
+    this.onEvent = (name, payload) => {
       if (typeof this[name] === 'function') {
         this[name](payload);
       }
     };
 
-    this.onClickBookmarkBtn = () => {
+    this.onRequestCloseBookmark = this.onClickBookmarkBtn = () => {
       this.setState((prevState) => {
         const showBookmarkBoard = !prevState.showBookmarkBoard;
         document.body.style.overflow = showBookmarkBoard ? 'hidden' : '';
@@ -113,11 +113,11 @@ class App extends Component {
     } else {
       appContent.push(this.renderBeginComponent());
     }
-    appContent.push(<BookmarkBoard key="BookmarkBoard" show={this.state.showBookmarkBoard} />);
+    appContent.push(<BookmarkBoard key="BookmarkBoard" onEvent={this.onEvent} show={this.state.showBookmarkBoard} />);
 
     return (
       <div className="app">
-        <MainBar onEvent={this.onMainBarEvent} isLogin={isLogin} allowLogin={allowLogin} />
+        <MainBar onEvent={this.onEvent} isLogin={isLogin} allowLogin={allowLogin} />
         <section className="appContent">{appContent}</section>
       </div>
     );
