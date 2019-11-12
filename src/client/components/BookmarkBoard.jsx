@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Icon, Input } from 'semantic-ui-react';
 
 import bookmarkProvider from '@/api/bookmarkProvider';
 import StockLinks from '@/components/StockLinks';
+import EventDispatcher from '@/components/subcomponents/EventDispatcher';
 
 import '@/css/BookmarkBoard.scss';
 
-class BookmarkBoard extends Component {
+class BookmarkBoard extends EventDispatcher {
   constructor(props) {
     super(props);
 
@@ -27,7 +28,7 @@ class BookmarkBoard extends Component {
         return;
       }
 
-      const handlers = [ 'onBookmarkStock', 'onClickRemoveBookmarkBtn' ];
+      const handlers = [ 'onClickBakground', 'onBookmarkStock', 'onClickRemoveBookmarkBtn' ];
       const { target } = e;
       e.persist();
       for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
@@ -42,6 +43,14 @@ class BookmarkBoard extends Component {
     this.onInputChange = (e) => {
       this.setState({ bookmarkInputString: e.target.value });
     };
+  }
+
+  onClickBakground(e, target) {
+    if (target.classList.contains('bookmarkBoard-background')) {
+      this.fireEvent(e, 'onRequestCloseBookmark');
+      return true;
+    }
+    return false;
   }
 
   onClickRemoveBookmarkBtn(e, target) {
@@ -105,10 +114,10 @@ class BookmarkBoard extends Component {
     if (this.props.show) className.push('bookmarkBoard--show');
 
     return (
-      <section className={className.join(' ')}>
+      <section className={className.join(' ')} onClick={this.onClick} onKeyPress={this.onClick}>
         <div className="bookmarkBoard-background" />
         <div className="bookmarkBoard-content">
-          <section className="bookmarkBoard-inputSection" onClick={this.onClick} onKeyPress={this.onClick}>
+          <section className="bookmarkBoard-inputSection">
             <Input
               className="bookmarkBoard-input"
               size="small"

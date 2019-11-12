@@ -6,6 +6,8 @@ module.exports = {
     "no-plusplus": "off",
     "default-case": "off",
     "no-fallthrough": "off",
+    "no-multi-assign": "off",
+    "react/sort-comp": "off",
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
     "no-case-declarations": "off",
