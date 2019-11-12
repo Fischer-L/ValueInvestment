@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Header, List } from 'semantic-ui-react';
 import { round } from '@/utils/index';
 import { TableByYears, TableByDividends } from '@/components/Table';
+import StockLinks from '@/components/StockLinks';
 
 import '@/css/ValueBoard.scss';
 
@@ -53,13 +54,16 @@ class ValueBoard extends Component {
   }
 
   render() {
-    const { name, eps, price, netValue } = this.props.stockData;
+    const { id, name, eps, price, netValue } = this.props.stockData;
     const pricesByPE = this.calcPricesByPE();
     const pricesByPB = this.calcPricesByPB();
     const pricesByDividends = this.calcPricesByDividends();
     return (
       <section className="valueBoard">
-        <Header as="h2" dividing>{name} {this.props.stockId}</Header>
+        <Header as="h2" dividing>
+          <span className="valueBoard-stockTitle">{name} {this.props.stockId}</span>
+          <StockLinks stock={{ id, name }} className="valueBoard-stockLinks" />
+        </Header>
         <List horizontal size="big">
           <List.Item>
             <List.Header>Price</List.Header>{round(price)}

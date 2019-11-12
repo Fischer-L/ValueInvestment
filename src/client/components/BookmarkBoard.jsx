@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { List, Icon, Input } from 'semantic-ui-react';
 
 import bookmarkProvider from '@/api/bookmarkProvider';
+import StockLinks from '@/components/StockLinks';
 
 import '@/css/BookmarkBoard.scss';
 
@@ -87,27 +88,11 @@ class BookmarkBoard extends Component {
   }
 
   renderItemSaved(stock) {
-    const nameEncoded = encodeURIComponent(stock.name);
-    const urls = [
-      `https://www.wantgoo.com/stock/astock/techchart?stockno=${stock.id}`,
-      `https://goodinfo.tw/StockInfo/ShowBuySaleChart.asp?CHT_CAT=DATE&STOCK_ID=${stock.id}`,
-      `https://www.google.com/search?tbm=nws&q=${stock.id}+${nameEncoded}`,
-      `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${stock.id}+${nameEncoded}`,
-      `https://www.cmoney.tw/follow/channel/stock-${stock.id}`,
-      `https://www.google.com/search?tbs=qdr:w&q=${nameEncoded}+site:www.ptt.cc/bbs/Stock`,
-    ];
     return (
       <List.Item className="bookmark-item" key={stock.id}>
         <Icon className="bookmark-removeItemBtn" name="trash alternate" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
         <List.Header className="bookmark-itemHeader">{stock.name} {stock.id}</List.Header>
-        <List className="bookmark-itemLinks" bulleted horizontal size="large">
-          <List.Item as="a" target="_blank" href={urls[0]}>技術</List.Item>
-          <List.Item as="a" target="_blank" href={urls[1]}>籌碼</List.Item>
-          <List.Item as="a" target="_blank" href={urls[2]}>News</List.Item>
-          <List.Item as="a" target="_blank" href={urls[3]}>24hrs News</List.Item>
-          <List.Item as="a" target="_blank" href={urls[4]}>討論</List.Item>
-          <List.Item as="a" target="_blank" href={urls[5]}>Ptt</List.Item>
-        </List>
+        <StockLinks className="bookmark-itemLinks" stock={stock} />
       </List.Item>);
   }
 
