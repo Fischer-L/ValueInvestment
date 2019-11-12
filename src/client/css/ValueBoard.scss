@@ -4,6 +4,16 @@
   width: calc(var(--input-max-width) * 0.8);
 }
 
+.valueBoard-stockTitle {
+  margin-right: 18px;
+  display: inline-block;
+}
+
+.valueBoard-stockLinks.ui.list {
+  margin: 0;
+  font-weight: normal;
+}
+
 @media only screen and (max-width: $large-screen-width) {
   .valueBoard {
     width: calc(var(--input-max-width));
