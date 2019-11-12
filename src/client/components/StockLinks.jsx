@@ -24,8 +24,8 @@ class StockLinks extends Component {
     return [
       `https://www.wantgoo.com/stock/astock/techchart?stockno=${stock.id}`,
       `https://goodinfo.tw/StockInfo/ShowBuySaleChart.asp?CHT_CAT=DATE&STOCK_ID=${stock.id}`,
-      `https://www.google.com/search?tbm=nws&q=${stock.id}+${nameEncoded}`,
-      `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${stock.id}+${nameEncoded}`,
+      `https://www.google.com/search?tbm=nws&q=${nameEncoded}`,
+      `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${nameEncoded}`,
       `https://www.cmoney.tw/follow/channel/stock-${stock.id}`,
       `https://www.google.com/search?tbs=qdr:w&q=${nameEncoded}+site:www.ptt.cc/bbs/Stock`,
     ];
