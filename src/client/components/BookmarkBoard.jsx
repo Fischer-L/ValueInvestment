@@ -94,6 +94,7 @@ class BookmarkBoard extends Component {
       `https://www.google.com/search?tbm=nws&q=${stock.id}+${nameEncoded}`,
       `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${stock.id}+${nameEncoded}`,
       `https://www.cmoney.tw/follow/channel/stock-${stock.id}`,
+      `https://www.google.com/search?tbs=qdr:w&q=${nameEncoded}+site:www.ptt.cc/bbs/Stock`,
     ];
     return (
       <List.Item className="bookmark-item" key={stock.id}>
@@ -105,6 +106,7 @@ class BookmarkBoard extends Component {
           <List.Item as="a" target="_blank" href={urls[2]}>News</List.Item>
           <List.Item as="a" target="_blank" href={urls[3]}>24hrs News</List.Item>
           <List.Item as="a" target="_blank" href={urls[4]}>討論</List.Item>
+          <List.Item as="a" target="_blank" href={urls[5]}>Ptt</List.Item>
         </List>
       </List.Item>);
   }
