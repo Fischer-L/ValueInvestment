@@ -35,7 +35,11 @@ class App extends Component {
     };
 
     this.onClickBookmarkBtn = () => {
-      this.setState(prevState => ({ showBookmarkBoard: !prevState.showBookmarkBoard }));
+      this.setState((prevState) => {
+        const showBookmarkBoard = !prevState.showBookmarkBoard;
+        document.body.style.overflow = showBookmarkBoard ? 'hidden' : '';
+        return { showBookmarkBoard };
+      });
     };
 
     this.onRequestStockValue = async ({ stockId }) => {
