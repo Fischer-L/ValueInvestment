@@ -84,7 +84,7 @@ class App extends Component {
     this.renderBeginComponent = () => (
       <div className="appContent-begin" key="appContent-begin">
         <img src={icoHen} width="88px" alt="Hen..." />
-        <p>Enter the number of the stock to look up</p>
+        <p>Enter the id of the stock to look up</p>
       </div>
     );
 
