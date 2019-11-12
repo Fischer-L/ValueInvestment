@@ -97,7 +97,7 @@ class BookmarkBoard extends Component {
   }
 
   renderItemsSaved(stocks) {
-    return <List size="large">{ stocks.map(s => this.renderItemSaved(s)) }</List>;
+    return <List className="bookmark-list" size="large">{ stocks.map(s => this.renderItemSaved(s)) }</List>;
   }
 
   render() {
