@@ -70,6 +70,15 @@
 
 .bookmark-itemHeader {
   margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.bookmark-stockTitle {
+  margin-right: 6px;
+}
+
+.bookmark-lookupBtn {
+  transform: scale(0.9) translateY(1px);
 }
 
 .bookmark-itemLinks.ui.list {

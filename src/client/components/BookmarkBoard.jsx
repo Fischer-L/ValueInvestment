@@ -14,6 +14,7 @@ class BookmarkBoard extends EventDispatcher {
 
     this.state = {
       bookmarks: [],
+      stockIdToLookup: '',
       bookmarkInputString: '',
     };
     this.populateBookmarks();
@@ -28,7 +29,7 @@ class BookmarkBoard extends EventDispatcher {
         return;
       }
 
-      const handlers = [ 'onClickBakground', 'onBookmarkStock', 'onClickRemoveBookmarkBtn' ];
+      const handlers = [ 'onClickBakground', 'onBookmarkStock', 'onRequestLookupStock', 'onClickRemoveBookmarkBtn' ];
       const { target } = e;
       e.persist();
       for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
@@ -45,9 +46,27 @@ class BookmarkBoard extends EventDispatcher {
     };
   }
 
+  onAskForURLs({ urls }) {
+    this.setState({ stockIdToLookup: '' });
+    for (let i = urls.length - 1; i >= 0; --i) {
+      window.open(urls[i], '_blank');
+    }
+  }
+
+  onRequestLookupStock(e, target) {
+    if (target.classList.contains('bookmark-lookupBtn')) {
+      const stockId = e.target.dataset.id;
+      this.setState({ stockIdToLookup: stockId });
+      this.fireEvent('onRequestLookupStock', { stockId });
+      this.fireEvent('onRequestCloseBookmark');
+      return true;
+    }
+    return false;
+  }
+
   onClickBakground(e, target) {
     if (target.classList.contains('bookmarkBoard-background')) {
-      this.fireEvent(e, 'onRequestCloseBookmark');
+      this.fireEvent('onRequestCloseBookmark');
       return true;
     }
     return false;
@@ -97,11 +116,15 @@ class BookmarkBoard extends EventDispatcher {
   }
 
   renderItemSaved(stock) {
+    const onEvent = stock.id === this.state.stockIdToLookup ? this.onEvent : null;
     return (
       <List.Item className="bookmark-item" key={stock.id}>
         <Icon className="bookmark-removeItemBtn" name="trash alternate" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
-        <List.Header className="bookmark-itemHeader">{stock.name} {stock.id}</List.Header>
-        <StockLinks className="bookmark-itemLinks" stock={stock} />
+        <List.Header className="bookmark-itemHeader">
+          <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
+          <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
+        </List.Header>
+        <StockLinks className="bookmark-itemLinks" stock={stock} onEvent={onEvent} />
       </List.Item>);
   }
 

@@ -31,7 +31,11 @@ class MainBar extends EventDispatcher {
       let { target } = e;
       while (target) {
         for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
-          if (this[handler](e, target)) return;
+          if (this[handler](e, target)) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
         }
         if (target.classList.contains('mainBar')) {
           target = null;
@@ -43,7 +47,7 @@ class MainBar extends EventDispatcher {
 
   onClickBookmarkBtn(e, target) {
     if (target.classList.contains('mainBar-bookmarkBtn')) {
-      this.fireEvent(e, 'onClickBookmarkBtn');
+      this.fireEvent('onClickBookmarkBtn');
       return true;
     }
     return false;
@@ -51,7 +55,7 @@ class MainBar extends EventDispatcher {
 
   onRequestLogin(e, target) {
     if (target.classList.contains('mainBar-loginBtn')) {
-      this.fireEvent(e, 'onRequestLogin');
+      this.fireEvent('onRequestLogin');
       return true;
     }
     return false;
@@ -73,7 +77,7 @@ class MainBar extends EventDispatcher {
 
     const { stockId } = this.state;
     if (stockId) {
-      this.fireEvent(e, 'onRequestStockValue', { stockId });
+      this.fireEvent('onRequestStockValue', { stockId });
     }
     return true;
   }
