@@ -123,6 +123,7 @@ class BookmarkBoard extends EventDispatcher {
               size="small"
               icon="save"
               placeholder="2330 台積電"
+              value={this.state.bookmarkInputString}
               onChange={this.onInputChange}
             />
           </section>
@@ -130,6 +131,12 @@ class BookmarkBoard extends EventDispatcher {
         </div>
       </section>
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.show && !this.props.show) {
+      this.setState({ bookmarkInputString: '' });
+    }
   }
 }
 

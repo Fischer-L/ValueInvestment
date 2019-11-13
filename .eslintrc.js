@@ -21,6 +21,7 @@ module.exports = {
     "react/no-multi-comp": "off",
     "react/forbid-prop-types": "warn",
     "react/require-default-props": "off",
+    "react/no-did-update-set-state": "warn",
     "react/destructuring-assignment": "off",
     "react/prefer-stateless-function": "warn",
     "react/jsx-one-expression-per-line": "off",
