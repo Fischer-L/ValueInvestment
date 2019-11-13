@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import 'semantic-ui-css/semantic.min.css';
 import '@/css/App.scss';
@@ -8,6 +8,7 @@ import MainBar from '@/components/MainBar';
 import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoard from '@/components/BookmarkBoard';
+import EventDispatcher from '@/components/subcomponents/EventDispatcher';
 
 import icoDuck from '@/assets/ico_duck.jpg';
 import icoHen from '@/assets/ico_hen.svg';
@@ -15,7 +16,7 @@ import icoLoading from '@/assets/ico_loading.svg';
 
 const stockProvider = new StockProvider({ apiClient, domParser: new DOMParser() });
 
-class App extends Component {
+class App extends EventDispatcher {
   constructor(props) {
     super(props);
 
@@ -28,12 +29,6 @@ class App extends Component {
       allowLogin: loginManager.allowLogin(),
     };
 
-    this.onEvent = (name, payload) => {
-      if (typeof this[name] === 'function') {
-        this[name](payload);
-      }
-    };
-
     this.onRequestCloseBookmark = this.onClickBookmarkBtn = () => {
       this.setState((prevState) => {
         const showBookmarkBoard = !prevState.showBookmarkBoard;
@@ -42,7 +37,7 @@ class App extends Component {
       });
     };
 
-    this.onRequestStockValue = async ({ stockId }) => {
+    this.onRequestLookupStock = this.onRequestStockValue = async ({ stockId }) => {
       let noCache = false;
       if (stockId.toLowerCase().startsWith('n')) {
         noCache = true;
