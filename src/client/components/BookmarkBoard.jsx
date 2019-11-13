@@ -58,7 +58,6 @@ class BookmarkBoard extends EventDispatcher {
       const stockId = e.target.dataset.id;
       this.setState({ stockIdToLookup: stockId });
       this.fireEvent('onRequestLookupStock', { stockId });
-      this.fireEvent('onRequestCloseBookmark');
       return true;
     }
     return false;
