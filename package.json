@@ -93,6 +93,7 @@
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
     "font-awesome": "^4.7.0",
+    "mongodb": "^3.3.4",
     "prop-types": "^15.7.2",
     "react": "16.8.2",
     "react-dom": "16.8.2",

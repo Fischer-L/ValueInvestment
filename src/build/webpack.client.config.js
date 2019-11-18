@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // eslint-disab
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const TerserJSPlugin = require('terser-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const utils = require('./utils');
-const config = require('./config');
+const config = require('./config_server');
 
 const { resolve } = utils;
 const { env, port, publicDir } = config;

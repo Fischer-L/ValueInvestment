@@ -1,4 +1,4 @@
-const { env, LOGIN_CLIENT_KEY, LOGIN_CLIENT_VALUE } = require('../build/config');
+const { env, LOGIN_CLIENT_KEY, LOGIN_CLIENT_VALUE } = require('../build/config_server');
 const HTTP = require('./httpStatusCodes');
 
 const inProduction = env === 'production';
@@ -15,7 +15,6 @@ const LOGIN_CLIENT_COOKIE_OPTIONS = {
   secure: inProduction,
   sameSite: 'Strict',
 };
-
 
 const middlewares = {
   checkLogin(req, res, next) {

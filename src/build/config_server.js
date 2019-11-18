@@ -1,4 +1,5 @@
 const utils = require('./utils');
+const configClient = require('./config_client');
 
 // 'webpack-dev-svr': Run with the Webpack dev server in the dev mode
 // 'local-dev': Run with the local server in the dev mode
@@ -16,11 +17,16 @@ if (process.env.PORT) {
   port = process.env.PORT;
 }
 
+let DB_URL = process.env.MONGODB_URI;
+if (env === 'local-dev') {
+  DB_URL = require('./config_local').DB_URL; // eslint-disable-line global-require
+}
+
 module.exports = {
+  ...configClient,
   env,
   port,
   publicDir,
 
-  LOGIN_CLIENT_KEY: '__a6',
-  LOGIN_CLIENT_VALUE: '5j04284fu06',
+  DB_URL,
 };
