@@ -5,10 +5,9 @@ const cookieParser = require('cookie-parser');
 
 const { env, port, publicDir } = require('../build/config_server');
 const middlewares = require('./middlewares');
+// const { getCollection } = require('../db/mongo'); // TODO
 const CacheProvider = require('./cacheProvider');
 const stockProvider = require('./stockProvider')({ env, axios });
-
-const Mongo = require('./db/mongo'); // eslint-disable-line no-unused-vars
 
 const PUBLIC_DIR = publicDir;
 const PORT = port;
@@ -40,6 +39,11 @@ app.get('/stockdata/:id', async (req, res) => {
   }
   res.json(data);
 });
+
+// TODO:
+// app.get('/bookmarks', async () => {
+//   const bookmarks = await getCollection('bookmarks');
+// });
 
 app.post('/login', middlewares.login);
 app.get('/logout', middlewares.logout);
