@@ -24,12 +24,20 @@ describe('CacheProvider', () => {
     expect(cache.get(req)).toBeNull();
   });
 
-
   it('should invalidate cache', async () => {
     const maxAge = 9999;
     const req = fakeRequest();
     const cache = new CacheProvider({ maxAge, shouldInvalidateCache: () => true });
     cache.set(req, 1);
+    expect(cache.get(req)).toBeNull();
+  });
+
+  it('should remove cache', async () => {
+    const req = fakeRequest();
+    const cache = new CacheProvider();
+    cache.set(req, 1);
+    expect(cache.get(req)).toBe(1);
+    cache.remove(req);
     expect(cache.get(req)).toBeNull();
   });
 });

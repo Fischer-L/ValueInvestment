@@ -1,8 +1,16 @@
+const defaultOptions = {
+  maxAge: 20 * 60 * 1000, // 20 mins
+  shouldInvalidateCache: () => false,
+};
+
 class CacheProvider {
-  constructor({ maxAge, shouldInvalidateCache }) {
+  constructor(options = {}) {
     this._cache = {};
-    this._maxAge = maxAge;
-    this._shouldInvalidateCache = shouldInvalidateCache;
+    this._options = {
+      ...defaultOptions,
+      ...options,
+    };
+    this._maxAge = options.maxAge;
   }
 
   get(req) {
@@ -10,7 +18,7 @@ class CacheProvider {
     this._removeCacheIfExpired(key);
 
     let cache = this._cache[key];
-    if (cache && this._shouldInvalidateCache && this._shouldInvalidateCache(req)) {
+    if (cache && this._options.shouldInvalidateCache(req)) {
       cache = null;
       delete this._cache[key];
     }
@@ -26,8 +34,15 @@ class CacheProvider {
     this._scheduleCacheCleanUp();
   }
 
+  remove(req) {
+    const key = req.path;
+    delete this._cache[key];
+  }
+
   _scheduleCacheCleanUp() {
-    if (this._cleanUpTimer) return;
+    if (this._cleanUpTimer || this._maxAge < 0) {
+      return;
+    }
     this._cleanUpTimer = setTimeout(() => {
       const keys = Object.keys(this._cache);
       if (!keys.length) return;
