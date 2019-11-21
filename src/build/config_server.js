@@ -19,7 +19,8 @@ if (process.env.PORT) {
 
 let DB_URL = process.env.MONGODB_URI;
 if (env === 'local-dev') {
-  DB_URL = require('./config_local').DB_URL; // eslint-disable-line global-require
+  const configLocal = require('./config_local'); // eslint-disable-line global-require
+  DB_URL = configLocal.DB_URL;
 }
 
 module.exports = {

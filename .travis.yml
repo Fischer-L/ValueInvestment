@@ -11,9 +11,9 @@ install:
   - yarn install
 
 script:
-  - yarn build-prod
   - yarn lint
-  - yarn test
+  - ENV=production yarn test
+  - yarn build-prod
 
 deploy:
   skip_cleanup: true
