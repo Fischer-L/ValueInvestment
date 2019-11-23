@@ -1,29 +1,67 @@
-const bookmarkProvider = {
-  put(id, payload) {
-    id = String(id);
-    if (localStorage.getItem(id)) return;
-    localStorage.setItem(id, JSON.stringify(payload));
-  },
+import { apiClient } from '@/api/index';
 
-  remove(id) {
-    localStorage.removeItem(String(id));
-  },
-
-  toArray() {
-    const bookmarks = [];
-    for (let i = 0; i < localStorage.length; ++i) {
-      try {
-        const item = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        if (this._isBookmarkType(item)) {
-          bookmarks.push(item);
-        }
-      } catch (e) {} // eslint-disable-line no-empty
-    }
-    return Promise.resolve(bookmarks);
-  },
-
-  _isBookmarkType(payload) {
+function clearLegacyLocalStorage() {
+  function isBookmarkType(payload) {
     return Object.prototype.toString.call(payload) === '[object Object]' && payload.id && payload.name;
+  }
+  for (let i = 0; i < localStorage.length; ++i) {
+    try {
+      const item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      if (isBookmarkType(item)) {
+        localStorage.removeItem(item.id);
+      }
+    } catch (e) {} // eslint-disable-line no-empty
+  }
+  console.log('Done with clearLegacyLocalStorage');
+}
+clearLegacyLocalStorage();
+
+const bookmarkProvider = {
+
+  _bookmarks: null,
+
+  async _init() {
+    if (this._bookmarks) {
+      return;
+    }
+    try {
+      const { data } = await apiClient.get('/bookmarks');
+      this._bookmarks = data.reduce((bookmarks, item) => {
+        bookmarks[item.id] = item;
+        return bookmarks;
+      }, {});
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  async toArray() {
+    await this._init();
+    return Object.values(this._bookmarks);
+  },
+
+  async put(id, payload) {
+    await this._init();
+    if (!this._bookmarks[id]) {
+      try {
+        apiClient.post('/bookmarks', { payload: [ payload ] });
+      } catch (e) {
+        console.error(e);
+      }
+      this._bookmarks[id] = payload;
+    }
+  },
+
+  async remove(id) {
+    await this._init();
+    if (this._bookmarks[id]) {
+      try {
+        apiClient.delete('/bookmarks', { params: { ids: id } });
+      } catch (e) {
+        console.error(e);
+      }
+      delete this._bookmarks[id];
+    }
   },
 };
 
