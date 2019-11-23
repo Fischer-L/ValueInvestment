@@ -4,14 +4,16 @@ function clearLegacyLocalStorage() {
   function isBookmarkType(payload) {
     return Object.prototype.toString.call(payload) === '[object Object]' && payload.id && payload.name;
   }
+  const legacyBookmarks = [];
   for (let i = 0; i < localStorage.length; ++i) {
     try {
       const item = JSON.parse(localStorage.getItem(localStorage.key(i)));
       if (isBookmarkType(item)) {
-        localStorage.removeItem(item.id);
+        legacyBookmarks.push(item);
       }
     } catch (e) {} // eslint-disable-line no-empty
   }
+  legacyBookmarks.forEach(item => localStorage.removeItem(item.id));
   console.log('Done with clearLegacyLocalStorage');
 }
 clearLegacyLocalStorage();
