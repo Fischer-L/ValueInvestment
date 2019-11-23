@@ -43,7 +43,7 @@ class BookmarksCollection {
   async getAll() {
     try {
       const collection = await this.getCollection();
-      return collection.find({}).toArray();
+      return collection.find({}, { sort: { _id: 1 } }).toArray();
     } catch (e) {
       console.error(e);
       throw e;

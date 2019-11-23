@@ -73,8 +73,8 @@ class BookmarkBoard extends EventDispatcher {
 
   onClickRemoveBookmarkBtn(e, target) {
     if (target.classList.contains('bookmark-removeItemBtn')) {
-      bookmarkProvider.remove(e.target.dataset.id);
-      this.populateBookmarks();
+      bookmarkProvider.remove(e.target.dataset.id)
+        .then(() => this.populateBookmarks());
       return true;
     }
     return false;
@@ -104,8 +104,8 @@ class BookmarkBoard extends EventDispatcher {
         bookmarkPayload.id = values[1];
         bookmarkPayload.name = values[0];
       }
-      bookmarkProvider.put(bookmarkPayload.id, bookmarkPayload);
-      this.populateBookmarks();
+      bookmarkProvider.put(bookmarkPayload.id, bookmarkPayload)
+        .then(() => this.populateBookmarks());
     }
     return true;
   }
