@@ -5,14 +5,13 @@ const cookieParser = require('cookie-parser');
 
 const { env, port, publicDir } = require('../build/config_server');
 const middlewares = require('./middlewares');
-// const { getCollection } = require('../db/mongo'); // TODO
+const initBookmarksRoute = require('./routes/bookmarksRoute');
 const CacheProvider = require('./cacheProvider');
 const stockProvider = require('./stockProvider')({ env, axios });
 
 const PUBLIC_DIR = publicDir;
 const PORT = port;
-const cache = new CacheProvider({
-  maxAge: 20 * 60 * 1000, // 20 mins
+const stockdataCache = new CacheProvider({
   shouldInvalidateCache(req) {
     const { noCache } = req.query;
     return noCache ? noCache.toLowerCase() === 'true' : false;
@@ -32,18 +31,15 @@ app.use(express.static(PUBLIC_DIR, {
 }));
 
 app.get('/stockdata/:id', async (req, res) => {
-  let data = cache.get(req);
+  let data = stockdataCache.get(req);
   if (!data) {
     data = await stockProvider.get(req.params.id);
-    cache.set(req, data);
+    stockdataCache.set(req, data);
   }
   res.json(data);
 });
 
-// TODO:
-// app.get('/bookmarks', async () => {
-//   const bookmarks = await getCollection('bookmarks');
-// });
+initBookmarksRoute(app);
 
 app.post('/login', middlewares.login);
 app.get('/logout', middlewares.logout);

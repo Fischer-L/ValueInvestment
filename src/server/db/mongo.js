@@ -39,14 +39,16 @@ async function connectMongoDB() {
 
 async function getCollection(name) {
   const collection = collections[name];
-  if (collection === undefined) {
+  if (!collection) {
     throw new Error(`Access unknown collection of ${name}`);
   }
-  if (collection.instance) {
-    return collection.instance;
+  if (mongoClient && !mongoClient.isConnected()) {
+    collection.instance = null;
   }
-  const db = await connectMongoDB();
-  collection.instance = new collection.Clazz(db);
+  if (!collection.instance) {
+    const db = await connectMongoDB();
+    collection.instance = new collection.Clazz(db);
+  }
   return collection.instance;
 }
 

@@ -72,13 +72,13 @@ class BookmarksCollection {
     }
   }
 
-  async remove(bookmarks = []) {
-    if (bookmarks.length === 0) return;
+  async remove(ids = []) {
+    if (ids.length === 0) return;
 
     let result = null;
     try {
       const collection = await this.getCollection();
-      const queries = bookmarks.map(bookmark => ({ _id: bookmark.id }));
+      const queries = ids.map(id => ({ _id: id }));
       const queryCount = queries.length;
       if (queryCount === 1) {
         result = await collection.deleteOne(queries[0]);
