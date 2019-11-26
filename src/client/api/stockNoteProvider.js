@@ -9,23 +9,25 @@ const stockNoteProvider = {
   _createPromises: {},
   _ongoingPromises: {},
 
-  async create(data) {
-    if (!data || !data.id || !data.notes || data.notes.length === 0) {
-      throw new Error(`Cannot create an invalid stock note: ${JSON.stringify(data)}`);
+  async create(id, note) {
+    if (!id || !note) {
+      throw new Error(`Create a stock note with invalid id, note = ${id}, ${JSON.stringify(note)}`);
     }
 
-    const stockNote = await this.get(data.id);
-    if (this._createPromises[data.id] || stockNote) {
-      console.warn(`Double create stock note: ${JSON.stringify(data)}`);
-      return this._createPromises[data.id];
+    const stockNote = await this.get(id);
+    if (this._createPromises[id] || stockNote) {
+      console.warn(`Double create stock note: ${id}`);
+      return this._createPromises[id];
     }
+
     try {
-      data = clone(data);
-      data.notes.sort((a, b) => b.createTime - a.createTime);
-      this._createPromises[data.id] = apiClient.put('/stocknote', { payload: data });
-      await this._createPromises[data.id].then(() => {
-        this._stockNotes[data.id] = data;
-      });
+      const payload = {
+        id,
+        notes: [{ ...clone(note), createTime: Date.now() }],
+      };
+      this._createPromises[id] = apiClient.put('/stocknote', { payload });
+      await this._createPromises[id];
+      this._stockNotes[id] = payload;
     } catch (e) {
       console.error(e);
     }

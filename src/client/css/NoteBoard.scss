@@ -1,15 +1,58 @@
 @import './Variables.scss';
 
 .noteBoard {
+  height: 100vh;
+  overflow: auto;
   flex: 1;
   margin-left: 66px;
 }
 
+.noteBoard-addBtn.large.icon {
+  transform: scale(0.88);
+  cursor: pointer;
+  float: right;
+}
+
+.note-header.ui.header {
+  margin-top: 36px;
+  position: relative;
+}
+
+.note-header.ui.header:first-child {
+  margin-top: 0;
+}
+
+.note-date.ui.tag.label {
+  position: absolute;
+  right: 6px;
+  top: 8px;
+}
+
 @media only screen and (max-width: $large-screen-width) {
   .noteBoard {
+    overflow: visible;
     width: calc(var(--input-max-width));
     max-width: 100%;
     margin-top: 66px;
     margin-left: 0;
   }
+}
+
+.note {
+  padding-bottom: 36px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+.note:first-child {
+  padding-bottom: 18px;
+}
+
+.note-pararaph--editMode {
+  width: 100%;
+  padding: 6px;
+}
+
+.noteBoard-editModeBtns.ui.buttons {
+  float: right;
 }
