@@ -1,6 +1,6 @@
 import axios from 'axios';
 import loginManager from './loginManager';
-import StockProvider from './StockProvider';
+import getStockProvider from './StockProvider';
 
 const apiClient = axios.create({
   baseURL: window.location.origin,
@@ -10,5 +10,5 @@ const apiClient = axios.create({
 export {
   apiClient,
   loginManager,
-  StockProvider,
+  getStockProvider,
 };

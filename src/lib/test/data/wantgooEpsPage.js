@@ -1696,5 +1696,5 @@ const HTML = `
         SetSubMenuFlag("財報股利", "基本財報", "每股盈餘");
     </script>
      
-`
+`;
 export default HTML;

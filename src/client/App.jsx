@@ -3,7 +3,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import '@/css/App.scss';
 
-import { apiClient, StockProvider, loginManager } from '@/api/index';
+import { apiClient, loginManager, getStockProvider } from '@/api/index';
 import MainBar from '@/components/MainBar';
 import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
@@ -14,7 +14,7 @@ import icoDuck from '@/assets/ico_duck.jpg';
 import icoHen from '@/assets/ico_hen.svg';
 import icoLoading from '@/assets/ico_loading.svg';
 
-const stockProvider = new StockProvider({ apiClient, domParser: new DOMParser() });
+const stockProvider = getStockProvider({ apiClient, domParser: new DOMParser() });
 
 class App extends EventDispatcher {
   constructor(props) {
