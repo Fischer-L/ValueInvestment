@@ -5,6 +5,7 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 COPY public public
+COPY src/lib src/lib
 COPY src/build src/build
 COPY src/server src/server
 
