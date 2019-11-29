@@ -2,7 +2,7 @@ const utils = require('./utils');
 const configClient = require('./config_client');
 
 // 'local-dev': Run with the local server in the dev mode
-// 'docker-dev': Run with the docker server in the dev mode
+// 'docker-test': Run with the docker server in the test mode
 // 'production': Run in the priduction mode
 const env = process.env.ENV || 'local-dev';
 

@@ -14,6 +14,8 @@ script:
   - yarn lint
   - ENV=production yarn test
   - yarn build-prod
+  - yarn docker-run-test
+  - yarn docker-stop-test
 
 deploy:
   skip_cleanup: true
