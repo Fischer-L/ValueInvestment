@@ -1,4 +1,4 @@
-FROM node:10.15.1-alpine
+FROM node:10.15.1-alpine AS base
 
 RUN mkdir -p /app
 WORKDIR /app
@@ -6,6 +6,9 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 COPY src src
 COPY public public
+
+
+FROM base AS production
 
 RUN rm -r src/client && yarn install --production --pure-lockfile && yarn cache clean
 

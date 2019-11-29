@@ -16,7 +16,7 @@
     "build-prod": "yarn clean; ENV=production webpack --config src/build/webpack.client.config.js",
     "build-docker-dev": "yarn clean && ENV=docker-dev webpack --config src/build/webpack.client.config.js",
     "run-svr": "nodemon ./src/server/server.js",
-    "docker-run-dev": "yarn docker-stop-dev; docker image rm local/value-investment:dev; yarn build-docker-dev && docker build --build-arg arg_env=docker-dev --force-rm -t local/value-investment:dev .; docker run -p 9000:9000 --name value-investment local/value-investment:dev",
+    "docker-run-dev": "yarn docker-stop-dev; docker image rm local/value-investment:dev; yarn build-docker-dev && docker build --target production --build-arg arg_env=docker-dev --force-rm -t local/value-investment:dev .; docker run -p 9000:9000 --name value-investment local/value-investment:dev",
     "docker-stop-dev": "docker stop value-investment; docker container rm value-investment"
   },
   "devDependencies": {

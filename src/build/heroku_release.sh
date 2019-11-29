@@ -2,7 +2,7 @@
 
 echo "$HEROKU_API_KEY" | docker login -u "$HEROKU_USERNAME" --password-stdin "$HEROKU_REGISTRY"
 
-docker build --force-rm -t registry.heroku.com/value-investment/web:latest .
+docker build --target production --force-rm -t registry.heroku.com/value-investment/web:latest .
 docker push registry.heroku.com/value-investment/web:latest
 
 image_id=$(docker inspect registry.heroku.com/value-investment/web:latest --format={{.Id}})
