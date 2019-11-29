@@ -6,7 +6,7 @@ const utils = require('./utils');
 const config = require('./config_server');
 
 const { resolve } = utils;
-const { env, port, publicDir } = config;
+const { env, publicDir } = config;
 
 const webpackConfig = {
   mode: env === 'production' ? 'production' : 'development',
@@ -113,17 +113,6 @@ switch (env) {
     webpackConfig.watchOptions = {
       aggregateTimeout: 50,
       ignored: /node_modules/,
-    };
-    break;
-
-  case 'webpack-dev-svr':
-    webpackConfig.devServer = {
-      port,
-      publicPath: `http://localhost:${port}`,
-      contentBase: publicDir,
-      watchContentBase: true,
-      // Workaround for https://github.com/webpack/webpack-dev-server/issues/1604
-      disableHostCheck: true,
     };
     break;
 }
