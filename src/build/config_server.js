@@ -1,7 +1,6 @@
 const utils = require('./utils');
 const configClient = require('./config_client');
 
-// 'webpack-dev-svr': Run with the Webpack dev server in the dev mode
 // 'local-dev': Run with the local server in the dev mode
 // 'docker-dev': Run with the docker server in the dev mode
 // 'production': Run in the priduction mode
