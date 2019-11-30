@@ -1,4 +1,5 @@
 const HTML = `
+<!-- wantgooPbPage -->
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -14,50 +15,6 @@ const HTML = `
     <meta property="og:site_name" content="玩股網" />
     <meta name="description" content="台積電(2330)股價淨值比分析，提供股價淨值比與每月收盤價比較，包含每月的股價淨值比等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
     <meta property="og:description" content="台積電(2330)股價淨值比分析，提供股價淨值比與每月收盤價比較，包含每月的股價淨值比等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
-    <link rel="canonical" href="https://www.wantgoo.com/stock/report/value?stockno=2330&types=2">
-
-
-
-<link rel='stylesheet' type='text/css' href='/dynamicfiles/common/css/shared_allwebsite.css?versionParams=2019-0329-003'>
-<link rel='stylesheet' type='text/css' href='/css/twstock/twstock.css?versionParams=2019-0329-003'>
-
-
-
-<script type='text/javascript' src='/dynamicfiles/common/js/shared_allwebsite.js?versionParams=2019-0329-003'></script>
-
-<script type='text/javascript'>var facebookPixelCode = '216968031982114';</script>
-<script type='text/javascript' src='/js/facebook/FacebookPixelCode.js'></script>
-<noscript><img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=216968031982114&ev=PageView&noscript=1' /></noscript>
-
-
-
-
-    <script src="/js/highCharts/stock/highstock.js"></script>
-    <script src="/js/highCharts/stock/modules/exporting.js"></script>
-    <script>
-    var _DATA = ["[1199145600000,3.16],[1201824000000,3.25],[1204329600000,3.42],[1207008000000,3.36],[1209600000000,3.3],[1212278400000,3.27],[1214870400000,2.89],[1217548800000,3.47],[1220227200000,3.1],[1222819200000,2.69],[1225497600000,2.29],[1228089600000,2.49],[1230768000000,2.23],[1233446400000,2.49],[1235865600000,2.76],[1238544000000,2.97],[1241136000000,3.21],[1243814400000,2.91],[1246406400000,3.13],[1249084800000,3.53],[1251763200000,3.85],[1254355200000,3.36],[1257033600000,3.42],[1259625600000,3.58],[1262304000000,3.44],[1264982400000,3.08],[1267401600000,3.22],[1270080000000,3.03],[1272672000000,2.95],[1275350400000,2.97],[1277942400000,3.06],[1280620800000,3.1],[1283299200000,3.26],[1285891200000,3.03],[1288569600000,3.06],[1291161600000,3.43],[1293840000000,3.68],[1296518400000,3.4],[1298937600000,3.41],[1301616000000,3.3],[1304208000000,3.27],[1306886400000,3.08],[1309478400000,3.07],[1312156800000,3.19],[1314835200000,3.22],[1317427200000,3.19],[1320105600000,3.23],[1322697600000,3.28],[1325376000000,3.4],[1328054400000,3.51],[1330560000000,3.49],[1333238400000,3.4],[1335830400000,3.34],[1338508800000,3.19],[1341100800000,3.18],[1343779200000,3.44],[1346457600000,3.71],[1349049600000,3.41],[1351728000000,3.79],[1354320000000,3.73],[1356998400000,3.9],[1359676800000,3.75],[1362096000000,3.6],[1364774400000,3.92],[1367366400000,3.71],[1370044800000,3.76],[1372636800000,3.47],[1375315200000,3.49],[1377993600000,3.49],[1380585600000,3.81],[1383264000000,3.39],[1385856000000,3.4],[1388534400000,3.39],[1391212800000,3.3],[1393632000000,3.62],[1396310400000,3.62],[1398902400000,3.45],[1401580800000,3.65],[1404172800000,3.5],[1406851200000,3.67],[1409529600000,3.55],[1412121600000,3.86],[1414800000000,3.84],[1417392000000,3.82],[1420070400000,3.82],[1422748800000,3.73],[1425168000000,3.61],[1427846400000,3.65],[1430438400000,3.37],[1433116800000,3.24],[1435708800000,3.22],[1438387200000,3.14],[1441065600000,3.16],[1443657600000,3.32],[1446336000000,3.13],[1448928000000,3.22],[1451606400000,3.2],[1454284800000,3.16],[1456790400000,3.44],[1459468800000,3.18],[1462060800000,3.17],[1464739200000,3.29],[1467331200000,3.49],[1470009600000,3.81],[1472688000000,3.96],[1475280000000,4.09],[1477958400000,3.7],[1480550400000,3.67],[1483228800000,3.75],[1485907200000,3.53],[1488326400000,3.53],[1491004800000,3.63],[1493596800000,3.62],[1496275200000,3.71],[1498867200000,3.82],[1501545600000,4.18],[1504224000000,4.18],[1506816000000,4.7],[1509494400000,4.1],[1512086400000,4.16],[1514764800000,4.62],[1517443200000,4.19],[1519862400000,4.22],[1522540800000,3.87],[1525132800000,3.62],[1527811200000,3.5],[1530403200000,3.97],[1533081600000,4.46],[1535760000000,4.57],[1538352000000,4.07],[1541030400000,3.71],[1543622400000,3.71],[1546300800000,3.64],[1548979200000,3.7],[1551398400000,3.8],[1554076800000,3.81]"];
-    var _ClosePrice = [[1136073600000,63.5],[1138752000000,60.9],[1141171200000,64.2],[1143849600000,68.1],[1146441600000,60.3],[1149120000000,58.4],[1151712000000,54.8],[1154390400000,58.1],[1157068800000,59.7],[1159660800000,61],[1162339200000,65.5],[1164931200000,67.5],[1167609600000,67.4],[1170288000000,69.3],[1172707200000,67.9],[1175385600000,68.7],[1177977600000,68.2],[1180656000000,70.9],[1183248000000,65],[1185926400000,62.7],[1188604800000,63.3],[1191196800000,63.8],[1193875200000,60.6],[1196467200000,62],[1199145600000,59.9],[1201824000000,61.6],[1204329600000,63.1],[1207008000000,66.7],[1209600000000,65.6],[1212278400000,65],[1214870400000,56.2],[1217548800000,58.9],[1220227200000,52.5],[1222819200000,48],[1225497600000,40.8],[1228089600000,44.4],[1230768000000,40.2],[1233446400000,44.95],[1235865600000,51.4],[1238544000000,55.2],[1241136000000,60.4],[1243814400000,54.7],[1246406400000,58.9],[1249084800000,59.2],[1251763200000,64.5],[1254355200000,60],[1257033600000,61.1],[1259625600000,64.5],[1262304000000,61.5],[1264982400000,58.8],[1267401600000,61.5],[1270080000000,61.8],[1272672000000,60.2],[1275350400000,60.6],[1277942400000,62.4],[1280620800000,58.9],[1283299200000,62],[1285891200000,62.8],[1288569600000,63.4],[1291161600000,71],[1293840000000,76.3],[1296518400000,70.5],[1298937600000,70.6],[1301616000000,73.2],[1304208000000,76.7],[1306886400000,72.2],[1309478400000,72],[1312156800000,69.4],[1314835200000,70],[1317427200000,73.6],[1320105600000,74.6],[1322697600000,75.8],[1325376000000,78.5],[1328054400000,81.1],[1330560000000,84.9],[1333238400000,86.8],[1335830400000,85.1],[1338508800000,81.3],[1341100800000,81],[1343779200000,83.3],[1346457600000,89.8],[1349049600000,88.7],[1351728000000,98.7],[1354320000000,97],[1356998400000,101.5],[1359676800000,104.5],[1362096000000,100.5],[1364774400000,109.5],[1367366400000,109.5],[1370044800000,111],[1372636800000,102.5],[1375315200000,100.5],[1377993600000,100.5],[1380585600000,109.5],[1383264000000,105],[1385856000000,105.5],[1388534400000,108],[1391212800000,108],[1393632000000,118.5],[1396310400000,118.5],[1398902400000,119.5],[1401580800000,126.5],[1404172800000,121],[1406851200000,124],[1409529600000,120],[1412121600000,130.5],[1414800000000,141.5],[1417392000000,141],[1420070400000,141],[1422748800000,150.5],[1425168000000,145.5],[1427846400000,147],[1430438400000,146],[1433116800000,140.5],[1435708800000,139.5],[1438387200000,129],[1441065600000,130],[1443657600000,136.5],[1446336000000,139],[1448928000000,143],[1451606400000,142],[1454284800000,149],[1456790400000,162],[1459468800000,150],[1462060800000,156.5],[1464739200000,162.5],[1467331200000,172.5],[1470009600000,176],[1472688000000,182.5],[1475280000000,188.5],[1477958400000,183],[1480550400000,181.5],[1483228800000,185.5],[1485907200000,189],[1488326400000,189],[1491004800000,194.5],[1493596800000,203],[1496275200000,208.5],[1498867200000,214.5],[1501545600000,216.5],[1504224000000,216.5],[1506816000000,243],[1509494400000,226],[1512086400000,229.5],[1514764800000,255],[1517443200000,246],[1519862400000,247.5],[1522540800000,227],[1525132800000,224],[1527811200000,216.5],[1530403200000,246],[1533081600000,256],[1535760000000,262.5],[1538352000000,234],[1541030400000,225.5],[1543622400000,225.5],[1546300800000,221],[1548979200000,239],[1551398400000,245.5],[1554076800000,253]];
-    var _name = '股價淨值比';
-        $(function () {
-            var types= 2;
-            $('.ic-ask').fancybox({
-                title: '',
-                href: '#explain_' + types
-            });
-        });
-    </script>
-
-<!-- Hotjar Tracking Code for https://www.wantgoo.com/ -->
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:827061,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
 
 </head>
 <body>
@@ -104,14 +61,7 @@ const HTML = `
 <a href='/stock/5871' title='中租-KY,5871,134.00,▲ 5 (3.88%),短線▲,長線▲,up' target='_blank'> 中租-KY,5871 </a>
 <a href='/stock/8436' title='大江,8436,432.00,▲ 16 (3.85%),短線▲,長線▼,up' target='_blank'> 大江,8436 </a>
 <a href='/stock/3105' title='穩懋,3105,219.50,▲ 14.5 (7.07%),短線--,長線▲,up' target='_blank'> 穩懋,3105 </a>
-            </div><!-- hot-stock:end -->
-
-            <script type="text/javascript">
-                // for **** js/masterPage.js => function SearchStock(stockNo)
-                var urlStockPage = "/stock/";
-                var domain_API_Stock2 = "https://api.wantgoo.com";
-                var domain_Web_Stock2 = "https://www.wantgoo.com";
-            </script>
+            </div>
             <div class="search-bar-inner">
                 <div class="select-box">
                     <select id="ddlSearchItems" name="" class="select">
@@ -125,32 +75,12 @@ const HTML = `
         </div><!-- search-bar:end -->
 
         <ul class="adWords">
-
-
-
 <li id='HeaderTextAd_2'><a href='https://www.wantgoo.com/laojiao/project/4'>台指當沖策略讓你先偷看</a></li>
 <li id='HeaderTextAd_7'><a href='https://www.wantgoo.com/laojiao/project/8'>教你如何操作美股</a></li>
 <li id='HeaderTextAd_8'><a href='http://bit.ly/2JwFQxx'>每天三分鐘做完股市功課</a></li>
 <li id='HeaderTextAd_3'><a href='http://bit.ly/2Juazv7'>免費試用客製化選股工具</a></li>
         </ul>
-    </div><!-- head:end -->
-
-    <script type='text/javascript'>
-        var googletag = googletag || {};
-        googletag.cmd = googletag.cmd || [];
-        (function () {
-            var gads = document.createElement('script');
-            gads.async = true;
-            gads.type = 'text/javascript';
-            var useSSL = 'https:' == document.location.protocol;
-            gads.src = (useSSL ? 'https:' : 'http:') +
-                '//www.googletagservices.com/tag/js/gpt.js';
-            var node = document.getElementsByTagName('script')[0];
-            node.parentNode.insertBefore(gads, node);
-        })();
-    </script>
-
-
+    </div>
 </header>
 
 <nav id="navigation">
@@ -414,34 +344,7 @@ const HTML = `
             </li>
         </ul>
     </div><!-- nav-box:end -->
-</nav><!-- navigation:end -->
-<script src="/scripts/jquery.signalr-2.2.2.min.js"></script>
-<script src="/signalr/hubs"></script>
-<script type="text/javascript">
-    var url = location.href;
-    var pattern = "(?<=.com).*";
-    var pathRegx = new RegExp(pattern);
-    var matchPath = pathRegx.exec(url);
-
-    $("a[href='" + matchPath + "']").parents("li").addClass("curt");
-
-    if (isMobile()) {
-        $("#navigation > div > ul > li > a").each(function () { $(this).attr("href", "javascript:;") });
-    };
-
-    if (window.jQuery && /\bUserName\b=[^;]+;/.test(document.cookie)) {
-        var webNotificationScript = document.createElement("script");
-
-        webNotificationScript.src = "/js/web-notification.js?v=636534226872643993";
-
-        document.body.appendChild(webNotificationScript);
-    }
-
-    $(function () {
-        LoadUserPanel();
-    });
-</script>
-
+</nav>
 
 <div id="container" class="clearfix">
 
@@ -548,16 +451,7 @@ const HTML = `
         <h4 class="tit">您已成功加入自選股。</h4>
         <div class="mt-x2"><button class="btn" onclick="jQuery.fancybox.close();">關閉視窗</button><button class="btn" id="goMySelectBtn">前往自選股</button></div>
     </div><!-- optional-mesg:end -->
-</div><!-- optional-ok:end -->
-
-<script type='text/javascript' src='/js/stock/MySelectAdd.js'></script>
-
-
-
-
-
-
-
+</div>
 <div class="hd bg-linear mb-x1 mt-neg">
     <ul class="sub-menu dd-menu">
         <li class="curts"><a href="/stock/2330">即時行情</a></li>
@@ -651,161 +545,7 @@ const HTML = `
     <div id="mainCol">
         <h1 class="heading">台積電(2330)股價淨值比</h1>
             <div id="chart" class="wChart mb-x1"></div><!-- chartValueCdy:end -->
-            <script>
-    var _ChartIDName = 'chart';
-    var _ChartHeight = 320;
-    var _Title = '台積電(2330)';
-    var _Subtitle = '股價淨值比' + '與月收盤價比較';
-                var _LineWidth = 2;
-                var _Function = function () {
-                    var p = '';
-                    var unit = '倍';
-                    var decimal = 2;
-                    if (this.point) {
-                        p += '<span>' + Highcharts.dateFormat('%Y/%m', this.point.x) + '</span><br/>';
-                        p += this.point.config.text;
-                    }
-                    else {
-                        p += '<span>' + Highcharts.dateFormat('%Y/%m', this.x) + '</span><br/>';
-                        $.each(this.points, function (i, series) {
 
-                            if (this.series.name == '月收盤價') {
-                                unit = '元';
-                                decimal = 1;
-                            }
-
-                            p += '<span style="color:' + this.series.color + '">' + this.series.name +
-                            '</span> : <span>' + Highcharts.numberFormat(this.y, decimal, '.', ',') + ' ' + unit + '</span><br/>';
-                        });
-                    }
-                    return p;
-                };
-            </script>
-            <script>
-                var chart;
-                $(function () {
-                    chart = new Highcharts.StockChart({
-                        chart: {
-                            renderTo: _ChartIDName,
-                            alignTicks: false,
-                            animation: false,
-                            height: _ChartHeight,
-                            spacing: [62, 20, 20, 20],
-                            borderWidth: 1,
-                            borderColor: '#e3e3e3',
-                            plotBackgroundColor: '#ffffff',
-                            backgroundColor: {
-                                linearGradient: [0, 0, 0, 500],
-                                stops: [
-                                    [0, 'rgb(255, 255, 255)'],
-                                    [1, 'rgb(245, 245, 245)']
-                                ]
-                            },
-                            style: { fontSize: '14px', fontFamily: 'Arial, sans-serif' }
-                        },
-                        credits: {
-                            text: '© WantGoo玩股網',
-                            href: '/',
-                            position: { verticalAlign: 'top', y: 30, x: -20 },
-                            style: { fontSize: '15px' }
-                        },
-                        legend: {
-                            enabled: true,
-                            padding: 0,
-                            itemStyle: { fontSize: '14px', fontWeight: 'normal', color: '#444444' }
-                        },
-                        scrollbar: {
-                            enabled: false
-                        },
-                        rangeSelector: {
-                            enabled: false,
-                            inputEnabled: false
-                        },
-                        navigator: {
-                            enabled: false
-                        },
-                        exporting: {
-                            enabled: false
-                        },
-                        title: {
-                            text: _Title,
-                            verticalAlign: 'top',
-                            y: -35
-                        },
-                        subtitle: {
-                            text: _Subtitle,
-                            verticalAlign: 'top',
-                            y: -14
-                        },
-                        plotOptions: {
-                            column: {
-                                animation: false
-                            },
-                            line: {
-                                lineWidth: _LineWidth,
-                                marker: {
-                                    enabled: false,
-                                    states: { hover: { enabled: true, radius: 4 } }
-                                }
-                            },
-                            series: {
-                                events: {
-                                    legendItemClick: function () {
-                                        return false;
-                                    }
-                                }
-                            }
-                        },
-                        xAxis: {
-                            tickPixelInterval: 200,
-                            type: 'datetime',
-                            labels: {
-                                formatter: function () { return Highcharts.dateFormat('%Y/%m', this.value); },
-                                style: { fontSize: '13px', color: '#888888' }
-                            }
-                        },
-                        yAxis: [{
-                            title: { text: '' },
-                            gridLineWidth: 1,
-                            opposite: false,
-                            offset: -8,
-                            gridLineColor: '#eeeeee',
-                            labels: {
-                                formatter: function () { return Highcharts.numberFormat(this.value, 0, '.', ',') + '%' },
-                                style: { fontSize: '13px', color: '#888888' }
-                            }
-                        }, {
-                            title: { text: '' },
-                            gridLineWidth: 0,
-
-                            offset: -8,
-                            gridLineColor: '#eeeeee',
-                            labels: {
-                                style: { fontSize: '13px', color: '#888888' }
-                            }
-                        }],
-                        tooltip: {
-                            backgroundColor: 'rgba(20, 20, 20, 0.8)',
-                            borderColor: '#222222',
-                            borderRadius: 10,
-                            borderWidth: 1,
-                            shared: true,
-                            style: { fontSize: '13px', color: '#ffffff' },
-                            formatter: _Function
-                        },
-                        series: [{
-                            name: _name,
-                            data: JSON.parse("[" + _DATA + "]"),
-                            color: '#e84b42'
-                        }, {
-                            name: '月收盤價',
-                            data: _ClosePrice,
-                            color: '#6fc4c1',
-                            yAxis: 1
-                        }]
-                    });
-                });
-            </script>
             <div id="explain_1" class="explain">
                 <h2>本益比</h2>
                 <p>
@@ -1707,11 +1447,7 @@ const HTML = `
 
 
         <div class="WantgooAdv adsbox ads300x250" name="300x250台股右上" id="a19f72f2-7243-4ce3-ad5d-bf7db5d70b6b">
-            <p><script type='text/javascript'>   googletag.cmd.push(function() {     googletag.defineSlot('/15927178/wantgoo_stock_300x250_RT', [300, 250], 'div-gpt-ad-1455863165086-0').addService(googletag.pubads());     googletag.pubads().enableSingleRequest();     googletag.enableServices();   }); </script><!-- /15927178/wantgoo_stock_300x250_RT --> <div id='div-gpt-ad-1455863165086-0' style='height:250px; width:300px;'> <script type='text/javascript'> googletag.cmd.push(function() { googletag.display('div-gpt-ad-1455863165086-0'); }); </script> </div></p>
         </div>
-
-
-
 
     <div class="sd-classstk  br-t">
 
@@ -1827,11 +1563,7 @@ const HTML = `
 
 
         <div class="WantgooAdv adsbox ads300x250" name="300x250個股右下" id="a7f3528c-b5ec-4096-8271-efabac2e6b04">
-            <p><script type='text/javascript'>   googletag.cmd.push(function() {     googletag.defineSlot('/15927178/wantgoo_share_300x250_RB', [300, 250], 'div-gpt-ad-1455863274338-0').addService(googletag.pubads());     googletag.pubads().enableSingleRequest();     googletag.enableServices();   }); </script><!-- /15927178/wantgoo_share_300x250_RB --> <div id='div-gpt-ad-1455863274338-0' style='height:250px; width:300px;'> <script type='text/javascript'> googletag.cmd.push(function() { googletag.display('div-gpt-ad-1455863274338-0'); }); </script> </div></p>
         </div>
-
-
-
 
     <div class="sd-kindstk">
 
@@ -2206,71 +1938,17 @@ const HTML = `
         <span>沒有帳號？<a href="/login/auth/register_normal?returnUrl=https://www.wantgoo.com/stock/report/value?types=1&amp;stockno=2330">免費註冊</a></span>
     </div>
 </form>
-
-
-<script type="text/javascript">
-    afterFacebookLoginFullSucceed_Url = "https://api.wantgoo.com/auth/login/apilogin_facebookid_nocookie_fornewweb";
-    $(function () {
-        // request to set scrollTop
-        reqSetScrollTop();
-        // 全站共用 Head 登入按鈕，套用燈箱UI
-        loadLogInUI("#aLogin");
-    });
-</script>
-
-
-
-<!-- 線上客服 begin olark code -->
-<script data-cfasync="false" src="/js/OnlineCS.js" type='text/javascript'></script>
-<!-- 線上客服 end olark code -->
-
-<link href="/css/widget/fixmodal.css?v=20171221" rel="stylesheet">
-<script type="text/javascript" src="/dynamicfiles/dodatasourcetxt/usedatajs2.js"></script>
-
 <div id="FixModal" class="" style="display: none;">
     <div class="FixModalBox">
         <span class="FixModalClose"></span>
         <div class="FixModalCont">
         </div>
     </div>
-</div><!-- /FixModal -->
-<script>
-    $(function () {
-        if (typeof msgtxt != "undefined" && msgtxt.length > 0) {
-            $("#FixModal").addClass("slideInRightFix").show();
-
-            $('.FixModalClose').click(function () {
-                $('.FixModalBox').addClass('slideOutRightFx');
-                setTimeout(function () { $('.FixModalBox').remove(); }, 1000);
-            });
-
-            setTimeout(function () {
-                $('.FixModalBox').addClass('slideOutRight');
-                setTimeout(function () { $('.FixModalBox').remove(); }, 1000);
-            }, 60000);
-
-            $(".FixModalCont").html(msgtxt);
-        } else {
-            $("#FixModal").remove();
-        };
-    });
-</script>
-
-
+</div>
 
     </div><!-- wrap:end -->
-
-    <script src="/js/gtag?v=Ojmm_Uw6l45aQt5KiPRE9OAcXu49R74xJUoe19pVv541"></script>
-
 </body>
 </html>
-
-
-
-
-    <script>
-        SetSubMenuFlag("財報股利", "企業價值", "股價淨值比");
-    </script>
 `;
 
 export default HTML;

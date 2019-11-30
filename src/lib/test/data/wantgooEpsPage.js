@@ -1,4 +1,5 @@
 const HTML = `
+<!-- wantgooEpsPage -->
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -6,7 +7,7 @@ const HTML = `
     <title>台積電(2330)每股盈餘財報 | 台股 | 玩股網</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 
-    
+
     <meta property="og:title" content="台積電(2330)每股盈餘財報 | 台股 | 玩股網" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.wantgoo.com/stock/report/basic_eps?stockno=2330" />
@@ -14,59 +15,10 @@ const HTML = `
     <meta property="og:site_name" content="玩股網" />
     <meta name="description" content="台積電(2330)每股盈餘財報，提供每股盈餘與每季收盤價比較，包含季增率、年增率等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
     <meta property="og:description" content="台積電(2330)每股盈餘財報，提供每股盈餘與每季收盤價比較，包含季增率、年增率等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
-    <link rel="canonical" href="https://www.wantgoo.com/stock/report/basic_eps?stockno=2330">
-
-    
-    
-<link rel='stylesheet' type='text/css' href='/dynamicfiles/common/css/shared_allwebsite.css?versionParams=2019-1008-001'>
-<link rel='stylesheet' type='text/css' href='/css/twstock/twstock.css?versionParams=2019-1008-001'>
-
-    
-    
-<script type='text/javascript' src='/dynamicfiles/common/js/shared_allwebsite.js?versionParams=2019-1008-001'></script>
-
-<script type='text/javascript'>var facebookPixelCode = '216968031982114';</script>
-<script type='text/javascript' src='/js/facebook/FacebookPixelCode.js'></script>
-<noscript><img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=216968031982114&ev=PageView&noscript=1' /></noscript>
-
-
-
-    
-    <script src="/js/highCharts/stock/highstock.js"></script>
-    <script src="/js/highCharts/stock/modules/exporting.js"></script>
-
-    <script>
-        $(function () {
-            //Fancybox
-            $('.ic-ask').fancybox({
-                title: '',
-                href: '#explain'
-            });
-
-        });
-    </script>
-
-
-<!-- Hotjar Tracking Code for https://www.wantgoo.com/ -->
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:827061,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
 
 </head>
 <body>
-<div id="wrap">    
-
-    
-
-
-
+<div id="wrap">
 <header id="header">
     <div class="head">
         <div class="brand" style="top: 10px;">
@@ -98,20 +50,13 @@ const HTML = `
             <div class="hot-stock" id="ShowHotStock">
                 <cite>熱門：</cite>
                 <a href="/option/futures/quotes?StockNo=WTXP%26" target="_blank"> 台指期盤後</a>
-                
+
 
 <a href='/stock/2504' title='國產,2504,10.65,▲ 0.93 (9.57%),短線--,長線▲,up' target='_blank'> 國產,2504 </a>
 <a href='/stock/5225' title='東科-KY,5225,62.10,▲ 2.9 (4.90%),短線▲,長線▲,up' target='_blank'> 東科-KY,5225 </a>
 <a href='/stock/2455' title='全新,2455,112.50,▲ 2.5 (2.27%),短線--,長線▲,up' target='_blank'> 全新,2455 </a>
 <a href='/stock/8406' title='金可-KY,8406,179.00,▲ 3 (1.70%),短線▲,長線--,up' target='_blank'> 金可-KY,8406 </a>
-            </div><!-- hot-stock:end -->
-
-            <script type="text/javascript">
-                // for **** js/masterPage.js => function SearchStock(stockNo)
-                var urlStockPage = "/stock/";
-                var domain_API_Stock2 = "https://api.wantgoo.com";
-                var domain_Web_Stock2 = "https://www.wantgoo.com";
-            </script>
+            </div>
             <div class="search-bar-inner">
                 <div class="select-box">
                     <select id="ddlSearchItems" name="" class="select">
@@ -125,32 +70,15 @@ const HTML = `
         </div><!-- search-bar:end -->
 
         <ul class="adWords">
-            
-            
+
+
 
 <li id='HeaderTextAd_7'><a href='http://bit.ly/2ppOnIZ'>老漁夫跟軌道鞅社團有何不同？</a></li>
 <li id='HeaderTextAd_4'><a href='http://bit.ly/2pwivmf'>百億操盤手被拐來玩股網開社團？</a></li>
 <li id='HeaderTextAd_3'><a href='http://bit.ly/2w6jGbY'>想要學「抓轉折」技巧的看這裡</a></li>
 <li id='HeaderTextAd_1'><a href='https://bit.ly/2Yg58mf'>每天有高手在你操作時提點？</a></li>
         </ul>
-    </div><!-- head:end -->
-
-    <script type='text/javascript'>
-        var googletag = googletag || {};
-        googletag.cmd = googletag.cmd || [];
-        (function () {
-            var gads = document.createElement('script');
-            gads.async = true;
-            gads.type = 'text/javascript';
-            var useSSL = 'https:' == document.location.protocol;
-            gads.src = (useSSL ? 'https:' : 'http:') +
-                '//www.googletagservices.com/tag/js/gpt.js';
-            var node = document.getElementsByTagName('script')[0];
-            node.parentNode.insertBefore(gads, node);
-        })();
-    </script>
-
-
+    </div>
 </header>
 
 <nav id="navigation">
@@ -459,37 +387,10 @@ const HTML = `
             </li>
         </ul>
     </div><!-- nav-box:end -->
-</nav><!-- navigation:end -->
-<script src="/scripts/jquery.signalr-2.2.2.min.js"></script>
-<script src="/signalr/hubs"></script>
-<script type="text/javascript">
-    var url = location.href;
-    var pattern = "(?<=.com).*";
-    var pathRegx = new RegExp(pattern);
-    var matchPath = pathRegx.exec(url);
-
-    $("a[href='" + matchPath + "']").parents("li").addClass("curt");
-
-    if (isMobile()) {
-        $("#navigation > div > ul > li > a").each(function () { $(this).attr("href", "javascript:;") });
-    };
-
-    if (window.jQuery && /\bUserName\b=[^;]+;/.test(document.cookie)) {
-        var webNotificationScript = document.createElement("script");
-
-        webNotificationScript.src = "/js/web-notification.js?v=636534226872643993";
-
-        document.body.appendChild(webNotificationScript);
-    }
-
-    $(function () {
-        LoadUserPanel();
-    });
-</script>
-
+</nav>
 
 <div id="container" class="clearfix">
-    
+
 
 
         <div class="WantgooAdv adsbox ads1000x90" name="1000x90個股" id="6057d2c1-f295-4717-ab81-82754e0aceb4">
@@ -498,7 +399,7 @@ const HTML = `
                         </a>
         </div>
 
-    
+
 
 
 
@@ -535,7 +436,7 @@ const HTML = `
                 </li>
         </ol>
 
-    
+
 
 
 
@@ -561,7 +462,7 @@ const HTML = `
         <span class="chg" name="Change">▼4.50</span>
         <span class="chg" name="ChangeRate">-1.57%</span>
     </div><!-- idx-change:end -->
-    
+
 
     <div class="idx-data">
         <ul class="idx-data-pri">
@@ -584,7 +485,7 @@ const HTML = `
 <div id="optional-box" class="optional-box">
     <h4 class="tit"></h4>
     <ul class="optional-inner" id="mySelectList">
-      
+
     </ul><!-- optional-inner:end -->
 </div><!-- optional-box:end -->
 
@@ -593,15 +494,7 @@ const HTML = `
         <h4 class="tit">您已成功加入自選股。</h4>
         <div class="mt-x2"><button class="btn" onclick="jQuery.fancybox.close();">關閉視窗</button><button class="btn" id="goMySelectBtn">前往自選股</button></div>
     </div><!-- optional-mesg:end -->
-</div><!-- optional-ok:end -->
-
-<script type='text/javascript' src='/js/stock/MySelectAdd.js'></script>
-
-
-
-
-
-
+</div>
 
 <div class="hd bg-linear mb-x1 mt-neg">
     <ul class="sub-menu dd-menu">
@@ -609,7 +502,7 @@ const HTML = `
         <li><a href="/stock/astock/techchart?stockno=2330">技術分析</a></li>
         <li><a href="/stock/reduction/techchart?stockno=2330">還原權息</a></li>
             <li><a href="/stock/astock/group?stockno=2330">台積電群</a></li>
-        
+
         <li><a href="/stock/astock/three?stockno=2330">法人動態</a></li>
         <li><a href="/stock/astock/margin?stockno=2330">資券變化</a></li>
             <li><a href="/stock/astock/chips?stockno=2330">大戶籌碼</a></li>
@@ -686,8 +579,8 @@ const HTML = `
                 </ul>
             </li>
             <li><a href="/stock/astock/basic?stockno=2330">基本資料</a></li>
-            <li><a href="/stock/astock/news?stockno=2330">相關新聞</a></li>        
-       
+            <li><a href="/stock/astock/news?stockno=2330">相關新聞</a></li>
+
     </ul>
 </div><!-- hd:end -->
 
@@ -695,160 +588,7 @@ const HTML = `
     <div id="mainCol">
         <h1 class="heading">台積電(2330)每股盈餘</h1>
             <div id="chartBasicEps" class="wChart mb-x1"></div><!-- chartBasicEps:end -->
-<script>var SeasonBEPS = [[1393632000000,1.85],[1401580800000,2.3],[1409529600000,2.94],[1417392000000,3.09],[1425168000000,3.05],[1433116800000,3.06],[1441065600000,2.9],[1448928000000,2.81],[1456790400000,2.5],[1464739200000,2.79],[1472688000000,3.74],[1480550400000,3.86],[1488326400000,3.38],[1496275200000,2.56],[1504224000000,3.46],[1512086400000,3.83],[1519862400000,3.46],[1527811200000,2.79],[1535760000000,3.44],[1543622400000,3.85],[1551398400000,2.37],[1559347200000,2.57]];var SeasonClose = [[1393632000000,118.5],[1401580800000,126.5],[1409529600000,120],[1417392000000,141],[1425168000000,145.5],[1433116800000,140.5],[1441065600000,130],[1448928000000,143],[1456790400000,162],[1464739200000,162.5],[1472688000000,182.5],[1480550400000,181.5],[1488326400000,189],[1496275200000,208.5],[1504224000000,216.5],[1512086400000,229.5],[1519862400000,247.5],[1527811200000,216.5],[1535760000000,262.5],[1543622400000,225.5],[1551398400000,245.5],[1559347200000,239]];</script>            <script>
-                var _ChartIDName = 'chartBasicEps';
-                var _ChartHeight = 320;
-                var _Title = '台積電 (2330)';
-                var _Subtitle = '每股盈餘與季收盤價比較';
-                var _LineWidth = 2;
-                var _Function = function () {
-                    var p = '';
-                    var unit = '元';
-                    var decimal = 0;
-                    if (this.point) {
-                        p += '<span>' + Highcharts.dateFormat('%Y/%m', this.point.x) + '</span><br/>';
-                        p += this.point.config.text;
-                    }
-                    else {
-                        var q = '';
-                        var month = Highcharts.dateFormat('%m', this.x);
-                        if (month == 3) q = ' (Q1)'; if (month == 6) q = ' (Q2)'; if (month == 9) q = ' (Q3)'; if (month == 12) q = ' (Q4)';
 
-                        p += '<span>' + Highcharts.dateFormat('%Y/%m', this.x) + q + '</span><br/>';
-                        $.each(this.points, function (i, series) {
-                            p += '<span style="color:' + this.series.color + '">' + this.series.name +
-                            '</span> : <span>' + Highcharts.numberFormat(this.y, 2) + unit + '</span><br/>';
-                        });
-                    }
-                    return p;
-                };
-            </script>
-            <script>
-                var chart;
-                $(function () {
-                    chart = new Highcharts.StockChart({
-                        chart: {
-                            renderTo: _ChartIDName,
-                            alignTicks: false,
-                            animation: false,
-                            height: _ChartHeight,
-                            spacing: [62, 20, 20, 20],
-                            borderWidth: 1,
-                            borderColor: '#e3e3e3',
-                            plotBackgroundColor: '#ffffff',
-                            backgroundColor: {
-                                linearGradient: [0, 0, 0, 500],
-                                stops: [
-                                    [0, 'rgb(255, 255, 255)'],
-                                    [1, 'rgb(245, 245, 245)']
-                                ]
-                            },
-                            style: { fontSize: '14px', fontFamily: 'Arial, sans-serif' }
-                        },
-                        credits: {
-                            text: '© WantGoo玩股網',
-                            href: '/',
-                            position: { verticalAlign: 'top', y: 30, x: -20 },
-                            style: { fontSize: '15px' }
-                        },
-                        legend: {
-                            enabled: true,
-                            padding: 0,
-                            itemStyle: { fontSize: '14px', fontWeight: 'normal', color: '#444444' }
-                        },
-                        scrollbar: {
-                            enabled: false
-                        },
-                        rangeSelector: {
-                            enabled: false,
-                            inputEnabled: false
-                        },
-                        navigator: {
-                            enabled: false
-                        },
-                        exporting: {
-                            enabled: false
-                        },
-                        title: {
-                            text: _Title,
-                            verticalAlign: 'top',
-                            y: -35
-                        },
-                        subtitle: {
-                            text: _Subtitle,
-                            verticalAlign: 'top',
-                            y: -14
-                        },
-                        plotOptions: {
-                            column: {
-                                animation: false
-                            },
-                            line: {
-                                lineWidth: _LineWidth,
-                                marker: {
-                                    enabled: false,
-                                    states: { hover: { enabled: true, radius: 4 } }
-                                }
-                            },
-                            series: {
-                                events: {
-                                    legendItemClick: function () {
-                                        return false;
-                                    }
-                                }
-                            }
-                        },
-                        xAxis: {
-                            tickPixelInterval: 200,
-                            type: 'datetime',
-                            labels: {
-                                formatter: function () { return Highcharts.dateFormat('%Y', this.value); },
-                                style: { fontSize: '13px', color: '#888888' }
-                            }
-                        },
-                        yAxis: [{
-                            title: { text: '' },
-                            gridLineWidth: 1,
-                            offset: 12,
-                            gridLineColor: '#eeeeee',
-                            labels: {
-                                style: { fontSize: '13px', color: '#888888' }
-                            }
-                        }, {
-                            title: { text: '' },
-                            gridLineWidth: 0,
-                            opposite: false,
-                            offset: -8,
-                            gridLineColor: '#eeeeee',
-                            labels: {
-                                style: { fontSize: '13px', color: '#888888' }
-                            }
-                        }],
-                        tooltip: {
-                            backgroundColor: 'rgba(20, 20, 20, 0.8)',
-                            borderColor: '#222222',
-                            borderRadius: 10,
-                            borderWidth: 1,
-                            shared: true,
-                            style: { fontSize: '13px', color: '#ffffff' },
-                            formatter:
-                            _Function
-
-                        },
-                        series: [{
-                            type: 'column',
-                            name: '每股盈餘',
-                            data: SeasonBEPS,
-                            color: '#f5b537'
-                        }, {
-                            name: '季收盤價',
-                            data: SeasonClose,
-                            color: '#6fc4c1',
-                            yAxis: 1,
-                        }]
-                    });
-                });
-            </script>
             <div id="explain" class="explain">
                 <h2>每股盈餘(<span class="ig">EPS</span>)</h2>
                 <p>
@@ -1069,7 +809,7 @@ const HTML = `
                     </tbody>
                 </table>
             </div><!-- 每股盈餘:end -->
-        
+
     </div><!-- mainCol:end -->
 
     ﻿
@@ -1127,14 +867,7 @@ const HTML = `
     </table>
 
 
-    </div><!-- 主力進出:end -->
-
-     
-        <div class="WantgooAdv adsbox ads300x250" name="300x250台股右上" id="a19f72f2-7243-4ce3-ad5d-bf7db5d70b6b">
-            <p><script type='text/javascript'>   googletag.cmd.push(function() {     googletag.defineSlot('/15927178/wantgoo_stock_300x250_RT', [300, 250], 'div-gpt-ad-1455863165086-0').addService(googletag.pubads());     googletag.pubads().enableSingleRequest();     googletag.enableServices();   }); </script><!-- /15927178/wantgoo_stock_300x250_RT --> <div id='div-gpt-ad-1455863165086-0' style='height:250px; width:300px;'> <script type='text/javascript'> googletag.cmd.push(function() { googletag.display('div-gpt-ad-1455863165086-0'); }); </script> </div></p>
-        </div>
-
-    
+    </div>
 
 
     <div class="sd-classstk  br-t">
@@ -1151,7 +884,7 @@ const HTML = `
                 <th width="20%">漲幅%</th>
             </tr>
         </thead>
-        <tbody>         
+        <tbody>
                 <tr>
                     <td class="cn"><a href="/stock/twstock/classcont?id=71" target="_blank">IC生產</a></td>
                     <td class="up">▲1.35</td>
@@ -1196,7 +929,7 @@ const HTML = `
                 <th>到期日</th>
             </tr>
         </thead>
-        <tbody>       
+        <tbody>
                 <tr>
                     <td class="cn">台積電台新9C購01</td>
                     <td class="cr">2020-12-31</td>
@@ -1247,15 +980,7 @@ const HTML = `
     </form>
 
 
-    </div><!-- 權證:end -->
-
-    
-        <div class="WantgooAdv adsbox ads300x250" name="300x250個股右下" id="a7f3528c-b5ec-4096-8271-efabac2e6b04">
-            <p><script type='text/javascript'>   googletag.cmd.push(function() {     googletag.defineSlot('/15927178/wantgoo_share_300x250_RB', [300, 250], 'div-gpt-ad-1455863274338-0').addService(googletag.pubads());     googletag.pubads().enableSingleRequest();     googletag.enableServices();   }); </script><!-- /15927178/wantgoo_share_300x250_RB --> <div id='div-gpt-ad-1455863274338-0' style='height:250px; width:300px;'> <script type='text/javascript'> googletag.cmd.push(function() { googletag.display('div-gpt-ad-1455863274338-0'); }); </script> </div></p>
-        </div>
-
-    
-
+    </div>
 
     <div class="sd-kindstk">
 
@@ -1631,70 +1356,18 @@ const HTML = `
         <span>沒有帳號？<a href="/login/auth/register_normal?returnUrl=">免費註冊</a></span>
     </div>
 </form>
-
-
-<script type="text/javascript">
-    afterFacebookLoginFullSucceed_Url = "https://api.wantgoo.com/auth/login/apilogin_facebookid_nocookie_fornewweb";
-    $(function () {
-        // request to set scrollTop
-        reqSetScrollTop();
-        // 全站共用 Head 登入按鈕，套用燈箱UI
-        loadLogInUI("#aLogin");
-    });
-</script>
-
-
-
-<!-- 線上客服 begin olark code -->
-<script data-cfasync="false" src="/js/OnlineCS.js" type='text/javascript'></script>
-<!-- 線上客服 end olark code -->
-
-<link href="/css/widget/fixmodal.css?v=20171221" rel="stylesheet">
-<script type="text/javascript" src="/dynamicfiles/dodatasourcetxt/usedatajs2.js"></script>
-
 <div id="FixModal" class="" style="display: none;">
     <div class="FixModalBox">
         <span class="FixModalClose"></span>
         <div class="FixModalCont">
         </div>
     </div>
-</div><!-- /FixModal -->
-<script>
-    $(function () {
-        if (typeof msgtxt != "undefined" && msgtxt.length > 0) {
-            $("#FixModal").addClass("slideInRightFix").show();
-
-            $('.FixModalClose').click(function () {
-                $('.FixModalBox').addClass('slideOutRightFx');
-                setTimeout(function () { $('.FixModalBox').remove(); }, 1000);
-            });
-
-            setTimeout(function () {
-                $('.FixModalBox').addClass('slideOutRight');
-                setTimeout(function () { $('.FixModalBox').remove(); }, 1000);
-            }, 60000);
-
-            $(".FixModalCont").html(msgtxt);
-        } else {
-            $("#FixModal").remove();
-        };
-    });
-</script>
-
-
+</div>
 
 </div><!-- wrap:end -->
-
-<script src="/js/gtag?v=Ojmm_Uw6l45aQt5KiPRE9OAcXu49R74xJUoe19pVv541"></script>
 
 </body>
 </html>
 
-
-
-    <script>
-        SetSubMenuFlag("財報股利", "基本財報", "每股盈餘");
-    </script>
-     
 `;
 export default HTML;
