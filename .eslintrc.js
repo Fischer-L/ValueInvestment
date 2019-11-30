@@ -4,6 +4,7 @@ module.exports = {
     "max-len": "off",
     "no-console": "off",
     "no-plusplus": "off",
+    "arrow-parens": "off",
     "default-case": "off",
     "no-fallthrough": "off",
     "no-multi-assign": "off",

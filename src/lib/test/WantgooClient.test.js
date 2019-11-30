@@ -1,5 +1,4 @@
-/* global jest, describe, expect, it */
-import { JSDOM } from 'jsdom';
+import fakeDOMParser from './utils/fakeDOMParser';
 
 import pePage from './data/wantgooPePage';
 import pbPage from './data/wantgooPbPage';
@@ -17,12 +16,6 @@ function fakeAxios() {
     }))),
   };
   return axios;
-}
-
-function fakeDOMParser() {
-  return {
-    parseFromString: html => (new JSDOM(html)).window.document,
-  };
 }
 
 function create() {
