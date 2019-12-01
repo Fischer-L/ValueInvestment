@@ -41,8 +41,8 @@ class WantgooServer extends StockProviderServerBase {
         path = `/stock/report/basic_dp?stockno=${id}`;
         break;
     }
-    const { data } = await this.crawler.get(path);
-    return data;
+    const html = await this.crawler.get(path);
+    return html;
   }
 }
 

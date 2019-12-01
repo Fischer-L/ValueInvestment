@@ -9,6 +9,7 @@ module.exports = {
     "no-fallthrough": "off",
     "no-multi-assign": "off",
     "react/sort-comp": "off",
+    "no-return-assign": "off",
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
     "no-case-declarations": "off",
