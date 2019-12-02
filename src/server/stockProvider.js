@@ -2,9 +2,9 @@ const WantgooServer = require('../lib/stockProvider/WantgooServer');
 
 let provider = null;
 
-function getStockProvider({ env, axios }) {
+function getStockProvider({ env, cloudscraper }) {
   if (!provider) {
-    provider = new WantgooServer({ env, axios });
+    provider = new WantgooServer({ env, cloudscraper });
   }
   return provider;
 }

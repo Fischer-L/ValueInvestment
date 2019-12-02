@@ -1,7 +1,7 @@
 class StockProviderServerBase {
   // - baseURL: A instance of URL
-  constructor({ env, axios, baseURL, timeout = 10000 }) {
-    Object.entries({ env, axios, baseURL, timeout }).forEach(([ k, v ]) => {
+  constructor({ env, cloudscraper, baseURL, timeout = 10000 }) {
+    Object.entries({ env, cloudscraper, baseURL, timeout }).forEach(([ k, v ]) => {
       this[`_${k}`] = v;
     });
     this._isProd = env === 'production';
@@ -16,15 +16,20 @@ class StockProviderServerBase {
       throw new Error(`No base url for ${this.constructor.name}`);
     }
     if (!this._crawler) {
-      this._crawler = this._axios.create({
-        baseURL: this._baseURL.toString(),
-        timeout: this._timeout,
-        headers: {
-          Host: this._baseURL.host,
-          Origin: this._baseURL.toString(),
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:71.0) Gecko/20100101 Firefox/71.0',
+      this._crawler = {
+        _firstRequest: null,
+        get: async (path) => {
+          const url = this._baseURL.origin + path;
+          if (this._firstRequest) {
+            // Should wait for the 1st request to make sure passing the DDOS check
+            await this._firstRequest;
+            return this._cloudscraper.get(url);
+          }
+          this._firstRequest = this._cloudscraper.get(url);
+          this._firstRequest.then(() => this._firstRequest = null);
+          return this._firstRequest;
         },
-      });
+      };
     }
     return this._crawler;
   }
