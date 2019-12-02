@@ -1,6 +1,6 @@
 import StockProviderClientBase from './StockProviderClientBase';
 
-class WantgooClient extends StockProviderClientBase {
+class GwClient extends StockProviderClientBase {
   _extractData({ pePage, pbPage, epsPage, dividendPage }) {
     const pe = this._extractPEorPB(pePage);
     const pb = this._extractPEorPB(pbPage);
@@ -79,4 +79,4 @@ class WantgooClient extends StockProviderClientBase {
   }
 }
 
-export default WantgooClient;
+export default GwClient;

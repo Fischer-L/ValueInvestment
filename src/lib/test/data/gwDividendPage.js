@@ -1,20 +1,21 @@
 const HTML = `
-<!-- wantgooPePage -->
+<!-- gwDividendPage -->
 <!doctype html>
 <html lang="zh-TW">
 <head>
     <meta charset="utf-8">
-    <title>台積電(2330)本益比分析 | 台股 | 玩股網</title>
+    <title>台積電(2330)股利政策分析 | 台股 | </title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"  />
 
 
-    <meta property="og:title" content="台積電(2330)本益比分析 | 台股 | 玩股網" />
+    <meta property="og:title" content="台積電(2330)股利政策分析 | 台股 | " />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.wantgoo.com/stock/report/value?types=1&amp;stockno=2330" />
-    <meta property="og:image" content="https://www.wantgoo.com/images/wantgoo-og-default.jpg" />
-    <meta property="og:site_name" content="玩股網" />
-    <meta name="description" content="台積電(2330)本益比分析，提供本益比與每月收盤價比較，包含每月的本益比等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
-    <meta property="og:description" content="台積電(2330)本益比分析，提供本益比與每月收盤價比較，包含每月的本益比等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
+    <meta property="og:url" content="https://www.gw.com/stock/report/basic_dp?stockno=2330" />
+    <meta property="og:image" content="https://www.gw.com/images/gw-og-default.jpg" />
+    <meta property="og:site_name" content="" />
+    <meta name="description" content="台積電(2330)股利政策分析，提供股票股利與現金股利比較，包含年度的除權息日、股票股利、現金股利、除權息前股價、現金殖利率與扣抵稅率等最新動態，更多台積電(2330)財報資訊盡在" />
+    <meta property="og:description" content="台積電(2330)股利政策分析，提供股票股利與現金股利比較，包含年度的除權息日、股票股利、現金股利、除權息前股價、現金殖利率與扣抵稅率等最新動態，更多台積電(2330)財報資訊盡在" />
+
 </head>
 <body>
     <div id="wrap">
@@ -27,13 +28,13 @@ const HTML = `
         <div class="brand">
                     <a href="/">
 
-                        <img src="/images/wantgoo-logo.png" alt="WantGoo玩股網" width="160" />
+                        <img src="/images/gw-logo.png" alt="gw" width="160" />
                     </a>
         </div><!-- brand:end -->
 
         <div class="head-tools">
             <a id="aLogin" href="javascript:;" class="hide tools-btn-bor">登入</a>
-            <a id="aReg" href="/login/auth/register_normal?returnUrl=/stock/report/value?types=1&amp;stockno=2330" class="hide tools-btn-bor" style="border-color: #f44336;color: #f44336;">免費註冊</a>
+            <a id="aReg" href="/login/auth/register_normal?returnUrl=/stock/report/basic_dp?stockno=2330" class="hide tools-btn-bor" style="border-color: #f44336;color: #f44336;">免費註冊</a>
 
             <a id="aSelfCollection" href="/my/stocklist" class="hide tools-btn" title="自選股"><i class="ic-astock"></i></a>
             <a id="aInsideMail" href="/member/insidemail/inbox" class="hide tools-btn"><i class="ic-email"></i><i class="msg-bubble">0</i></a>
@@ -56,10 +57,10 @@ const HTML = `
                 <a href="/option/futures/quotes?StockNo=WTXP%26" target="_blank"> 台指期盤後</a>
 
 
-<a href='/stock/4953' title='緯軟,4953,126.00,▲ 3 (2.44%),短線--,長線▲,up' target='_blank'> 緯軟,4953 </a>
-<a href='/stock/3231' title='緯創,3231,25.10,▲ 0.5 (2.03%),短線▲,長線▲,up' target='_blank'> 緯創,3231 </a>
-<a href='/stock/2330' title='台積電,2330,253.00,▲ 6.5 (2.64%),短線▲,長線▲,up' target='_blank'> 台積電,2330 </a>
-<a href='/stock/2442' title='新美齊,2442,14.45,▲ 0.65 (4.71%),短線▲,長線▲,up' target='_blank'> 新美齊,2442 </a>
+<a href='/stock/1590' title='亞德客-KY,1590,427.00,▼ -7 (-1.61%),短線--,長線▲,dn' target='_blank'> 亞德客-KY,1590 </a>
+<a href='/stock/4966' title='譜瑞-KY,4966,535.00,▲ 20 (3.88%),短線--,長線▲,up' target='_blank'> 譜瑞-KY,4966 </a>
+<a href='/stock/2357' title='華碩,2357,230.00,▲ 4 (1.77%),短線▲,長線--,up' target='_blank'> 華碩,2357 </a>
+<a href='/stock/2207' title='和泰車,2207,394.00,▲ 17.5 (4.65%),短線▲,長線▲,up' target='_blank'> 和泰車,2207 </a>
             </div>
             <div class="search-bar-inner">
                 <div class="select-box">
@@ -77,18 +78,19 @@ const HTML = `
 
 
 
-<li id='HeaderTextAd_4'><a href='https://www.wantgoo.com/laojiao'>投資菜鳥專屬</a></li>
-<li id='HeaderTextAd_1'><a href='https://www.wantgoo.com/laojiao/project/3'>這是個沒有主力干預的市場</a></li>
-<li id='HeaderTextAd_8'><a href='http://bit.ly/2JwFQxx'>每天三分鐘做完股市功課</a></li>
-<li id='HeaderTextAd_3'><a href='http://bit.ly/2Juazv7'>免費試用客製化選股工具</a></li>
+<li id='HeaderTextAd_2'><a href='https://www.gw.com/laojiao/project/4'>台指當沖策略讓你先偷看</a></li>
+<li id='HeaderTextAd_5'><a href='https://www.gw.com/laojiao/project/6'>正統法人實戰教學</a></li>
+<li id='HeaderTextAd_7'><a href='https://www.gw.com/laojiao/project/8'>教你如何操作美股</a></li>
+<li id='HeaderTextAd_6'><a href='https://www.gw.com/clubs'>投資教學社團介紹</a></li>
         </ul>
     </div>
+
 </header>
 
 <nav id="navigation">
     <div class="nav-box bg-linear box-bor">
         <ul class="nav-channel">
-            <li class="nav-channel-home"><a href="/" title="玩股網首頁" class="ic-home"></a></li>
+            <li class="nav-channel-home"><a href="/" title="首頁" class="ic-home"></a></li>
             <li>
                 <a href="/stock" onclick="sentEvent('點擊台股', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">台股</span></a>
                 <ul class="nav-channel-2">
@@ -347,41 +349,37 @@ const HTML = `
         </ul>
     </div><!-- nav-box:end -->
 </nav>
+
 <div id="container" class="clearfix">
-
-
-
-        <div class="WantgooAdv adsbox ads1000x90" name="1000x90個股" id="356788b1-9afe-46f8-b563-da3f99a0a0a5">
-        </div>
 
         <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/">
-                            <span itemprop="name">玩股網</span>
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/">
+                            <span itemprop="name"></span>
                         </a>
                     <meta itemprop="position" content="1" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/stock">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock">
                             <span itemprop="name">台股</span>
                         </a>
                     <meta itemprop="position" content="2" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/stock/2330">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/2330">
                             <span itemprop="name">台積電(2330)</span>
                         </a>
                     <meta itemprop="position" content="3" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/stock/report/basic_mr?stockno=2330">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/report/basic_mr?stockno=2330">
                             <span itemprop="name">財報股利</span>
                         </a>
                     <meta itemprop="position" content="4" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="active">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/stock/report/value?types=1&amp;stockno=2330">
-                            <span itemprop="name">本益比</span>
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/report/basic_dp?stockno=2330">
+                            <span itemprop="name">股利政策</span>
                         </a>
                     <meta itemprop="position" content="5" />
                 </li>
@@ -426,7 +424,7 @@ const HTML = `
             <li>股淨比<b class="i">3.81</b></li>
             <li>本益比<b class="i">18.21</b></li>
             <li>偏多比<b class="i">10</b></li>
-            <li>價量分數<b class="i">12</b></li>
+            <li>價量分數<b class="i">10</b></li>
             <li class="idata-wt">發行權證(檔)<b class="i">482</b></li>
             <li class="idata-fql" style="width: 192px; padding-right: 0;">離季線<b class="i">22.35(9.69%)</b></li>
         </ul>
@@ -535,853 +533,190 @@ const HTML = `
 </div><!-- hd:end -->
 
 
-
     <div id="mainCol">
-        <h1 class="heading">台積電(2330)本益比</h1>
-            <div id="chart" class="wChart mb-x1"></div><!-- chartValueCdy:end -->
-            <div id="explain_1" class="explain">
-                <h2>本益比</h2>
+        <h1 class="heading">台積電(2330)股利政策</h1>
+            <div id="chartDp" class="wChart mb-x1"></div><!-- chartDp:end -->
+
+            <div id="explain" class="explain">
+                <h2>股利政策</h2>
+                <h3>現金股利</h3>
                 <p>
-                    <span class="bak">公式：本益比 = 月均價 / 近4季EPS總和</span><br>
-                    本益比衡量：股價相對於EPS獲利的高低。 本益比越高，代表股價越貴，潛在報酬率越低； 本益比越低，代表股價越便宜，潛在報酬率越高，但是並不是絕對，因為當產業或個股獲利成長性越高，市場願意給予的本益比也越高，但還可能會越來越高，因此本益比應配合產業、獲利成長性做觀察。
+                    定義：公司將部分盈餘以現金方式發放給股東的收益。<br />
+                    現金股利可視為利息般的實質現金收益， 當公司的盈餘因應自身投資需求還有剩餘， 通常會以現金股利的方式回饋股東。 因此當企業處於成長需要大量再投資，現金股息發配就會較少； 當企業處於成熟期沒有太多成長機會，現金股息發配就會較多，所以不能單純用殖利率來判斷公司好壞。
                 </p>
-            </div>
-            <div id="explain_2" class="explain">
-                <h2>股價淨值比</h2>
+
+                <h3>股票股利</h3>
                 <p>
-                    <span class="bak">公式：股價淨值比 = 月均價 / 每股淨值</span><br>
-                    股價淨值比衡量：股價相對於每股淨值的高低。 因此當股價淨值比越高，代表股價越貴，潛在報酬率越低； 股價淨值比越低，代表股價越便宜，潛在報酬率越高。 當產業或個股獲利處於成長，市場願意給的股價較高，因此股價淨值比會偏高； 當產業或個股獲利處於成熟期，沒有想像空間，市場願意給的股價較低，因此股價淨值比會偏低。 因此股價淨值比較適合：和公司本身歷史股價淨值比的比較，或是和同一產業其他公司的比較。 另外景氣循環產業獲利波動大，例如塑化業，DRam，使用股價淨值比評價較本益比適合。
-                </p>
-            </div>
-            <div id="explain_3" class="explain">
-                <h2>現金股利殖利率</h2>
-                <p>
-                    <span class="bak">公式：現金股利殖利率 = 現金股利 / 月均價 * 100%</span><br />
-                    現金股利殖利率是以現金股利和股價做相比，衡量潛在報酬率的高低。 現金股利殖利率越高，潛在報酬率越高。 觀察現金股利殖利率有幾個重點：<br />
-                    1. 股息不要只看一年，要看一個景氣循環，或至少五年。<br />
-                    2. 會賺錢的公司才會配息，所以重點還是在公司的產業、獲利、體質的長期觀察。<br />
-                    3. 時常虧錢、或是自由現金流量不足的公司竟然能配息...這就要提防是公司為了取悅市場，挖東牆補西牆的結果，最好不要碰這種不肖公司。
+                    定義：公司將盈餘轉成增資，以股票形式分配給股東。<br />
+                    盈餘是屬於股東的投資成果， 如果企業因應成長所需，希望將盈餘留在公司內做廠房、設備等再投資， 可透過發配股票股利的方式，以股票換取原本應該分配股東的盈餘。 因此股票股利是將股東盈餘留在企業的手段，會讓股本和淨值膨脹。 當企業處於成長需要大量再投資，股票股利發配就會較多； 當企業處於成熟期沒有成長機會，股票股利發配就會較少。
                 </p>
             </div><!-- explain:end -->
             <div class="br-trl">
-                <table cellpadding="0" cellspacing="0" class="tb rw4n tbhl">
+                <table cellpadding="0" cellspacing="0" class="tb rw5n tbhl">
                     <caption class="hd-sm">
-                        本益比<span class="ic-ask" title="名詞解釋"></span>
+                        股利政策<span class="ic-ask" title="名詞解釋"></span>
                     </caption>
                     <thead class="thd">
                         <tr>
-                            <th class="cr">年度/月份</th>
-                            <th width="35%">本益比(倍)</th>
-                            <th>月收盤價</th>
+                            <th width="10%">年度</th>
+                            <th>除權息日</th>
+                            <th>股票股利</th>
+                            <th>現金股利</th>
+                            <th>除權息前股價</th>
+                            <th>現金殖利率%</th>
                         </tr>
                     </thead>
                     <tbody>
-                                <tr>
-                                    <td class="cr">2019/4</td>
-                                    <td>18.21</td>
-                                    <td>253</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2019/3</td>
-                                    <td>18.13</td>
-                                    <td>245.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2019/2</td>
-                                    <td>17.65</td>
-                                    <td>239</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2019/1</td>
-                                    <td>16.35</td>
-                                    <td>221</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/12</td>
-                                    <td>16.68</td>
-                                    <td>225.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/11</td>
-                                    <td>16.68</td>
-                                    <td>225.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/10</td>
-                                    <td>17.27</td>
-                                    <td>234</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/9</td>
-                                    <td>19.37</td>
-                                    <td>262.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/8</td>
-                                    <td>18.89</td>
-                                    <td>256</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/7</td>
-                                    <td>18.48</td>
-                                    <td>246</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/6</td>
-                                    <td>16.27</td>
-                                    <td>216.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/5</td>
-                                    <td>16.83</td>
-                                    <td>224</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/4</td>
-                                    <td>17.16</td>
-                                    <td>227</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/3</td>
-                                    <td>18.71</td>
-                                    <td>247.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/2</td>
-                                    <td>18.59</td>
-                                    <td>246</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2018/1</td>
-                                    <td>19.22</td>
-                                    <td>255</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/12</td>
-                                    <td>17.29</td>
-                                    <td>229.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/11</td>
-                                    <td>17.03</td>
-                                    <td>226</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/10</td>
-                                    <td>17.96</td>
-                                    <td>243</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/9</td>
-                                    <td>16</td>
-                                    <td>216.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/8</td>
-                                    <td>16</td>
-                                    <td>216.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/7</td>
-                                    <td>15.58</td>
-                                    <td>214.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/6</td>
-                                    <td>15.14</td>
-                                    <td>208.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/5</td>
-                                    <td>14.74</td>
-                                    <td>203</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/4</td>
-                                    <td>15.09</td>
-                                    <td>194.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/3</td>
-                                    <td>14.66</td>
-                                    <td>189</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/2</td>
-                                    <td>14.66</td>
-                                    <td>189</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2017/1</td>
-                                    <td>15.68</td>
-                                    <td>185.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/12</td>
-                                    <td>15.34</td>
-                                    <td>181.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/11</td>
-                                    <td>15.47</td>
-                                    <td>183</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/10</td>
-                                    <td>17.12</td>
-                                    <td>188.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/9</td>
-                                    <td>16.58</td>
-                                    <td>182.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/8</td>
-                                    <td>15.99</td>
-                                    <td>176</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/7</td>
-                                    <td>15.31</td>
-                                    <td>172.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/6</td>
-                                    <td>14.42</td>
-                                    <td>162.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/5</td>
-                                    <td>13.89</td>
-                                    <td>156.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/4</td>
-                                    <td>12.69</td>
-                                    <td>150</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/3</td>
-                                    <td>13.71</td>
-                                    <td>162</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/2</td>
-                                    <td>12.61</td>
-                                    <td>149</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2016/1</td>
-                                    <td>11.74</td>
-                                    <td>142</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/12</td>
-                                    <td>11.82</td>
-                                    <td>143</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/11</td>
-                                    <td>11.49</td>
-                                    <td>139</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/10</td>
-                                    <td>11.24</td>
-                                    <td>136.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/9</td>
-                                    <td>10.71</td>
-                                    <td>130</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/8</td>
-                                    <td>10.63</td>
-                                    <td>129</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/7</td>
-                                    <td>12.26</td>
-                                    <td>139.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/6</td>
-                                    <td>12.35</td>
-                                    <td>140.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/5</td>
-                                    <td>12.83</td>
-                                    <td>146</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/4</td>
-                                    <td>14.44</td>
-                                    <td>147</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/3</td>
-                                    <td>14.29</td>
-                                    <td>145.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/2</td>
-                                    <td>14.78</td>
-                                    <td>150.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2015/1</td>
-                                    <td>15.99</td>
-                                    <td>141</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/12</td>
-                                    <td>15.99</td>
-                                    <td>141</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/11</td>
-                                    <td>16.04</td>
-                                    <td>141.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/10</td>
-                                    <td>16.56</td>
-                                    <td>130.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/9</td>
-                                    <td>15.23</td>
-                                    <td>120</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/8</td>
-                                    <td>15.74</td>
-                                    <td>124</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/7</td>
-                                    <td>15.96</td>
-                                    <td>121</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/6</td>
-                                    <td>16.69</td>
-                                    <td>126.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/5</td>
-                                    <td>15.77</td>
-                                    <td>119.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/4</td>
-                                    <td>16.32</td>
-                                    <td>118.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/3</td>
-                                    <td>16.32</td>
-                                    <td>118.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/2</td>
-                                    <td>14.88</td>
-                                    <td>108</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2014/1</td>
-                                    <td>14.73</td>
-                                    <td>108</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/12</td>
-                                    <td>14.8</td>
-                                    <td>105.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/11</td>
-                                    <td>14.73</td>
-                                    <td>105</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/10</td>
-                                    <td>15.58</td>
-                                    <td>109.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/9</td>
-                                    <td>14.3</td>
-                                    <td>100.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/8</td>
-                                    <td>14.3</td>
-                                    <td>100.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/7</td>
-                                    <td>15.44</td>
-                                    <td>102.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/6</td>
-                                    <td>16.72</td>
-                                    <td>111</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/5</td>
-                                    <td>16.49</td>
-                                    <td>109.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/4</td>
-                                    <td>17.08</td>
-                                    <td>109.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/3</td>
-                                    <td>15.68</td>
-                                    <td>100.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/2</td>
-                                    <td>16.3</td>
-                                    <td>104.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2013/1</td>
-                                    <td>16.86</td>
-                                    <td>101.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/12</td>
-                                    <td>16.11</td>
-                                    <td>97</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/11</td>
-                                    <td>16.4</td>
-                                    <td>98.7</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/10</td>
-                                    <td>14.73</td>
-                                    <td>88.7</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/9</td>
-                                    <td>16.94</td>
-                                    <td>89.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/8</td>
-                                    <td>15.72</td>
-                                    <td>83.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/7</td>
-                                    <td>15.98</td>
-                                    <td>81</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/6</td>
-                                    <td>16.04</td>
-                                    <td>81.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/5</td>
-                                    <td>16.79</td>
-                                    <td>85.1</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/4</td>
-                                    <td>16.76</td>
-                                    <td>86.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/3</td>
-                                    <td>16.39</td>
-                                    <td>84.9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/2</td>
-                                    <td>14.67</td>
-                                    <td>81.1</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2012/1</td>
-                                    <td>14.2</td>
-                                    <td>78.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/12</td>
-                                    <td>13.71</td>
-                                    <td>75.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/11</td>
-                                    <td>13.49</td>
-                                    <td>74.6</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/10</td>
-                                    <td>13.31</td>
-                                    <td>73.6</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/9</td>
-                                    <td>11.35</td>
-                                    <td>70</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/8</td>
-                                    <td>11.25</td>
-                                    <td>69.4</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/7</td>
-                                    <td>11.36</td>
-                                    <td>72</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/6</td>
-                                    <td>11.39</td>
-                                    <td>72.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/5</td>
-                                    <td>12.1</td>
-                                    <td>76.7</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/4</td>
-                                    <td>11.73</td>
-                                    <td>73.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/3</td>
-                                    <td>11.91</td>
-                                    <td>70.6</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/2</td>
-                                    <td>11.89</td>
-                                    <td>70.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2011/1</td>
-                                    <td>12.87</td>
-                                    <td>76.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/12</td>
-                                    <td>11.97</td>
-                                    <td>71</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/11</td>
-                                    <td>10.69</td>
-                                    <td>63.4</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/10</td>
-                                    <td>11.87</td>
-                                    <td>62.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/9</td>
-                                    <td>11.7</td>
-                                    <td>62</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/8</td>
-                                    <td>11.11</td>
-                                    <td>58.9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/7</td>
-                                    <td>13.33</td>
-                                    <td>62.4</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/6</td>
-                                    <td>12.95</td>
-                                    <td>60.6</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/5</td>
-                                    <td>12.86</td>
-                                    <td>60.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/4</td>
-                                    <td>17.97</td>
-                                    <td>61.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/3</td>
-                                    <td>17.88</td>
-                                    <td>61.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/2</td>
-                                    <td>22.11</td>
-                                    <td>58.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2010/1</td>
-                                    <td>23.12</td>
-                                    <td>61.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/12</td>
-                                    <td>24.02</td>
-                                    <td>64.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/11</td>
-                                    <td>22.97</td>
-                                    <td>61.1</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/10</td>
-                                    <td>22.47</td>
-                                    <td>60</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/9</td>
-                                    <td>24.16</td>
-                                    <td>64.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/8</td>
-                                    <td>22.17</td>
-                                    <td>59.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/7</td>
-                                    <td>20.67</td>
-                                    <td>58.9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/6</td>
-                                    <td>19.13</td>
-                                    <td>54.7</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/5</td>
-                                    <td>21.12</td>
-                                    <td>60.4</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/4</td>
-                                    <td>14.15</td>
-                                    <td>55.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/3</td>
-                                    <td>13.18</td>
-                                    <td>51.4</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/2</td>
-                                    <td>9.44</td>
-                                    <td>44.95</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2009/1</td>
-                                    <td>8.45</td>
-                                    <td>40.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/12</td>
-                                    <td>9.43</td>
-                                    <td>44.4</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/11</td>
-                                    <td>8.66</td>
-                                    <td>40.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/10</td>
-                                    <td>10.21</td>
-                                    <td>48</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/9</td>
-                                    <td>11.27</td>
-                                    <td>52.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/8</td>
-                                    <td>12.64</td>
-                                    <td>58.9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/7</td>
-                                    <td>12.41</td>
-                                    <td>56.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/6</td>
-                                    <td>14.07</td>
-                                    <td>65</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/5</td>
-                                    <td>14.2</td>
-                                    <td>65.6</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/4</td>
-                                    <td>15.66</td>
-                                    <td>66.7</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/3</td>
-                                    <td>15.28</td>
-                                    <td>63.1</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/2</td>
-                                    <td>15.88</td>
-                                    <td>61.6</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2008/1</td>
-                                    <td>15.44</td>
-                                    <td>59.9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/12</td>
-                                    <td>-</td>
-                                    <td>62</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/11</td>
-                                    <td>-</td>
-                                    <td>60.6</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/10</td>
-                                    <td>-</td>
-                                    <td>63.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/9</td>
-                                    <td>-</td>
-                                    <td>63.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/8</td>
-                                    <td>-</td>
-                                    <td>62.7</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/7</td>
-                                    <td>-</td>
-                                    <td>65</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/6</td>
-                                    <td>-</td>
-                                    <td>70.9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/5</td>
-                                    <td>-</td>
-                                    <td>68.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/4</td>
-                                    <td>-</td>
-                                    <td>68.7</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/3</td>
-                                    <td>-</td>
-                                    <td>67.9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/2</td>
-                                    <td>-</td>
-                                    <td>69.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2007/1</td>
-                                    <td>-</td>
-                                    <td>67.4</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/12</td>
-                                    <td>-</td>
-                                    <td>67.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/11</td>
-                                    <td>-</td>
-                                    <td>65.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/10</td>
-                                    <td>-</td>
-                                    <td>61</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/9</td>
-                                    <td>-</td>
-                                    <td>59.7</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/8</td>
-                                    <td>-</td>
-                                    <td>58.1</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/7</td>
-                                    <td>-</td>
-                                    <td>54.8</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/6</td>
-                                    <td>-</td>
-                                    <td>58.4</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/5</td>
-                                    <td>-</td>
-                                    <td>60.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/4</td>
-                                    <td>-</td>
-                                    <td>68.1</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/3</td>
-                                    <td>-</td>
-                                    <td>64.2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/2</td>
-                                    <td>-</td>
-                                    <td>60.9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cr">2006/1</td>
-                                    <td>-</td>
-                                    <td>63.5</td>
-                                </tr>
+                            <tr>
+                                <td class="cr">2019</td>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>8</td>
+                                <td>246.5</td>
+                                <td>3.245436</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2018</td>
+                                <td>06/25</td>
+                                <td>0</td>
+                                <td>8</td>
+                                <td>227.5</td>
+                                <td>3.516484</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2017</td>
+                                <td>06/26</td>
+                                <td>0</td>
+                                <td>7</td>
+                                <td>217</td>
+                                <td>3.225806</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2016</td>
+                                <td>06/27</td>
+                                <td>0</td>
+                                <td>6</td>
+                                <td>159</td>
+                                <td>3.773585</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2015</td>
+                                <td>06/29</td>
+                                <td>0</td>
+                                <td>4.5</td>
+                                <td>146</td>
+                                <td>3.08</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2014</td>
+                                <td>07/14</td>
+                                <td>0</td>
+                                <td>3</td>
+                                <td>136.5</td>
+                                <td>2.197738</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2013</td>
+                                <td>07/03</td>
+                                <td>0</td>
+                                <td>3</td>
+                                <td>110</td>
+                                <td>2.726866</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2012</td>
+                                <td>07/04</td>
+                                <td>0</td>
+                                <td>3</td>
+                                <td>84.2</td>
+                                <td>3.562329</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2011</td>
+                                <td>06/29</td>
+                                <td>0</td>
+                                <td>3</td>
+                                <td>72.5</td>
+                                <td>4.137259</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2010</td>
+                                <td>07/06</td>
+                                <td>0</td>
+                                <td>3</td>
+                                <td>61.4</td>
+                                <td>4.885558</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2009</td>
+                                <td>07/15</td>
+                                <td>0.02</td>
+                                <td>3</td>
+                                <td>55.8</td>
+                                <td>5.38</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2008</td>
+                                <td>07/16</td>
+                                <td>0.02</td>
+                                <td>3.03</td>
+                                <td>57.6</td>
+                                <td>5.25</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2007</td>
+                                <td>06/08</td>
+                                <td>0.02</td>
+                                <td>3</td>
+                                <td>69</td>
+                                <td>4.35</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2006</td>
+                                <td>06/20</td>
+                                <td>0.15</td>
+                                <td>2.5</td>
+                                <td>59.4</td>
+                                <td>4.21</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2005</td>
+                                <td>06/13</td>
+                                <td>0.5</td>
+                                <td>2</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2004</td>
+                                <td>06/14</td>
+                                <td>0.14</td>
+                                <td>0.6</td>
+                                <td>50.5</td>
+                                <td>1.19</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2003</td>
+                                <td>07/07</td>
+                                <td>0.08</td>
+                                <td>0</td>
+                                <td>62</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="cr">2002</td>
+                                <td>-</td>
+                                <td>0.1</td>
+                                <td>0</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                     </tbody>
                 </table>
-            </div><!-- 現金殖利率:end -->
+            </div><!-- 股利政策:end -->
     </div><!-- mainCol:end -->
 
-    ﻿
+
 
 
 ﻿<div id="sideCol">
@@ -1436,13 +771,10 @@ const HTML = `
     </table>
 
 
-    </div><!-- 主力進出:end -->
-
-
-        <div class="WantgooAdv adsbox ads300x250" name="300x250台股右上" id="a19f72f2-7243-4ce3-ad5d-bf7db5d70b6b">
-        </div>
-
+    </div>
     <div class="sd-classstk  br-t">
+
+
 
     <table cellpadding="0" cellspacing="0" class="tb cl2n tbhl">
         <caption class="hd-sm">個股分類行情<span class="more"><a href="/stock/twstock/class">更多</a></span></caption>
@@ -1550,12 +882,7 @@ const HTML = `
     </form>
 
 
-    </div><!-- 權證:end -->
-
-
-        <div class="WantgooAdv adsbox ads300x250" name="300x250個股右下" id="a7f3528c-b5ec-4096-8271-efabac2e6b04">
-        </div>
-
+    </div>
     <div class="sd-kindstk">
 
 
@@ -1674,16 +1001,16 @@ const HTML = `
 
     <div class="hd-sm">即時新聞<a class="more" href="/stock/astock/news?StockNo=2330">更多新聞焦點</a></div>
     <ul class="ell lists">
-            <li><a href="/news/content/index?ID=957275">【亞洲投顧】盤後分析</a><time class="update">25分鐘前</time></li>
-            <li><a href="/news/content/index?ID=957215">【永豐期貨】台指選擇權盤後－連假後補漲 台股強攻站上10800關卡</a><time class="update">1小時前</time></li>
+            <li><a href="/news/content/index?ID=957215">【永豐期貨】台指選擇權盤後－連假後補漲 台股強攻站上10800關卡</a><time class="update">42分鐘前</time></li>
             <li><a href="/news/content/index?ID=957170">【日盛投顧】5日線不破 短線仍偏多</a><time class="update">1小時前</time></li>
             <li><a href="/news/content/index?ID=957168">【群益期貨】台股期權盤後－避險買盤回歸  台股量價齊揚</a><time class="update">1小時前</time></li>
-            <li><a href="/news/content/index?ID=957120">台股盤後—價量俱揚甩清明變盤陰霾 指數挺進10800關卡</a><time class="update">2小時前</time></li>
-            <li><a href="/news/content/index?ID=957012">台積電股價登半年高 單日市值增逾1500億元 重回6.5兆元</a><time class="update">6小時前</time></li>
+            <li><a href="/news/content/index?ID=957120">台股盤後—價量俱揚甩清明變盤陰霾 指數挺進10800關卡</a><time class="update">1小時前</time></li>
+            <li><a href="/news/content/index?ID=957012">台積電股價登半年高 單日市值增逾1500億元 重回6.5兆元</a><time class="update">5小時前</time></li>
             <li><a href="/news/content/index?ID=956942">【永豐期貨】台指選擇權盤前－震盪走升 台股站上10700點</a><time class="update">8小時前</time></li>
-            <li><a href="/news/content/index?ID=956930">【日盛投顧】盤前分析</a><time class="update">9小時前</time></li>
-            <li><a href="/news/content/index?ID=956917">◆外資連續5日買超個股</a><time class="update">10小時前</time></li>
+            <li><a href="/news/content/index?ID=956930">【日盛投顧】盤前分析</a><time class="update">8小時前</time></li>
+            <li><a href="/news/content/index?ID=956917">◆外資連續5日買超個股</a><time class="update">9小時前</time></li>
             <li><a href="/news/content/index?ID=956775">〈Q2產業景氣展望〉華為手機出貨旺 散熱、砷化鎵族群Q2營運添動能</a><time class="update">1天前</time></li>
+            <li><a href="/news/content/index?ID=956729">〈台股風向球〉進入頸線壓力區 惟高檔出貨手法未現 後續看4大關鍵</a><time class="update">1天前</time></li>
     </ul>
 
 
@@ -1869,32 +1196,32 @@ const HTML = `
 <footer class="site-footer">
     <div class="site-footer-inner">
         <div class="site-statement">
-            資訊來源：臺灣證券交易所TWSE、財團法人中華民國證券櫃檯買賣中心GTSM、台灣期貨交易所及本資訊內容係經玩股網有限公司處理提供。<br>
+            資訊來源：臺灣證券交易所TWSE、財團法人中華民國證券櫃檯買賣中心GTSM、台灣期貨交易所及本資訊內容係經有限公司處理提供。<br>
             使用者須遵守台灣證券交易所「<a href="http://www.twse.com.tw/ch/products/download/regulation_use.pdf" target="_blank" rel="nofollow noopener noreferrer">交易資訊使用管理辦法</a>」等交易資訊管理相關規定，所有資訊以台灣證券交易所公告資料為主。
         </div><!-- /site-statement -->
 
         <div class="site-about cf">
-            <a href="/siteinfo/about">關於玩股網</a>
+            <a href="/siteinfo/about">關於</a>
             <a href="/Member/MemberArea/Doc_Terms">服務條款 &amp; 免責聲明</a>
             <a href="/siteinfo/faq" rel="nofollow">FAQ</a>
             <a href="/siteinfo/feedback" rel="nofollow">連絡我們</a>
-            <a href="https://m.wantgoo.com/">手機版</a>
+            <a href="https://m.gw.com/">手機版</a>
         </div><!-- /site-about -->
 
         <div class="site-local" itemscope="" itemtype="http://schema.org/LocalBusiness">
-            <span itemprop="name" class="is-obs">玩股網</span>
+            <span itemprop="name" class="is-obs"></span>
             <address class="site-address" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
                 <span itemprop="addressRegion" class="site-addr">台北市</span>
                 <span itemprop="addressLocality" class="site-addr">信義區</span>
                 <span itemprop="streetAddress" class="site-addr">基隆路一段163號7樓之3</span>
                 <span class="site-tel">諮詢專線 <b itemprop="telephone">02-2767-1556</b></span>
-                <span>客服信箱 <a href="mailto:service@wantgoo.com"><b itemprop="email" class="site-email">service@wantgoo.com</b></a></span>
+                <span>客服信箱 <a href="mailto:service@gw.com"><b itemprop="email" class="site-email">service@gw.com</b></a></span>
             </address>
         </div><!-- /site-local -->
-        <small class="site-copyr">© 2010-2019 WantGoo.com All rights reserved.<span style="color:#efefef;">@10.140.0.13</span></small>
+        <small class="site-copyr">© 2010-2019 gw.com All rights reserved.<span style="color:#efefef;">@10.140.0.19</span></small>
 
         <div class="site-social">
-            <a href="https://www.facebook.com/wantgoo.fans" title="就是愛玩股粉絲團" target="_blank" rel="noopener noreferrer" class="ic-fb"></a>
+            <a href="https://www.facebook.com/gw.fans" title="就是愛玩股粉絲團" target="_blank" rel="noopener noreferrer" class="ic-fb"></a>
         </div><!-- /site-social -->
     </div><!-- /site-footer-inner-->
 </footer>
@@ -1926,7 +1253,7 @@ const HTML = `
     <div class="d-flex justify-content-between small mt-3 text-muted">
         <span><a href="/mi/micommon/forgotpassword">忘記密碼</a></span>
 
-        <span>沒有帳號？<a href="/login/auth/register_normal?returnUrl=https://www.wantgoo.com/stock/report/basic_dp?stockno=2330">免費註冊</a></span>
+        <span>沒有帳號？<a href="/login/auth/register_normal?returnUrl=https://www.gw.com/stock/2330">免費註冊</a></span>
     </div>
 </form>
 <div id="FixModal" class="" style="display: none;">

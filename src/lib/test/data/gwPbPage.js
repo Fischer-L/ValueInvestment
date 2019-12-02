@@ -1,35 +1,40 @@
 const HTML = `
-<!-- wantgooEpsPage -->
+<!-- gwPbPage -->
 <!doctype html>
 <html lang="zh-TW">
 <head>
     <meta charset="utf-8">
-    <title>台積電(2330)每股盈餘財報 | 台股 | 玩股網</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>台積電(2330)股價淨值比分析 | 台股 | </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"  />
 
 
-    <meta property="og:title" content="台積電(2330)每股盈餘財報 | 台股 | 玩股網" />
+    <meta property="og:title" content="台積電(2330)股價淨值比分析 | 台股 | " />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.wantgoo.com/stock/report/basic_eps?stockno=2330" />
-    <meta property="og:image" content="https://www.wantgoo.com/images/wantgoo-og-default.jpg" />
-    <meta property="og:site_name" content="玩股網" />
-    <meta name="description" content="台積電(2330)每股盈餘財報，提供每股盈餘與每季收盤價比較，包含季增率、年增率等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
-    <meta property="og:description" content="台積電(2330)每股盈餘財報，提供每股盈餘與每季收盤價比較，包含季增率、年增率等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
+    <meta property="og:url" content="https://www.gw.com/stock/report/value?types=2&amp;stockno=2330" />
+    <meta property="og:image" content="https://www.gw.com/images/gw-og-default.jpg" />
+    <meta property="og:site_name" content="" />
+    <meta name="description" content="台積電(2330)股價淨值比分析，提供股價淨值比與每月收盤價比較，包含每月的股價淨值比等最新動態，更多台積電(2330)財報資訊盡在" />
+    <meta property="og:description" content="台積電(2330)股價淨值比分析，提供股價淨值比與每月收盤價比較，包含每月的股價淨值比等最新動態，更多台積電(2330)財報資訊盡在" />
 
 </head>
 <body>
-<div id="wrap">
+    <div id="wrap">
+
+
+
+
 <header id="header">
     <div class="head">
-        <div class="brand" style="top: 10px;">
-            <a href="/">
-                <img src="/images/wantgoo-logo-2019.svg" alt="WantGoo玩股網" width="120">
-            </a>
+        <div class="brand">
+                    <a href="/">
+
+                        <img src="/images/gw-logo.png" alt="gw" width="160" />
+                    </a>
         </div><!-- brand:end -->
 
         <div class="head-tools">
             <a id="aLogin" href="javascript:;" class="hide tools-btn-bor">登入</a>
-            <a id="aReg" href="/login/auth/register_normal?returnUrl=/stock/report/basic_eps?stockno=2330" class="hide tools-btn-bor" style="border-color: #f44336;color: #f44336;">免費註冊</a>
+            <a id="aReg" href="/login/auth/register_normal?returnUrl=/stock/report/value?types=2&amp;stockno=2330" class="hide tools-btn-bor" style="border-color: #f44336;color: #f44336;">免費註冊</a>
 
             <a id="aSelfCollection" href="/my/stocklist" class="hide tools-btn" title="自選股"><i class="ic-astock"></i></a>
             <a id="aInsideMail" href="/member/insidemail/inbox" class="hide tools-btn"><i class="ic-email"></i><i class="msg-bubble">0</i></a>
@@ -52,10 +57,10 @@ const HTML = `
                 <a href="/option/futures/quotes?StockNo=WTXP%26" target="_blank"> 台指期盤後</a>
 
 
-<a href='/stock/2504' title='國產,2504,10.65,▲ 0.93 (9.57%),短線--,長線▲,up' target='_blank'> 國產,2504 </a>
-<a href='/stock/5225' title='東科-KY,5225,62.10,▲ 2.9 (4.90%),短線▲,長線▲,up' target='_blank'> 東科-KY,5225 </a>
-<a href='/stock/2455' title='全新,2455,112.50,▲ 2.5 (2.27%),短線--,長線▲,up' target='_blank'> 全新,2455 </a>
-<a href='/stock/8406' title='金可-KY,8406,179.00,▲ 3 (1.70%),短線▲,長線--,up' target='_blank'> 金可-KY,8406 </a>
+<a href='/stock/3016' title='嘉晶,3016,55.30,▲ 1.4 (2.60%),短線▲,長線▲,up' target='_blank'> 嘉晶,3016 </a>
+<a href='/stock/5871' title='中租-KY,5871,134.00,▲ 5 (3.88%),短線▲,長線▲,up' target='_blank'> 中租-KY,5871 </a>
+<a href='/stock/8436' title='大江,8436,432.00,▲ 16 (3.85%),短線▲,長線▼,up' target='_blank'> 大江,8436 </a>
+<a href='/stock/3105' title='穩懋,3105,219.50,▲ 14.5 (7.07%),短線--,長線▲,up' target='_blank'> 穩懋,3105 </a>
             </div>
             <div class="search-bar-inner">
                 <div class="select-box">
@@ -70,13 +75,10 @@ const HTML = `
         </div><!-- search-bar:end -->
 
         <ul class="adWords">
-
-
-
-<li id='HeaderTextAd_7'><a href='http://bit.ly/2ppOnIZ'>老漁夫跟軌道鞅社團有何不同？</a></li>
-<li id='HeaderTextAd_4'><a href='http://bit.ly/2pwivmf'>百億操盤手被拐來玩股網開社團？</a></li>
-<li id='HeaderTextAd_3'><a href='http://bit.ly/2w6jGbY'>想要學「抓轉折」技巧的看這裡</a></li>
-<li id='HeaderTextAd_1'><a href='https://bit.ly/2Yg58mf'>每天有高手在你操作時提點？</a></li>
+<li id='HeaderTextAd_2'><a href='https://www.gw.com/laojiao/project/4'>台指當沖策略讓你先偷看</a></li>
+<li id='HeaderTextAd_7'><a href='https://www.gw.com/laojiao/project/8'>教你如何操作美股</a></li>
+<li id='HeaderTextAd_8'><a href='http://bit.ly/2JwFQxx'>每天三分鐘做完股市功課</a></li>
+<li id='HeaderTextAd_3'><a href='http://bit.ly/2Juazv7'>免費試用客製化選股工具</a></li>
         </ul>
     </div>
 </header>
@@ -84,7 +86,7 @@ const HTML = `
 <nav id="navigation">
     <div class="nav-box bg-linear box-bor">
         <ul class="nav-channel">
-            <li class="nav-channel-home"><a href="/" title="玩股網首頁" class="ic-home"></a></li>
+            <li class="nav-channel-home"><a href="/" title="首頁" class="ic-home"></a></li>
             <li>
                 <a href="/stock" onclick="sentEvent('點擊台股', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">台股</span></a>
                 <ul class="nav-channel-2">
@@ -99,7 +101,6 @@ const HTML = `
                             <li><a href="/stock/twstock/classlist?group=5" onclick="sentEvent(  '點擊台股_分類行情_概念股','導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">概念股</span></a></li>
                             <li><a href="/stock/twstock/classlist?group=6" onclick="sentEvent('點擊台股_分類行情_集團股',  '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">集團股</span></a></li>
                             <li><a href="/stock/twstock/classcont?id=^273" onclick="sentEvent( '點擊台股_分類行情_ETF', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">ETF</span></a></li>
-                            <li><a href="/stock/twstock/classcont?id=^551" onclick="sentEvent( '點擊台股_分類行情_ETN', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">ETN</span></a></li>
                         </ul>
                     </li>
                     <li>
@@ -116,7 +117,6 @@ const HTML = `
                         <a href="/stock/twstock/financingbearish?type=%E5%A4%A7%E7%9B%A4%E7%B1%8C%E7%A2%BC%E8%AE%8A%E5%8C%96" onclick="sentEvent('點擊台股_融資融券','導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">融資融券</span></a>
                         <ul class="nav-channel-3">
                             <li><a href="/stock/twstock/financingbearish?type=%E5%A4%A7%E7%9B%A4%E7%B1%8C%E7%A2%BC%E8%AE%8A%E5%8C%96" onclick="sentEvent( '點擊台股_融資融券_大盤籌碼變化', '導覽列','NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">大盤籌碼變化</span></a></li>
-                            <li><a href="/stock/twstock/financingbearish?type=%E5%A4%A7%E7%9B%A4%E6%89%A3%E9%99%A4ETF%E7%B1%8C%E7%A2%BC%E8%AE%8A%E5%8C%96" onclick="sentEvent( '點擊台股_融資融券_大盤扣除ETF籌碼變化', '導覽列','NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">大盤扣除ETF籌碼變化</span></a></li>
                             <li><a href="/stock/twstock/financingbearish?type=%E8%B3%87%E5%A2%9E" onclick="sentEvent('點擊台股_融資融券_融資增加', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">融資增加</span></a></li>
                             <li><a href="/stock/twstock/financingbearish?type=%E8%B3%87%E6%B8%9B" onclick="sentEvent('點擊台股_融資融券_融資減少', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">融資減少</span></a></li>
                             <li><a href="/stock/twstock/financingbearish?type=%E5%88%B8%E5%A2%9E" onclick="sentEvent('點擊台股_融資融券_融券增加', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">融券增加</span></a></li>
@@ -187,7 +187,6 @@ const HTML = `
                             <li><a href="/stock/futures/futures_d" onclick="sentEvent('點擊期權_期權留倉_自營持倉','導覽列',  'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">自營持倉</span></a></li>
                         </ul>
                     </li>
-                    <li><a href="/stock/futures/optionmainforceobservation" onclick="sentEvent('點擊期權_主力選擇權觀察表','導覽列',  'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">主力選擇權觀察表</span></a></li>
                     <li><a href="/stock/futures/optionstoday" onclick="sentEvent('點擊期權_選擇權支撐壓力表','導覽列',  'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">選擇權支撐壓力表</span></a></li>
                     <li><a href="/stock/futures/optionscprate" onclick="sentEvent('點擊期權_選擇權買賣權比','導覽列',  'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">選擇權買賣權比</span></a></li>
                 </ul>
@@ -208,43 +207,6 @@ const HTML = `
                     <span class="mark-words">NEW</span>
                 </div>
                 <a href="/laojiao" onclick="sentEvent('點擊老鳥說', '導覽列', 'NoLogging', { 'dimension3': '0' });" target="_blank" itemprop="url"><span itemprop="name">老鳥說</span></a>
-                <ul class="nav-channel-2" style="width: 180px;">
-                        <li>
-                            <a href="/laojiao/project/3" onclick="sentEvent('點擊老鳥說_英雄哥外匯操盤室', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                <span itemprop="name">英雄哥外匯操盤室</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/laojiao/project/4" onclick="sentEvent('點擊老鳥說_台指藏寶圖', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                <span itemprop="name">台指藏寶圖</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/laojiao/project/6" onclick="sentEvent('點擊老鳥說_期貨操盤人培訓中心', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                <span itemprop="name">期貨操盤人培訓中心</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/laojiao/project/9" onclick="sentEvent('點擊老鳥說_台指主力關鍵', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                <span itemprop="name">台指主力關鍵</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/laojiao/project/10" onclick="sentEvent('點擊老鳥說_台股導航老司機 ', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                <span itemprop="name">台股導航老司機 </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/laojiao/project/14" onclick="sentEvent('點擊老鳥說_龍吟期權書院', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                <span itemprop="name">龍吟期權書院</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/laojiao/project/17" onclick="sentEvent('點擊老鳥說_順勢致勝－趨勢指南針', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                <span itemprop="name">順勢致勝－趨勢指南針</span>
-                            </a>
-                        </li>
-                </ul>
             </li>
             <li>
                 <a href="/global" onclick="sentEvent('點擊國際','導覽列',  'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">國際</span></a>
@@ -276,7 +238,7 @@ const HTML = `
                     <li><a href="/hottip/notifysetting" onclick="sentEvent('點擊飆股搜尋_飆股通知設定','導覽列',  'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">飆股通知設定</span></a></li>
                     <li><a href="/hottip/stoploss" onclick="sentEvent('點擊飆股搜尋_停損通知設定','導覽列',  'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">停損通知設定</span></a></li>
                     <li><a href="/hottip/search/performanceanalysis" onclick="sentEvent( '點擊飆股搜尋_績效分析', '導覽列','NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">績效分析</span></a></li>
-                    <li><a href="/hottip/promotion" onclick="sentEvent('點擊飆股搜尋_飆股介紹', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">飆股介紹</span></a></li>
+                    <li><a href="/hottip/pages/intro" onclick="sentEvent('點擊飆股搜尋_飆股介紹', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">飆股介紹</span></a></li>
                     <li><a href="/hottip/pages/teaching" onclick="sentEvent('點擊飆股搜尋_教學文章', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">教學文章</span></a></li>
                     <li><a href="/hottip/pages/qa" onclick="sentEvent('點擊飆股搜尋_飆股Q&amp;A', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">飆股Q&amp;A</span></a></li>
                     <li><a href="/hottip/smartselect" onclick="sentEvent('點擊飆股搜尋_俏秘書智慧選股', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">俏秘書智慧選股</span></a></li>
@@ -319,13 +281,14 @@ const HTML = `
                             </a>
                         </li>
                         <li>
-                            <a href="/clubs/39" onclick="sentEvent('點擊社團_軌道鞅', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
+                            <a href="/clubs/25" onclick="sentEvent('點擊社團_軌道鞅', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
                                     <span itemprop="name">軌道鞅</span>
                             </a>
                         </li>
                         <li>
                             <a href="/clubs/26" onclick="sentEvent('點擊社團_黑馬', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                    <span itemprop="name">黑馬</span>
+                                    <span class="onsale" itemprop="name">黑馬</span>
+                                    <div class="mark-glint"><span class="mark-words">限時優惠</span></div>
                             </a>
                         </li>
                         <li>
@@ -344,14 +307,8 @@ const HTML = `
                             </a>
                         </li>
                         <li>
-                            <a href="/clubs/35" onclick="sentEvent('點擊社團_E哥', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                    <span itemprop="name">E哥</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/clubs/38" onclick="sentEvent('點擊社團_老漁夫', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
-                                    <span class="onsale" itemprop="name">老漁夫</span>
-                                    <div class="mark-glint"><span class="mark-words">限時優惠</span></div>
+                            <a href="/clubs/35" onclick="sentEvent('點擊社團_外匯E哥', '導覽列', 'NoLogging', { 'dimension3': '0' });" itemprop="url">
+                                    <span itemprop="name">外匯E哥</span>
                             </a>
                         </li>
                 </ul>
@@ -393,9 +350,9 @@ const HTML = `
 
 
 
-        <div class="WantgooAdv adsbox ads1000x90" name="1000x90個股" id="6057d2c1-f295-4717-ab81-82754e0aceb4">
-                        <a href="//www.wantgoo.com/admin/backoffice/adclick?id=6057d2c1-f295-4717-ab81-82754e0aceb4" title="老漁夫小資翻身 " target="_blank">
-                            <img src="https://img.wantgoo.com/wantgoofiles/banner/936536ba-27cc-4209-b014-c0fdfe6ad23d.gif" alt="老漁夫小資翻身 ">
+        <div class="gwAdv adsbox ads1000x90" name="1000x90個股" id="9e23b5bc-1b2b-41ea-ba1c-00154f870995">
+                        <a href="//www.gw.com/admin/backoffice/adclick?id=9e23b5bc-1b2b-41ea-ba1c-00154f870995" title="老鳥說平台發表 " target="_blank">
+                            <img src="https://img.gw.com/gwfiles/banner/d1e94b19-1949-4a80-b033-bad04b6ae65a.jpg" alt="老鳥說平台發表 ">
                         </a>
         </div>
 
@@ -405,32 +362,32 @@ const HTML = `
 
         <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemprop="item" href="https://www.wantgoo.com/">
-                            <span itemprop="name">玩股網</span>
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/">
+                            <span itemprop="name"></span>
                         </a>
                     <meta itemprop="position" content="1" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemprop="item" href="https://www.wantgoo.com/stock">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock">
                             <span itemprop="name">台股</span>
                         </a>
                     <meta itemprop="position" content="2" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemprop="item" href="https://www.wantgoo.com/stock/2330">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/2330">
                             <span itemprop="name">台積電(2330)</span>
                         </a>
                     <meta itemprop="position" content="3" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemprop="item" href="https://www.wantgoo.com/stock/report/basic_mr?stockno=2330">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/report/basic_mr?stockno=2330">
                             <span itemprop="name">財報股利</span>
                         </a>
                     <meta itemprop="position" content="4" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="active">
-                        <a itemprop="item" href="https://www.wantgoo.com/stock/report/basic_eps?stockno=2330">
-                            <span itemprop="name">每股盈餘</span>
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/report/value?types=2&amp;stockno=2330">
+                            <span itemprop="name">股價淨值比</span>
                         </a>
                     <meta itemprop="position" content="5" />
                 </li>
@@ -444,11 +401,11 @@ const HTML = `
     <h3 class="idx-name">
         台積電<span class="i idx-code">2330</span>
     </h3>
-    <time class="i redate">2019/10/09 14:44</time>
+    <time class="i redate">2019/04/08 14:58</time>
     <div class="idx-more">
         <small class="idx-status">上市</small>
             <span class="idx-class">
-                <a href="/stock/twstock/classcont?id=^024">半導體</a><b class="i chg up">▲0.14%</b>
+                <a href="/stock/twstock/classcont?id=^024">半導體</a><b class="i chg up">▲2.20%</b>
             </span>
         <button class="btn-sm add-mystock" name="台積電" no="2330"><span class="i">+</span>自選股</button>
     </div><!-- idx-more:end -->
@@ -457,27 +414,27 @@ const HTML = `
 
 
 
-    <div id="ChangeInfoDiv" class="i idx-change dn">
-        <span class="price dn" name="Deal">282.00</span>
-        <span class="chg" name="Change">▼4.50</span>
-        <span class="chg" name="ChangeRate">-1.57%</span>
+    <div id="ChangeInfoDiv" class="i idx-change up">
+        <span class="price up" name="Deal">253.00</span>
+        <span class="chg" name="Change">▲6.50</span>
+        <span class="chg" name="ChangeRate">2.64%</span>
     </div><!-- idx-change:end -->
 
 
     <div class="idx-data">
         <ul class="idx-data-pri">
-            <li name="Open">開盤<b class="dn">283.5</b></li>
-            <li name="High">最高<b class="dn">286</b></li>
-            <li name="Low">最低<b class="dn">282</b></li>
-            <li name="Last">昨收<b class="i">286.5</b></li>
-            <li name="Volume" class="idata-v">成交量(張)<b class="i">34,732</b></li>
-            <li class="idata-mc">市值(億)<b class="i">73,124</b></li>
-            <li>股淨比<b class="i">4.71</b></li>
-            <li>本益比<b class="i">23.06</b></li>
-            <li>偏多比<b class="i">9</b></li>
-            <li>價量分數<b class="i">5</b></li>
-            <li class="idata-wt">發行權證(檔)<b class="i">638</b></li>
-            <li class="idata-fql" style="width: 192px; padding-right: 0;">離季線<b class="i">22.11(8.51%)</b></li>
+            <li name="Open">開盤<b class="up">251</b></li>
+            <li name="High">最高<b class="up">253</b></li>
+            <li name="Low">最低<b class="up">250.5</b></li>
+            <li name="Last">昨收<b class="i">246.5</b></li>
+            <li name="Volume" class="idata-v">成交量(張)<b class="i">45,133</b></li>
+            <li class="idata-mc">市值(億)<b class="i">65,604</b></li>
+            <li>股淨比<b class="i">3.81</b></li>
+            <li>本益比<b class="i">18.21</b></li>
+            <li>偏多比<b class="i">10</b></li>
+            <li>價量分數<b class="i">12</b></li>
+            <li class="idata-wt">發行權證(檔)<b class="i">482</b></li>
+            <li class="idata-fql" style="width: 192px; padding-right: 0;">離季線<b class="i">22.35(9.69%)</b></li>
         </ul>
     </div><!-- idx-data:end -->
 </div><!-- idx-quotes:end -->
@@ -495,7 +452,6 @@ const HTML = `
         <div class="mt-x2"><button class="btn" onclick="jQuery.fancybox.close();">關閉視窗</button><button class="btn" id="goMySelectBtn">前往自選股</button></div>
     </div><!-- optional-mesg:end -->
 </div>
-
 <div class="hd bg-linear mb-x1 mt-neg">
     <ul class="sub-menu dd-menu">
         <li class="curts"><a href="/stock/2330">即時行情</a></li>
@@ -585,231 +541,851 @@ const HTML = `
 </div><!-- hd:end -->
 
 
-    <div id="mainCol">
-        <h1 class="heading">台積電(2330)每股盈餘</h1>
-            <div id="chartBasicEps" class="wChart mb-x1"></div><!-- chartBasicEps:end -->
 
-            <div id="explain" class="explain">
-                <h2>每股盈餘(<span class="ig">EPS</span>)</h2>
+    <div id="mainCol">
+        <h1 class="heading">台積電(2330)股價淨值比</h1>
+            <div id="chart" class="wChart mb-x1"></div><!-- chartValueCdy:end -->
+
+            <div id="explain_1" class="explain">
+                <h2>本益比</h2>
                 <p>
-                    <span class="bak">公式：<span class="ig">EPS</span> = 稅後淨利 / 已發行股數</span><br />
-                    代表著每股獲利能力，<span class="ig">EPS</span>越高=每股報酬率越高。通常<span class="ig">EPS</span>年成長率高的公司，享有的股價/本益比也越高。
+                    <span class="bak">公式：本益比 = 月均價 / 近4季EPS總和</span><br>
+                    本益比衡量：股價相對於EPS獲利的高低。 本益比越高，代表股價越貴，潛在報酬率越低； 本益比越低，代表股價越便宜，潛在報酬率越高，但是並不是絕對，因為當產業或個股獲利成長性越高，市場願意給予的本益比也越高，但還可能會越來越高，因此本益比應配合產業、獲利成長性做觀察。
+                </p>
+            </div>
+            <div id="explain_2" class="explain">
+                <h2>股價淨值比</h2>
+                <p>
+                    <span class="bak">公式：股價淨值比 = 月均價 / 每股淨值</span><br>
+                    股價淨值比衡量：股價相對於每股淨值的高低。 因此當股價淨值比越高，代表股價越貴，潛在報酬率越低； 股價淨值比越低，代表股價越便宜，潛在報酬率越高。 當產業或個股獲利處於成長，市場願意給的股價較高，因此股價淨值比會偏高； 當產業或個股獲利處於成熟期，沒有想像空間，市場願意給的股價較低，因此股價淨值比會偏低。 因此股價淨值比較適合：和公司本身歷史股價淨值比的比較，或是和同一產業其他公司的比較。 另外景氣循環產業獲利波動大，例如塑化業，DRam，使用股價淨值比評價較本益比適合。
+                </p>
+            </div>
+            <div id="explain_3" class="explain">
+                <h2>現金股利殖利率</h2>
+                <p>
+                    <span class="bak">公式：現金股利殖利率 = 現金股利 / 月均價 * 100%</span><br />
+                    現金股利殖利率是以現金股利和股價做相比，衡量潛在報酬率的高低。 現金股利殖利率越高，潛在報酬率越高。 觀察現金股利殖利率有幾個重點：<br />
+                    1. 股息不要只看一年，要看一個景氣循環，或至少五年。<br />
+                    2. 會賺錢的公司才會配息，所以重點還是在公司的產業、獲利、體質的長期觀察。<br />
+                    3. 時常虧錢、或是自由現金流量不足的公司竟然能配息...這就要提防是公司為了取悅市場，挖東牆補西牆的結果，最好不要碰這種不肖公司。
                 </p>
             </div><!-- explain:end -->
             <div class="br-trl">
-                <table cellpadding="0" cellspacing="0" class="tb tbhl">
-                    <caption class="hd-sm">每股盈餘<span class="ic-ask" title="名詞解釋"></span><span class="more"><small class="unit">單位：元</small></span></caption>
+                <table cellpadding="0" cellspacing="0" class="tb rw4n tbhl">
+                    <caption class="hd-sm">
+                        股價淨值比<span class="ic-ask" title="名詞解釋"></span>
+                    </caption>
                     <thead class="thd">
                         <tr>
-                            <th>年度/季別</th>
-                            <th>每股盈餘</th>
-                            <th>季增率%</th>
-                            <th>年增率%</th>
-                            <th>季收盤價</th>
+                            <th class="cr">年度/月份</th>
+                            <th width="35%">股價淨值比(倍)</th>
+                            <th>月收盤價</th>
                         </tr>
                     </thead>
                     <tbody>
-
                                 <tr>
-                                    <td class="cr">2019 Q2</td>
-                                    <td>2.57</td>
-                                    <td>8.44</td>
-                                    <td>-7.89</td>
+                                    <td class="cr">2019/4</td>
+                                    <td>3.81</td>
+                                    <td>253</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2019/3</td>
+                                    <td>3.8</td>
+                                    <td>245.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2019/2</td>
+                                    <td>3.7</td>
                                     <td>239</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2019 Q1</td>
-                                    <td>2.37</td>
-                                    <td>-38.44</td>
-                                    <td>-31.5</td>
-                                    <td>245.5</td>
-                                </tr>
-                                <tr class="tal">
-                                    <td class="cn cr">總計</td>
-                                    <td>4.94</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td class="cr">2019/1</td>
+                                    <td>3.64</td>
+                                    <td>221</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2018 Q4</td>
-                                    <td>3.85</td>
-                                    <td>11.92</td>
-                                    <td>0.52</td>
+                                    <td class="cr">2018/12</td>
+                                    <td>3.71</td>
                                     <td>225.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2018 Q3</td>
-                                    <td>3.44</td>
-                                    <td>23.3</td>
-                                    <td>-0.58</td>
+                                    <td class="cr">2018/11</td>
+                                    <td>3.71</td>
+                                    <td>225.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2018/10</td>
+                                    <td>4.07</td>
+                                    <td>234</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2018/9</td>
+                                    <td>4.57</td>
                                     <td>262.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2018 Q2</td>
-                                    <td>2.79</td>
-                                    <td>-19.36</td>
-                                    <td>8.98</td>
+                                    <td class="cr">2018/8</td>
+                                    <td>4.46</td>
+                                    <td>256</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2018/7</td>
+                                    <td>3.97</td>
+                                    <td>246</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2018/6</td>
+                                    <td>3.5</td>
                                     <td>216.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2018 Q1</td>
-                                    <td>3.46</td>
-                                    <td>-9.66</td>
-                                    <td>2.37</td>
-                                    <td>247.5</td>
-                                </tr>
-                                <tr class="tal">
-                                    <td class="cn cr">總計</td>
-                                    <td>13.54</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td class="cr">2018/5</td>
+                                    <td>3.62</td>
+                                    <td>224</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2017 Q4</td>
-                                    <td>3.83</td>
-                                    <td>10.69</td>
-                                    <td>-0.78</td>
+                                    <td class="cr">2018/4</td>
+                                    <td>3.87</td>
+                                    <td>227</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2018/3</td>
+                                    <td>4.22</td>
+                                    <td>247.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2018/2</td>
+                                    <td>4.19</td>
+                                    <td>246</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2018/1</td>
+                                    <td>4.62</td>
+                                    <td>255</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2017/12</td>
+                                    <td>4.16</td>
                                     <td>229.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2017 Q3</td>
-                                    <td>3.46</td>
-                                    <td>35.16</td>
-                                    <td>-7.49</td>
+                                    <td class="cr">2017/11</td>
+                                    <td>4.1</td>
+                                    <td>226</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2017/10</td>
+                                    <td>4.7</td>
+                                    <td>243</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2017/9</td>
+                                    <td>4.18</td>
                                     <td>216.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2017 Q2</td>
-                                    <td>2.56</td>
-                                    <td>-24.26</td>
-                                    <td>-8.24</td>
+                                    <td class="cr">2017/8</td>
+                                    <td>4.18</td>
+                                    <td>216.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2017/7</td>
+                                    <td>3.82</td>
+                                    <td>214.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2017/6</td>
+                                    <td>3.71</td>
                                     <td>208.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2017 Q1</td>
-                                    <td>3.38</td>
-                                    <td>-12.44</td>
-                                    <td>35.2</td>
-                                    <td>189</td>
-                                </tr>
-                                <tr class="tal">
-                                    <td class="cn cr">總計</td>
-                                    <td>13.23</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td class="cr">2017/5</td>
+                                    <td>3.62</td>
+                                    <td>203</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2016 Q4</td>
-                                    <td>3.86</td>
-                                    <td>3.21</td>
-                                    <td>37.37</td>
+                                    <td class="cr">2017/4</td>
+                                    <td>3.63</td>
+                                    <td>194.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2017/3</td>
+                                    <td>3.53</td>
+                                    <td>189</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2017/2</td>
+                                    <td>3.53</td>
+                                    <td>189</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2017/1</td>
+                                    <td>3.75</td>
+                                    <td>185.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2016/12</td>
+                                    <td>3.67</td>
                                     <td>181.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2016 Q3</td>
-                                    <td>3.74</td>
-                                    <td>34.05</td>
-                                    <td>28.97</td>
+                                    <td class="cr">2016/11</td>
+                                    <td>3.7</td>
+                                    <td>183</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2016/10</td>
+                                    <td>4.09</td>
+                                    <td>188.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2016/9</td>
+                                    <td>3.96</td>
                                     <td>182.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2016 Q2</td>
-                                    <td>2.79</td>
-                                    <td>11.6</td>
-                                    <td>-8.82</td>
+                                    <td class="cr">2016/8</td>
+                                    <td>3.81</td>
+                                    <td>176</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2016/7</td>
+                                    <td>3.49</td>
+                                    <td>172.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2016/6</td>
+                                    <td>3.29</td>
                                     <td>162.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2016 Q1</td>
-                                    <td>2.5</td>
-                                    <td>-11.03</td>
-                                    <td>-18.03</td>
-                                    <td>162</td>
-                                </tr>
-                                <tr class="tal">
-                                    <td class="cn cr">總計</td>
-                                    <td>12.89</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td class="cr">2016/5</td>
+                                    <td>3.17</td>
+                                    <td>156.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2015 Q4</td>
-                                    <td>2.81</td>
-                                    <td>-3.1</td>
-                                    <td>-9.06</td>
+                                    <td class="cr">2016/4</td>
+                                    <td>3.18</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2016/3</td>
+                                    <td>3.44</td>
+                                    <td>162</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2016/2</td>
+                                    <td>3.16</td>
+                                    <td>149</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2016/1</td>
+                                    <td>3.2</td>
+                                    <td>142</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2015/12</td>
+                                    <td>3.22</td>
                                     <td>143</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2015 Q3</td>
-                                    <td>2.9</td>
-                                    <td>-5.23</td>
-                                    <td>-1.36</td>
+                                    <td class="cr">2015/11</td>
+                                    <td>3.13</td>
+                                    <td>139</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2015/10</td>
+                                    <td>3.32</td>
+                                    <td>136.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2015/9</td>
+                                    <td>3.16</td>
                                     <td>130</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2015 Q2</td>
-                                    <td>3.06</td>
-                                    <td>0.33</td>
-                                    <td>33.04</td>
+                                    <td class="cr">2015/8</td>
+                                    <td>3.14</td>
+                                    <td>129</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2015/7</td>
+                                    <td>3.22</td>
+                                    <td>139.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2015/6</td>
+                                    <td>3.24</td>
                                     <td>140.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2015 Q1</td>
-                                    <td>3.05</td>
-                                    <td>-1.29</td>
-                                    <td>64.86</td>
-                                    <td>145.5</td>
-                                </tr>
-                                <tr class="tal">
-                                    <td class="cn cr">總計</td>
-                                    <td>11.82</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td class="cr">2015/5</td>
+                                    <td>3.37</td>
+                                    <td>146</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2014 Q4</td>
-                                    <td>3.09</td>
-                                    <td>5.1</td>
-                                    <td>78.61</td>
+                                    <td class="cr">2015/4</td>
+                                    <td>3.65</td>
+                                    <td>147</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2015/3</td>
+                                    <td>3.61</td>
+                                    <td>145.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2015/2</td>
+                                    <td>3.73</td>
+                                    <td>150.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2015/1</td>
+                                    <td>3.82</td>
                                     <td>141</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2014 Q3</td>
-                                    <td>2.94</td>
-                                    <td>27.83</td>
-                                    <td>47</td>
+                                    <td class="cr">2014/12</td>
+                                    <td>3.82</td>
+                                    <td>141</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2014/11</td>
+                                    <td>3.84</td>
+                                    <td>141.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2014/10</td>
+                                    <td>3.86</td>
+                                    <td>130.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2014/9</td>
+                                    <td>3.55</td>
                                     <td>120</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2014 Q2</td>
-                                    <td>2.3</td>
-                                    <td>24.32</td>
-                                    <td>15</td>
+                                    <td class="cr">2014/8</td>
+                                    <td>3.67</td>
+                                    <td>124</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2014/7</td>
+                                    <td>3.5</td>
+                                    <td>121</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2014/6</td>
+                                    <td>3.65</td>
                                     <td>126.5</td>
                                 </tr>
                                 <tr>
-                                    <td class="cr">2014 Q1</td>
-                                    <td>1.85</td>
-                                    <td>6.94</td>
-                                    <td>20.92</td>
+                                    <td class="cr">2014/5</td>
+                                    <td>3.45</td>
+                                    <td>119.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2014/4</td>
+                                    <td>3.62</td>
                                     <td>118.5</td>
                                 </tr>
-                                    <tr class="tal">
-                                        <td class="cn cr">總計</td>
-                                        <td>10.18</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
+                                <tr>
+                                    <td class="cr">2014/3</td>
+                                    <td>3.62</td>
+                                    <td>118.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2014/2</td>
+                                    <td>3.3</td>
+                                    <td>108</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2014/1</td>
+                                    <td>3.39</td>
+                                    <td>108</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/12</td>
+                                    <td>3.4</td>
+                                    <td>105.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/11</td>
+                                    <td>3.39</td>
+                                    <td>105</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/10</td>
+                                    <td>3.81</td>
+                                    <td>109.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/9</td>
+                                    <td>3.49</td>
+                                    <td>100.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/8</td>
+                                    <td>3.49</td>
+                                    <td>100.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/7</td>
+                                    <td>3.47</td>
+                                    <td>102.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/6</td>
+                                    <td>3.76</td>
+                                    <td>111</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/5</td>
+                                    <td>3.71</td>
+                                    <td>109.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/4</td>
+                                    <td>3.92</td>
+                                    <td>109.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/3</td>
+                                    <td>3.6</td>
+                                    <td>100.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/2</td>
+                                    <td>3.75</td>
+                                    <td>104.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2013/1</td>
+                                    <td>3.9</td>
+                                    <td>101.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/12</td>
+                                    <td>3.73</td>
+                                    <td>97</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/11</td>
+                                    <td>3.79</td>
+                                    <td>98.7</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/10</td>
+                                    <td>3.41</td>
+                                    <td>88.7</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/9</td>
+                                    <td>3.71</td>
+                                    <td>89.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/8</td>
+                                    <td>3.44</td>
+                                    <td>83.3</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/7</td>
+                                    <td>3.18</td>
+                                    <td>81</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/6</td>
+                                    <td>3.19</td>
+                                    <td>81.3</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/5</td>
+                                    <td>3.34</td>
+                                    <td>85.1</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/4</td>
+                                    <td>3.4</td>
+                                    <td>86.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/3</td>
+                                    <td>3.49</td>
+                                    <td>84.9</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/2</td>
+                                    <td>3.51</td>
+                                    <td>81.1</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2012/1</td>
+                                    <td>3.4</td>
+                                    <td>78.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/12</td>
+                                    <td>3.28</td>
+                                    <td>75.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/11</td>
+                                    <td>3.23</td>
+                                    <td>74.6</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/10</td>
+                                    <td>3.19</td>
+                                    <td>73.6</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/9</td>
+                                    <td>3.22</td>
+                                    <td>70</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/8</td>
+                                    <td>3.19</td>
+                                    <td>69.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/7</td>
+                                    <td>3.07</td>
+                                    <td>72</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/6</td>
+                                    <td>3.08</td>
+                                    <td>72.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/5</td>
+                                    <td>3.27</td>
+                                    <td>76.7</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/4</td>
+                                    <td>3.3</td>
+                                    <td>73.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/3</td>
+                                    <td>3.41</td>
+                                    <td>70.6</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/2</td>
+                                    <td>3.4</td>
+                                    <td>70.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2011/1</td>
+                                    <td>3.68</td>
+                                    <td>76.3</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/12</td>
+                                    <td>3.43</td>
+                                    <td>71</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/11</td>
+                                    <td>3.06</td>
+                                    <td>63.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/10</td>
+                                    <td>3.03</td>
+                                    <td>62.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/9</td>
+                                    <td>3.26</td>
+                                    <td>62</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/8</td>
+                                    <td>3.1</td>
+                                    <td>58.9</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/7</td>
+                                    <td>3.06</td>
+                                    <td>62.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/6</td>
+                                    <td>2.97</td>
+                                    <td>60.6</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/5</td>
+                                    <td>2.95</td>
+                                    <td>60.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/4</td>
+                                    <td>3.03</td>
+                                    <td>61.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/3</td>
+                                    <td>3.22</td>
+                                    <td>61.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/2</td>
+                                    <td>3.08</td>
+                                    <td>58.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2010/1</td>
+                                    <td>3.44</td>
+                                    <td>61.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/12</td>
+                                    <td>3.58</td>
+                                    <td>64.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/11</td>
+                                    <td>3.42</td>
+                                    <td>61.1</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/10</td>
+                                    <td>3.36</td>
+                                    <td>60</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/9</td>
+                                    <td>3.85</td>
+                                    <td>64.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/8</td>
+                                    <td>3.53</td>
+                                    <td>59.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/7</td>
+                                    <td>3.13</td>
+                                    <td>58.9</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/6</td>
+                                    <td>2.91</td>
+                                    <td>54.7</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/5</td>
+                                    <td>3.21</td>
+                                    <td>60.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/4</td>
+                                    <td>2.97</td>
+                                    <td>55.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/3</td>
+                                    <td>2.76</td>
+                                    <td>51.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/2</td>
+                                    <td>2.49</td>
+                                    <td>44.95</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2009/1</td>
+                                    <td>2.23</td>
+                                    <td>40.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/12</td>
+                                    <td>2.49</td>
+                                    <td>44.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/11</td>
+                                    <td>2.29</td>
+                                    <td>40.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/10</td>
+                                    <td>2.69</td>
+                                    <td>48</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/9</td>
+                                    <td>3.1</td>
+                                    <td>52.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/8</td>
+                                    <td>3.47</td>
+                                    <td>58.9</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/7</td>
+                                    <td>2.89</td>
+                                    <td>56.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/6</td>
+                                    <td>3.27</td>
+                                    <td>65</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/5</td>
+                                    <td>3.3</td>
+                                    <td>65.6</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/4</td>
+                                    <td>3.36</td>
+                                    <td>66.7</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/3</td>
+                                    <td>3.42</td>
+                                    <td>63.1</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/2</td>
+                                    <td>3.25</td>
+                                    <td>61.6</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2008/1</td>
+                                    <td>3.16</td>
+                                    <td>59.9</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/12</td>
+                                    <td>-</td>
+                                    <td>62</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/11</td>
+                                    <td>-</td>
+                                    <td>60.6</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/10</td>
+                                    <td>-</td>
+                                    <td>63.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/9</td>
+                                    <td>-</td>
+                                    <td>63.3</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/8</td>
+                                    <td>-</td>
+                                    <td>62.7</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/7</td>
+                                    <td>-</td>
+                                    <td>65</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/6</td>
+                                    <td>-</td>
+                                    <td>70.9</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/5</td>
+                                    <td>-</td>
+                                    <td>68.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/4</td>
+                                    <td>-</td>
+                                    <td>68.7</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/3</td>
+                                    <td>-</td>
+                                    <td>67.9</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/2</td>
+                                    <td>-</td>
+                                    <td>69.3</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2007/1</td>
+                                    <td>-</td>
+                                    <td>67.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/12</td>
+                                    <td>-</td>
+                                    <td>67.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/11</td>
+                                    <td>-</td>
+                                    <td>65.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/10</td>
+                                    <td>-</td>
+                                    <td>61</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/9</td>
+                                    <td>-</td>
+                                    <td>59.7</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/8</td>
+                                    <td>-</td>
+                                    <td>58.1</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/7</td>
+                                    <td>-</td>
+                                    <td>54.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/6</td>
+                                    <td>-</td>
+                                    <td>58.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/5</td>
+                                    <td>-</td>
+                                    <td>60.3</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/4</td>
+                                    <td>-</td>
+                                    <td>68.1</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/3</td>
+                                    <td>-</td>
+                                    <td>64.2</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/2</td>
+                                    <td>-</td>
+                                    <td>60.9</td>
+                                </tr>
+                                <tr>
+                                    <td class="cr">2006/1</td>
+                                    <td>-</td>
+                                    <td>63.5</td>
+                                </tr>
                     </tbody>
                 </table>
-            </div><!-- 每股盈餘:end -->
-
+            </div><!-- 現金殖利率:end -->
     </div><!-- mainCol:end -->
 
     ﻿
@@ -834,41 +1410,44 @@ const HTML = `
         </thead>
         <tbody>
                     <tr>
-                        <td class="cn"><span class="el">新加坡商瑞銀</span></td>
-                        <td class="up">+1370</td>
-                        <td class="cn"><span class="el">美商高盛</span></td>
-                        <td class="dn">-1699</td>
-                    </tr>
-                    <tr>
                         <td class="cn"><span class="el">台灣摩根士丹利</span></td>
-                        <td class="up">+1213</td>
-                        <td class="cn"><span class="el">摩根大通</span></td>
-                        <td class="dn">-1689</td>
+                        <td class="up">+6937</td>
+                        <td class="cn"><span class="el">港商麥格理</span></td>
+                        <td class="dn">-5770</td>
                     </tr>
                     <tr>
-                        <td class="cn"><span class="el">統一</span></td>
-                        <td class="up">+634</td>
-                        <td class="cn"><span class="el">美林</span></td>
-                        <td class="dn">-1631</td>
+                        <td class="cn"><span class="el">香港上海匯豐</span></td>
+                        <td class="up">+4180</td>
+                        <td class="cn"><span class="el">大和國泰</span></td>
+                        <td class="dn">-2353</td>
                     </tr>
                     <tr>
-                        <td class="cn"><span class="el">群益金鼎-敦南</span></td>
-                        <td class="up">+460</td>
+                        <td class="cn"><span class="el">東方匯理</span></td>
+                        <td class="up">+2901</td>
                         <td class="cn"><span class="el">元大</span></td>
-                        <td class="dn">-1412</td>
+                        <td class="dn">-1392</td>
                     </tr>
                     <tr>
-                        <td class="cn"><span class="el">宏遠</span></td>
-                        <td class="up">+379</td>
+                        <td class="cn"><span class="el">美林</span></td>
+                        <td class="up">+2527</td>
+                        <td class="cn"><span class="el">兆豐</span></td>
+                        <td class="dn">-1128</td>
+                    </tr>
+                    <tr>
+                        <td class="cn"><span class="el">新加坡商瑞銀</span></td>
+                        <td class="up">+2459</td>
                         <td class="cn"><span class="el">國泰</span></td>
-                        <td class="dn">-1316</td>
+                        <td class="dn">-1052</td>
                     </tr>
         </tbody>
     </table>
 
 
-    </div>
+    </div><!-- 主力進出:end -->
 
+
+        <div class="gwAdv adsbox ads300x250" name="300x250台股右上" id="a19f72f2-7243-4ce3-ad5d-bf7db5d70b6b">
+        </div>
 
     <div class="sd-classstk  br-t">
 
@@ -886,28 +1465,28 @@ const HTML = `
         </thead>
         <tbody>
                 <tr>
-                    <td class="cn"><a href="/stock/twstock/classcont?id=71" target="_blank">IC生產</a></td>
-                    <td class="up">▲1.35</td>
-                        <td class="cn"><a href="/stock/twstock/classcont?id=411" target="_blank">車聯網</a></td>
-                        <td class="up">▲0.56</td>
+                    <td class="cn"><a href="/stock/twstock/classcont?id=453" target="_blank">人臉辨識</a></td>
+                    <td class="up">▲2.32</td>
+                        <td class="cn"><a href="/stock/twstock/classcont?id=71" target="_blank">IC生產</a></td>
+                        <td class="up">▲2.16</td>
                 </tr>
                 <tr>
-                    <td class="cn"><a href="/stock/twstock/classcont?id=446" target="_blank">MOSFET</a></td>
-                    <td class="up">▲0.39</td>
+                    <td class="cn"><a href="/stock/twstock/classcont?id=169" target="_blank">台積電</a></td>
+                    <td class="up">▲2.15</td>
+                        <td class="cn"><a href="/stock/twstock/classcont?id=462" target="_blank">比特幣</a></td>
+                        <td class="up">▲1.89</td>
+                </tr>
+                <tr>
+                    <td class="cn"><a href="/stock/twstock/classcont?id=479" target="_blank">美國ADR</a></td>
+                    <td class="up">▲1.86</td>
+                        <td class="cn"><a href="/stock/twstock/classcont?id=331" target="_blank">赴美掛牌</a></td>
+                        <td class="up">▲1.86</td>
+                </tr>
+                <tr>
+                    <td class="cn"><a href="/stock/twstock/classcont?id=439" target="_blank">3D感測</a></td>
+                    <td class="up">▲1.86</td>
                         <td class="cn"><a href="/stock/twstock/classcont?id=104" target="_blank">晶圓代工</a></td>
-                        <td class="up">▲0.35</td>
-                </tr>
-                <tr>
-                    <td class="cn"><a href="/stock/twstock/classcont?id=309" target="_blank">美國電子相關</a></td>
-                    <td class="up">▲0.35</td>
-                        <td class="cn"><a href="/stock/twstock/classcont?id=490" target="_blank">智慧衣</a></td>
-                        <td class="up">▲0.33</td>
-                </tr>
-                <tr>
-                    <td class="cn"><a href="/stock/twstock/classcont?id=346" target="_blank">智慧城市</a></td>
-                    <td class="up">▲0.20</td>
-                        <td class="cn"><a href="/stock/twstock/classcont?id=361" target="_blank">蘋果供應</a></td>
-                        <td class="up">▲0.17</td>
+                        <td class="up">▲1.85</td>
                 </tr>
         </tbody>
     </table>
@@ -931,46 +1510,46 @@ const HTML = `
         </thead>
         <tbody>
                 <tr>
-                    <td class="cn">台積電台新9C購01</td>
-                    <td class="cr">2020-12-31</td>
-                        <td class="cn">台積電台新9C購01</td>
-                        <td class="cr">2020-09-04</td>
+                    <td class="cn">台積電台新97購01</td>
+                    <td class="cr">2020-07-27</td>
+                        <td class="cn">台積電台新97購01</td>
+                        <td class="cr">2019-12-26</td>
                 </tr>
                 <tr>
-                    <td class="cn">台積電統一99購01</td>
-                    <td class="cr">2020-09-04</td>
-                        <td class="cn">台積電統一99購01</td>
-                        <td class="cr">2020-07-27</td>
+                    <td class="cn">台積電統一8C售01</td>
+                    <td class="cr">2019-12-26</td>
+                        <td class="cn">台積電統一8C售01</td>
+                        <td class="cr">2019-12-25</td>
                 </tr>
                 <tr>
-                    <td class="cn">台積電元大96購03</td>
-                    <td class="cr">2020-06-15</td>
-                        <td class="cn">台積電元大96購03</td>
-                        <td class="cr">2020-06-08</td>
+                    <td class="cn">台積電群益8C購02</td>
+                    <td class="cr">2019-12-13</td>
+                        <td class="cn">台積電群益8C購02</td>
+                        <td class="cr">2019-12-10</td>
                 </tr>
                 <tr>
-                    <td class="cn">台積電元大96購01</td>
-                    <td class="cr">2020-06-02</td>
-                        <td class="cn">台積電元大96購01</td>
-                        <td class="cr">2020-06-01</td>
+                    <td class="cn">台積電台新8C購01</td>
+                    <td class="cr">2019-12-02</td>
+                        <td class="cn">台積電台新8C購01</td>
+                        <td class="cr">2019-11-28</td>
                 </tr>
                 <tr>
-                    <td class="cn">台積電國泰95售01</td>
-                    <td class="cr">2020-06-01</td>
-                        <td class="cn">台積電國泰95售01</td>
-                        <td class="cr">2020-06-01</td>
+                    <td class="cn">台積電統一8B售01</td>
+                    <td class="cr">2019-11-20</td>
+                        <td class="cn">台積電統一8B售01</td>
+                        <td class="cr">2019-11-18</td>
                 </tr>
                 <tr>
-                    <td class="cn">台積電中信95售06</td>
-                    <td class="cr">2020-05-26</td>
-                        <td class="cn">台積電中信95售06</td>
-                        <td class="cr">2020-05-26</td>
+                    <td class="cn">台積電中信8B購03</td>
+                    <td class="cr">2019-11-18</td>
+                        <td class="cn">台積電中信8B購03</td>
+                        <td class="cr">2019-11-14</td>
                 </tr>
                 <tr>
-                    <td class="cn">台積電中信95售05</td>
-                    <td class="cr">2020-05-25</td>
-                        <td class="cn">台積電中信95售05</td>
-                        <td class="cr">2020-05-25</td>
+                    <td class="cn">台積電中信8B售01</td>
+                    <td class="cr">2019-11-07</td>
+                        <td class="cn">台積電中信8B售01</td>
+                        <td class="cr">2019-11-05</td>
                 </tr>
         </tbody>
     </table>
@@ -980,13 +1559,17 @@ const HTML = `
     </form>
 
 
-    </div>
+    </div><!-- 權證:end -->
+
+
+        <div class="gwAdv adsbox ads300x250" name="300x250個股右下" id="a7f3528c-b5ec-4096-8271-efabac2e6b04">
+        </div>
 
     <div class="sd-kindstk">
 
 
     <table cellpadding="0" cellspacing="0" class="tb rw5n tbhl">
-        <caption class="hd-sm">同類個股<span class="more"><a href="/stock/twstock/classcont?id=71">更多</a></span></caption>
+        <caption class="hd-sm">同類個股<span class="more"><a href="/stock/twstock/classcont?id=453">更多</a></span></caption>
         <thead class="thd">
             <tr>
                 <th width="24%">股票</th>
@@ -998,46 +1581,46 @@ const HTML = `
         </thead>
         <tbody>
                 <tr>
+                    <td class="cn"><a href="/stock/3105" target="_blank">穩懋</a></td>
+                    <td>219.5</td>
+                    <td class="up">▲14.5</td>
+                    <td class="up">7.07%</td>
+                    <td>13,118,000</td>
+                </tr>
+                <tr>
+                    <td class="cn"><a href="/stock/3406" target="_blank">玉晶光</a></td>
+                    <td>435</td>
+                    <td class="up">▲26.5</td>
+                    <td class="up">6.49%</td>
+                    <td>13,707,000</td>
+                </tr>
+                <tr>
+                    <td class="cn"><a href="/stock/2405" target="_blank">浩鑫</a></td>
+                    <td>13.55</td>
+                    <td class="up">▲0.2</td>
+                    <td class="up">1.50%</td>
+                    <td>2,637,000</td>
+                </tr>
+                <tr>
+                    <td class="cn"><a href="/stock/6271" target="_blank">同欣電</a></td>
+                    <td>103.5</td>
+                    <td class="up">▲1.5</td>
+                    <td class="up">1.47%</td>
+                    <td>666,000</td>
+                </tr>
+                <tr>
+                    <td class="cn"><a href="/stock/3227" target="_blank">原相</a></td>
+                    <td>92.1</td>
+                    <td class="up">▲1.3</td>
+                    <td class="up">1.43%</td>
+                    <td>2,878,000</td>
+                </tr>
+                <tr>
                     <td class="cn"><a href="/stock/4919" target="_blank">新唐</a></td>
-                    <td>49.6</td>
-                    <td class="up">▲0.4</td>
-                    <td class="up">0.81%</td>
-                    <td>1,601,000</td>
-                </tr>
-                <tr>
-                    <td class="cn"><a href="/stock/5347" target="_blank">世界</a></td>
-                    <td>61.7</td>
-                    <td class="dn">▼-0.7</td>
-                    <td class="dn">-1.12%</td>
-                    <td>1,709,000</td>
-                </tr>
-                <tr>
-                    <td class="cn"><a href="/stock/3707" target="_blank">漢磊</a></td>
-                    <td>26.55</td>
-                    <td class="dn">▼-0.6</td>
-                    <td class="dn">-2.21%</td>
-                    <td>7,719,000</td>
-                </tr>
-                <tr>
-                    <td class="cn"><a href="/stock/2337" target="_blank">旺宏</a></td>
-                    <td>31.9</td>
-                    <td class="dn">▼-0.75</td>
-                    <td class="dn">-2.30%</td>
-                    <td>72,001,000</td>
-                </tr>
-                <tr>
-                    <td class="cn"><a href="/stock/2344" target="_blank">華邦電</a></td>
-                    <td>16.9</td>
-                    <td class="dn">▼-0.7</td>
-                    <td class="dn">-3.98%</td>
-                    <td>42,975,000</td>
-                </tr>
-                <tr>
-                    <td class="cn"><a href="/stock/6287" target="_blank">元隆</a></td>
-                    <td>2.06</td>
-                    <td class="dn">▼-0.1</td>
-                    <td class="dn">-4.63%</td>
-                    <td>28,000</td>
+                    <td>53.4</td>
+                    <td class="up">▲0.7</td>
+                    <td class="up">1.33%</td>
+                    <td>2,906,000</td>
                 </tr>
         </tbody>
     </table>
@@ -1061,11 +1644,18 @@ const HTML = `
         </thead>
         <tbody>
                 <tr>
+                    <td class="cn"><a href="/stock/2303" target="_blank">聯電</a></td>
+                    <td>11.9</td>
+                    <td class="up">▲0.35</td>
+                    <td class="up">3.03%</td>
+                    <td>105,478</td>
+                </tr>
+                <tr>
                     <td class="cn"><a href="/stock/STM" target="_blank">意法半導體</a></td>
-                    <td>21.05</td>
-                    <td class="up">▲1.41</td>
-                    <td class="up">7.18%</td>
-                    <td>3,730</td>
+                    <td>17.4</td>
+                    <td class="up">▲0.45</td>
+                    <td class="up">2.65%</td>
+                    <td>3,716</td>
                 </tr>
                 <tr>
                     <td class="cn"><a href="/stock/2325" target="_blank">矽品</a></td>
@@ -1073,13 +1663,6 @@ const HTML = `
                     <td class="">0</td>
                     <td class="">0.00%</td>
                     <td>28,056</td>
-                </tr>
-                <tr>
-                    <td class="cn"><a href="/stock/2303" target="_blank">聯電</a></td>
-                    <td>13.15</td>
-                    <td class="dn">▼-0.2</td>
-                    <td class="dn">-1.50%</td>
-                    <td>38,270</td>
                 </tr>
                 <tr>
                     <td class="cn"><a href="/stock/2311" target="_blank">日月光</a></td>
@@ -1100,16 +1683,16 @@ const HTML = `
 
     <div class="hd-sm">即時新聞<a class="more" href="/stock/astock/news?StockNo=2330">更多新聞焦點</a></div>
     <ul class="ell lists">
-            <li><a href="/news/content/index?ID=1017886">美股盤後 - 美中達「第一階段」協議+Fed延長回購！道瓊漲逾300點</a><time class="update">19小時前</time></li>
-            <li><a href="/news/content/index?ID=1017878">美股早盤 - 川普報喜談判「非常順利」+脫歐露曙光 道瓊漲近400點</a><time class="update">1天前</time></li>
-            <li><a href="/news/content/index?ID=1017860">美股盤後 — 美中高層級談判開局順利 四大指數同步收漲</a><time class="update">1天前</time></li>
-            <li><a href="/news/content/index?ID=1017855">美股早盤 - 劉鶴稱「抱持極大誠意而來」激勵道瓊早盤跳漲逾150點</a><time class="update">2天前</time></li>
-            <li><a href="/news/content/index?ID=1017833">美股盤後 — 美中僅可能達成有限貿易協議 四大指數連二跌止步</a><time class="update">2天前</time></li>
-            <li><a href="/news/content/index?ID=1017827">美股早盤 - 樂見Fed擴表+靜待鮑爾Fed Listens圓桌會議 道瓊早盤反彈逾150點</a><time class="update">3天前</time></li>
-            <li><a href="/news/content/index?ID=1017805">台股連假前夕賣壓湧現 短線看貿易戰談判結果 盤勢估狹幅整理</a><time class="update">3天前</time></li>
-            <li><a href="/news/content/index?ID=1017800">◆外資連續5日買超個股</a><time class="update">3天前</time></li>
-            <li><a href="/news/content/index?ID=1017741">台股盤後－長假前買盤縮手 權值股無力 失守10900點</a><time class="update">3天前</time></li>
-            <li><a href="/news/content/index?ID=1017720">台股盤中－長假前觀望 台積電、鴻海回檔 開低走低失守11000點</a><time class="update">3天前</time></li>
+            <li><a href="/news/content/index?ID=957275">【亞洲投顧】盤後分析</a><time class="update">26分鐘前</time></li>
+            <li><a href="/news/content/index?ID=957215">【永豐期貨】台指選擇權盤後－連假後補漲 台股強攻站上10800關卡</a><time class="update">1小時前</time></li>
+            <li><a href="/news/content/index?ID=957170">【日盛投顧】5日線不破 短線仍偏多</a><time class="update">1小時前</time></li>
+            <li><a href="/news/content/index?ID=957168">【群益期貨】台股期權盤後－避險買盤回歸  台股量價齊揚</a><time class="update">1小時前</time></li>
+            <li><a href="/news/content/index?ID=957120">台股盤後—價量俱揚甩清明變盤陰霾 指數挺進10800關卡</a><time class="update">2小時前</time></li>
+            <li><a href="/news/content/index?ID=957012">台積電股價登半年高 單日市值增逾1500億元 重回6.5兆元</a><time class="update">6小時前</time></li>
+            <li><a href="/news/content/index?ID=956942">【永豐期貨】台指選擇權盤前－震盪走升 台股站上10700點</a><time class="update">8小時前</time></li>
+            <li><a href="/news/content/index?ID=956930">【日盛投顧】盤前分析</a><time class="update">9小時前</time></li>
+            <li><a href="/news/content/index?ID=956917">◆外資連續5日買超個股</a><time class="update">10小時前</time></li>
+            <li><a href="/news/content/index?ID=956775">〈Q2產業景氣展望〉華為手機出貨旺 散熱、砷化鎵族群Q2營運添動能</a><time class="update">1天前</time></li>
     </ul>
 
 
@@ -1131,60 +1714,60 @@ const HTML = `
         </thead>
         <tbody>
                 <tr>
-                    <td class="cr">10/09</td>
-                    <td>-2,688</td>
-                    <td>168</td>
-                    <td>-1,715</td>
-                    <td class="dn">-4,235</td>
+                    <td class="cr">04/08</td>
+                    <td>21,346</td>
+                    <td>259</td>
+                    <td>-107</td>
+                    <td class="up">21,498</td>
                 </tr>
                 <tr>
-                    <td class="cr">10/08</td>
-                    <td>16,431</td>
-                    <td>-78</td>
-                    <td>-899</td>
-                    <td class="up">15,454</td>
+                    <td class="cr">04/03</td>
+                    <td>4,838</td>
+                    <td>-35</td>
+                    <td>-171</td>
+                    <td class="up">4,632</td>
                 </tr>
                 <tr>
-                    <td class="cr">10/07</td>
-                    <td>386</td>
-                    <td>210</td>
-                    <td>-240</td>
-                    <td class="up">356</td>
+                    <td class="cr">04/02</td>
+                    <td>6,415</td>
+                    <td>30</td>
+                    <td>614</td>
+                    <td class="up">7,059</td>
                 </tr>
                 <tr>
-                    <td class="cr">10/04</td>
-                    <td>-2,019</td>
+                    <td class="cr">04/01</td>
+                    <td>12,270</td>
                     <td>329</td>
-                    <td>432</td>
-                    <td class="dn">-1,258</td>
+                    <td>763</td>
+                    <td class="up">13,362</td>
                 </tr>
                 <tr>
-                    <td class="cr">10/03</td>
-                    <td>-6,844</td>
-                    <td>301</td>
-                    <td>819</td>
-                    <td class="dn">-5,724</td>
+                    <td class="cr">03/29</td>
+                    <td>3,571</td>
+                    <td>-276</td>
+                    <td>-532</td>
+                    <td class="up">2,763</td>
                 </tr>
                 <tr>
-                    <td class="cr">10/02</td>
-                    <td>5,828</td>
-                    <td>401</td>
-                    <td>-366</td>
-                    <td class="up">5,863</td>
+                    <td class="cr">03/28</td>
+                    <td>-88</td>
+                    <td>0</td>
+                    <td>-155</td>
+                    <td class="dn">-243</td>
                 </tr>
                 <tr>
-                    <td class="cr">10/01</td>
-                    <td>26,718</td>
-                    <td>517</td>
-                    <td>-487</td>
-                    <td class="up">26,748</td>
+                    <td class="cr">03/27</td>
+                    <td>-4,335</td>
+                    <td>351</td>
+                    <td>895</td>
+                    <td class="dn">-3,089</td>
                 </tr>
                 <tr>
-                    <td class="cr">09/27</td>
-                    <td>19,172</td>
-                    <td>1,032</td>
-                    <td>-190</td>
-                    <td class="up">20,014</td>
+                    <td class="cr">03/26</td>
+                    <td>2,316</td>
+                    <td>-105</td>
+                    <td>-85</td>
+                    <td class="up">2,126</td>
                 </tr>
         </tbody>
     </table>
@@ -1197,7 +1780,7 @@ const HTML = `
 
 
     <table cellpadding="0" cellspacing="0" class="tb">
-        <caption class="hd-sm">融資融券變化<span class="more"><time class="update">2019/10/09</time><a href="/stock/astock/margin?StockNo=2330">圖表統計</a></span></caption>
+        <caption class="hd-sm">融資融券變化<span class="more"><time class="update">2019/04/03</time><a href="/stock/astock/margin?StockNo=2330">圖表統計</a></span></caption>
         <thead class="thd">
             <tr>
                 <th width="33%">融資變化</th>
@@ -1207,9 +1790,9 @@ const HTML = `
         </thead>
         <tbody>
             <tr>
-                <td class="cr">777</td>
-                <td class="cr">11,506</td>
-                <td class="cr">5</td>
+                <td class="cr">-63</td>
+                <td class="cr">8,454</td>
+                <td class="cr">42</td>
             </tr>
         </tbody>
         <thead class="thd">
@@ -1221,9 +1804,9 @@ const HTML = `
         </thead>
         <tbody>
             <tr>
-                <td class="cr">-232</td>
-                <td class="cr">1,607</td>
-                <td class="cr">0.0001</td>
+                <td class="cr">235</td>
+                <td class="cr">474</td>
+                <td class="cr">0.0017</td>
             </tr>
         </tbody>
     </table>
@@ -1247,27 +1830,27 @@ const HTML = `
         <tbody>
             <tr>
                 <td class="cn">每股盈餘</td>
-                <td>4.94</td>
+                <td></td>
                 <td>13.54</td>
             </tr>
             <tr>
                 <td class="cn">營業毛利率</td>
-                <td>41.93%</td>
+                <td></td>
                 <td>48.70%</td>
             </tr>
             <tr>
                 <td class="cn">營業利益率</td>
-                <td>30.19%</td>
+                <td></td>
                 <td>37.49%</td>
             </tr>
             <tr>
                 <td class="cn">稅前純益率</td>
-                <td>31.97%</td>
+                <td></td>
                 <td>38.82%</td>
             </tr>
             <tr>
                 <td class="cn">累計營收</td>
-                <td>75274</td>
+                <td>13898</td>
                 <td>103147</td>
             </tr>
             <tr>
@@ -1292,36 +1875,35 @@ const HTML = `
 </div><!-- container:end -->
 
 
-
 <footer class="site-footer">
     <div class="site-footer-inner">
         <div class="site-statement">
-            資訊來源：臺灣證券交易所TWSE、財團法人中華民國證券櫃檯買賣中心GTSM、台灣期貨交易所及本資訊內容係經玩股網有限公司處理提供。<br>
+            資訊來源：臺灣證券交易所TWSE、財團法人中華民國證券櫃檯買賣中心GTSM、台灣期貨交易所及本資訊內容係經有限公司處理提供。<br>
             使用者須遵守台灣證券交易所「<a href="http://www.twse.com.tw/ch/products/download/regulation_use.pdf" target="_blank" rel="nofollow noopener noreferrer">交易資訊使用管理辦法</a>」等交易資訊管理相關規定，所有資訊以台灣證券交易所公告資料為主。
         </div><!-- /site-statement -->
 
         <div class="site-about cf">
-            <a href="/siteinfo/about">關於玩股網</a>
+            <a href="/siteinfo/about">關於</a>
             <a href="/Member/MemberArea/Doc_Terms">服務條款 &amp; 免責聲明</a>
             <a href="/siteinfo/faq" rel="nofollow">FAQ</a>
             <a href="/siteinfo/feedback" rel="nofollow">連絡我們</a>
-            <a href="https://m.wantgoo.com/">手機版</a>
+            <a href="https://m.gw.com/">手機版</a>
         </div><!-- /site-about -->
 
         <div class="site-local" itemscope="" itemtype="http://schema.org/LocalBusiness">
-            <span itemprop="name" class="is-obs">玩股網</span>
+            <span itemprop="name" class="is-obs"></span>
             <address class="site-address" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
                 <span itemprop="addressRegion" class="site-addr">台北市</span>
                 <span itemprop="addressLocality" class="site-addr">信義區</span>
                 <span itemprop="streetAddress" class="site-addr">基隆路一段163號7樓之3</span>
                 <span class="site-tel">諮詢專線 <b itemprop="telephone">02-2767-1556</b></span>
-                <span>客服信箱 <a href="mailto:service@wantgoo.com"><b itemprop="email" class="site-email">service@wantgoo.com</b></a></span>
+                <span>客服信箱 <a href="mailto:service@gw.com"><b itemprop="email" class="site-email">service@gw.com</b></a></span>
             </address>
         </div><!-- /site-local -->
-        <small class="site-copyr">© 2010-2019 WantGoo.com All rights reserved.<span style="color:#efefef;">@10.140.0.19</span></small>
+        <small class="site-copyr">© 2010-2019 gw.com All rights reserved.<span style="color:#efefef;">@10.140.0.13</span></small>
 
         <div class="site-social">
-            <a href="https://www.facebook.com/wantgoo.fans" onclick="sentEvent('點擊FB粉絲團', 'Footer', 'NoLogging', {'dimension3':'0'});" title="就是愛玩股粉絲團" target="_blank" rel="noopener noreferrer" class="ic-fb"></a>
+            <a href="https://www.facebook.com/gw.fans" title="就是愛玩股粉絲團" target="_blank" rel="noopener noreferrer" class="ic-fb"></a>
         </div><!-- /site-social -->
     </div><!-- /site-footer-inner-->
 </footer>
@@ -1353,7 +1935,7 @@ const HTML = `
     <div class="d-flex justify-content-between small mt-3 text-muted">
         <span><a href="/mi/micommon/forgotpassword">忘記密碼</a></span>
 
-        <span>沒有帳號？<a href="/login/auth/register_normal?returnUrl=">免費註冊</a></span>
+        <span>沒有帳號？<a href="/login/auth/register_normal?returnUrl=https://www.gw.com/stock/report/value?types=1&amp;stockno=2330">免費註冊</a></span>
     </div>
 </form>
 <div id="FixModal" class="" style="display: none;">
@@ -1364,10 +1946,9 @@ const HTML = `
     </div>
 </div>
 
-</div><!-- wrap:end -->
-
+    </div><!-- wrap:end -->
 </body>
 </html>
-
 `;
+
 export default HTML;
