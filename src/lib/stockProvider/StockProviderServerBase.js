@@ -17,15 +17,17 @@ class StockProviderServerBase {
     }
     if (!this._crawler) {
       this._crawler = {
-        _firstRequest: null,
         get: async (path) => {
-          const url = this._baseURL.origin + path;
+          const options = {
+            uri: this._baseURL.origin + path,
+            cloudflareMaxTimeout: this._timeout,
+          };
           if (this._firstRequest) {
             // Should wait for the 1st request to make sure passing the DDOS check
             await this._firstRequest;
-            return this._cloudscraper.get(url);
+            return this._cloudscraper.get(options);
           }
-          this._firstRequest = this._cloudscraper.get(url);
+          this._firstRequest = this._cloudscraper.get(options);
           this._firstRequest.then(() => this._firstRequest = null);
           return this._firstRequest;
         },
