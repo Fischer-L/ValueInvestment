@@ -16,7 +16,6 @@ CMD ENV=docker-test node src/server/server.js
 FROM base AS production
 
 RUN rm -r src/client && yarn install --production --pure-lockfile && yarn cache clean
-
 ARG arg_env=production
 ENV env=$arg_env
 CMD ENV=$env node src/server/server.js
