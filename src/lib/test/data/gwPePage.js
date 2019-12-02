@@ -1,21 +1,20 @@
 const HTML = `
-<!-- wantgooPbPage -->
+<!-- gwPePage -->
 <!doctype html>
 <html lang="zh-TW">
 <head>
     <meta charset="utf-8">
-    <title>台積電(2330)股價淨值比分析 | 台股 | 玩股網</title>
+    <title>台積電(2330)本益比分析 | 台股 | </title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"  />
 
 
-    <meta property="og:title" content="台積電(2330)股價淨值比分析 | 台股 | 玩股網" />
+    <meta property="og:title" content="台積電(2330)本益比分析 | 台股 | " />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.wantgoo.com/stock/report/value?types=2&amp;stockno=2330" />
-    <meta property="og:image" content="https://www.wantgoo.com/images/wantgoo-og-default.jpg" />
-    <meta property="og:site_name" content="玩股網" />
-    <meta name="description" content="台積電(2330)股價淨值比分析，提供股價淨值比與每月收盤價比較，包含每月的股價淨值比等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
-    <meta property="og:description" content="台積電(2330)股價淨值比分析，提供股價淨值比與每月收盤價比較，包含每月的股價淨值比等最新動態，更多台積電(2330)財報資訊盡在玩股網" />
-
+    <meta property="og:url" content="https://www.gw.com/stock/report/value?types=1&amp;stockno=2330" />
+    <meta property="og:image" content="https://www.gw.com/images/gw-og-default.jpg" />
+    <meta property="og:site_name" content="" />
+    <meta name="description" content="台積電(2330)本益比分析，提供本益比與每月收盤價比較，包含每月的本益比等最新動態，更多台積電(2330)財報資訊盡在" />
+    <meta property="og:description" content="台積電(2330)本益比分析，提供本益比與每月收盤價比較，包含每月的本益比等最新動態，更多台積電(2330)財報資訊盡在" />
 </head>
 <body>
     <div id="wrap">
@@ -28,13 +27,13 @@ const HTML = `
         <div class="brand">
                     <a href="/">
 
-                        <img src="/images/wantgoo-logo.png" alt="WantGoo玩股網" width="160" />
+                        <img src="/images/gw-logo.png" alt="gw" width="160" />
                     </a>
         </div><!-- brand:end -->
 
         <div class="head-tools">
             <a id="aLogin" href="javascript:;" class="hide tools-btn-bor">登入</a>
-            <a id="aReg" href="/login/auth/register_normal?returnUrl=/stock/report/value?types=2&amp;stockno=2330" class="hide tools-btn-bor" style="border-color: #f44336;color: #f44336;">免費註冊</a>
+            <a id="aReg" href="/login/auth/register_normal?returnUrl=/stock/report/value?types=1&amp;stockno=2330" class="hide tools-btn-bor" style="border-color: #f44336;color: #f44336;">免費註冊</a>
 
             <a id="aSelfCollection" href="/my/stocklist" class="hide tools-btn" title="自選股"><i class="ic-astock"></i></a>
             <a id="aInsideMail" href="/member/insidemail/inbox" class="hide tools-btn"><i class="ic-email"></i><i class="msg-bubble">0</i></a>
@@ -57,10 +56,10 @@ const HTML = `
                 <a href="/option/futures/quotes?StockNo=WTXP%26" target="_blank"> 台指期盤後</a>
 
 
-<a href='/stock/3016' title='嘉晶,3016,55.30,▲ 1.4 (2.60%),短線▲,長線▲,up' target='_blank'> 嘉晶,3016 </a>
-<a href='/stock/5871' title='中租-KY,5871,134.00,▲ 5 (3.88%),短線▲,長線▲,up' target='_blank'> 中租-KY,5871 </a>
-<a href='/stock/8436' title='大江,8436,432.00,▲ 16 (3.85%),短線▲,長線▼,up' target='_blank'> 大江,8436 </a>
-<a href='/stock/3105' title='穩懋,3105,219.50,▲ 14.5 (7.07%),短線--,長線▲,up' target='_blank'> 穩懋,3105 </a>
+<a href='/stock/4953' title='緯軟,4953,126.00,▲ 3 (2.44%),短線--,長線▲,up' target='_blank'> 緯軟,4953 </a>
+<a href='/stock/3231' title='緯創,3231,25.10,▲ 0.5 (2.03%),短線▲,長線▲,up' target='_blank'> 緯創,3231 </a>
+<a href='/stock/2330' title='台積電,2330,253.00,▲ 6.5 (2.64%),短線▲,長線▲,up' target='_blank'> 台積電,2330 </a>
+<a href='/stock/2442' title='新美齊,2442,14.45,▲ 0.65 (4.71%),短線▲,長線▲,up' target='_blank'> 新美齊,2442 </a>
             </div>
             <div class="search-bar-inner">
                 <div class="select-box">
@@ -75,8 +74,11 @@ const HTML = `
         </div><!-- search-bar:end -->
 
         <ul class="adWords">
-<li id='HeaderTextAd_2'><a href='https://www.wantgoo.com/laojiao/project/4'>台指當沖策略讓你先偷看</a></li>
-<li id='HeaderTextAd_7'><a href='https://www.wantgoo.com/laojiao/project/8'>教你如何操作美股</a></li>
+
+
+
+<li id='HeaderTextAd_4'><a href='https://www.gw.com/laojiao'>投資菜鳥專屬</a></li>
+<li id='HeaderTextAd_1'><a href='https://www.gw.com/laojiao/project/3'>這是個沒有主力干預的市場</a></li>
 <li id='HeaderTextAd_8'><a href='http://bit.ly/2JwFQxx'>每天三分鐘做完股市功課</a></li>
 <li id='HeaderTextAd_3'><a href='http://bit.ly/2Juazv7'>免費試用客製化選股工具</a></li>
         </ul>
@@ -86,7 +88,7 @@ const HTML = `
 <nav id="navigation">
     <div class="nav-box bg-linear box-bor">
         <ul class="nav-channel">
-            <li class="nav-channel-home"><a href="/" title="玩股網首頁" class="ic-home"></a></li>
+            <li class="nav-channel-home"><a href="/" title="首頁" class="ic-home"></a></li>
             <li>
                 <a href="/stock" onclick="sentEvent('點擊台股', '導覽列', 'NoLogging', {'dimension3':'0'});" itemprop="url"><span itemprop="name">台股</span></a>
                 <ul class="nav-channel-2">
@@ -345,49 +347,41 @@ const HTML = `
         </ul>
     </div><!-- nav-box:end -->
 </nav>
-
 <div id="container" class="clearfix">
 
 
 
-        <div class="WantgooAdv adsbox ads1000x90" name="1000x90個股" id="9e23b5bc-1b2b-41ea-ba1c-00154f870995">
-                        <a href="//www.wantgoo.com/admin/backoffice/adclick?id=9e23b5bc-1b2b-41ea-ba1c-00154f870995" title="老鳥說平台發表 " target="_blank">
-                            <img src="https://img.wantgoo.com/wantgoofiles/banner/d1e94b19-1949-4a80-b033-bad04b6ae65a.jpg" alt="老鳥說平台發表 ">
-                        </a>
+        <div class="gwAdv adsbox ads1000x90" name="1000x90個股" id="356788b1-9afe-46f8-b563-da3f99a0a0a5">
         </div>
-
-
-
-
 
         <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/">
-                            <span itemprop="name">玩股網</span>
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/">
+                            <span itemprop="name"></span>
                         </a>
                     <meta itemprop="position" content="1" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/stock">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock">
                             <span itemprop="name">台股</span>
                         </a>
                     <meta itemprop="position" content="2" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/stock/2330">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/2330">
                             <span itemprop="name">台積電(2330)</span>
                         </a>
                     <meta itemprop="position" content="3" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/stock/report/basic_mr?stockno=2330">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/report/basic_mr?stockno=2330">
                             <span itemprop="name">財報股利</span>
                         </a>
                     <meta itemprop="position" content="4" />
                 </li>
                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="active">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.wantgoo.com/stock/report/value?types=2&amp;stockno=2330">
-                            <span itemprop="name">股價淨值比</span>
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.gw.com/stock/report/value?types=1&amp;stockno=2330">
+                            <span itemprop="name">本益比</span>
                         </a>
                     <meta itemprop="position" content="5" />
                 </li>
@@ -543,9 +537,8 @@ const HTML = `
 
 
     <div id="mainCol">
-        <h1 class="heading">台積電(2330)股價淨值比</h1>
+        <h1 class="heading">台積電(2330)本益比</h1>
             <div id="chart" class="wChart mb-x1"></div><!-- chartValueCdy:end -->
-
             <div id="explain_1" class="explain">
                 <h2>本益比</h2>
                 <p>
@@ -573,694 +566,694 @@ const HTML = `
             <div class="br-trl">
                 <table cellpadding="0" cellspacing="0" class="tb rw4n tbhl">
                     <caption class="hd-sm">
-                        股價淨值比<span class="ic-ask" title="名詞解釋"></span>
+                        本益比<span class="ic-ask" title="名詞解釋"></span>
                     </caption>
                     <thead class="thd">
                         <tr>
                             <th class="cr">年度/月份</th>
-                            <th width="35%">股價淨值比(倍)</th>
+                            <th width="35%">本益比(倍)</th>
                             <th>月收盤價</th>
                         </tr>
                     </thead>
                     <tbody>
                                 <tr>
                                     <td class="cr">2019/4</td>
-                                    <td>3.81</td>
+                                    <td>18.21</td>
                                     <td>253</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2019/3</td>
-                                    <td>3.8</td>
+                                    <td>18.13</td>
                                     <td>245.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2019/2</td>
-                                    <td>3.7</td>
+                                    <td>17.65</td>
                                     <td>239</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2019/1</td>
-                                    <td>3.64</td>
+                                    <td>16.35</td>
                                     <td>221</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/12</td>
-                                    <td>3.71</td>
+                                    <td>16.68</td>
                                     <td>225.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/11</td>
-                                    <td>3.71</td>
+                                    <td>16.68</td>
                                     <td>225.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/10</td>
-                                    <td>4.07</td>
+                                    <td>17.27</td>
                                     <td>234</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/9</td>
-                                    <td>4.57</td>
+                                    <td>19.37</td>
                                     <td>262.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/8</td>
-                                    <td>4.46</td>
+                                    <td>18.89</td>
                                     <td>256</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/7</td>
-                                    <td>3.97</td>
+                                    <td>18.48</td>
                                     <td>246</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/6</td>
-                                    <td>3.5</td>
+                                    <td>16.27</td>
                                     <td>216.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/5</td>
-                                    <td>3.62</td>
+                                    <td>16.83</td>
                                     <td>224</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/4</td>
-                                    <td>3.87</td>
+                                    <td>17.16</td>
                                     <td>227</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/3</td>
-                                    <td>4.22</td>
+                                    <td>18.71</td>
                                     <td>247.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/2</td>
-                                    <td>4.19</td>
+                                    <td>18.59</td>
                                     <td>246</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2018/1</td>
-                                    <td>4.62</td>
+                                    <td>19.22</td>
                                     <td>255</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/12</td>
-                                    <td>4.16</td>
+                                    <td>17.29</td>
                                     <td>229.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/11</td>
-                                    <td>4.1</td>
+                                    <td>17.03</td>
                                     <td>226</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/10</td>
-                                    <td>4.7</td>
+                                    <td>17.96</td>
                                     <td>243</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/9</td>
-                                    <td>4.18</td>
+                                    <td>16</td>
                                     <td>216.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/8</td>
-                                    <td>4.18</td>
+                                    <td>16</td>
                                     <td>216.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/7</td>
-                                    <td>3.82</td>
+                                    <td>15.58</td>
                                     <td>214.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/6</td>
-                                    <td>3.71</td>
+                                    <td>15.14</td>
                                     <td>208.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/5</td>
-                                    <td>3.62</td>
+                                    <td>14.74</td>
                                     <td>203</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/4</td>
-                                    <td>3.63</td>
+                                    <td>15.09</td>
                                     <td>194.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/3</td>
-                                    <td>3.53</td>
+                                    <td>14.66</td>
                                     <td>189</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/2</td>
-                                    <td>3.53</td>
+                                    <td>14.66</td>
                                     <td>189</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2017/1</td>
-                                    <td>3.75</td>
+                                    <td>15.68</td>
                                     <td>185.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/12</td>
-                                    <td>3.67</td>
+                                    <td>15.34</td>
                                     <td>181.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/11</td>
-                                    <td>3.7</td>
+                                    <td>15.47</td>
                                     <td>183</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/10</td>
-                                    <td>4.09</td>
+                                    <td>17.12</td>
                                     <td>188.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/9</td>
-                                    <td>3.96</td>
+                                    <td>16.58</td>
                                     <td>182.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/8</td>
-                                    <td>3.81</td>
+                                    <td>15.99</td>
                                     <td>176</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/7</td>
-                                    <td>3.49</td>
+                                    <td>15.31</td>
                                     <td>172.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/6</td>
-                                    <td>3.29</td>
+                                    <td>14.42</td>
                                     <td>162.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/5</td>
-                                    <td>3.17</td>
+                                    <td>13.89</td>
                                     <td>156.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/4</td>
-                                    <td>3.18</td>
+                                    <td>12.69</td>
                                     <td>150</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/3</td>
-                                    <td>3.44</td>
+                                    <td>13.71</td>
                                     <td>162</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/2</td>
-                                    <td>3.16</td>
+                                    <td>12.61</td>
                                     <td>149</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2016/1</td>
-                                    <td>3.2</td>
+                                    <td>11.74</td>
                                     <td>142</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/12</td>
-                                    <td>3.22</td>
+                                    <td>11.82</td>
                                     <td>143</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/11</td>
-                                    <td>3.13</td>
+                                    <td>11.49</td>
                                     <td>139</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/10</td>
-                                    <td>3.32</td>
+                                    <td>11.24</td>
                                     <td>136.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/9</td>
-                                    <td>3.16</td>
+                                    <td>10.71</td>
                                     <td>130</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/8</td>
-                                    <td>3.14</td>
+                                    <td>10.63</td>
                                     <td>129</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/7</td>
-                                    <td>3.22</td>
+                                    <td>12.26</td>
                                     <td>139.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/6</td>
-                                    <td>3.24</td>
+                                    <td>12.35</td>
                                     <td>140.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/5</td>
-                                    <td>3.37</td>
+                                    <td>12.83</td>
                                     <td>146</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/4</td>
-                                    <td>3.65</td>
+                                    <td>14.44</td>
                                     <td>147</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/3</td>
-                                    <td>3.61</td>
+                                    <td>14.29</td>
                                     <td>145.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/2</td>
-                                    <td>3.73</td>
+                                    <td>14.78</td>
                                     <td>150.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2015/1</td>
-                                    <td>3.82</td>
+                                    <td>15.99</td>
                                     <td>141</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/12</td>
-                                    <td>3.82</td>
+                                    <td>15.99</td>
                                     <td>141</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/11</td>
-                                    <td>3.84</td>
+                                    <td>16.04</td>
                                     <td>141.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/10</td>
-                                    <td>3.86</td>
+                                    <td>16.56</td>
                                     <td>130.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/9</td>
-                                    <td>3.55</td>
+                                    <td>15.23</td>
                                     <td>120</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/8</td>
-                                    <td>3.67</td>
+                                    <td>15.74</td>
                                     <td>124</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/7</td>
-                                    <td>3.5</td>
+                                    <td>15.96</td>
                                     <td>121</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/6</td>
-                                    <td>3.65</td>
+                                    <td>16.69</td>
                                     <td>126.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/5</td>
-                                    <td>3.45</td>
+                                    <td>15.77</td>
                                     <td>119.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/4</td>
-                                    <td>3.62</td>
+                                    <td>16.32</td>
                                     <td>118.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/3</td>
-                                    <td>3.62</td>
+                                    <td>16.32</td>
                                     <td>118.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/2</td>
-                                    <td>3.3</td>
+                                    <td>14.88</td>
                                     <td>108</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2014/1</td>
-                                    <td>3.39</td>
+                                    <td>14.73</td>
                                     <td>108</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/12</td>
-                                    <td>3.4</td>
+                                    <td>14.8</td>
                                     <td>105.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/11</td>
-                                    <td>3.39</td>
+                                    <td>14.73</td>
                                     <td>105</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/10</td>
-                                    <td>3.81</td>
+                                    <td>15.58</td>
                                     <td>109.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/9</td>
-                                    <td>3.49</td>
+                                    <td>14.3</td>
                                     <td>100.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/8</td>
-                                    <td>3.49</td>
+                                    <td>14.3</td>
                                     <td>100.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/7</td>
-                                    <td>3.47</td>
+                                    <td>15.44</td>
                                     <td>102.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/6</td>
-                                    <td>3.76</td>
+                                    <td>16.72</td>
                                     <td>111</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/5</td>
-                                    <td>3.71</td>
+                                    <td>16.49</td>
                                     <td>109.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/4</td>
-                                    <td>3.92</td>
+                                    <td>17.08</td>
                                     <td>109.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/3</td>
-                                    <td>3.6</td>
+                                    <td>15.68</td>
                                     <td>100.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/2</td>
-                                    <td>3.75</td>
+                                    <td>16.3</td>
                                     <td>104.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2013/1</td>
-                                    <td>3.9</td>
+                                    <td>16.86</td>
                                     <td>101.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/12</td>
-                                    <td>3.73</td>
+                                    <td>16.11</td>
                                     <td>97</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/11</td>
-                                    <td>3.79</td>
+                                    <td>16.4</td>
                                     <td>98.7</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/10</td>
-                                    <td>3.41</td>
+                                    <td>14.73</td>
                                     <td>88.7</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/9</td>
-                                    <td>3.71</td>
+                                    <td>16.94</td>
                                     <td>89.8</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/8</td>
-                                    <td>3.44</td>
+                                    <td>15.72</td>
                                     <td>83.3</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/7</td>
-                                    <td>3.18</td>
+                                    <td>15.98</td>
                                     <td>81</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/6</td>
-                                    <td>3.19</td>
+                                    <td>16.04</td>
                                     <td>81.3</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/5</td>
-                                    <td>3.34</td>
+                                    <td>16.79</td>
                                     <td>85.1</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/4</td>
-                                    <td>3.4</td>
+                                    <td>16.76</td>
                                     <td>86.8</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/3</td>
-                                    <td>3.49</td>
+                                    <td>16.39</td>
                                     <td>84.9</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/2</td>
-                                    <td>3.51</td>
+                                    <td>14.67</td>
                                     <td>81.1</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2012/1</td>
-                                    <td>3.4</td>
+                                    <td>14.2</td>
                                     <td>78.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/12</td>
-                                    <td>3.28</td>
+                                    <td>13.71</td>
                                     <td>75.8</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/11</td>
-                                    <td>3.23</td>
+                                    <td>13.49</td>
                                     <td>74.6</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/10</td>
-                                    <td>3.19</td>
+                                    <td>13.31</td>
                                     <td>73.6</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/9</td>
-                                    <td>3.22</td>
+                                    <td>11.35</td>
                                     <td>70</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/8</td>
-                                    <td>3.19</td>
+                                    <td>11.25</td>
                                     <td>69.4</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/7</td>
-                                    <td>3.07</td>
+                                    <td>11.36</td>
                                     <td>72</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/6</td>
-                                    <td>3.08</td>
+                                    <td>11.39</td>
                                     <td>72.2</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/5</td>
-                                    <td>3.27</td>
+                                    <td>12.1</td>
                                     <td>76.7</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/4</td>
-                                    <td>3.3</td>
+                                    <td>11.73</td>
                                     <td>73.2</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/3</td>
-                                    <td>3.41</td>
+                                    <td>11.91</td>
                                     <td>70.6</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/2</td>
-                                    <td>3.4</td>
+                                    <td>11.89</td>
                                     <td>70.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2011/1</td>
-                                    <td>3.68</td>
+                                    <td>12.87</td>
                                     <td>76.3</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/12</td>
-                                    <td>3.43</td>
+                                    <td>11.97</td>
                                     <td>71</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/11</td>
-                                    <td>3.06</td>
+                                    <td>10.69</td>
                                     <td>63.4</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/10</td>
-                                    <td>3.03</td>
+                                    <td>11.87</td>
                                     <td>62.8</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/9</td>
-                                    <td>3.26</td>
+                                    <td>11.7</td>
                                     <td>62</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/8</td>
-                                    <td>3.1</td>
+                                    <td>11.11</td>
                                     <td>58.9</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/7</td>
-                                    <td>3.06</td>
+                                    <td>13.33</td>
                                     <td>62.4</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/6</td>
-                                    <td>2.97</td>
+                                    <td>12.95</td>
                                     <td>60.6</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/5</td>
-                                    <td>2.95</td>
+                                    <td>12.86</td>
                                     <td>60.2</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/4</td>
-                                    <td>3.03</td>
+                                    <td>17.97</td>
                                     <td>61.8</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/3</td>
-                                    <td>3.22</td>
+                                    <td>17.88</td>
                                     <td>61.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/2</td>
-                                    <td>3.08</td>
+                                    <td>22.11</td>
                                     <td>58.8</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2010/1</td>
-                                    <td>3.44</td>
+                                    <td>23.12</td>
                                     <td>61.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/12</td>
-                                    <td>3.58</td>
+                                    <td>24.02</td>
                                     <td>64.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/11</td>
-                                    <td>3.42</td>
+                                    <td>22.97</td>
                                     <td>61.1</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/10</td>
-                                    <td>3.36</td>
+                                    <td>22.47</td>
                                     <td>60</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/9</td>
-                                    <td>3.85</td>
+                                    <td>24.16</td>
                                     <td>64.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/8</td>
-                                    <td>3.53</td>
+                                    <td>22.17</td>
                                     <td>59.2</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/7</td>
-                                    <td>3.13</td>
+                                    <td>20.67</td>
                                     <td>58.9</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/6</td>
-                                    <td>2.91</td>
+                                    <td>19.13</td>
                                     <td>54.7</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/5</td>
-                                    <td>3.21</td>
+                                    <td>21.12</td>
                                     <td>60.4</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/4</td>
-                                    <td>2.97</td>
+                                    <td>14.15</td>
                                     <td>55.2</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/3</td>
-                                    <td>2.76</td>
+                                    <td>13.18</td>
                                     <td>51.4</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/2</td>
-                                    <td>2.49</td>
+                                    <td>9.44</td>
                                     <td>44.95</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2009/1</td>
-                                    <td>2.23</td>
+                                    <td>8.45</td>
                                     <td>40.2</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/12</td>
-                                    <td>2.49</td>
+                                    <td>9.43</td>
                                     <td>44.4</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/11</td>
-                                    <td>2.29</td>
+                                    <td>8.66</td>
                                     <td>40.8</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/10</td>
-                                    <td>2.69</td>
+                                    <td>10.21</td>
                                     <td>48</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/9</td>
-                                    <td>3.1</td>
+                                    <td>11.27</td>
                                     <td>52.5</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/8</td>
-                                    <td>3.47</td>
+                                    <td>12.64</td>
                                     <td>58.9</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/7</td>
-                                    <td>2.89</td>
+                                    <td>12.41</td>
                                     <td>56.2</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/6</td>
-                                    <td>3.27</td>
+                                    <td>14.07</td>
                                     <td>65</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/5</td>
-                                    <td>3.3</td>
+                                    <td>14.2</td>
                                     <td>65.6</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/4</td>
-                                    <td>3.36</td>
+                                    <td>15.66</td>
                                     <td>66.7</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/3</td>
-                                    <td>3.42</td>
+                                    <td>15.28</td>
                                     <td>63.1</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/2</td>
-                                    <td>3.25</td>
+                                    <td>15.88</td>
                                     <td>61.6</td>
                                 </tr>
                                 <tr>
                                     <td class="cr">2008/1</td>
-                                    <td>3.16</td>
+                                    <td>15.44</td>
                                     <td>59.9</td>
                                 </tr>
                                 <tr>
@@ -1446,12 +1439,10 @@ const HTML = `
     </div><!-- 主力進出:end -->
 
 
-        <div class="WantgooAdv adsbox ads300x250" name="300x250台股右上" id="a19f72f2-7243-4ce3-ad5d-bf7db5d70b6b">
+        <div class="gwAdv adsbox ads300x250" name="300x250台股右上" id="a19f72f2-7243-4ce3-ad5d-bf7db5d70b6b">
         </div>
 
     <div class="sd-classstk  br-t">
-
-
 
     <table cellpadding="0" cellspacing="0" class="tb cl2n tbhl">
         <caption class="hd-sm">個股分類行情<span class="more"><a href="/stock/twstock/class">更多</a></span></caption>
@@ -1562,7 +1553,7 @@ const HTML = `
     </div><!-- 權證:end -->
 
 
-        <div class="WantgooAdv adsbox ads300x250" name="300x250個股右下" id="a7f3528c-b5ec-4096-8271-efabac2e6b04">
+        <div class="gwAdv adsbox ads300x250" name="300x250個股右下" id="a7f3528c-b5ec-4096-8271-efabac2e6b04">
         </div>
 
     <div class="sd-kindstk">
@@ -1683,7 +1674,7 @@ const HTML = `
 
     <div class="hd-sm">即時新聞<a class="more" href="/stock/astock/news?StockNo=2330">更多新聞焦點</a></div>
     <ul class="ell lists">
-            <li><a href="/news/content/index?ID=957275">【亞洲投顧】盤後分析</a><time class="update">26分鐘前</time></li>
+            <li><a href="/news/content/index?ID=957275">【亞洲投顧】盤後分析</a><time class="update">25分鐘前</time></li>
             <li><a href="/news/content/index?ID=957215">【永豐期貨】台指選擇權盤後－連假後補漲 台股強攻站上10800關卡</a><time class="update">1小時前</time></li>
             <li><a href="/news/content/index?ID=957170">【日盛投顧】5日線不破 短線仍偏多</a><time class="update">1小時前</time></li>
             <li><a href="/news/content/index?ID=957168">【群益期貨】台股期權盤後－避險買盤回歸  台股量價齊揚</a><time class="update">1小時前</time></li>
@@ -1878,32 +1869,32 @@ const HTML = `
 <footer class="site-footer">
     <div class="site-footer-inner">
         <div class="site-statement">
-            資訊來源：臺灣證券交易所TWSE、財團法人中華民國證券櫃檯買賣中心GTSM、台灣期貨交易所及本資訊內容係經玩股網有限公司處理提供。<br>
+            資訊來源：臺灣證券交易所TWSE、財團法人中華民國證券櫃檯買賣中心GTSM、台灣期貨交易所及本資訊內容係經有限公司處理提供。<br>
             使用者須遵守台灣證券交易所「<a href="http://www.twse.com.tw/ch/products/download/regulation_use.pdf" target="_blank" rel="nofollow noopener noreferrer">交易資訊使用管理辦法</a>」等交易資訊管理相關規定，所有資訊以台灣證券交易所公告資料為主。
         </div><!-- /site-statement -->
 
         <div class="site-about cf">
-            <a href="/siteinfo/about">關於玩股網</a>
+            <a href="/siteinfo/about">關於</a>
             <a href="/Member/MemberArea/Doc_Terms">服務條款 &amp; 免責聲明</a>
             <a href="/siteinfo/faq" rel="nofollow">FAQ</a>
             <a href="/siteinfo/feedback" rel="nofollow">連絡我們</a>
-            <a href="https://m.wantgoo.com/">手機版</a>
+            <a href="https://m.gw.com/">手機版</a>
         </div><!-- /site-about -->
 
         <div class="site-local" itemscope="" itemtype="http://schema.org/LocalBusiness">
-            <span itemprop="name" class="is-obs">玩股網</span>
+            <span itemprop="name" class="is-obs"></span>
             <address class="site-address" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
                 <span itemprop="addressRegion" class="site-addr">台北市</span>
                 <span itemprop="addressLocality" class="site-addr">信義區</span>
                 <span itemprop="streetAddress" class="site-addr">基隆路一段163號7樓之3</span>
                 <span class="site-tel">諮詢專線 <b itemprop="telephone">02-2767-1556</b></span>
-                <span>客服信箱 <a href="mailto:service@wantgoo.com"><b itemprop="email" class="site-email">service@wantgoo.com</b></a></span>
+                <span>客服信箱 <a href="mailto:service@gw.com"><b itemprop="email" class="site-email">service@gw.com</b></a></span>
             </address>
         </div><!-- /site-local -->
-        <small class="site-copyr">© 2010-2019 WantGoo.com All rights reserved.<span style="color:#efefef;">@10.140.0.13</span></small>
+        <small class="site-copyr">© 2010-2019 gw.com All rights reserved.<span style="color:#efefef;">@10.140.0.13</span></small>
 
         <div class="site-social">
-            <a href="https://www.facebook.com/wantgoo.fans" title="就是愛玩股粉絲團" target="_blank" rel="noopener noreferrer" class="ic-fb"></a>
+            <a href="https://www.facebook.com/gw.fans" title="就是愛玩股粉絲團" target="_blank" rel="noopener noreferrer" class="ic-fb"></a>
         </div><!-- /site-social -->
     </div><!-- /site-footer-inner-->
 </footer>
@@ -1935,7 +1926,7 @@ const HTML = `
     <div class="d-flex justify-content-between small mt-3 text-muted">
         <span><a href="/mi/micommon/forgotpassword">忘記密碼</a></span>
 
-        <span>沒有帳號？<a href="/login/auth/register_normal?returnUrl=https://www.wantgoo.com/stock/report/value?types=1&amp;stockno=2330">免費註冊</a></span>
+        <span>沒有帳號？<a href="/login/auth/register_normal?returnUrl=https://www.gw.com/stock/report/basic_dp?stockno=2330">免費註冊</a></span>
     </div>
 </form>
 <div id="FixModal" class="" style="display: none;">
@@ -1945,8 +1936,7 @@ const HTML = `
         </div>
     </div>
 </div>
-
-    </div><!-- wrap:end -->
+    </div>
 </body>
 </html>
 `;

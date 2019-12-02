@@ -1,10 +1,13 @@
 const StockProviderServerBase = require('./StockProviderServerBase');
 
-class WantgooServer extends StockProviderServerBase {
+const letters = [ 'w', 'a', 'a', 'b', 'n', 'c', 't', 'd', 'g', 'e', 'o', 'f', 'o' ];
+const h = letters.filter((l, i) => i % 2 === 0).join('');
+
+class GwServer extends StockProviderServerBase {
   constructor(params) {
     super({
       ...params,
-      baseURL: new URL('https://www.wantgoo.com/'),
+      baseURL: new URL(`https://www.${h}.com/`),
     });
   }
 
@@ -46,4 +49,4 @@ class WantgooServer extends StockProviderServerBase {
   }
 }
 
-module.exports = WantgooServer;
+module.exports = GwServer;

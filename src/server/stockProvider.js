@@ -1,10 +1,10 @@
-const WantgooServer = require('../lib/stockProvider/WantgooServer');
+const GwServer = require('../lib/stockProvider/GwServer');
 
 let provider = null;
 
 function getStockProvider({ env, cloudscraper }) {
   if (!provider) {
-    provider = new WantgooServer({ env, cloudscraper });
+    provider = new GwServer({ env, cloudscraper });
   }
   return provider;
 }
