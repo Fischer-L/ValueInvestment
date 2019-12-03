@@ -1,20 +1,5 @@
-/* global beforeAll, afterAll, describe, expect, it */
-const { closeMongoDB, connectMongoDB } = require('../db/mongo');
+const createTestCollection = require('./utils/createTestCollection');
 const BookmarksCollection = require('../db/BookmarksCollection');
-
-class TestBookmarksCollection extends BookmarksCollection {
-  constructor(db) {
-    super(db);
-    this._name = `TEST_${this._name}`;
-  }
-}
-
-const fakeData = [
-  { id: '2317', name: '鴻海' },
-  { id: '2330', name: '台積電' },
-];
-
-let bookmarks = null;
 
 function verifyData(expected, actual) {
   expect(expected.length).toBe(actual.length);
@@ -26,20 +11,21 @@ function verifyData(expected, actual) {
   });
 }
 
+const fakeData = [
+  { id: '2317', name: '鴻海' },
+  { id: '2330', name: '台積電' },
+];
+
+let bookmarks = null;
+let testTarget = null;
+
 beforeAll(async function () {
-  const db = await connectMongoDB();
-  bookmarks = new TestBookmarksCollection(db);
+  testTarget = await createTestCollection(BookmarksCollection);
+  bookmarks = testTarget.collection;
 });
 
-afterAll(async function () {
-  try {
-    const collection = await bookmarks.getCollection();
-    await collection.drop();
-  } catch (e) {
-    throw e;
-  } finally {
-    await closeMongoDB();
-  }
+afterAll(function () {
+  return testTarget.destroy();
 });
 
 describe('BookmarksCollection', () => {
