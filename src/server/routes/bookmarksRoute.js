@@ -4,13 +4,21 @@ const CacheProvider = require('../cacheProvider');
 
 const mongoCache = new CacheProvider({ maxAge: -1 });
 
+const BOOKMARK_TYPE = {
+  STOCK: 'stock',
+  PTT_USER: 'pttuser',
+};
+
 function initBookmarksRoute(app) {
   app.get('/bookmarks', async (req, res) => {
     let data = mongoCache.get(req);
     if (!data) {
       try {
-        const bookmarks = await getCollection('bookmarks');
-        data = await bookmarks.getAll();
+        const [ pttUsers, stocks ] = await Promise.all([
+          getCollection('pttUsers').then(collection => collection.getAll()),
+          getCollection('bookmarks').then(collection => collection.getAll()),
+        ]);
+        data = { pttUsers, stocks };
         mongoCache.set(req, data);
       } catch (e) {
         console.error(e);
@@ -21,7 +29,7 @@ function initBookmarksRoute(app) {
     res.json(data);
   });
 
-  app.post('/bookmarks', async (req, res) => {
+  app.post('/bookmarks/:type*?', async (req, res) => {
     let data = null;
     try {
       const payload = req.body.payload;
@@ -37,8 +45,9 @@ function initBookmarksRoute(app) {
     }
 
     try {
-      const bookmarks = await getCollection('bookmarks');
-      await bookmarks.save(data);
+      const collectionName = req.params.type === BOOKMARK_TYPE.PTT_USER ? 'pttUsers' : 'bookmarks';
+      const collection = await getCollection(collectionName);
+      await collection.save(data);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
       return;
@@ -48,7 +57,7 @@ function initBookmarksRoute(app) {
     res.sendStatus(HTTP.OK);
   });
 
-  app.delete('/bookmarks', async (req, res) => {
+  app.delete('/bookmarks/:type*?', async (req, res) => {
     let data = null;
     try {
       const ids = req.query.ids;
@@ -64,8 +73,9 @@ function initBookmarksRoute(app) {
     }
 
     try {
-      const bookmarks = await getCollection('bookmarks');
-      await bookmarks.remove(data);
+      const collectionName = req.params.type === BOOKMARK_TYPE.PTT_USER ? 'pttUsers' : 'bookmarks';
+      const collection = await getCollection(collectionName);
+      await collection.remove(data);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
       return;

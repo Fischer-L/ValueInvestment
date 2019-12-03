@@ -1,5 +1,6 @@
 const Mongo = require('mongodb').MongoClient;
 const { DB_URL } = require('../../build/config_server');
+const PttUsersCollection = require('./PttUsersCollection');
 const BookmarksCollection = require('./BookmarksCollection');
 
 const options = {
@@ -10,6 +11,10 @@ let mongoDB = null;
 let mongoClient = null;
 
 const collections = {
+  pttUsers: {
+    instance: null,
+    Clazz: PttUsersCollection,
+  },
   bookmarks: {
     instance: null,
     Clazz: BookmarksCollection,

@@ -27,8 +27,8 @@ const bookmarkProvider = {
       return;
     }
     try {
-      const { data } = await apiClient.get('/bookmarks');
-      this._bookmarks = data.reduce((bookmarks, item) => {
+      const { data: { stocks } } = await apiClient.get('/bookmarks');
+      this._bookmarks = stocks.reduce((bookmarks, item) => {
         bookmarks[item.id] = item;
         return bookmarks;
       }, {});
