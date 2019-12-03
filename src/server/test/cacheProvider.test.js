@@ -1,4 +1,3 @@
-/* global describe, expect, it */
 import CacheProvider from '../cacheProvider';
 
 function fakeRequest() {
