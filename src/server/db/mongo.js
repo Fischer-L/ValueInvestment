@@ -9,6 +9,7 @@ const options = {
 
 let mongoDB = null;
 let mongoClient = null;
+let connectPromise = null;
 
 const collections = {
   pttUsers: {
@@ -24,21 +25,24 @@ const collections = {
 async function closeMongoDB() {
   if (mongoClient) {
     const client = mongoClient;
-    mongoDB = mongoClient = null;
+    mongoDB = mongoClient = connectPromise = null;
     await client.close();
   }
 }
 
 async function connectMongoDB() {
-  if (mongoClient && mongoClient.isConnected()) return mongoDB;
+  if (connectPromise) await connectPromise;
+  if (mongoDB && mongoClient && mongoClient.isConnected()) return mongoDB;
 
   try {
-    mongoClient = await Mongo.connect(DB_URL, options);
+    connectPromise = Mongo.connect(DB_URL, options);
+    mongoClient = await connectPromise;
     mongoDB = mongoClient.db();
     console.log('Connection established to', DB_URL);
   } catch (e) {
     console.error(e);
   }
+  connectPromise = null;
   return mongoDB;
 }
 
