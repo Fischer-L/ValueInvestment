@@ -32,7 +32,7 @@ async function closeMongoDB() {
 
 async function connectMongoDB() {
   if (connectPromise) await connectPromise;
-  if (mongoClient && mongoClient.isConnected()) return mongoDB;
+  if (mongoDB && mongoClient && mongoClient.isConnected()) return mongoDB;
 
   try {
     connectPromise = Mongo.connect(DB_URL, options);
