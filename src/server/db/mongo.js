@@ -42,6 +42,7 @@ async function connectMongoDB() {
   } catch (e) {
     console.error(e);
   }
+  connectPromise = null;
   return mongoDB;
 }
 
