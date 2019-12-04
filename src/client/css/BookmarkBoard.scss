@@ -50,6 +50,40 @@
   pointer-events: auto !important;
 }
 
+.bookmark-pttUsers-holder {
+  margin-top: 16px;
+  display: flex;
+  align-items: baseline;
+}
+
+.bookmark-pttUsers {
+  height: 2.8rem;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.bookmark-pttUser {
+  margin-right: 6px;
+  list-style: none;
+  display: inline-block;
+}
+
+.bookmark-removePttUserBtn.icon {
+  margin-left: 3px;
+  vertical-align: unset;
+  cursor: pointer;
+}
+
+.pttUsersLinks-openBtn.ui.icon.button {
+  transform: scale(0.68);
+}
+
 .bookmark-list {
   flex: 1;
   overflow-y: auto;

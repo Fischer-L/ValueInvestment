@@ -24,7 +24,7 @@ afterAll(function () {
 
 describe('PttUsersCollection', () => {
   it('should save ptt users', async () => {
-    await pttUsers.save(fakeData);
+    await pttUsers.save(fakeData.map(id => ({ id })));
     const data = await pttUsers.getAll();
     verifyData(data, fakeData);
   });

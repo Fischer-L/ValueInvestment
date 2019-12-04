@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, Icon, Input } from 'semantic-ui-react';
+import { List, Icon, Input, Button } from 'semantic-ui-react';
 
-import bookmarkProvider from '@/api/bookmarkProvider';
+import getLink from '@/utils/getLink';
+import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
 import StockLinks from '@/components/StockLinks';
 import EventDispatcher from '@/components/subcomponents/EventDispatcher';
 
@@ -13,10 +14,12 @@ class BookmarkBoard extends EventDispatcher {
     super(props);
 
     this.state = {
+      pttUsers: [],
       bookmarks: [],
       stockIdToLookup: '',
       bookmarkInputString: '',
     };
+    this.populatePttUsers();
     this.populateBookmarks();
 
     this.onClick = (e) => {
@@ -29,7 +32,7 @@ class BookmarkBoard extends EventDispatcher {
         return;
       }
 
-      const handlers = [ 'onClickBakground', 'onBookmarkStock', 'onRequestLookupStock', 'onClickRemoveBookmarkBtn' ];
+      const handlers = [ 'onClickBakground', 'onBookmark', 'onRequestLookupStock', 'onClickRemoveBookmarkBtn', 'onClickPttUsersLinks', 'onClickRemovePttUserBtn' ];
       const { target } = e;
       e.persist();
       for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
@@ -73,14 +76,35 @@ class BookmarkBoard extends EventDispatcher {
 
   onClickRemoveBookmarkBtn(e, target) {
     if (target.classList.contains('bookmark-removeItemBtn')) {
-      bookmarkProvider.remove(e.target.dataset.id)
+      bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, e.target.dataset.id)
         .then(() => this.populateBookmarks());
       return true;
     }
     return false;
   }
 
-  onBookmarkStock(e, target) {
+  onClickPttUsersLinks(e, target) {
+    if (target.classList.contains('pttUsersLinks-openBtn')) {
+      requestAnimationFrame(() => {
+        this.state.pttUsers.forEach(({ id }) => {
+          window.open(getLink('ptt', { q: id }), '_blank');
+        });
+      });
+      return true;
+    }
+    return false;
+  }
+
+  onClickRemovePttUserBtn(e, target) {
+    if (target.classList.contains('bookmark-removePttUserBtn')) {
+      bookmarkProvider.remove(BOOKMARK_TYPE.PTT_USER, e.target.dataset.id)
+        .then(() => this.populatePttUsers());
+      return true;
+    }
+    return false;
+  }
+
+  onBookmark(e, target) {
     let submit = false;
     switch (e.type) {
       case 'click':
@@ -104,31 +128,55 @@ class BookmarkBoard extends EventDispatcher {
         bookmarkPayload.id = values[1];
         bookmarkPayload.name = values[0];
       }
-      bookmarkProvider.put(bookmarkPayload.id, bookmarkPayload)
+      bookmarkProvider.put(BOOKMARK_TYPE.STOCK, bookmarkPayload.id, bookmarkPayload)
         .then(() => this.populateBookmarks());
+    } else if (values.length === 1) {
+      const id = values[0];
+      bookmarkProvider.put(BOOKMARK_TYPE.PTT_USER, id, { id }).then(() => this.populatePttUsers());
     }
     return true;
   }
 
-  populateBookmarks() {
-    bookmarkProvider.toArray().then(bookmarks => this.setState({ bookmarks }));
+  populatePttUsers() {
+    bookmarkProvider.toArray(BOOKMARK_TYPE.PTT_USER).then(pttUsers => this.setState({ pttUsers }));
   }
 
-  renderItemSaved(stock) {
-    const onEvent = stock.id === this.state.stockIdToLookup ? this.onEvent : null;
-    return (
-      <List.Item className="bookmark-item" key={stock.id}>
-        <Icon className="bookmark-removeItemBtn" name="trash alternate" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
-        <List.Header className="bookmark-itemHeader">
-          <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
-          <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
-        </List.Header>
-        <StockLinks className="bookmark-itemLinks" stock={stock} onEvent={onEvent} />
-      </List.Item>);
+  populateBookmarks() {
+    bookmarkProvider.toArray(BOOKMARK_TYPE.STOCK).then(bookmarks => this.setState({ bookmarks }));
   }
 
   renderItemsSaved(stocks) {
-    return <List className="bookmark-list" size="large">{ stocks.map(s => this.renderItemSaved(s)) }</List>;
+    const items = stocks.map(stock => {
+      const onEvent = stock.id === this.state.stockIdToLookup ? this.onEvent : null;
+      return (
+        <List.Item className="bookmark-item" key={stock.id}>
+          <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
+          <List.Header className="bookmark-itemHeader">
+            <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
+            <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
+          </List.Header>
+          <StockLinks className="bookmark-itemLinks" stock={stock} onEvent={onEvent} />
+        </List.Item>);
+    });
+    return <List className="bookmark-list" size="large">{ items }</List>;
+  }
+
+  renderPttUsers(pttUsers) {
+    if (pttUsers.length === 0) return null;
+
+    const items = pttUsers.map(({ id }) => (
+      <li className="bookmark-pttUser" key={id}>
+        <a target="_blank" rel="noopener noreferrer" href={getLink('ptt', { q: id })}>{id}</a>
+        <Icon className="bookmark-removePttUserBtn" name="close" data-id={id} onClick={this.onClick} />
+      </li>
+    ));
+    return (
+      <div className="bookmark-pttUsers-holder">
+        <Button className="pttUsersLinks-openBtn" icon="globe" circular onClick={this.onClick} />
+        <ul className="bookmark-pttUsers">
+          { items }
+        </ul>
+      </div>);
   }
 
   render() {
@@ -148,6 +196,7 @@ class BookmarkBoard extends EventDispatcher {
               value={this.state.bookmarkInputString}
               onChange={this.onInputChange}
             />
+            { this.renderPttUsers(this.state.pttUsers) }
           </section>
           { this.renderItemsSaved(this.state.bookmarks) }
         </div>
