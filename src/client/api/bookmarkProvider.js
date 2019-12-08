@@ -27,27 +27,26 @@ const bookmarkProvider = {
 
   _bookmarks: null,
 
-  async _init() {
-    if (this._bookmarks) {
-      return;
-    }
-    try {
-      const { data: { stocks, pttUsers } } = await apiClient.get('/bookmarks');
+  _init() {
+    if (this._initPromise) return this._initPromise;
 
-      this._bookmarks = {};
-
-      this._bookmarks[BOOKMARK_TYPE.STOCK] = stocks.reduce((acc, item) => {
-        acc[item.id] = item;
-        return acc;
-      }, {});
-
-      this._bookmarks[BOOKMARK_TYPE.PTT_USER] = pttUsers.reduce((users, item) => {
-        users[item.id] = item;
-        return users;
-      }, {});
-    } catch (e) {
-      console.error(e);
-    }
+    this._initPromise = apiClient.get('/bookmarks')
+      .then(({ data: { stocks, pttUsers } }) => {
+        this._bookmarks = {};
+        this._bookmarks[BOOKMARK_TYPE.STOCK] = stocks.reduce((acc, item) => {
+          acc[item.id] = item;
+          return acc;
+        }, {});
+        this._bookmarks[BOOKMARK_TYPE.PTT_USER] = pttUsers.reduce((users, item) => {
+          users[item.id] = item;
+          return users;
+        }, {});
+      })
+      .catch(e => {
+        this._initPromise = null;
+        console.error(e);
+      });
+    return this._initPromise;
   },
 
   async toArray(type) {
