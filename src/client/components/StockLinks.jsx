@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { List, Button } from 'semantic-ui-react';
 
 import getLink from '@/utils/getLink';
+import openLink from '@/utils/openLink';
 import EventDispatcher from '@/components/subcomponents/EventDispatcher';
 import '@/css/StockLinks.scss';
 
@@ -13,9 +14,7 @@ class StockLinks extends EventDispatcher {
     this.onClick = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      for (let i = this._urls.length - 1; i >= 0; --i) {
-        window.open(this._urls[i], '_blank');
-      }
+      openLink(this._urls);
       return false;
     };
   }
