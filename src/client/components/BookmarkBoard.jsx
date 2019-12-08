@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { List, Icon, Input, Button } from 'semantic-ui-react';
 
 import getLink from '@/utils/getLink';
+import openLink from '@/utils/openLink';
 import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
 import StockLinks from '@/components/StockLinks';
 import EventDispatcher from '@/components/subcomponents/EventDispatcher';
@@ -51,9 +52,7 @@ class BookmarkBoard extends EventDispatcher {
 
   onAskForURLs({ urls }) {
     this.setState({ stockIdToLookup: '' });
-    for (let i = urls.length - 1; i >= 0; --i) {
-      window.open(urls[i], '_blank');
-    }
+    openLink(urls);
   }
 
   onRequestLookupStock(e, target) {
@@ -85,11 +84,8 @@ class BookmarkBoard extends EventDispatcher {
 
   onClickPttUsersLinks(e, target) {
     if (target.classList.contains('pttUsersLinks-openBtn')) {
-      requestAnimationFrame(() => {
-        this.state.pttUsers.forEach(({ id }) => {
-          window.open(getLink('ptt', { q: id }), '_blank');
-        });
-      });
+      const urls = this.state.pttUsers.map(({ id }) => getLink('ptt', { q: id }));
+      openLink(urls);
       return true;
     }
     return false;
