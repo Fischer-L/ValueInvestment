@@ -18,6 +18,11 @@ function clearLegacyLocalStorage() {
 }
 clearLegacyLocalStorage();
 
+export const BOOKMARK_TYPE = {
+  STOCK: 'stock',
+  PTT_USER: 'pttuser',
+};
+
 const bookmarkProvider = {
 
   _bookmarks: null,
@@ -27,42 +32,52 @@ const bookmarkProvider = {
       return;
     }
     try {
-      const { data: { stocks } } = await apiClient.get('/bookmarks');
-      this._bookmarks = stocks.reduce((bookmarks, item) => {
-        bookmarks[item.id] = item;
-        return bookmarks;
+      const { data: { stocks, pttUsers } } = await apiClient.get('/bookmarks');
+
+      this._bookmarks = {};
+
+      this._bookmarks[BOOKMARK_TYPE.STOCK] = stocks.reduce((acc, item) => {
+        acc[item.id] = item;
+        return acc;
+      }, {});
+
+      this._bookmarks[BOOKMARK_TYPE.PTT_USER] = pttUsers.reduce((users, item) => {
+        users[item.id] = item;
+        return users;
       }, {});
     } catch (e) {
       console.error(e);
     }
   },
 
-  async toArray() {
+  async toArray(type) {
     await this._init();
-    return Object.values(this._bookmarks);
+    return Object.values(this._bookmarks[type]);
   },
 
-  async put(id, payload) {
+  async put(type, id, payload) {
     await this._init();
-    if (!this._bookmarks[id]) {
+    const data = this._bookmarks[type];
+    if (!data[id]) {
       try {
-        apiClient.post('/bookmarks', { payload: [ payload ] });
+        apiClient.post(`/bookmarks/${type}`, { payload: [ payload ] });
       } catch (e) {
         console.error(e);
       }
-      this._bookmarks[id] = payload;
+      data[id] = payload;
     }
   },
 
-  async remove(id) {
+  async remove(type, id) {
     await this._init();
-    if (this._bookmarks[id]) {
+    const data = this._bookmarks[type];
+    if (data[id]) {
       try {
-        apiClient.delete('/bookmarks', { params: { ids: id } });
+        apiClient.delete(`/bookmarks/${type}`, { params: { ids: id } });
       } catch (e) {
         console.error(e);
       }
-      delete this._bookmarks[id];
+      delete data[id];
     }
   },
 };
