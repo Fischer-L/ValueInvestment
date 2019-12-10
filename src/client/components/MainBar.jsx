@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button } from 'semantic-ui-react';
 
-import EventDispatcher from '@/components/subcomponents/EventDispatcher';
+import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/MainBar.scss';
 
-class MainBar extends EventDispatcher {
+class MainBar extends ClickableComponent {
   constructor(props) {
     super(props);
 
@@ -17,69 +17,46 @@ class MainBar extends EventDispatcher {
       this.setState({ stockId: e.target.value });
     };
 
-    this.onClick = (e) => {
-      if (e.type === 'touchend') {
-        this._isTouchHandled = true;
+    this._stopTraversingDOM = (e, target) => target.classList.contains('mainBar');
+
+    this.onClickBookmarkBtn = (e, target) => {
+      if (target.classList.contains('mainBar-bookmarkBtn')) {
+        this.fireEvent('onClickBookmarkBtn');
+        return true;
       }
-      if (e.type === 'click' && this._isTouchHandled) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-      e.persist();
-      const handlers = [ 'onClickBookmarkBtn', 'onRequestLogin', 'onRequestStockValue' ];
-      let { target } = e;
-      while (target) {
-        for (const handler of handlers) { // eslint-disable-line no-restricted-syntax
-          if (this[handler](e, target)) {
-            e.preventDefault();
-            e.stopPropagation();
-            return;
-          }
-        }
-        if (target.classList.contains('mainBar')) {
-          target = null;
-        }
-        target = target && target.parentElement;
-      }
+      return false;
     };
-  }
 
-  onClickBookmarkBtn(e, target) {
-    if (target.classList.contains('mainBar-bookmarkBtn')) {
-      this.fireEvent('onClickBookmarkBtn');
+    this.onRequestLogin = (e, target) => {
+      if (target.classList.contains('mainBar-loginBtn')) {
+        this.fireEvent('onRequestLogin');
+        return true;
+      }
+      return false;
+    };
+
+    this.onRequestStockValue = (e, target) => {
+      let submit = false;
+      switch (e.type) {
+        case 'click':
+        case 'touchend':
+          submit = target.classList.contains('search') && target.classList.contains('icon');
+          break;
+
+        case 'keypress':
+          submit = e.key.toLowerCase() === 'enter';
+          break;
+      }
+      if (!submit) return false;
+
+      const { stockId } = this.state;
+      if (stockId) {
+        this.fireEvent('onRequestStockValue', { stockId });
+      }
       return true;
-    }
-    return false;
-  }
+    };
 
-  onRequestLogin(e, target) {
-    if (target.classList.contains('mainBar-loginBtn')) {
-      this.fireEvent('onRequestLogin');
-      return true;
-    }
-    return false;
-  }
-
-  onRequestStockValue(e, target) {
-    let submit = false;
-    switch (e.type) {
-      case 'click':
-      case 'touchend':
-        submit = target.classList.contains('search') && target.classList.contains('icon');
-        break;
-
-      case 'keypress':
-        submit = e.key.toLowerCase() === 'enter';
-        break;
-    }
-    if (!submit) return false;
-
-    const { stockId } = this.state;
-    if (stockId) {
-      this.fireEvent('onRequestStockValue', { stockId });
-    }
-    return true;
+    this.regisHandler(this.onClickBookmarkBtn, this.onRequestLogin, this.onRequestStockValue);
   }
 
   renderLoginButton() {
