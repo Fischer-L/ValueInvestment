@@ -4,19 +4,16 @@ import { List, Button } from 'semantic-ui-react';
 
 import getLink from '@/utils/getLink';
 import openLink from '@/utils/openLink';
-import EventDispatcher from '@/components/subcomponents/EventDispatcher';
+import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/StockLinks.scss';
 
-class StockLinks extends EventDispatcher {
+class StockLinks extends ClickableComponent {
   constructor(props) {
     super(props);
-
-    this.onClick = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      openLink(this._urls);
-      return false;
-    };
+    this.regisOnClick(() => {
+      openLink(...this._urls);
+      return true;
+    });
   }
 
   createURLs({ stock }) {
@@ -41,7 +38,7 @@ class StockLinks extends EventDispatcher {
         <List.Item as="a" target="_blank" rel="noopener noreferrer" href={this._urls[3]}>24hrs News</List.Item>
         <List.Item as="a" target="_blank" rel="noopener noreferrer" href={this._urls[4]}>討論</List.Item>
         <List.Item as="a" target="_blank" rel="noopener noreferrer" href={this._urls[5]}>Ptt</List.Item>
-        <Button className="stockLinks-openBtn" icon="globe" circular onClick={this.onClick} />
+        <Button className="stockLinks-openBtn" icon="globe" circular onClick={this.onClick} onTouchEnd={this.onClick} />
       </List>
     );
   }

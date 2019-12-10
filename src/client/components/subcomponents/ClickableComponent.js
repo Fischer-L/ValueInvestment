@@ -40,7 +40,7 @@ class ClickableComponent extends EventDispatcher {
     return false;
   }
 
-  regisHandler(...handlers) {
+  regisOnClick(...handlers) {
     this._handlers.push(...handlers.filter(h => typeof h === 'function'));
   }
 }

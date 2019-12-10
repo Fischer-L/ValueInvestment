@@ -56,7 +56,7 @@ class MainBar extends ClickableComponent {
       return true;
     };
 
-    this.regisHandler(this.onClickBookmarkBtn, this.onRequestLogin, this.onRequestStockValue);
+    this.regisOnClick(this.onClickBookmarkBtn, this.onRequestLogin, this.onRequestStockValue);
   }
 
   renderLoginButton() {
