@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import 'semantic-ui-css/semantic.min.css';
 import '@/css/App.scss';
@@ -8,7 +8,6 @@ import MainBar from '@/components/MainBar';
 import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoard from '@/components/BookmarkBoard';
-import EventDispatcher from '@/components/subcomponents/EventDispatcher';
 
 import icoDuck from '@/assets/ico_duck.jpg';
 import icoHen from '@/assets/ico_hen.svg';
@@ -16,7 +15,7 @@ import icoLoading from '@/assets/ico_loading.svg';
 
 const stockProvider = getStockProvider({ apiClient, domParser: new DOMParser() });
 
-class App extends EventDispatcher {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -94,6 +93,17 @@ class App extends EventDispatcher {
       }
       return boards;
     };
+
+    this.mainBarCallbacks = {
+      onRequestLogin: this.onRequestLogin,
+      onClickBookmarkBtn: this.onClickBookmarkBtn,
+      onRequestStockValue: this.onRequestStockValue,
+    };
+
+    this.bookmarkBoardCallbacks = {
+      onRequestLookupStock: this.onRequestLookupStock,
+      onRequestCloseBookmark: this.onRequestCloseBookmark,
+    };
   }
 
   render() {
@@ -108,11 +118,11 @@ class App extends EventDispatcher {
     } else {
       appContent.push(this.renderBeginComponent());
     }
-    appContent.push(<BookmarkBoard key="BookmarkBoard" onEvent={this.onEvent} show={this.state.showBookmarkBoard} />);
+    appContent.push(<BookmarkBoard key="BookmarkBoard" show={this.state.showBookmarkBoard} {...this.bookmarkBoardCallbacks} />);
 
     return (
       <div className="app">
-        <MainBar onEvent={this.onEvent} isLogin={isLogin} allowLogin={allowLogin} />
+        <MainBar isLogin={isLogin} allowLogin={allowLogin} {...this.mainBarCallbacks} />
         <section className="appContent">{appContent}</section>
       </div>
     );

@@ -1,7 +1,6 @@
-// import { Component } from 'react'; TODO: Will need after removing EventDispatcher
-import EventDispatcher from '@/components/subcomponents/EventDispatcher';
+import { Component } from 'react';
 
-class ClickableComponent extends EventDispatcher {
+class ClickableComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -34,6 +33,12 @@ class ClickableComponent extends EventDispatcher {
         target = target && target.parentElement;
       }
     };
+  }
+
+  fireCallback(name, payload) {
+    if (typeof this.props[name] === 'function') {
+      this.props[name](payload);
+    }
   }
 
   _stopTraversingDOM(e, target) { // eslint-disable-line no-unused-vars

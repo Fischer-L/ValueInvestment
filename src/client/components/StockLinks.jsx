@@ -44,11 +44,11 @@ class StockLinks extends ClickableComponent {
   }
 
   componentDidMount() {
-    this.fireEvent('onAskForURLs', { stock: this.props.stock, urls: this._urls });
+    this.fireCallback('onAskForURLs', { stock: this.props.stock, urls: this._urls });
   }
 
   componentDidUpdate() {
-    this.fireEvent('onAskForURLs', { stock: this.props.stock, urls: this._urls });
+    this.fireCallback('onAskForURLs', { stock: this.props.stock, urls: this._urls });
   }
 }
 
@@ -58,6 +58,8 @@ StockLinks.propTypes = {
     name: PropTypes.string.isRequired,
   }),
   className: PropTypes.string,
+  autoOpenLinks: PropTypes.bool,
+  onAskForURLs: PropTypes.func,
 };
 
 export default StockLinks;
