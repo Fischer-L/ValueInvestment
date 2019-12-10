@@ -21,7 +21,7 @@ class MainBar extends ClickableComponent {
 
     this.onClickBookmarkBtn = (e, target) => {
       if (target.classList.contains('mainBar-bookmarkBtn')) {
-        this.fireEvent('onClickBookmarkBtn');
+        this.fireCallback('onClickBookmarkBtn');
         return true;
       }
       return false;
@@ -29,7 +29,7 @@ class MainBar extends ClickableComponent {
 
     this.onRequestLogin = (e, target) => {
       if (target.classList.contains('mainBar-loginBtn')) {
-        this.fireEvent('onRequestLogin');
+        this.fireCallback('onRequestLogin');
         return true;
       }
       return false;
@@ -51,7 +51,7 @@ class MainBar extends ClickableComponent {
 
       const { stockId } = this.state;
       if (stockId) {
-        this.fireEvent('onRequestStockValue', { stockId });
+        this.fireCallback('onRequestStockValue', { stockId });
       }
       return true;
     };
@@ -96,6 +96,9 @@ class MainBar extends ClickableComponent {
 MainBar.propTypes = {
   isLogin: PropTypes.bool,
   allowLogin: PropTypes.bool,
+  onRequestLogin: PropTypes.func,
+  onClickBookmarkBtn: PropTypes.func,
+  onRequestStockValue: PropTypes.func,
 };
 
 export default MainBar;

@@ -34,7 +34,7 @@ class BookmarkBoard extends ClickableComponent {
       if (target.classList.contains('bookmark-lookupBtn')) {
         const stockId = e.target.dataset.id;
         this.setState({ stockIdToLookup: stockId });
-        this.fireEvent('onRequestLookupStock', { stockId });
+        this.fireCallback('onRequestLookupStock', { stockId });
         return true;
       }
       return false;
@@ -42,7 +42,7 @@ class BookmarkBoard extends ClickableComponent {
 
     this.onClickBakground = (e, target) => {
       if (target.classList.contains('bookmarkBoard-background')) {
-        this.fireEvent('onRequestCloseBookmark');
+        this.fireCallback('onRequestCloseBookmark');
         return true;
       }
       return false;
@@ -124,7 +124,7 @@ class BookmarkBoard extends ClickableComponent {
 
   renderItemsSaved(stocks) {
     const items = stocks.map(stock => {
-      const onEvent = stock.id === this.state.stockIdToLookup ? this.onEvent : null;
+      const onAskForURLs = stock.id === this.state.stockIdToLookup ? this.onAskForURLs : null;
       return (
         <List.Item className="bookmark-item" key={stock.id}>
           <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
@@ -132,7 +132,7 @@ class BookmarkBoard extends ClickableComponent {
             <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
             <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
           </List.Header>
-          <StockLinks className="bookmark-itemLinks" stock={stock} onEvent={onEvent} />
+          <StockLinks className="bookmark-itemLinks" stock={stock} onAskForURLs={onAskForURLs} />
         </List.Item>);
     });
     return <List className="bookmark-list" size="large">{ items }</List>;
@@ -190,6 +190,8 @@ class BookmarkBoard extends ClickableComponent {
 
 BookmarkBoard.propTypes = {
   show: PropTypes.bool,
+  onRequestLookupStock: PropTypes.func,
+  onRequestCloseBookmark: PropTypes.func,
 };
 
 export default BookmarkBoard;
