@@ -144,12 +144,12 @@ class BookmarkBoard extends ClickableComponent {
     const items = pttUsers.map(({ id }) => (
       <li className="bookmark-pttUser" key={id}>
         <a target="_blank" rel="noopener noreferrer" href={getLink('ptt', { q: id })}>{id}</a>
-        <Icon className="bookmark-removePttUserBtn" name="close" data-id={id} onClick={this.onClick} />
+        <Icon className="bookmark-removePttUserBtn" name="close" data-id={id} onClick={this.onClick} onTouchEnd={this.onClick} />
       </li>
     ));
     return (
       <div className="bookmark-pttUsers-holder">
-        <Button className="pttUsersLinks-openBtn" icon="globe" circular onClick={this.onClick} />
+        <Button className="pttUsersLinks-openBtn" icon="globe" circular onClick={this.onClick} onTouchEnd={this.onClick} />
         <ul className="bookmark-pttUsers">
           { items }
         </ul>
@@ -161,7 +161,7 @@ class BookmarkBoard extends ClickableComponent {
     if (this.props.show) className.push('bookmarkBoard--show');
 
     return (
-      <section className={className.join(' ')} onClick={this.onClick} onKeyPress={this.onClick}>
+      <section className={className.join(' ')} onClick={this.onClick} onTouchEnd={this.onClick} onKeyPress={this.onClick}>
         <div className="bookmarkBoard-background" />
         <div className="bookmarkBoard-content">
           <section className="bookmarkBoard-inputSection">
