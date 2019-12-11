@@ -14,12 +14,10 @@ script:
   - yarn lint
   - ENV=production yarn test
   - yarn build-prod
-  - yarn docker-run-test
-  - yarn docker-stop-test
 
 deploy:
   skip_cleanup: true
   provider: script
-  script: bash src/build/heroku_release.sh
+  script: yarn docker-stop-test && yarn docker-stop-test && bash src/build/heroku_release.sh
   on:
     branch: master

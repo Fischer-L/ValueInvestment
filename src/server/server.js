@@ -31,5 +31,5 @@ app.post('/logout', middlewares.logout);
 
 app.listen(PORT, function () {
   console.log('listening on port:', PORT, __dirname);
-  if (env === 'docker-test') process.exit(0);
+  if (env === 'docker-test') process.exit(1);
 });
