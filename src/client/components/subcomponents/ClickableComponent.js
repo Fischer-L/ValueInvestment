@@ -12,7 +12,6 @@ class ClickableComponent extends Component {
       if (e.type === 'touchend') this._isTouchHandled = true;
 
       if (e.type === 'click' && this._isTouchHandled) {
-        e.preventDefault();
         e.stopPropagation();
         return;
       }
