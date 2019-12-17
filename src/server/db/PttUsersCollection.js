@@ -7,7 +7,7 @@ const CollectionBase = require('./CollectionBase');
 // }
 class PttUsersCollection extends CollectionBase {
   _sanitizeDocs(users) {
-    return users.map(({ id }) => String(id)).filter(id => !!id).map(id => ({ id, _id: id }));
+    return users.map(({ id }) => String(id)).filter(id => !!id).map(id => ({ id }));
   }
 }
 

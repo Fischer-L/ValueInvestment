@@ -2,6 +2,7 @@ const Mongo = require('mongodb').MongoClient;
 const { DB_URL } = require('../../build/config_server');
 const PttUsersCollection = require('./PttUsersCollection');
 const BookmarksCollection = require('./BookmarksCollection');
+const StockNotesCollection = require('./StockNotesCollection');
 
 const options = {
   useUnifiedTopology: true,
@@ -19,6 +20,10 @@ const collections = {
   bookmarks: {
     instance: null,
     Clazz: BookmarksCollection,
+  },
+  stockNotes: {
+    instance: null,
+    Clazz: StockNotesCollection,
   },
 };
 
