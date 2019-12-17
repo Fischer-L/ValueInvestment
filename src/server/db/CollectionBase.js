@@ -40,7 +40,10 @@ class CollectionBase {
     let result = null;
     try {
       const collection = await this.getCollection();
-      const docs = this._sanitizeDocs(data);
+      const docs = this._sanitizeDocs(data).map(doc => {
+        doc._id = doc.id;
+        return doc;
+      });
       const saveCount = docs.length;
       if (saveCount === 1) {
         result = await collection.insertOne(docs[0]);

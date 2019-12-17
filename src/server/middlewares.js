@@ -38,6 +38,36 @@ const middlewares = {
   logout(req, res) {
     res.clearCookie(LOGIN_KEY).clearCookie(LOGIN_CLIENT_KEY).sendStatus(HTTP.OK);
   },
+
+  collectPayload(req, res, next) {
+    try {
+      const payload = req.body.payload;
+      if (payload instanceof Array && payload.length > 0) {
+        res.locals.payload = payload;
+      } else {
+        throw new Error(`No body payload to collect - ${req.body}`);
+      }
+    } catch (e) {
+      res.status(HTTP.BAD_REQUEST).send(e.toString());
+      return;
+    }
+    next();
+  },
+
+  collectIDs(req, res, next) {
+    try {
+      const ids = req.query.ids;
+      if (ids) {
+        res.locals.ids = ids.split(',');
+      } else {
+        throw new Error(`No ids in query: ${req.query}`);
+      }
+    } catch (e) {
+      res.status(HTTP.BAD_REQUEST).send(e.toString());
+      return;
+    }
+    next();
+  },
 };
 
 module.exports = middlewares;

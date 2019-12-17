@@ -27,10 +27,7 @@ class BookmarksCollection extends CollectionBase {
   }
 
   _sanitizeDocs(bookmarks) {
-    return bookmarks.map(bookmark => ({
-      ...bookmark,
-      _id: bookmark.id,
-    }));
+    return bookmarks.map(bookmark => ({ ...bookmark }));
   }
 }
 
