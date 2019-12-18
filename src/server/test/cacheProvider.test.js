@@ -1,8 +1,8 @@
 import CacheProvider from '../cacheProvider';
 
-function fakeRequest(query) {
+function fakeRequest() {
   return {
-    originalUrl: '/fakeRequest' + (query ? `?${query}` : ''),
+    path: '/fakeRequest',
   };
 }
 
@@ -38,15 +38,5 @@ describe('CacheProvider', () => {
     expect(cache.get(req)).toBe(1);
     cache.remove(req);
     expect(cache.get(req)).toBeNull();
-  });
-
-  it('should recognize url query', async () => {
-    const cache = new CacheProvider();
-    const req = fakeRequest();
-    const req2 = fakeRequest('a=a&b=b');
-    cache.set(req, 1);
-    cache.set(req2, 2);
-    expect(cache.get(req)).toBe(1);
-    expect(cache.get(req2)).toBe(2);
   });
 });
