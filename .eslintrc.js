@@ -8,6 +8,7 @@ module.exports = {
     "default-case": "off",
     "no-fallthrough": "off",
     "no-multi-assign": "off",
+    "prefer-template": "off",
     "react/sort-comp": "off",
     "no-return-assign": "off",
     "no-param-reassign": "off",

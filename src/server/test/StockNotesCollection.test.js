@@ -49,6 +49,10 @@ const fakeData = [
     id: '2330',
     name: '台積電',
     notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
+  }, {
+    id: '3008',
+    name: '大立光',
+    notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
   },
 ];
 
@@ -71,11 +75,20 @@ describe('StockNotesCollection', () => {
     verifyData(data, fakeData);
   });
 
-  // NOTICE: Bad smell, this test relies on the saved data from the above test.
+  // NOTICE: Bad smell, the below tests rely on the saved data from the above test.
   // This is faster but should refactor once tests get complicated.
-  it('should remove stock notes', async () => {
-    await stockNotes.remove([fakeData[1].id]);
-    const data = await stockNotes.getAll();
-    verifyData(data, fakeData.slice(0, 1));
+  describe('', () => {
+    it('should get stock notes', async () => {
+      let data = await stockNotes.get([ fakeData[1].id ]);
+      verifyData(data, fakeData.slice(1, 2));
+      data = await stockNotes.get([fakeData[1].id, fakeData[2].id]);
+      verifyData(data, fakeData.slice(1, 3));
+    });
+
+    it('should remove stock notes', async () => {
+      await stockNotes.remove([ fakeData[1].id ]);
+      const data = await stockNotes.getAll();
+      verifyData(data, [ fakeData[0], fakeData[2] ]);
+    });
   });
 });
