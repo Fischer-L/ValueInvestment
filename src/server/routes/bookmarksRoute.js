@@ -10,17 +10,30 @@ const BOOKMARK_TYPE = {
   PTT_USER: 'pttuser',
 };
 
+const COLLECTION_NAME = {
+  [ BOOKMARK_TYPE.STOCK ]: 'bookmarks',
+  [ BOOKMARK_TYPE.PTT_USER ]: 'pttUsers',
+};
+
+async function getBookmarks(type) {
+  let data = mongoCache.get(type);
+  if (!data) {
+    data = await getCollection(COLLECTION_NAME[ type ]).then(collection => collection.getAll());
+  }
+  mongoCache.set(type, data);
+  return data;
+}
+
 function initBookmarksRoute(app) {
   app.get('/bookmarks', async (req, res) => {
-    let data = mongoCache.get(req);
+    let data = null;
     if (!data) {
       try {
-        const [ pttUsers, stocks ] = await Promise.all([
-          getCollection('pttUsers').then(collection => collection.getAll()),
-          getCollection('bookmarks').then(collection => collection.getAll()),
+        const [ stocks, pttUsers ] = await Promise.all([
+          getBookmarks(BOOKMARK_TYPE.STOCK),
+          getBookmarks(BOOKMARK_TYPE.PTT_USER),
         ]);
-        data = { pttUsers, stocks };
-        mongoCache.set(req, data);
+        data = { stocks, pttUsers };
       } catch (e) {
         console.error(e);
         res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
@@ -30,29 +43,29 @@ function initBookmarksRoute(app) {
     res.json(data);
   });
 
-  app.post('/bookmarks/:type*?', collectPayload, async (req, res) => {
+  app.post('/bookmarks/:type', collectPayload, async (req, res) => {
     try {
       const { payload } = res.locals;
-      const collectionName = req.params.type === BOOKMARK_TYPE.PTT_USER ? 'pttUsers' : 'bookmarks';
-      await getCollection(collectionName).then(collection => collection.save(payload));
+      const name = COLLECTION_NAME[ req.params.type ];
+      await getCollection(name).then(collection => collection.save(payload));
       res.sendStatus(HTTP.OK);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
     } finally {
-      mongoCache.remove(req);
+      mongoCache.remove(req.params.type);
     }
   });
 
-  app.delete('/bookmarks/:type*?', collectIDs, async (req, res) => {
+  app.delete('/bookmarks/:type', collectIDs, async (req, res) => {
     try {
       const { ids } = res.locals;
-      const collectionName = req.params.type === BOOKMARK_TYPE.PTT_USER ? 'pttUsers' : 'bookmarks';
-      await getCollection(collectionName).then(collection => collection.remove(ids));
+      const name = COLLECTION_NAME[ req.params.type ];
+      await getCollection(name).then(collection => collection.remove(ids));
       res.sendStatus(HTTP.OK);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
     } finally {
-      mongoCache.remove(req);
+      mongoCache.remove(req.params.type);
     }
   });
 }
