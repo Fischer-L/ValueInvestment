@@ -26,7 +26,7 @@ const CollectionBase = require('./CollectionBase');
 //       chips: {
 //         comment: string,
 //       },
-//       lastUpdateTime: int, ms elapsed since January 1, 1970 00:00:00 UTC,
+//       createTime: int, ms elapsed since January 1, 1970 00:00:00 UTC,
 //     }
 //   ]
 // }
@@ -38,7 +38,7 @@ class StockNotesCollection extends CollectionBase {
       .map(item => ({
         ...item,
         id: String(item.id),
-        lastUpdateTime: item.notes[0].lastUpdateTime,
+        lastUpdateTime: item.notes[0].createTime,
       }));
   }
 }
