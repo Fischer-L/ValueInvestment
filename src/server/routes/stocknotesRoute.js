@@ -25,26 +25,24 @@ function initStocknotesRoute(app) {
     try {
       const { payload } = res.locals;
       await getCollection('stockNotes').then(collection => collection.save(payload));
+      res.sendStatus(HTTP.OK);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
-      return;
     } finally {
       mongoCache.remove(req);
     }
-    res.sendStatus(HTTP.OK);
   });
 
   app.delete('/stocknotes/', collectIDs, async (req, res) => {
     try {
       const { ids } = res.locals;
       await getCollection('stockNotes').then(collection => collection.remove(ids));
+      res.sendStatus(HTTP.OK);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
-      return;
     } finally {
       mongoCache.remove(req);
     }
-    res.sendStatus(HTTP.OK);
   });
 }
 

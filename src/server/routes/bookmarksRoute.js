@@ -1,6 +1,7 @@
 const HTTP = require('../httpStatusCodes');
 const { getCollection } = require('../db/mongo');
 const CacheProvider = require('../cacheProvider');
+const { collectIDs, collectPayload } = require('../middlewares');
 
 const mongoCache = new CacheProvider({ maxAge: -1 });
 
@@ -29,61 +30,30 @@ function initBookmarksRoute(app) {
     res.json(data);
   });
 
-  app.post('/bookmarks/:type*?', async (req, res) => {
-    let data = null;
+  app.post('/bookmarks/:type*?', collectPayload, async (req, res) => {
     try {
-      const payload = req.body.payload;
-      if (payload instanceof Array && payload.length > 0) {
-        data = payload;
-      }
-      if (!data) {
-        throw new Error('No bookmarks to save');
-      }
-    } catch (e) {
-      res.status(HTTP.BAD_REQUEST).send(e.toString());
-      return;
-    }
-
-    try {
+      const { payload } = res.locals;
       const collectionName = req.params.type === BOOKMARK_TYPE.PTT_USER ? 'pttUsers' : 'bookmarks';
-      const collection = await getCollection(collectionName);
-      await collection.save(data);
+      await getCollection(collectionName).then(collection => collection.save(payload));
+      res.sendStatus(HTTP.OK);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
-      return;
     } finally {
       mongoCache.remove(req);
     }
-    res.sendStatus(HTTP.OK);
   });
 
-  app.delete('/bookmarks/:type*?', async (req, res) => {
-    let data = null;
+  app.delete('/bookmarks/:type*?', collectIDs, async (req, res) => {
     try {
-      const ids = req.query.ids;
-      if (ids) {
-        data = ids.split(',');
-      }
-      if (!data) {
-        throw new Error('No bookmarks to delete');
-      }
-    } catch (e) {
-      res.status(HTTP.BAD_REQUEST).send(e.toString());
-      return;
-    }
-
-    try {
+      const { ids } = res.locals;
       const collectionName = req.params.type === BOOKMARK_TYPE.PTT_USER ? 'pttUsers' : 'bookmarks';
-      const collection = await getCollection(collectionName);
-      await collection.remove(data);
+      await getCollection(collectionName).then(collection => collection.remove(ids));
+      res.sendStatus(HTTP.OK);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
-      return;
     } finally {
       mongoCache.remove(req);
     }
-
-    res.sendStatus(HTTP.OK);
   });
 }
 
