@@ -6,11 +6,13 @@ const { collectIDs, collectPayload } = require('../middlewares');
 const mongoCache = new CacheProvider({ maxAge: -1 });
 
 function initStocknotesRoute(app) {
-  app.get('/stocknotes/', async (req, res) => {
+  app.get('/stocknotes/:id', async (req, res) => {
     let data = mongoCache.get(req);
     if (!data) {
       try {
-        data = await getCollection('stockNotes').then(collection => collection.getAll());
+        const id = req.params.id;
+        data = await getCollection('stockNotes').then(collection => collection.get([ id ]));
+        data = data[0];
         mongoCache.set(req, data);
       } catch (e) {
         console.error(e);
@@ -21,7 +23,7 @@ function initStocknotesRoute(app) {
     res.json(data);
   });
 
-  app.post('/stocknotes/', collectPayload, async (req, res) => {
+  app.post('/stocknotes', collectPayload, async (req, res) => {
     try {
       const { payload } = res.locals;
       await getCollection('stockNotes').then(collection => collection.save(payload));
@@ -33,7 +35,7 @@ function initStocknotesRoute(app) {
     }
   });
 
-  app.delete('/stocknotes/', collectIDs, async (req, res) => {
+  app.delete('/stocknotes', collectIDs, async (req, res) => {
     try {
       const { ids } = res.locals;
       await getCollection('stockNotes').then(collection => collection.remove(ids));

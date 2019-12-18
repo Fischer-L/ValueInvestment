@@ -34,6 +34,26 @@ class CollectionBase {
     }
   }
 
+  async get(ids = []) {
+    if (ids.length === 0) return [];
+
+    try {
+      let result = null;
+      const collection = await this.getCollection();
+      if (ids.length === 1) {
+        result = await collection.findOne({ _id: ids[0] });
+        result = [ result ];
+      } else {
+        result = await collection.find({ _id: { $in: ids } }, { sort: { _id: 1 } });
+        result = result.toArray();
+      }
+      return result;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
   async save(data = []) {
     if (data.length === 0) return;
 
