@@ -1,6 +1,5 @@
 const defaultOptions = {
   maxAge: 20 * 60 * 1000, // 20 mins
-  shouldInvalidateCache: () => false,
 };
 
 class CacheProvider {
@@ -10,23 +9,16 @@ class CacheProvider {
       ...defaultOptions,
       ...options,
     };
-    this._maxAge = options.maxAge;
+    this._maxAge = this._options.maxAge;
   }
 
-  get(req) {
-    const key = req.path;
+  get(key) {
     this._removeCacheIfExpired(key);
-
-    let cache = this._cache[key];
-    if (cache && this._options.shouldInvalidateCache(req)) {
-      cache = null;
-      delete this._cache[key];
-    }
+    const cache = this._cache[key];
     return cache ? cache.data : null;
   }
 
-  set(req, data) {
-    const key = req.path;
+  set(key, data) {
     this._cache[key] = {
       data,
       updateTime: Date.now(),
@@ -34,8 +26,7 @@ class CacheProvider {
     this._scheduleCacheCleanUp();
   }
 
-  remove(req) {
-    const key = req.path;
+  remove(key) {
     delete this._cache[key];
   }
 
@@ -54,7 +45,7 @@ class CacheProvider {
 
   _removeCacheIfExpired(key) {
     const cache = this._cache[key];
-    if (!cache) return;
+    if (!cache || this._maxAge < 0) return;
     if (Date.now() - cache.updateTime >= this._maxAge) delete this._cache[key];
   }
 }

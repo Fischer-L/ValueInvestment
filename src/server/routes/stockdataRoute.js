@@ -4,19 +4,25 @@ const CacheProvider = require('../cacheProvider');
 const { env } = require('../../build/config_server');
 const stockProvider = require('../stockProvider')({ env, cloudscraper });
 
-const stockdataCache = new CacheProvider({
-  shouldInvalidateCache(req) {
-    const { noCache } = req.query;
-    return noCache ? noCache.toLowerCase() === 'true' : false;
-  },
-});
+const stockdataCache = new CacheProvider();
+
+function shouldInvalidateCache(req) {
+  const { noCache } = req.query;
+  return noCache ? noCache.toLowerCase() === 'true' : false;
+}
 
 function initStockdataRoute(app) {
   app.get('/stockdata/:id', async (req, res) => {
-    let data = stockdataCache.get(req);
+    const cacheKey = req.path;
+
+    if (shouldInvalidateCache(req)) {
+      stockdataCache.remove(cacheKey);
+    }
+
+    let data = stockdataCache.get(cacheKey);
     if (!data) {
       data = await stockProvider.get(req.params.id);
-      stockdataCache.set(req, data);
+      stockdataCache.set(cacheKey, data);
     }
     res.json(data);
   });
