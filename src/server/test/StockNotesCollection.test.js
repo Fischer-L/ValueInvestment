@@ -8,7 +8,7 @@ function verifyData(mongoData, actual) {
   mongoData.forEach((v, i) => {
     expect(v.id).toBe(actual[i].id);
     expect(v.name).toBe(actual[i].name);
-    expect(v.lastUpdateTime).toBe(v.notes[0].lastUpdateTime);
+    expect(v.lastUpdateTime).toBe(v.notes[0].createTime);
 
     const expectedNotes = v.notes;
     const actualNotes = actual[i].notes;
@@ -16,27 +16,27 @@ function verifyData(mongoData, actual) {
   });
 }
 
-function genNote(lastUpdateTime) {
+function genNote(createTime) {
   return {
     trade: {
-      comment: `trade${lastUpdateTime}`,
+      comment: `trade${createTime}`,
     },
     value: {
-      comment: `value${lastUpdateTime}`,
+      comment: `value${createTime}`,
     },
     story: {
-      comment: `story${lastUpdateTime}`,
+      comment: `story${createTime}`,
     },
     fundamentals: {
-      comment: `fundamentals${lastUpdateTime}`,
+      comment: `fundamentals${createTime}`,
     },
     technicals: {
-      comment: `technicals${lastUpdateTime}`,
+      comment: `technicals${createTime}`,
     },
     chips: {
-      comment: `chips${lastUpdateTime}`,
+      comment: `chips${createTime}`,
     },
-    lastUpdateTime,
+    createTime,
   };
 }
 
