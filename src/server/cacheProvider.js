@@ -13,15 +13,8 @@ class CacheProvider {
     this._maxAge = options.maxAge;
   }
 
-  _keyOf(req) {
-    if (!req || !req.originalUrl) {
-      throw new Error(`Fail to extract cache key from ${JSON.stringify(req)}`);
-    }
-    return req.originalUrl;
-  }
-
   get(req) {
-    const key = this._keyOf(req);
+    const key = req.path;
     this._removeCacheIfExpired(key);
 
     let cache = this._cache[key];
@@ -33,7 +26,7 @@ class CacheProvider {
   }
 
   set(req, data) {
-    const key = this._keyOf(req);
+    const key = req.path;
     this._cache[key] = {
       data,
       updateTime: Date.now(),
@@ -42,7 +35,7 @@ class CacheProvider {
   }
 
   remove(req) {
-    const key = this._keyOf(req);
+    const key = req.path;
     delete this._cache[key];
   }
 
