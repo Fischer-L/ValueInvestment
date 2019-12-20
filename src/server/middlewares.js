@@ -41,11 +41,25 @@ const middlewares = {
 
   collectPayload(req, res, next) {
     try {
-      const payload = req.body.payload;
-      if (payload instanceof Array && payload.length > 0) {
-        res.locals.payload = payload;
+      if (req.body.payload) {
+        res.locals.payload = req.body.payload;
       } else {
-        throw new Error(`No body payload to collect - ${req.body}`);
+        throw new Error(`No body payload to collect - ${JSON.stringify(req.body)}`);
+      }
+    } catch (e) {
+      res.status(HTTP.BAD_REQUEST).send(e.toString());
+      return;
+    }
+    next();
+  },
+
+  collectPayloads(req, res, next) {
+    try {
+      const payloads = req.body.payloads;
+      if (payloads instanceof Array && payloads.length > 0) {
+        res.locals.payloads = payloads;
+      } else {
+        throw new Error(`No body payloads to collect - ${JSON.stringify(req.body)}`);
       }
     } catch (e) {
       res.status(HTTP.BAD_REQUEST).send(e.toString());
@@ -60,7 +74,7 @@ const middlewares = {
       if (ids) {
         res.locals.ids = ids.split(',');
       } else {
-        throw new Error(`No ids in query: ${req.query}`);
+        throw new Error(`No ids in query: ${JSON.stringify(req.query)}`);
       }
     } catch (e) {
       res.status(HTTP.BAD_REQUEST).send(e.toString());

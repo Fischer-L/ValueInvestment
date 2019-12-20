@@ -1,7 +1,7 @@
 const HTTP = require('../httpStatusCodes');
 const { getCollection } = require('../db/mongo');
 const CacheProvider = require('../cacheProvider');
-const { collectIDs, collectPayload } = require('../middlewares');
+const { collectIDs, collectPayloads } = require('../middlewares');
 
 const mongoCache = new CacheProvider({ maxAge: -1 });
 
@@ -43,11 +43,11 @@ function initBookmarksRoute(app) {
     res.json(data);
   });
 
-  app.post('/bookmarks/:type', collectPayload, async (req, res) => {
+  app.post('/bookmarks/:type', collectPayloads, async (req, res) => {
     try {
-      const { payload } = res.locals;
+      const { payloads } = res.locals;
       const name = COLLECTION_NAME[ req.params.type ];
-      await getCollection(name).then(collection => collection.save(payload));
+      await getCollection(name).then(collection => collection.save(payloads));
       res.sendStatus(HTTP.OK);
     } catch (e) {
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());

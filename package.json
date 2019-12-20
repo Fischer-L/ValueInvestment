@@ -6,7 +6,7 @@
   "author": "fischer.json <fischer.json@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn open-tab-build-local && yarn open-tab && yarn run-svr",
+    "dev": "yarn open-tab-build-local; yarn open-tab; yarn run-svr",
     "open-tab": "osascript -e 'tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down'",
     "open-tab-build-local": "osascript -e 'tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down' -e 'tell application \"Terminal\" to do script with command \"yarn build-local\" in window 1'",
     "clean": "rimraf ./public",
