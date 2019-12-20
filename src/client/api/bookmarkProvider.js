@@ -59,7 +59,7 @@ const bookmarkProvider = {
     const data = this._bookmarks[type];
     if (!data[id]) {
       try {
-        apiClient.post(`/bookmarks/${type}`, { payload: [ payload ] });
+        apiClient.post(`/bookmarks/${type}`, { payloads: [ payload ] });
       } catch (e) {
         console.error(e);
       }

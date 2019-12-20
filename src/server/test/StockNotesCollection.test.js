@@ -49,6 +49,10 @@ const fakeData = [
     id: '2330',
     name: '台積電',
     notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
+  }, {
+    id: '3008',
+    name: '大立光',
+    notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
   },
 ];
 
@@ -64,19 +68,30 @@ afterAll(function () {
   return testTarget.destroy();
 });
 
-// TODO
-describe.skip('StockNotesCollection', () => {
+describe('StockNotesCollection', () => {
   it('should save stock notes', async () => {
     await stockNotes.save(fakeData);
     const data = await stockNotes.getAll();
     verifyData(data, fakeData);
   });
 
-  // NOTICE: Bad smell, this test relies on the saved data from the above test.
-  // This is faster but should refactor once tests get complicated.
-  it('should remove stock notes', async () => {
-    await stockNotes.remove([fakeData[1].id]);
-    const data = await stockNotes.getAll();
-    verifyData(data, fakeData.slice(0, 1));
+  // NOTICE: Bad smell, the below tests rely on the saved data from the above test
+  // and have the order-dependency. This is faster but should refactor once tests get complicated.
+  describe('', () => {
+    it('should get one stock note', async () => {
+      const data = await stockNotes.get([ fakeData[1].id ]);
+      verifyData(data, [ fakeData[1] ]);
+    });
+
+    it('should get 2 stock notes', async () => {
+      const data = await stockNotes.get([ fakeData[0].id, fakeData[2].id ]);
+      verifyData(data, [ fakeData[0], fakeData[2] ]);
+    });
+
+    it('should remove stock notes', async () => {
+      await stockNotes.remove([ fakeData[1].id ]);
+      const data = await stockNotes.getAll();
+      verifyData(data, [ fakeData[0], fakeData[2] ]);
+    });
   });
 });
