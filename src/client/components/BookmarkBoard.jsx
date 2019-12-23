@@ -59,7 +59,10 @@ class BookmarkBoard extends ClickableComponent {
 
     this.onClickPttUsersLinks = (e, target) => {
       if (target.classList.contains('pttUsersLinks-openBtn')) {
-        const urls = this.state.pttUsers.map(({ id }) => getLink('ptt', { q: id }));
+        const urls = this.state.pttUsers.map(({ id }) => {
+          if (id === '標的') return getLink('pttpost', { q: id });
+          return getLink('ptt', { q: id });
+        });
         openLink(...urls);
         return true;
       }
