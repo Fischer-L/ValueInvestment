@@ -20,6 +20,9 @@ export default function getLink(site, query, pathParams) {
     case 'pttuser':
       return `https://www.ptt.cc/bbs/Stock/search?q=author%3A${encodeURIComponent(query.q)}`;
 
+    case 'pttpost':
+      return `https://www.ptt.cc/bbs/Stock/search?q=${encodeURIComponent(query.q)}`;
+
     case 'goodinfo':
       return `https://goodinfo.tw/StockInfo/ShowBuySaleChart.asp?CHT_CAT=DATE&STOCK_ID=${encodeURIComponent(query.stockId)}`;
 
