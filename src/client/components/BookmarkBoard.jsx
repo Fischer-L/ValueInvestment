@@ -59,20 +59,28 @@ class BookmarkBoard extends ClickableComponent {
 
     this.onClickPttUsersLinks = (e, target) => {
       if (target.classList.contains('pttUsersLinks-openBtn')) {
-        const urls = this.state.pttUsers.map(({ id }) => {
-          if (id === '標的') return getLink('pttpost', { q: id });
-          return getLink('ptt', { q: id });
-        });
+        const urls = this.state.pttUsers.reduce((_urls, { id }) => {
+          if (id === '標的') {
+            _urls.push(getLink('pttpost', { q: id }));
+          } else {
+            _urls.push(getLink('ptt', { q: id }), getLink('pttuser', { q: id }));
+          }
+          return _urls;
+        }, []);
         openLink(...urls);
         return true;
       }
       return false;
     };
 
-    this.onClickRemovePttUserBtn = (e, target) => {
+    this.onClickPttUser = (e, target) => {
       if (target.classList.contains('bookmark-removePttUserBtn')) {
         bookmarkProvider.remove(BOOKMARK_TYPE.PTT_USER, e.target.dataset.id)
           .then(() => this.populatePttUsers());
+        return true;
+      }
+      if (e.target.dataset.links) {
+        openLink(...e.target.dataset.links.split(','));
         return true;
       }
       return false;
@@ -121,7 +129,7 @@ class BookmarkBoard extends ClickableComponent {
 
     this.populatePttUsers();
     this.populateBookmarks();
-    this.regisOnClick(this.onClickBakground, this.onBookmark, this.onRequestLookupStock, this.onClickRemoveBookmarkBtn, this.onClickPttUsersLinks, this.onClickRemovePttUserBtn);
+    this.regisOnClick(this.onClickBakground, this.onBookmark, this.onRequestLookupStock, this.onClickRemoveBookmarkBtn, this.onClickPttUsersLinks, this.onClickPttUser);
   }
 
 
@@ -144,12 +152,19 @@ class BookmarkBoard extends ClickableComponent {
   renderPttUsers(pttUsers) {
     if (pttUsers.length === 0) return null;
 
-    const items = pttUsers.map(({ id }) => (
-      <li className="bookmark-pttUser" key={id}>
-        <a target="_blank" rel="noopener noreferrer" href={getLink('ptt', { q: id })}>{id}</a>
-        <Icon className="bookmark-removePttUserBtn" name="close" data-id={id} onClick={this.onClick} onTouchEnd={this.onClick} />
-      </li>
-    ));
+    const items = pttUsers.map(({ id }) => {
+      const links = [];
+      if (id === '標的') {
+        links.push(getLink('pttpost', { q: id }));
+      } else {
+        links.push(getLink('ptt', { q: id }), getLink('pttuser', { q: id }));
+      }
+      return (
+        <li className="bookmark-pttUser" key={id} onClick={this.onClick} onTouchEnd={this.onClick}>
+          <a data-links={links.join(',')} href="javascript:void(0)">{id}</a>
+          <Icon className="bookmark-removePttUserBtn" name="close" data-id={id} />
+        </li>);
+    });
     return (
       <div className="bookmark-pttUsers-holder">
         <Button className="pttUsersLinks-openBtn" icon="globe" circular onClick={this.onClick} onTouchEnd={this.onClick} />
