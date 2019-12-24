@@ -88,6 +88,13 @@ describe('StockNotesCollection', () => {
       verifyData(data, [ fakeData[0], fakeData[2] ]);
     });
 
+    it('should update one stock note', async () => {
+      fakeData[1].notes.unshift(genNote(Date.now() + 1));
+      await stockNotes.update(fakeData[1].id, { notes: fakeData[1].notes });
+      const data = await stockNotes.get([ fakeData[1].id ]);
+      verifyData(data, [ fakeData[1] ]);
+    });
+
     it('should remove stock notes', async () => {
       await stockNotes.remove([ fakeData[1].id ]);
       const data = await stockNotes.getAll();

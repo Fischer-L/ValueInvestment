@@ -41,6 +41,16 @@ class StockNotesCollection extends CollectionBase {
         lastUpdateTime: item.notes[0].createTime,
       }));
   }
+
+  _sanitizeDataOnUpdate(id, { notes }) {
+    if (!notes || notes.length === 0) {
+      throw new Error(`Update stock note of ${id} with empty notes`);
+    }
+    return {
+      notes,
+      lastUpdateTime: notes[0].createTime,
+    };
+  }
 }
 
 module.exports = StockNotesCollection;

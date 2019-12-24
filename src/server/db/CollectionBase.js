@@ -13,6 +13,11 @@ class CollectionBase {
     throw new Error(`${this.constructor.name} should implement _sanitizeDocs`);
   }
 
+  // Called before updating data, should return correct data to update
+  _sanitizeDataOnUpdate(id, data) { // eslint-disable-line no-unused-vars
+    throw new Error(`${this.constructor.name} should implement _sanitizeDataOnUpdate`);
+  }
+
   async getCollection() {
     if (!this._collection) {
       try {
@@ -68,6 +73,17 @@ class CollectionBase {
       if (result.insertedCount !== saveCount) {
         throw new Error(`Save ${this._name} exception: expect to save ${saveCount} docs but only ${result.insertedCount}`);
       }
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
+  async update(id, data) {
+    if (!id || !data) return;
+    try {
+      const collection = await this.getCollection();
+      await collection.updateOne({ _id: id }, { $set: this._sanitizeDataOnUpdate(id, data) });
     } catch (e) {
       console.error(e);
       throw e;
