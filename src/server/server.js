@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 
 const { env, port, publicDir } = require('../build/config_server');
 const middlewares = require('./middlewares');
+const initStocknoteRoute = require('./routes/stocknoteRoute');
 const initStockdataRoute = require('./routes/stockdataRoute');
 const initBookmarksRoute = require('./routes/bookmarksRoute');
 
@@ -22,6 +23,7 @@ app.use(express.static(PUBLIC_DIR, {
   },
 }));
 
+initStocknoteRoute(app);
 initStockdataRoute(app);
 initBookmarksRoute(app);
 
