@@ -10,7 +10,7 @@ const stockNoteProvider = {
   _ongoingPromises: {},
 
   async create(data) {
-    if (!data || !data.id || !data.name || !data.notes || data.notes.length === 0) {
+    if (!data || !data.id || !data.notes || data.notes.length === 0) {
       throw new Error(`Cannot create an invalid stock note: ${JSON.stringify(data)}`);
     }
 
