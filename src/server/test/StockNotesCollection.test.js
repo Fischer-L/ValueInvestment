@@ -43,15 +43,12 @@ function genNote(createTime) {
 const fakeData = [
   {
     id: '2317',
-    name: '鴻海',
     notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
   }, {
     id: '2330',
-    name: '台積電',
     notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
   }, {
     id: '3008',
-    name: '大立光',
     notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
   },
 ];
