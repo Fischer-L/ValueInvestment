@@ -34,7 +34,6 @@ class CollectionBase {
       const collection = await this.getCollection();
       return collection.find({}, { sort: { _id: 1 } }).toArray();
     } catch (e) {
-      console.error(e);
       throw e;
     }
   }
@@ -49,7 +48,6 @@ class CollectionBase {
       }
       return collection.find({ _id: { $in: ids } }, { sort: { _id: 1 } }).toArray();
     } catch (e) {
-      console.error(e);
       throw e;
     }
   }
@@ -67,14 +65,15 @@ class CollectionBase {
       const saveCount = docs.length;
       if (saveCount === 1) {
         result = await collection.insertOne(docs[0]);
-      } else {
+      } else if (saveCount > 1) {
         result = await collection.insertMany(docs);
+      } else {
+        throw new Error(`Save ${this._name} exception: nothing to save: ${JSON.stringify(data)}`);
       }
       if (result.insertedCount !== saveCount) {
         throw new Error(`Save ${this._name} exception: expect to save ${saveCount} docs but only ${result.insertedCount}`);
       }
     } catch (e) {
-      console.error(e);
       throw e;
     }
   }
@@ -85,7 +84,6 @@ class CollectionBase {
       const collection = await this.getCollection();
       await collection.updateOne({ _id: id }, { $set: this._sanitizeDataOnUpdate(id, data) });
     } catch (e) {
-      console.error(e);
       throw e;
     }
   }
@@ -104,10 +102,9 @@ class CollectionBase {
         result = await collection.deleteMany(queries);
       }
       if (result.deletedCount !== queryCount) {
-        console.warn(`Remove ${this._name} exception: expect to remove ${queryCount} docs but only ${result.deletedCount}`);
+        throw new Error(`Remove ${this._name} exception: expect to remove ${queryCount} docs but only ${result.deletedCount}`);
       }
     } catch (e) {
-      console.error(e);
       throw e;
     }
   }

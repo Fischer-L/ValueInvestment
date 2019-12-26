@@ -50,6 +50,7 @@ function initBookmarksRoute(app) {
       await getCollection(name).then(collection => collection.save(payloads));
       res.sendStatus(HTTP.OK);
     } catch (e) {
+      console.error(e);
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
     } finally {
       mongoCache.remove(req.params.type);
@@ -63,6 +64,7 @@ function initBookmarksRoute(app) {
       await getCollection(name).then(collection => collection.remove(ids));
       res.sendStatus(HTTP.OK);
     } catch (e) {
+      console.error(e);
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
     } finally {
       mongoCache.remove(req.params.type);

@@ -12,6 +12,7 @@ function initStocknoteRoute(app) {
       await getCollection('stockNotes').then(collection => collection.save([ payload ]));
       res.sendStatus(HTTP.OK);
     } catch (e) {
+      console.error(e);
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
     } finally {
       mongoCache.remove(payload.id);
@@ -42,6 +43,7 @@ function initStocknoteRoute(app) {
       await getCollection('stockNotes').then(collection => collection.update(id, payload));
       res.sendStatus(HTTP.OK);
     } catch (e) {
+      console.error(e);
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
     } finally {
       mongoCache.remove(id);
@@ -54,6 +56,7 @@ function initStocknoteRoute(app) {
       await getCollection('stockNotes').then(collection => collection.remove([ id ]));
       res.sendStatus(HTTP.OK);
     } catch (e) {
+      console.error(e);
       res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
     } finally {
       mongoCache.remove(id);
