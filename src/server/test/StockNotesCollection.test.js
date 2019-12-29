@@ -1,6 +1,10 @@
 const createTestCollection = require('./utils/createTestCollection');
 const StockNotesCollection = require('../db/StockNotesCollection');
 
+function verifyEmptyArray(arr) {
+  expect(JSON.stringify(arr)).toBe('[]');
+}
+
 function verifyData(mongoData, actual) {
   expect(mongoData.length).toBe(actual.length);
   actual.sort((a, b) => a.id.localeCompare(b.id));
@@ -16,8 +20,8 @@ function verifyData(mongoData, actual) {
   });
 }
 
-function genNote(createTime) {
-  return {
+function genNote(createTime, ...excludes) {
+  const note = {
     trade: {
       comment: `trade${createTime}`,
     },
@@ -38,6 +42,8 @@ function genNote(createTime) {
     },
     createTime,
   };
+  excludes.forEach(key => delete note[key]);
+  return note;
 }
 
 const fakeData = [
@@ -46,10 +52,10 @@ const fakeData = [
     notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
   }, {
     id: '2330',
-    notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
+    notes: [ genNote(Date.now(), 'value', 'fundamentals'), genNote(Date.now() - 1) ],
   }, {
     id: '3008',
-    notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
+    notes: [ genNote(Date.now()), genNote(Date.now() - 1, 'trade', 'chips') ],
   },
 ];
 
@@ -66,6 +72,31 @@ afterAll(function () {
 });
 
 describe('StockNotesCollection', () => {
+  it('should note save invalid stock notes', async () => {
+    let data = null;
+    let invalid = null;
+
+    await stockNotes.save(null).catch(() => {});
+    data = await stockNotes.getAll();
+    verifyEmptyArray(data);
+
+    invalid = {
+      id: '1234',
+      notes: [{ ...genNote(Date.now()), createTime: null }],
+    };
+    await stockNotes.save([ invalid ]).catch(() => {});
+    data = await stockNotes.getAll();
+    verifyEmptyArray(data);
+
+    invalid = {
+      id: '1234',
+      notes: [{ createTime: null }],
+    };
+    await stockNotes.save([ invalid ]).catch(() => {});
+    data = await stockNotes.getAll();
+    verifyEmptyArray(data);
+  });
+
   it('should save stock notes', async () => {
     await stockNotes.save(fakeData);
     const data = await stockNotes.getAll();
