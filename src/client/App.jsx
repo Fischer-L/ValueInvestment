@@ -88,8 +88,8 @@ class App extends Component {
 
     this.renderBoards = ({ stockId, stockData, isLogin, allowLogin }) => {
       const boards = [ <ValueBoard stockId={stockId} stockData={stockData} key="ValueBoard" /> ];
-      if (allowLogin && isLogin && false) {
-        boards.push(<NoteBoard key="NoteBoard" />);
+      if (allowLogin && isLogin) {
+        boards.push(<NoteBoard key="NoteBoard" stockId={stockId} />);
       }
       return boards;
     };

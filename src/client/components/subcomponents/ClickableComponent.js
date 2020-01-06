@@ -6,7 +6,7 @@ class ClickableComponent extends Component {
 
     this._handlers = [];
 
-    this.onClick = (e) => {
+    this.onClick = e => {
       if (this._handlers.length === 0) return;
 
       if (e.type === 'touchend') this._isTouchHandled = true;
@@ -31,6 +31,17 @@ class ClickableComponent extends Component {
         }
         target = target && target.parentElement;
       }
+    };
+  }
+
+  onClickDo(callback) {
+    return e => {
+      if (e.type === 'touchend') this._isTouchHandled = true;
+      if (e.type === 'click' && this._isTouchHandled) {
+        e.stopPropagation();
+        return;
+      }
+      callback(e);
     };
   }
 
