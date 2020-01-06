@@ -8,12 +8,12 @@ const LOGIN_VALUE = 'z8%20284h96';
 const LOGIN_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: inProduction,
-  sameSite: 'Strict',
+  SameSite: 'Lax',
 };
 const LOGIN_CLIENT_COOKIE_OPTIONS = {
   httpOnly: false,
   secure: inProduction,
-  sameSite: 'Strict',
+  SameSite: 'Lax',
 };
 
 const middlewares = {
