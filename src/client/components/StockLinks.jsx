@@ -10,10 +10,7 @@ import '@/css/StockLinks.scss';
 class StockLinks extends ClickableComponent {
   constructor(props) {
     super(props);
-    this.regisOnClick(() => {
-      openLink(...this._urls);
-      return true;
-    });
+    this.openLinks = this.onClickDo(() => openLink(...this._urls));
   }
 
   createURLs({ stock }) {
@@ -38,7 +35,7 @@ class StockLinks extends ClickableComponent {
         <List.Item as="a" target="_blank" rel="noopener noreferrer" href={this._urls[3]}>24hrs News</List.Item>
         <List.Item as="a" target="_blank" rel="noopener noreferrer" href={this._urls[4]}>討論</List.Item>
         <List.Item as="a" target="_blank" rel="noopener noreferrer" href={this._urls[5]}>Ptt</List.Item>
-        <Button className="stockLinks-openBtn" icon="globe" circular onClick={this.onClick} onTouchEnd={this.onClick} />
+        <Button className="stockLinks-openBtn" icon="globe" circular onClick={this.openLinks} onTouchEnd={this.openLinks} />
       </List>
     );
   }

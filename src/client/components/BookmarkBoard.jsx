@@ -30,75 +30,54 @@ class BookmarkBoard extends ClickableComponent {
       openLink(...urls);
     };
 
-    this.onRequestLookupStock = (e, target) => {
-      if (target.classList.contains('bookmark-lookupBtn')) {
-        const stockId = e.target.dataset.id;
-        this.setState({ stockIdToLookup: stockId });
-        this.fireCallback('onRequestLookupStock', { stockId });
-        return true;
-      }
-      return false;
-    };
+    this.onRequestLookupStock = this.onClickDo(e => {
+      const stockId = e.target.dataset.id;
+      this.setState({ stockIdToLookup: stockId });
+      this.fireCallback('onRequestLookupStock', { stockId });
+    });
 
-    this.onClickBakground = (e, target) => {
-      if (target.classList.contains('bookmarkBoard-background')) {
-        this.fireCallback('onRequestCloseBookmark');
-        return true;
-      }
-      return false;
-    };
+    this.onClickBakground = this.onClickDo(() => this.fireCallback('onRequestCloseBookmark'));
 
-    this.onClickRemoveBookmarkBtn = (e, target) => {
-      if (target.classList.contains('bookmark-removeItemBtn')) {
-        bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, e.target.dataset.id)
-          .then(() => this.populateBookmarks());
-        return true;
-      }
-      return false;
-    };
+    this.onClickRemoveBookmarkBtn = this.onClickDo(e => {
+      bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, e.target.dataset.id)
+        .then(() => this.populateBookmarks());
+    });
 
-    this.onClickPttUsersLinks = (e, target) => {
-      if (target.classList.contains('pttUsersLinks-openBtn')) {
-        const urls = this.state.pttUsers.reduce((_urls, { id }) => {
-          if (id === '標的') {
-            _urls.push(getLink('pttpost', { q: id }));
-          } else {
-            _urls.push(getLink('ptt', { q: id }), getLink('pttuser', { q: id }));
-          }
-          return _urls;
-        }, []);
-        openLink(...urls);
-        return true;
-      }
-      return false;
-    };
+    this.onClickPttUsersLinks = this.onClickDo(() => {
+      const urls = this.state.pttUsers.reduce((_urls, { id }) => {
+        if (id === '標的') {
+          _urls.push(getLink('pttpost', { q: id }));
+        } else {
+          _urls.push(getLink('ptt', { q: id }), getLink('pttuser', { q: id }));
+        }
+        return _urls;
+      }, []);
+      openLink(...urls);
+    });
 
-    this.onClickPttUser = (e, target) => {
-      if (target.classList.contains('bookmark-removePttUserBtn')) {
-        bookmarkProvider.remove(BOOKMARK_TYPE.PTT_USER, e.target.dataset.id)
-          .then(() => this.populatePttUsers());
-        return true;
-      }
+    this.onClickPttUser = this.onClickDo(e => {
       if (e.target.dataset.links) {
         openLink(...e.target.dataset.links.split(','));
-        return true;
+        return;
       }
-      return false;
-    };
+      if (e.target.classList.contains('bookmark-removePttUserBtn')) {
+        bookmarkProvider.remove(BOOKMARK_TYPE.PTT_USER, e.target.dataset.id).then(() => this.populatePttUsers());
+      }
+    });
 
-    this.onBookmark = (e, target) => {
+    this.onBookmark = this.onClickDo(e => {
       let submit = false;
       switch (e.type) {
         case 'click':
         case 'touchend':
-          submit = target.classList.contains('save') && target.classList.contains('icon');
+          submit = e.target.classList.contains('save') && e.target.classList.contains('icon');
           break;
 
         case 'keypress':
           submit = e.key.toLowerCase() === 'enter';
           break;
       }
-      if (!submit) return false;
+      if (!submit) return;
 
       const values = this.state.bookmarkInputString.trim().split(' ');
       if (values.length > 1) {
@@ -116,8 +95,7 @@ class BookmarkBoard extends ClickableComponent {
         const id = values[0];
         bookmarkProvider.put(BOOKMARK_TYPE.PTT_USER, id, { id }).then(() => this.populatePttUsers());
       }
-      return true;
-    };
+    });
 
     this.populatePttUsers = () => {
       bookmarkProvider.toArray(BOOKMARK_TYPE.PTT_USER).then(pttUsers => this.setState({ pttUsers }));
@@ -129,19 +107,17 @@ class BookmarkBoard extends ClickableComponent {
 
     this.populatePttUsers();
     this.populateBookmarks();
-    this.regisOnClick(this.onClickBakground, this.onBookmark, this.onRequestLookupStock, this.onClickRemoveBookmarkBtn, this.onClickPttUsersLinks, this.onClickPttUser);
   }
-
 
   renderItemsSaved(stocks) {
     const items = stocks.map(stock => {
       const onAskForURLs = stock.id === this.state.stockIdToLookup ? this.onAskForURLs : null;
       return (
         <List.Item className="bookmark-item" key={stock.id}>
-          <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
+          <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onClickRemoveBookmarkBtn} onTouchEnd={this.onClickRemoveBookmarkBtn} />
           <List.Header className="bookmark-itemHeader">
             <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
-            <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onClick} onTouchEnd={this.onClick} />
+            <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onRequestLookupStock} onTouchEnd={this.onRequestLookupStock} />
           </List.Header>
           <StockLinks className="bookmark-itemLinks" stock={stock} onAskForURLs={onAskForURLs} />
         </List.Item>);
@@ -160,14 +136,14 @@ class BookmarkBoard extends ClickableComponent {
         links.push(getLink('ptt', { q: id }), getLink('pttuser', { q: id }));
       }
       return (
-        <li className="bookmark-pttUser" key={id} onClick={this.onClick} onTouchEnd={this.onClick}>
+        <li className="bookmark-pttUser" key={id} onClick={this.onClickPttUser} onTouchEnd={this.onClickPttUser}>
           <a data-links={links.join(',')} href="javascript:void(0)">{id}</a>
           <Icon className="bookmark-removePttUserBtn" name="close" data-id={id} />
         </li>);
     });
     return (
       <div className="bookmark-pttUsers-holder">
-        <Button className="pttUsersLinks-openBtn" icon="globe" circular onClick={this.onClick} onTouchEnd={this.onClick} />
+        <Button className="pttUsersLinks-openBtn" icon="globe" circular onClick={this.onClickPttUsersLinks} onTouchEnd={this.onClickPttUsersLinks} />
         <ul className="bookmark-pttUsers">
           { items }
         </ul>
@@ -179,10 +155,10 @@ class BookmarkBoard extends ClickableComponent {
     if (this.props.show) className.push('bookmarkBoard--show');
 
     return (
-      <section className={className.join(' ')} onClick={this.onClick} onTouchEnd={this.onClick} onKeyPress={this.onClick}>
-        <div className="bookmarkBoard-background" />
+      <section className={className.join(' ')}>
+        <div className="bookmarkBoard-background" onClick={this.onClickBakground} onTouchEnd={this.onClickBakground} />
         <div className="bookmarkBoard-content">
-          <section className="bookmarkBoard-inputSection">
+          <section className="bookmarkBoard-inputSection" onClick={this.onBookmark} onTouchEnd={this.onBookmark} onKeyPress={this.onBookmark}>
             <Input
               className="bookmarkBoard-input"
               size="small"

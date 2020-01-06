@@ -17,46 +17,27 @@ class MainBar extends ClickableComponent {
       this.setState({ stockId: e.target.value });
     };
 
-    this._stopTraversingDOM = (e, target) => target.classList.contains('mainBar');
+    this.onClickBookmarkBtn = this.onClickDo(() => this.fireCallback('onClickBookmarkBtn'));
 
-    this.onClickBookmarkBtn = (e, target) => {
-      if (target.classList.contains('mainBar-bookmarkBtn')) {
-        this.fireCallback('onClickBookmarkBtn');
-        return true;
-      }
-      return false;
-    };
+    this.onRequestLogin = this.onClickDo(() => this.fireCallback('onRequestLogin'));
 
-    this.onRequestLogin = (e, target) => {
-      if (target.classList.contains('mainBar-loginBtn')) {
-        this.fireCallback('onRequestLogin');
-        return true;
-      }
-      return false;
-    };
-
-    this.onRequestStockValue = (e, target) => {
+    this.onRequestStockValue = this.onClickDo(e => {
       let submit = false;
       switch (e.type) {
         case 'click':
         case 'touchend':
-          submit = target.classList.contains('search') && target.classList.contains('icon');
+          submit = e.target.classList.contains('search') && e.target.classList.contains('icon');
           break;
 
         case 'keypress':
           submit = e.key.toLowerCase() === 'enter';
           break;
       }
-      if (!submit) return false;
-
       const { stockId } = this.state;
-      if (stockId) {
+      if (submit && stockId) {
         this.fireCallback('onRequestStockValue', { stockId });
       }
-      return true;
-    };
-
-    this.regisOnClick(this.onClickBookmarkBtn, this.onRequestLogin, this.onRequestStockValue);
+    });
   }
 
   renderLoginButton() {
@@ -65,7 +46,7 @@ class MainBar extends ClickableComponent {
       return null;
     }
     return (
-      <Button className="mainBar-loginBtn" animated="vertical">
+      <Button className="mainBar-loginBtn" animated="vertical" onClick={this.onRequestLogin} onTouchEnd={this.onRequestLogin}>
         <Button.Content visible>{ isLogin ? 'Logout' : 'Login' }</Button.Content>
         <Button.Content hidden>{ isLogin ? 'Sell' : 'Buy' }</Button.Content>
       </Button>
@@ -74,7 +55,7 @@ class MainBar extends ClickableComponent {
 
   render() {
     return (
-      <div className="mainBar" onClick={this.onClick} onKeyPress={this.onClick} onTouchEnd={this.onClick}>
+      <div className="mainBar" onClick={this.onRequestStockValue} onKeyPress={this.onRequestStockValue} onTouchEnd={this.onRequestStockValue}>
         <section className="mainBar-inputHolder">
           <Input
             className="mainBar-input"
@@ -85,7 +66,7 @@ class MainBar extends ClickableComponent {
           />
         </section>
         <section className="mainBar-buttonsArea">
-          <Button className="mainBar-bookmarkBtn" icon="bookmark" />
+          <Button className="mainBar-bookmarkBtn" icon="bookmark" onClick={this.onClickBookmarkBtn} onTouchEnd={this.onClickBookmarkBtn} />
           { this.renderLoginButton() }
         </section>
       </div>

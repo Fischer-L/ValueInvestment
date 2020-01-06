@@ -6,6 +6,7 @@ module.exports = {
     "no-plusplus": "off",
     "arrow-parens": "off",
     "default-case": "off",
+    "padded-blocks": "off",
     "no-script-url": "warn",
     "no-fallthrough": "off",
     "no-multi-assign": "off",
