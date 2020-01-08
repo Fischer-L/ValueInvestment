@@ -38,7 +38,7 @@ class NoteBoard extends ClickableComponent {
       if (this.state.loading) {
         return;
       }
-      this.setState({ loading: true });
+      this.setState({ loading: true, editMode: false });
 
       const note = [ 'trade', 'value', 'story', 'fundamentals', 'technicals', 'chips' ]
         .reduce((_note, key) => {
