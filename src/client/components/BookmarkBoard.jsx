@@ -99,9 +99,7 @@ class BookmarkBoard extends ClickableComponent {
 
     this.populatePttUsers = () => {
       bookmarkProvider.toArray(BOOKMARK_TYPE.PTT_USER).then(pttUsers => {
-        pttUsers = pttUsers.slice();
-        pttUsers.unshift({ id: '標的' });
-        this.setState({ pttUsers });
+        this.setState({ pttUsers: [ { id: '標的' }, ...pttUsers ] });
       });
     };
 
