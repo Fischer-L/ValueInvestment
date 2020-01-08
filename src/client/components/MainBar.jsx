@@ -46,9 +46,8 @@ class MainBar extends ClickableComponent {
       return null;
     }
     return (
-      <Button className="mainBar-loginBtn" animated="vertical" onClick={this.onRequestLogin} onTouchEnd={this.onRequestLogin}>
-        <Button.Content visible>{ isLogin ? 'Logout' : 'Login' }</Button.Content>
-        <Button.Content hidden>{ isLogin ? 'Sell' : 'Buy' }</Button.Content>
+      <Button className="mainBar-loginBtn" onClick={this.onRequestLogin} onTouchEnd={this.onRequestLogin}>
+        { isLogin ? 'Logout' : 'Login' }
       </Button>
     );
   }
