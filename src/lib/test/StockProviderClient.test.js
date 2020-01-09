@@ -1,24 +1,25 @@
 import { StockProviderClient, StockDataParserClient } from '../stockProvider/StockProviderClient';
 
-const FAKE_DATA = { fake: 123 };
+const FAKE_DEFAULT_DATA = { fake: 123 };
 
-function fakeAxios() {
+function fakeAxios(data) {
   const axios = {
     get: jest.fn(() => (new Promise((resolve) => {
-      setTimeout(() => resolve({ data: FAKE_DATA }), axios.delay || 0);
+      setTimeout(() => resolve({ data }), axios.delay || 0);
     }))),
   };
   return axios;
 }
 
-function fakeDataParser(extra) {
+function fakeDataParser() {
   const parser = new StockDataParserClient({});
-  parser.parseData = jest.fn(data => Object.assign({}, data, extra));
+  parser.parseData = jest.fn(data => data);
   return parser;
 }
 
-function create(dataParsers = [ fakeDataParser() ]) {
-  const axios = fakeAxios();
+function create(fakeData, fakeParsers) {
+  const axios = fakeAxios({ default: FAKE_DEFAULT_DATA, ...fakeData });
+  const dataParsers = { default: fakeDataParser(), ...fakeParsers };
   return {
     axios,
     stockProvider: new StockProviderClient({ apiClient: axios, dataParsers }),
@@ -38,7 +39,7 @@ describe('StockProviderClient', () => {
     const { axios, stockProvider } = create();
     const data = await stockProvider.get(stockId);
     verifyAxios(axios, { stockId });
-    expect(data).toMatchObject({ ...FAKE_DATA, id: stockId });
+    expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
   });
 
   it('should cache stock data', async () => {
@@ -46,10 +47,10 @@ describe('StockProviderClient', () => {
     const { axios, stockProvider } = create();
 
     let data = await stockProvider.get(stockId);
-    expect(data).toMatchObject({ ...FAKE_DATA, id: stockId });
+    expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
 
     data = await stockProvider.get(stockId);
-    expect(data).toMatchObject({ ...FAKE_DATA, id: stockId });
+    expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
 
     verifyAxios(axios, { stockId });
   });
@@ -59,12 +60,12 @@ describe('StockProviderClient', () => {
     const { axios, stockProvider } = create();
 
     let data = await stockProvider.get(stockId);
-    expect(data).toMatchObject({ ...FAKE_DATA, id: stockId });
+    expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
     verifyAxios(axios, { stockId });
 
     const noCache = true;
     data = await stockProvider.get(stockId, noCache);
-    expect(data).toMatchObject({ ...FAKE_DATA, id: stockId });
+    expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
     verifyAxios(axios, { stockId, noCache, times: 2 });
   });
 
@@ -83,11 +84,13 @@ describe('StockProviderClient', () => {
 
   it('should accept multiple stock data parsers', async () => {
     const stockId = '2330';
-    const { axios, stockProvider } = create([
-      fakeDataParser(), fakeDataParser({ a: 567 }),
-    ]);
+    const { axios, stockProvider } = create({
+      second: { a: 567 },
+    }, {
+      second: fakeDataParser(),
+    });
     const data = await stockProvider.get(stockId);
     verifyAxios(axios, { stockId });
-    expect(data).toMatchObject({ ...FAKE_DATA, a: 567, id: stockId });
+    expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, a: 567, id: stockId });
   });
 });

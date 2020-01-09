@@ -7,7 +7,9 @@ export default function getStockProvider(params) {
   if (!provider) {
     provider = new StockProviderClient({
       ...params,
-      dataParsers: [ new GwClient(params) ],
+      dataParsers: {
+        gwStockData: new GwClient(params),
+      },
     });
   }
   return provider;

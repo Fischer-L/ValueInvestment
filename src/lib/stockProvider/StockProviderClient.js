@@ -54,9 +54,9 @@ class StockProviderClient {
 
           if (data.error) throw data.error;
 
-          this._stocks[id].data = this._dataParsers.reduce((_data, parser) => ({
+          this._stocks[id].data = Object.entries(this._dataParsers).reduce((_data, [ key, parser ]) => ({
             ..._data,
-            ...parser.parseData(data),
+            ...parser.parseData(data[key]),
           }), {});
           this._stocks[id].data.id = id;
 
