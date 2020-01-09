@@ -1,7 +1,7 @@
 class StockProviderServerBase {
   // - baseURL: A instance of URL
-  constructor({ env, cloudscraper, baseURL, timeout = 10000 }) {
-    Object.entries({ env, cloudscraper, baseURL, timeout }).forEach(([ k, v ]) => {
+  constructor({ env, cloudscraper, baseURL, timeout = 10000, challenge = false }) {
+    Object.entries({ env, cloudscraper, baseURL, timeout, challenge }).forEach(([ k, v ]) => {
       this[`_${k}`] = v;
     });
     this._isProd = env === 'production';
@@ -22,8 +22,12 @@ class StockProviderServerBase {
             uri: this._baseURL.origin + path,
             cloudflareMaxTimeout: this._timeout,
           };
-          if (!this._challengeRequest) {
-            this._challengeRequest = this._cloudscraper.get(this._baseURL.origin);
+          if (this._challenge) {
+            if (!this._challengeRequest) {
+              this._challengeRequest = this._cloudscraper.get(this._baseURL.origin);
+            }
+          } else {
+            this._challengeRequest = Promise.resolve();
           }
           return this._challengeRequest.then(() => this._cloudscraper.get(options));
         },

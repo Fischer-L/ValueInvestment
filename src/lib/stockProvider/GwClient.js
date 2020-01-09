@@ -1,7 +1,7 @@
-import StockProviderClientBase from './StockProviderClientBase';
+import { StockDataParserClient } from './StockProviderClient';
 
-class GwClient extends StockProviderClientBase {
-  _extractData({ pePage, pbPage, epsPage, dividendPage }) {
+class GwClient extends StockDataParserClient {
+  parseData({ pePage, pbPage, epsPage, dividendPage }) {
     const pe = this._extractPEorPB(pePage);
     const pb = this._extractPEorPB(pbPage);
     const dividends = this._extractDividends(dividendPage).slice(0, 5);
@@ -15,10 +15,6 @@ class GwClient extends StockProviderClientBase {
       eps,
       netValue,
     };
-  }
-
-  _parseDomFromString(htmlString) {
-    return this._domParser.parseFromString(htmlString, 'text/html');
   }
 
   _extractBasicInfo(epsPage) {

@@ -31,31 +31,35 @@
 //     },
 //   },
 // }
-class StockProviderClientBase {
-  constructor({ apiClient, domParser }) {
+class StockProviderClient {
+  constructor({ apiClient, dataParsers }) {
     this._stocks = {};
-    this._domParser = domParser;
     this._api = apiClient;
-  }
-
-  _extractData(data) { // eslint-disable-line no-unused-vars
-    throw new Error(`${this.constructor.name} should implement _extractData`);
+    this._dataParsers = dataParsers;
   }
 
   get(id, noCache = false) {
     let params;
+
     if (noCache === true) {
       params = { noCache };
       this._stocks[id] = null;
     }
+
     if (!this._stocks[id]) {
       this._stocks[id] = {};
       this._stocks[id].promise = new Promise(async (resolve, reject) => {
         try {
           const { data } = await this._api.get(`/stockdata/${id}`, { params });
+
           if (data.error) throw data.error;
-          this._stocks[id].data = this._extractData(data);
+
+          this._stocks[id].data = this._dataParsers.reduce((_data, parser) => ({
+            ..._data,
+            ...parser.parseData(data),
+          }), {});
           this._stocks[id].data.id = id;
+
           resolve(this._stocks[id].data);
         } catch (e) {
           console.error(e);
@@ -67,4 +71,18 @@ class StockProviderClientBase {
   }
 }
 
-export default StockProviderClientBase;
+class StockDataParserClient {
+  constructor({ domParser }) {
+    this._domParser = domParser;
+  }
+
+  _parseDomFromString(htmlString) {
+    return this._domParser.parseFromString(htmlString, 'text/html');
+  }
+
+  parseData(data) { // eslint-disable-line no-unused-vars
+    throw new Error(`${this.constructor.name} should implement parseData`);
+  }
+}
+
+export { StockProviderClient, StockDataParserClient };
