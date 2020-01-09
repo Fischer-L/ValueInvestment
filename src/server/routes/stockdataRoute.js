@@ -22,7 +22,8 @@ function initStockdataRoute(app) {
 
     let data = stockdataCache.get(cacheKey);
     if (!data) {
-      data = await gwStockProvider.get(req.params.id);
+      const [ gwStockData ] = await Promise.all([ gwStockProvider.get(req.params.id) ]);
+      data = { gwStockData };
       stockdataCache.set(cacheKey, data);
     }
     res.json(data);
