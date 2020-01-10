@@ -7,7 +7,7 @@ import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/NoteBoard.scss';
 
 const show = _show => ({ display: _show ? '' : 'none' });
-const commentOf = data => (data && data.comment ? data.comment : '');
+const commentOf = data => (data && data.comment ? data.comment.trim() : '');
 const toDateInTW = time => (time ? (new Date(time + 8 * 60 * 60 * 1000)).toISOString().split('T')[0] : '');
 
 class NoteBoard extends ClickableComponent {
@@ -59,7 +59,9 @@ class NoteBoard extends ClickableComponent {
     if (editMode) {
       return <textarea className={`note-pararaph--editMode ${className}`} rows="6" defaultValue={texts} />;
     }
-    return <p className={`note-pararaph ${className}`}>{ texts }</p>;
+    const lines = [];
+    texts.split('\n').forEach((text, i) => lines.push(text, <br key={i} />));
+    return <p className={`note-pararaph ${className}`}>{ lines }</p>;
   }
 
   Note({ editMode, note = {} }) {
