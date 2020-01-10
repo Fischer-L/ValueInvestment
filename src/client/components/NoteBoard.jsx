@@ -61,7 +61,15 @@ class NoteBoard extends ClickableComponent {
     }
     const lines = [];
     texts.split('\n').forEach((text, i) => lines.push(text, <br key={i} />));
-    return <p className={`note-pararaph ${className}`}>{ lines }</p>;
+    return <p className={`note-pararaph ${className}`} style={show(texts)}>{ lines }</p>;
+  }
+
+  Comment({ header, texts, editMode, className }) {
+    return (
+      <div className="note-comment" style={show(editMode || texts)}>
+        <Header className="note-header" as="h4">{ header }</Header>
+        { this.Paragraph({ texts, editMode, className }) }
+      </div>);
   }
 
   Note({ editMode, note = {} }) {
@@ -73,21 +81,11 @@ class NoteBoard extends ClickableComponent {
           <Label className="note-date" as="span" color="orange" size="tiny" tag style={show(!editMode)}>{ toDateInTW(createTime) }</Label>
         </Header>
         { this.Paragraph({ className: 'note-trade', texts: commentOf(trade), editMode }) }
-
-        <Header className="note-header" as="h4">價值面</Header>
-        { this.Paragraph({ className: 'note-value', texts: commentOf(value), editMode }) }
-
-        <Header className="note-header" as="h4">題材面</Header>
-        { this.Paragraph({ className: 'note-story', texts: commentOf(story), editMode }) }
-
-        <Header className="note-header" as="h4">基本面</Header>
-        { this.Paragraph({ className: 'note-fundamentals', texts: commentOf(fundamentals), editMode }) }
-
-        <Header className="note-header" as="h4">技術面</Header>
-        { this.Paragraph({ className: 'note-technicals', texts: commentOf(technicals), editMode }) }
-
-        <Header className="note-header" as="h4">籌碼面</Header>
-        { this.Paragraph({ className: 'note-chips', texts: commentOf(chips), editMode }) }
+        { this.Comment({ header: '價值面', className: 'note-value', texts: commentOf(value), editMode }) }
+        { this.Comment({ header: '題材面', className: 'note-story', texts: commentOf(story), editMode }) }
+        { this.Comment({ header: '基本面', className: 'note-fundamentals', texts: commentOf(fundamentals), editMode }) }
+        { this.Comment({ header: '技術面', className: 'note-technicals', texts: commentOf(technicals), editMode }) }
+        { this.Comment({ header: '籌碼面', className: 'note-chips', texts: commentOf(chips), editMode }) }
       </div>
     );
   }
