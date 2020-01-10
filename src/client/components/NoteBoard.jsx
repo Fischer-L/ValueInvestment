@@ -8,6 +8,7 @@ import '@/css/NoteBoard.scss';
 
 const show = _show => ({ display: _show ? '' : 'none' });
 const commentOf = data => (data && data.comment ? data.comment : '');
+const toDateInTW = time => (time ? (new Date(time + 8 * 60 * 60 * 1000)).toISOString().split('T')[0] : '');
 
 class NoteBoard extends ClickableComponent {
   constructor(props) {
@@ -67,7 +68,7 @@ class NoteBoard extends ClickableComponent {
       <div>
         <Header className="note-header" as="h3">
           操作策略
-          <Label className="note-date" as="span" color="orange" size="tiny" tag style={show(!editMode)}>{ createTime }</Label>
+          <Label className="note-date" as="span" color="orange" size="tiny" tag style={show(!editMode)}>{ toDateInTW(createTime) }</Label>
         </Header>
         { this.Paragraph({ className: 'note-trade', texts: commentOf(trade), editMode }) }
 
