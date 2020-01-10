@@ -27,6 +27,7 @@ module.exports = {
     "react/sort-comp": "off",
     "react/no-multi-comp": "off",
     "react/forbid-prop-types": "warn",
+    "react/no-array-index-key": "warn",
     "react/require-default-props": "off",
     "react/no-did-update-set-state": "warn",
     "react/destructuring-assignment": "off",
