@@ -19,6 +19,7 @@ class NoteBoard extends ClickableComponent {
       stockId: null,
       stockNote: null,
       editMode: false,
+      defaultNote: null,
     };
 
     this.loadStockNote = (id, forceLoad) => {
@@ -31,27 +32,38 @@ class NoteBoard extends ClickableComponent {
       });
     };
 
-    this.toggleEditMode = this.onClickDo(() => {
-      this.setState(prevState => ({ editMode: !prevState.editMode }));
+    this.closeEditMode = this.onClickDo(() => {
+      this.setState({ editMode: false, defaultNote: null });
+    });
+    this.openEditMode = this.onClickDo((e, payload) => {
+      this.setState({ editMode: true, defaultNote: payload && payload.defaultNote });
     });
 
     this.saveNote = this.onClickDo(async () => {
       if (this.state.loading) {
         return;
       }
-      this.setState({ loading: true, editMode: false });
+      this.closeEditMode();
+      this.setState({ loading: true });
 
       const note = [ 'trade', 'value', 'story', 'fundamentals', 'technicals', 'chips' ]
         .reduce((_note, key) => {
           _note[key] = { comment: document.querySelector(`textarea.note-${key}`).value };
           return _note;
         }, {});
+
       if (this.state.stockNote) {
         await stockNoteProvider.addNote(this.state.stockId, note);
       } else {
         await stockNoteProvider.create(this.state.stockId, note);
       }
       this.loadStockNote(this.state.stockId, true);
+    });
+
+    this.copyNote = this.onClickDo(e => {
+      if (!e.target.dataset.note) return;
+      const defaultNote = JSON.parse(e.target.dataset.note);
+      this.openEditMode(null, { defaultNote });
     });
   }
 
@@ -72,12 +84,14 @@ class NoteBoard extends ClickableComponent {
       </div>);
   }
 
-  Note({ editMode, note = {} }) {
+  Note({ editMode, copyNote, note = {} }) {
     const { trade, value, story, fundamentals, technicals, chips, createTime } = note;
+    const dataNote = JSON.stringify({ trade, value, story, fundamentals, technicals, chips });
     return (
       <div>
         <Header className="note-header" as="h3">
           操作策略
+          <Icon className="note-copyBtn" name="copy outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={copyNote} onTouchEnd={copyNote} />
           <Label className="note-date" as="span" color="orange" size="tiny" tag style={show(!editMode)}>{ toDateInTW(createTime) }</Label>
         </Header>
         { this.Paragraph({ className: 'note-trade', texts: commentOf(trade), editMode }) }
@@ -91,22 +105,22 @@ class NoteBoard extends ClickableComponent {
   }
 
   EditModeElem() {
-    const { editMode } = this.state;
-    const { saveNote, toggleEditMode } = this;
+    const { editMode, defaultNote } = this.state;
+    const { saveNote, openEditMode, closeEditMode } = this;
     if (!editMode) {
       return (
         <div>
-          <Icon className="noteBoard-addBtn" name="add" size="large" onClick={toggleEditMode} onTouchEnd={toggleEditMode} />
+          <Icon className="noteBoard-addBtn" name="add" size="large" onClick={openEditMode} onTouchEnd={openEditMode} />
           <Divider clearing hidden />
         </div>
       );
     }
     return (
       <div>
-        { this.Note({ editMode }) }
+        { this.Note({ editMode, note: defaultNote }) }
         <Divider clearing hidden />
         <Button.Group className="noteBoard-editModeBtns">
-          <Button className="noteBoard-cancelBtn" onClick={toggleEditMode} onTouchEnd={toggleEditMode}>Cancel</Button>
+          <Button className="noteBoard-cancelBtn" onClick={closeEditMode} onTouchEnd={closeEditMode}>Cancel</Button>
           <Button.Or />
           <Button positive onClick={saveNote} onTouchEnd={saveNote}>Save</Button>
         </Button.Group>
@@ -116,9 +130,10 @@ class NoteBoard extends ClickableComponent {
   }
 
   Notes() {
+    const copyNote = this.copyNote;
     const stockNote = this.state.stockNote;
     if (stockNote) {
-      return stockNote.notes.map(note => <section className="note" key={note.createTime}>{ this.Note({ note }) }</section>);
+      return stockNote.notes.map(note => <section className="note" key={note.createTime}>{ this.Note({ note, copyNote }) }</section>);
     }
     return null;
   }
