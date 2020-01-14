@@ -25,14 +25,13 @@ const loginManager = {
     return false;
   },
 
-  async login() {
+  async login(passcode) {
     if (this.isLogin()) {
       return true;
     }
     if (!this.allowLogin()) {
       return false;
     }
-    const passcode = prompt('Passcode');
     return this._handleResponse(() => apiClient.post('/login', { pc: passcode }));
   },
 
