@@ -45,7 +45,7 @@ class StockNotesCollection extends CollectionBase {
 
   _sanitizeDocs(items) {
     return items
-      .slice(0, 20)
+      .slice(0, 60)
       .filter(item => item.id && this._areNotesValid(item.notes))
       .map(item => ({
         ...item,
