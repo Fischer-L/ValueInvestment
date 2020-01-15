@@ -8,6 +8,7 @@ import MainBar from '@/components/MainBar';
 import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoard from '@/components/BookmarkBoard';
+import Prompt, { ACTION } from '@/components/Prompt';
 
 import icoDuck from '@/assets/ico_duck.jpg';
 import icoHen from '@/assets/ico_hen.svg';
@@ -24,6 +25,7 @@ class App extends Component {
       stockId: null,
       stockData: null,
       showBookmarkBoard: false,
+      askLogin: false,
       isLogin: loginManager.isLogin(),
       allowLogin: loginManager.allowLogin(),
     };
@@ -54,15 +56,27 @@ class App extends Component {
     };
 
     this.onRequestLogin = async () => {
-      if (this.state.isLogin || !this.state.allowLogin) {
+      const { isLogin, askLogin, allowLogin } = this.state;
+      if (isLogin || !allowLogin) {
         await loginManager.logout();
-      } else if (this.state.allowLogin) {
-        await loginManager.login();
+        this.setState({
+          isLogin: loginManager.isLogin(),
+          allowLogin: loginManager.allowLogin(),
+        });
+      } else if (!isLogin && !askLogin && allowLogin) {
+        this.setState({ askLogin: true });
       }
-      this.setState({
-        isLogin: loginManager.isLogin(),
-        allowLogin: loginManager.allowLogin(),
-      });
+    };
+
+    this.onLoginPromptClose = async ({ action, input }) => {
+      this.setState({ askLogin: false });
+      if (action === ACTION.OK && input) {
+        await loginManager.login(input);
+        this.setState({
+          isLogin: loginManager.isLogin(),
+          allowLogin: loginManager.allowLogin(),
+        });
+      }
     };
 
     this.renderErrorComponent = msg => (
@@ -92,6 +106,14 @@ class App extends Component {
         boards.push(<NoteBoard key="NoteBoard" stockId={stockId} />);
       }
       return boards;
+    };
+
+    this.renderLoginPrompt = () => {
+      const { isLogin, askLogin, allowLogin } = this.state;
+      if (!isLogin && askLogin && allowLogin) {
+        return <Prompt hasInput title="Passcode" onClose={this.onLoginPromptClose} />;
+      }
+      return null;
     };
 
     this.mainBarCallbacks = {
@@ -124,6 +146,7 @@ class App extends Component {
       <div className="app">
         <MainBar isLogin={isLogin} allowLogin={allowLogin} {...this.mainBarCallbacks} />
         <section className="appContent">{appContent}</section>
+        { this.renderLoginPrompt() }
       </div>
     );
   }
