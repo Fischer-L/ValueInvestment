@@ -28,7 +28,7 @@ class NoteBoard extends ClickableComponent {
       }
       this.setState({ stockId: id, loading: true });
       stockNoteProvider.get(id).then(stockNote => {
-        stockNote.notes.sort((a, b) => b.createTime - a.createTime);
+        if (stockNote) stockNote.notes.sort((a, b) => b.createTime - a.createTime);
         this.setState({ stockNote, loading: false });
       });
     };
