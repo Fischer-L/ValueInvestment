@@ -13,9 +13,9 @@ class CollectionBase {
     throw new Error(`${this.constructor.name} should implement _sanitizeDocs`);
   }
 
-  // Called before updating data, should return correct data to update
-  _sanitizeDataOnUpdate(id, data) { // eslint-disable-line no-unused-vars
-    throw new Error(`${this.constructor.name} should implement _sanitizeDataOnUpdate`);
+  // Called for updating data
+  async _update(collection, id, payload) { // eslint-disable-line no-unused-vars
+    throw new Error(`${this.constructor.name} should implement _update`);
   }
 
   async getCollection() {
@@ -78,11 +78,11 @@ class CollectionBase {
     }
   }
 
-  async update(id, data) {
-    if (!id || !data) return;
+  async update(id, payload) {
+    if (!id || !payload) return;
     try {
       const collection = await this.getCollection();
-      await collection.updateOne({ _id: id }, { $set: this._sanitizeDataOnUpdate(id, data) });
+      await this._update(collection, id, payload);
     } catch (e) {
       throw e;
     }

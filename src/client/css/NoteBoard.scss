@@ -42,7 +42,8 @@
   top: 8px;
 }
 
-.note-copyBtn.icon.copy.outline {
+.note-copyBtn.icon.outline,
+.note-editBtn.icon.outline {
   display: inline-block;
   transform: scale(0.7);
   vertical-align: top;

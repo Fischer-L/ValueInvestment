@@ -1,5 +1,7 @@
 const CollectionBase = require('./CollectionBase');
 
+const clone = data => data && JSON.parse(JSON.stringify(data));
+
 // Schema:
 // {
 //   _id: this.id,
@@ -30,38 +32,44 @@ const CollectionBase = require('./CollectionBase');
 //   ]
 // }
 class StockNotesCollection extends CollectionBase {
-  _isNoteValid(note) {
+
+  _contentInNote(note) {
     if (!note) return false;
-
-    if (!(note.createTime > 0)) return false;
-
     const keys = [ 'trade', 'value', 'story', 'fundamentals', 'technicals', 'chips'];
     return keys.some(key => note[key] && note[key].comment);
   }
 
-  _areNotesValid(notes) {
-    return notes && notes.length > 0 && !notes.some(note => !this._isNoteValid(note));
-  }
-
   _sanitizeDocs(items) {
+    const now = Date.now();
     return items
       .slice(0, 60)
-      .filter(item => item.id && this._areNotesValid(item.notes))
+      .filter(item => !!item.id && this._contentInNote(item.note))
       .map(item => ({
-        ...item,
         id: String(item.id),
-        lastUpdateTime: Date.now(),
+        notes: [ { ...item.note, createTime: now } ],
+        lastUpdateTime: now,
       }));
   }
 
-  _sanitizeDataOnUpdate(id, { notes }) {
-    if (!this._areNotesValid(notes)) {
-      throw new Error(`Update stock note of ${id} with invalid notes: ${JSON.stringify(notes)}`);
+  async _update(collection, id, { note }) {
+    if (!this._contentInNote(note)) {
+      throw new Error(`Update stock note of ${id} with invalid note: ${JSON.stringify(note)}`);
     }
-    return {
-      notes,
-      lastUpdateTime: Date.now(),
-    };
+
+    const now = Date.now();
+    const query = { _id: id };
+    const promises = [
+      collection.updateOne(query, { $set: { lastUpdateTime: now } }),
+    ];
+    if (note.createTime > 0) {
+      query['notes.createTime'] = note.createTime;
+      promises.push(collection.updateOne(query, { $set: { 'notes.$': note } }));
+    } else {
+      note = clone(note);
+      note.createTime = now;
+      promises.push(collection.updateOne(query, { $push: { notes: note } }));
+    }
+    await Promise.all(promises);
   }
 }
 
