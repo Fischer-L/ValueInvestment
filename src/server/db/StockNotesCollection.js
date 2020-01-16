@@ -5,7 +5,7 @@ const CollectionBase = require('./CollectionBase');
 //   _id: this.id,
 //   id: string; stock id,
 //   lastUpdateTime: int, ms elapsed since January 1, 1970 00:00:00 UTC,
-//   notes: [
+//   notes: [ // Ordered by `createTime` in the ASC order
 //     {
 //       trade: {
 //         comment: string,
@@ -50,7 +50,7 @@ class StockNotesCollection extends CollectionBase {
       .map(item => ({
         ...item,
         id: String(item.id),
-        lastUpdateTime: item.notes[0].createTime,
+        lastUpdateTime: Date.now(),
       }));
   }
 
@@ -60,7 +60,7 @@ class StockNotesCollection extends CollectionBase {
     }
     return {
       notes,
-      lastUpdateTime: notes[0].createTime,
+      lastUpdateTime: Date.now(),
     };
   }
 }

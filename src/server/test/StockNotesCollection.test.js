@@ -12,7 +12,7 @@ function verifyData(mongoData, actual) {
   mongoData.forEach((v, i) => {
     expect(v.id).toBe(actual[i].id);
     expect(v.name).toBe(actual[i].name);
-    expect(v.lastUpdateTime).toBe(v.notes[0].createTime);
+    expect(v.lastUpdateTime).toBeGreaterThanOrEqual(v.notes[v.notes.length - 1].createTime);
 
     const expectedNotes = v.notes;
     const actualNotes = actual[i].notes;

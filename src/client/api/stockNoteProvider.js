@@ -41,10 +41,7 @@ const stockNoteProvider = {
       try {
         this._ongoingPromises[id] = apiClient.get(`/stocknote/${id}`);
         const { data } = await this._ongoingPromises[id];
-        if (data) {
-          data.notes.sort((a, b) => b.createTime - a.createTime);
-          this._stockNotes[id] = data;
-        }
+        this._stockNotes[id] = data;
       } catch (e) {
         console.error(e);
       }
@@ -63,7 +60,7 @@ const stockNoteProvider = {
 
     try {
       const notes = clone(this._stockNotes[id].notes);
-      notes.unshift({ ...clone(note), createTime: Date.now() });
+      notes.push({ ...clone(note), createTime: Date.now() });
       this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}`, { payload: { notes } });
       await this._ongoingPromises[id].then(() => {
         this._stockNotes[id].notes = notes;
