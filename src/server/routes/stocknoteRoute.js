@@ -4,6 +4,22 @@ const CacheProvider = require('../cacheProvider');
 const { collectPayload } = require('../middlewares');
 
 const mongoCache = new CacheProvider({ maxAge: -1 });
+const sortNotesByAsc = ({ notes }) => notes.sort((a, b) => a.createTime - b.createTime);
+
+const reverseNotes = {
+  TIMESTAMP: 1579159482427,
+  async run() {
+    const stockNotes = await getCollection('stockNotes');
+    const docs = await stockNotes.getAll();
+    docs.forEach(doc => {
+      if (doc.lastUpdateTime >= this.TIMESTAMP) return;
+      sortNotesByAsc(doc);
+      stockNotes.update(doc.id, doc);
+    });
+    console.log('reverseNotes ran');
+  },
+};
+reverseNotes.run();
 
 function initStocknoteRoute(app) {
   app.put('/stocknote/', collectPayload, async (req, res) => {
