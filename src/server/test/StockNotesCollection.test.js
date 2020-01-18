@@ -1,64 +1,35 @@
 const createTestCollection = require('./utils/createTestCollection');
 const StockNotesCollection = require('../db/StockNotesCollection');
 
+const FIELDS = [ 'trade', 'value', 'story', 'fundamentals', 'technicals', 'chips'];
+
 function verifyEmptyArray(arr) {
   expect(JSON.stringify(arr)).toBe('[]');
 }
 
-function verifyData(mongoData, actual) {
-  expect(mongoData.length).toBe(actual.length);
-  actual.sort((a, b) => a.id.localeCompare(b.id));
+function verifyData(mongoData, inputs) {
+  expect(mongoData.length).toBe(inputs.length);
+  inputs.sort((a, b) => a.id.localeCompare(b.id));
   mongoData.sort((a, b) => a.id.localeCompare(b.id));
   mongoData.forEach((v, i) => {
-    expect(v.id).toBe(actual[i].id);
-    expect(v.name).toBe(actual[i].name);
+    expect(v.id).toBe(inputs[i].id);
     expect(v.lastUpdateTime).toBeGreaterThanOrEqual(v.notes[v.notes.length - 1].createTime);
 
     const expectedNotes = v.notes;
-    const actualNotes = actual[i].notes;
-    expectedNotes.forEach((n, j) => expect(n).toEqual(actualNotes[j]));
+    const inputNotes = inputs[i].notes;
+    expectedNotes.forEach((n, j) => {
+      FIELDS.forEach(key => expect(n[key]).toEqual(inputNotes[j][key]));
+    });
   });
 }
 
-function genNote(createTime, ...excludes) {
-  const note = {
-    trade: {
-      comment: `trade${createTime}`,
-    },
-    value: {
-      comment: `value${createTime}`,
-    },
-    story: {
-      comment: `story${createTime}`,
-    },
-    fundamentals: {
-      comment: `fundamentals${createTime}`,
-    },
-    technicals: {
-      comment: `technicals${createTime}`,
-    },
-    chips: {
-      comment: `chips${createTime}`,
-    },
-    createTime,
-  };
-  excludes.forEach(key => delete note[key]);
+function genNote(comment) {
+  const note = {};
+  FIELDS.forEach(key => note[key] = { comment });
   return note;
 }
 
-const fakeData = [
-  {
-    id: '2317',
-    notes: [ genNote(Date.now()), genNote(Date.now() - 1), genNote(Date.now() - 2) ],
-  }, {
-    id: '2330',
-    notes: [ genNote(Date.now(), 'value', 'fundamentals'), genNote(Date.now() - 1) ],
-  }, {
-    id: '3008',
-    notes: [ genNote(Date.now()), genNote(Date.now() - 1, 'trade', 'chips') ],
-  },
-];
-
+const fakeData = [];
 let stockNotes = null;
 let testTarget = null;
 
@@ -74,31 +45,58 @@ afterAll(function () {
 describe('StockNotesCollection', () => {
   it('should note save invalid stock notes', async () => {
     let data = null;
-    let invalid = null;
+    let invalids = null;
 
-    await stockNotes.save(null).catch(() => {});
+    await stockNotes.save(invalids).catch(() => {});
     data = await stockNotes.getAll();
     verifyEmptyArray(data);
 
-    invalid = {
-      id: '1234',
-      notes: [{ ...genNote(Date.now()), createTime: null }],
-    };
-    await stockNotes.save([ invalid ]).catch(() => {});
+    invalids = [
+      {
+        id: '1234',
+        note: genNote(),
+      }, {
+        id: '5678',
+        note: genNote(),
+      },
+    ];
+    await stockNotes.save(invalids).catch(() => {});
     data = await stockNotes.getAll();
     verifyEmptyArray(data);
 
-    invalid = {
-      id: '1234',
-      notes: [{ createTime: null }],
-    };
-    await stockNotes.save([ invalid ]).catch(() => {});
+    invalids = [
+      {
+        id: '1234',
+      }, {
+        id: '5678',
+      },
+    ];
+    await stockNotes.save(invalids).catch(() => {});
     data = await stockNotes.getAll();
     verifyEmptyArray(data);
   });
 
   it('should save stock notes', async () => {
-    await stockNotes.save(fakeData);
+    const payloads = [];
+    fakeData.push({
+      id: '2330', notes: [ genNote('fakeData0-1') ],
+    });
+    payloads.push({
+      id: '2330', note: genNote('fakeData0-1'),
+    });
+    fakeData.push({
+      id: '2317', notes: [ genNote('fakeData1-1') ],
+    });
+    payloads.push({
+      id: '2317', note: genNote('fakeData1-1'),
+    });
+    fakeData.push({
+      id: '3008', notes: [ genNote('fakeData2-1') ],
+    });
+    payloads.push({
+      id: '3008', note: genNote('fakeData2-1'),
+    });
+    await stockNotes.save(payloads);
     const data = await stockNotes.getAll();
     verifyData(data, fakeData);
   });
@@ -116,11 +114,24 @@ describe('StockNotesCollection', () => {
       verifyData(data, [ fakeData[0], fakeData[2] ]);
     });
 
-    it('should update one stock note', async () => {
-      fakeData[1].notes.unshift(genNote(Date.now() + 1));
-      await stockNotes.update(fakeData[1].id, { notes: fakeData[1].notes });
+    it('should push one note into notes', async () => {
+      fakeData[1].notes.push(genNote('fakeData1-2'));
+      await stockNotes.update(fakeData[1].id, { note: genNote('fakeData1-2') });
       const data = await stockNotes.get([ fakeData[1].id ]);
       verifyData(data, [ fakeData[1] ]);
+    });
+
+    it('should update one note in notes', async () => {
+      const [ fakeData1 ] = await stockNotes.get([ fakeData[1].id ]);
+      let note0 = fakeData1.notes[0];
+      note0 = fakeData1.notes[0] = {
+        ...genNote(note0.trade.comment + 'updated'),
+        createTime: note0.createTime,
+      };
+      await stockNotes.update(fakeData[1].id, { note: note0 });
+      const [ updatedfakeData1 ] = await stockNotes.get([ fakeData[1].id ]);
+      expect(updatedfakeData1.createTime).toBe(fakeData1.createTime);
+      verifyData([ updatedfakeData1 ], [ fakeData1 ]);
     });
 
     it('should remove stock notes', async () => {

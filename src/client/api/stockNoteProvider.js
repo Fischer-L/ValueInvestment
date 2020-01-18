@@ -21,13 +21,13 @@ const stockNoteProvider = {
     }
 
     try {
-      const payload = {
-        id,
-        notes: [{ ...clone(note), createTime: Date.now() }],
-      };
-      this._createPromises[id] = apiClient.put('/stocknote', { payload });
+      note = clone(note);
+      this._createPromises[id] = apiClient.put('/stocknote', { payload: { id, note } });
       await this._createPromises[id];
-      this._stockNotes[id] = payload;
+      this._stockNotes[id] = {
+        id,
+        notes: [ { ...note, createTime: Date.now() } ],
+      };
     } catch (e) {
       console.error(e);
     }
@@ -59,12 +59,33 @@ const stockNoteProvider = {
     }
 
     try {
-      const notes = clone(this._stockNotes[id].notes);
-      notes.push({ ...clone(note), createTime: Date.now() });
-      this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}`, { payload: { notes } });
-      await this._ongoingPromises[id].then(() => {
-        this._stockNotes[id].notes = notes;
-      });
+      note = clone(note);
+      this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}`, { payload: { note } });
+      await this._ongoingPromises[id];
+      this._stockNotes[id].notes.push({ ...note, createTime: Date.now() });
+    } catch (e) {
+      console.error(e);
+    }
+    this._ongoingPromises[id] = null;
+  },
+
+  async updateNote(id, note) {
+    if (this._ongoingPromises[id]) {
+      await this._ongoingPromises[id];
+    }
+    if (!this._stockNotes[id]) {
+      throw new Error(`Update a note for an unknown stock note: ${id}`);
+    }
+
+    try {
+      const i = this._stockNotes[id].notes.findIndex(currentNote => currentNote.createTime === note.createTime);
+      if (i < 0) {
+        throw new Error(`Update an unknown note: ${note}`);
+      }
+      note = clone(note);
+      this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}`, { payload: { note } });
+      await this._ongoingPromises[id];
+      this._stockNotes[id].notes[i] = note;
     } catch (e) {
       console.error(e);
     }
