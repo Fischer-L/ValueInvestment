@@ -15,7 +15,7 @@ export default function getLink(site, query, pathParams) {
       return `https://www.${middleName.of('cmy')}.tw/follow/channel/stock-${pathParams.stockId}`;
 
     case 'ptt':
-      return `https://www.google.com/search?tbs=qdr:m&q=${encodeURIComponent(query.q)}+site:www.ptt.cc/bbs/Stock`;
+      return `https://www.google.com/search?tbs=qdr:w&q=${encodeURIComponent(query.q)}+site:www.ptt.cc/bbs/Stock`;
 
     case 'pttuser':
       return `https://www.ptt.cc/bbs/Stock/search?q=author%3A${encodeURIComponent(query.q)}`;
