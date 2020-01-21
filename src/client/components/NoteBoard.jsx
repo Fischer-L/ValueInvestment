@@ -131,6 +131,7 @@ class NoteBoard extends ClickableComponent {
     const { trade, value, story, fundamentals, technicals, chips, createTime } = note;
     return (
       <div ref={noteRef}>
+        { editMode ? this.EditModeButtons(onOK, onCancel) : null }
         <Header className="note-header" as="h3">
           操作策略
           <Icon className="note-copyBtn" name="copy outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={copyNote} onTouchEnd={copyNote} />
