@@ -33,6 +33,10 @@ const clone = data => data && JSON.parse(JSON.stringify(data));
 // }
 class StockNotesCollection extends CollectionBase {
 
+  static get NOTES_SIZE_LIMIT() {
+    return 60;
+  }
+
   _contentInNote(note) {
     if (!note) return false;
     const keys = [ 'trade', 'value', 'story', 'fundamentals', 'technicals', 'chips'];
@@ -69,6 +73,35 @@ class StockNotesCollection extends CollectionBase {
       promises.push(collection.updateOne(query, { $push: { notes: note } }));
     }
     await Promise.all(promises);
+  }
+
+  async _overrideNotes(docs) {
+    if (!docs.length) return;
+
+    try {
+      const collection = await this.getCollection();
+      docs.forEach(({ id, notes }) => {
+        collection.updateOne({ _id: id }, { $set: { notes } });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async get(ids = []) {
+    const docsOverLimit = [];
+    const limit = StockNotesCollection.NOTES_SIZE_LIMIT;
+
+    let docs = await super.get(ids);
+    docs = docs.map(doc => {
+      if (doc.notes.length > limit) {
+        doc.notes.splice(0, doc.notes.length - limit);
+        docsOverLimit.push(doc);
+      }
+      return doc;
+    });
+    setImmediate(() => this._overrideNotes(docsOverLimit));
+    return docs;
   }
 }
 
