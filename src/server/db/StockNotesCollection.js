@@ -42,7 +42,6 @@ class StockNotesCollection extends CollectionBase {
   _sanitizeDocs(items) {
     const now = Date.now();
     return items
-      .slice(0, 60)
       .filter(item => !!item.id && this._contentInNote(item.note))
       .map(item => ({
         id: String(item.id),
