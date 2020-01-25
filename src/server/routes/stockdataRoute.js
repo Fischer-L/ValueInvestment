@@ -22,9 +22,24 @@ function initStockdataRoute(app) {
 
     let data = stockdataCache.get(cacheKey);
     if (!data) {
-      const [ gwStockData ] = await Promise.all([ gwStockProvider.get(req.params.id) ]);
-      data = { gwStockData };
-      stockdataCache.set(cacheKey, data);
+      const providers = [
+        [ 'gwStockData', gwStockProvider ],
+      ];
+      const dataArray = await Promise.all(
+        providers.map(provider => provider[1].get(req.params.id)),
+      );
+
+      data = { error: '' };
+      providers.forEach(([ key ], i) => {
+        if (dataArray[i].error) {
+          data.error += ' / ' + dataArray[i].error;
+        } else {
+          data[key] = dataArray[i];
+        }
+      });
+      if (!data.error) {
+        stockdataCache.set(cacheKey, data);
+      }
     }
     res.json(data);
   });
