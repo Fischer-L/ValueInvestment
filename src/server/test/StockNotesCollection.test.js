@@ -139,5 +139,17 @@ describe('StockNotesCollection', () => {
       const data = await stockNotes.getAll();
       verifyData(data, [ fakeData[0], fakeData[2] ]);
     });
+
+    it('should limit the notes size', async () => {
+      const spyLimit = jest.spyOn(StockNotesCollection, 'NOTES_SIZE_LIMIT', 'get').mockReturnValue(1);
+
+      fakeData[0].notes.push(genNote('fakeData0-2'));
+      await stockNotes.update(fakeData[0].id, { note: genNote('fakeData0-2') });
+      const data = await stockNotes.get([ fakeData[0].id ]);
+      fakeData[0].notes = fakeData[0].notes.slice(1, 2);
+      verifyData(data, [ fakeData[0] ]);
+
+      spyLimit.mockRestore();
+    });
   });
 });
