@@ -62,6 +62,7 @@ class StockProviderClient {
 
           resolve(this._stocks[id].data);
         } catch (e) {
+          delete this._stocks[id];
           console.error(e);
           reject(e);
         }

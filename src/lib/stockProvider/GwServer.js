@@ -44,8 +44,12 @@ class GwServer extends StockProviderServerBase {
         path = `/stock/report/basic_dp?stockno=${id}`;
         break;
     }
-    const html = await this.crawler.get(path);
-    return html;
+    try {
+      const html = await this.crawler.get(path);
+      return html;
+    } catch (e) {
+      throw new Error(e.name + ' : ' + e.message);
+    }
   }
 }
 
