@@ -37,10 +37,18 @@ class StockNotesCollection extends CollectionBase {
     return 60;
   }
 
+  static get NOTES_ACTION() {
+    return {
+      ADD: 'ADD',
+      UPDATE: 'UPDATE',
+      DELETE: 'DELETE',
+    };
+  }
+
   _contentInNote(note) {
     if (!note) return false;
     const keys = [ 'trade', 'value', 'story', 'fundamentals', 'technicals', 'chips'];
-    return keys.some(key => note[key] && note[key].comment);
+    return note.createTime > 0 && keys.some(key => note[key] && note[key].comment);
   }
 
   _sanitizeDocs(items) {
@@ -49,29 +57,33 @@ class StockNotesCollection extends CollectionBase {
       .filter(item => !!item.id && this._contentInNote(item.note))
       .map(item => ({
         id: String(item.id),
-        notes: [ { ...item.note, createTime: now } ],
+        notes: [ clone(item.note) ],
         lastUpdateTime: now,
       }));
   }
 
-  async _update(collection, id, { note }) {
+  async _update(collection, id, { note, action }) {
     if (!this._contentInNote(note)) {
       throw new Error(`Update stock note of ${id} with invalid note: ${JSON.stringify(note)}`);
     }
 
-    const now = Date.now();
+    const promises = [];
     const query = { _id: id };
-    const promises = [
-      collection.updateOne(query, { $set: { lastUpdateTime: now } }),
-    ];
-    if (note.createTime > 0) {
-      query['notes.createTime'] = note.createTime;
-      promises.push(collection.updateOne(query, { $set: { 'notes.$': note } }));
-    } else {
-      note = clone(note);
-      note.createTime = now;
-      promises.push(collection.updateOne(query, { $push: { notes: note } }));
+    const { ADD, UPDATE } = StockNotesCollection.NOTES_ACTION;
+    switch (action.toUpperCase()) {
+      case ADD:
+        promises.push(collection.updateOne(query, { $push: { notes: note } }));
+        break;
+
+      case UPDATE:
+        query['notes.createTime'] = note.createTime;
+        promises.push(collection.updateOne(query, { $set: { 'notes.$': note } }));
+        break;
+
+      default:
+        throw new Error(`Update stock note of ${id} with invalid action: ${action}`);
     }
+    promises.push(collection.updateOne(query, { $set: { lastUpdateTime: Date.now() } }));
     await Promise.all(promises);
   }
 

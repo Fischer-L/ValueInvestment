@@ -24,12 +24,20 @@ function verifyData(mongoData, inputs) {
 }
 
 function genNote(comment) {
-  const note = {};
+  const note = { createTime: Date.now() };
   FIELDS.forEach(key => note[key] = { comment });
   return note;
 }
+const fakeData = [
+  {
+    id: '2330', notes: [ genNote('fakeData0-1') ],
+  }, {
+    id: '2317', notes: [ genNote('fakeData1-1') ],
+  }, {
+    id: '3008', notes: [ genNote('fakeData2-1') ],
+  },
+];
 
-const fakeData = [];
 let stockNotes = null;
 let testTarget = null;
 
@@ -78,23 +86,14 @@ describe('StockNotesCollection', () => {
 
   it('should save stock notes', async () => {
     const payloads = [];
-    fakeData.push({
-      id: '2330', notes: [ genNote('fakeData0-1') ],
+    payloads.push({
+      id: '2330', note: fakeData[0].notes[0],
     });
     payloads.push({
-      id: '2330', note: genNote('fakeData0-1'),
-    });
-    fakeData.push({
-      id: '2317', notes: [ genNote('fakeData1-1') ],
+      id: '2317', note: fakeData[1].notes[0],
     });
     payloads.push({
-      id: '2317', note: genNote('fakeData1-1'),
-    });
-    fakeData.push({
-      id: '3008', notes: [ genNote('fakeData2-1') ],
-    });
-    payloads.push({
-      id: '3008', note: genNote('fakeData2-1'),
+      id: '3008', note: fakeData[2].notes[0],
     });
     await stockNotes.save(payloads);
     const data = await stockNotes.getAll();
@@ -115,20 +114,21 @@ describe('StockNotesCollection', () => {
     });
 
     it('should push one note into notes', async () => {
-      fakeData[1].notes.push(genNote('fakeData1-2'));
-      await stockNotes.update(fakeData[1].id, { note: genNote('fakeData1-2') });
+      const note = genNote('fakeData1-2');
+      fakeData[1].notes.push(note);
+      await stockNotes.update(fakeData[1].id, { action: 'add', note });
       const data = await stockNotes.get([ fakeData[1].id ]);
       verifyData(data, [ fakeData[1] ]);
     });
 
     it('should update one note in notes', async () => {
-      const [ fakeData1 ] = await stockNotes.get([ fakeData[1].id ]);
+      const fakeData1 = fakeData[1];
       let note0 = fakeData1.notes[0];
       note0 = fakeData1.notes[0] = {
         ...genNote(note0.trade.comment + 'updated'),
         createTime: note0.createTime,
       };
-      await stockNotes.update(fakeData[1].id, { note: note0 });
+      await stockNotes.update(fakeData[1].id, { action: 'update', note: note0 });
       const [ updatedfakeData1 ] = await stockNotes.get([ fakeData[1].id ]);
       expect(updatedfakeData1.createTime).toBe(fakeData1.createTime);
       verifyData([ updatedfakeData1 ], [ fakeData1 ]);
@@ -143,8 +143,9 @@ describe('StockNotesCollection', () => {
     it('should limit the notes size', async () => {
       const spyLimit = jest.spyOn(StockNotesCollection, 'NOTES_SIZE_LIMIT', 'get').mockReturnValue(1);
 
-      fakeData[0].notes.push(genNote('fakeData0-2'));
-      await stockNotes.update(fakeData[0].id, { note: genNote('fakeData0-2') });
+      const note = genNote('fakeData0-2');
+      fakeData[0].notes.push(note);
+      await stockNotes.update(fakeData[0].id, { action: 'add', note });
       const data = await stockNotes.get([ fakeData[0].id ]);
       fakeData[0].notes = fakeData[0].notes.slice(1, 2);
       verifyData(data, [ fakeData[0] ]);
