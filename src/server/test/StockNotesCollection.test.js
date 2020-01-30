@@ -129,7 +129,16 @@ describe('StockNotesCollection', () => {
         createTime: note0.createTime,
       };
       await stockNotes.update(fakeData[1].id, { action: 'update', note: note0 });
-      const [ updatedfakeData1 ] = await stockNotes.get([ fakeData[1].id ]);
+      const [ updatedfakeData1 ] = await stockNotes.get([ fakeData1.id ]);
+      expect(updatedfakeData1.createTime).toBe(fakeData1.createTime);
+      verifyData([ updatedfakeData1 ], [ fakeData1 ]);
+    });
+
+    it('should delete one note in notes', async () => {
+      const fakeData1 = fakeData[1];
+      const note0 = fakeData1.notes.shift();
+      await stockNotes.update(fakeData[1].id, { action: 'delete', note: note0 });
+      const [ updatedfakeData1 ] = await stockNotes.get([ fakeData1.id ]);
       expect(updatedfakeData1.createTime).toBe(fakeData1.createTime);
       verifyData([ updatedfakeData1 ], [ fakeData1 ]);
     });

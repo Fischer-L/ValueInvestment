@@ -69,7 +69,7 @@ class StockNotesCollection extends CollectionBase {
 
     const promises = [];
     const query = { _id: id };
-    const { ADD, UPDATE } = StockNotesCollection.NOTES_ACTION;
+    const { ADD, UPDATE, DELETE } = StockNotesCollection.NOTES_ACTION;
     switch (action.toUpperCase()) {
       case ADD:
         promises.push(collection.updateOne(query, { $push: { notes: note } }));
@@ -78,6 +78,10 @@ class StockNotesCollection extends CollectionBase {
       case UPDATE:
         query['notes.createTime'] = note.createTime;
         promises.push(collection.updateOne(query, { $set: { 'notes.$': note } }));
+        break;
+
+      case DELETE:
+        promises.push(collection.updateOne(query, { $pull: { notes: { createTime: note.createTime } } }));
         break;
 
       default:

@@ -76,7 +76,7 @@ const stockNoteProvider = {
       await this._ongoingPromises[id];
     }
     if (!this._stockNotes[id]) {
-      throw new Error(`Update a note for an unknown stock note: ${id}`);
+      throw new Error(`Update an note for an unknown stock note: ${id}`);
     }
 
     try {
@@ -88,6 +88,29 @@ const stockNoteProvider = {
       this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}/note`, { action: 'update', payload: { note } });
       await this._ongoingPromises[id];
       this._stockNotes[id].notes[i] = note;
+    } catch (e) {
+      console.error(e);
+    }
+    this._ongoingPromises[id] = null;
+  },
+
+  async deleteNote(id, note) {
+    if (this._ongoingPromises[id]) {
+      await this._ongoingPromises[id];
+    }
+    if (!this._stockNotes[id]) {
+      throw new Error(`Delete an note for an unknown stock note: ${id}`);
+    }
+
+    try {
+      const notes = this._stockNotes[id].notes;
+      const i = notes.findIndex(currentNote => currentNote.createTime === note.createTime);
+      if (i < 0) {
+        throw new Error(`Delete an unknown note: ${note}`);
+      }
+      this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}/note`, { action: 'delete', payload: { note } });
+      await this._ongoingPromises[id];
+      this._stockNotes[id].notes.splice(i, 1);
     } catch (e) {
       console.error(e);
     }
