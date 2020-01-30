@@ -104,6 +104,14 @@ class NoteBoard extends ClickableComponent {
       }
     });
 
+    this.deleteNote = this.onClickDo(async e => {
+      if (e.target.dataset.note) {
+        this.setState({ loading: true });
+        await stockNoteProvider.deleteNote(this.state.stockId, JSON.parse(e.target.dataset.note));
+        this.loadStockNote(this.state.stockId, true);
+      }
+    });
+
     this.cancelEditNote = () => this.setState({ noteEdited: null });
   }
 
@@ -124,7 +132,7 @@ class NoteBoard extends ClickableComponent {
       </div>);
   }
 
-  Note({ note = {}, copyNote, editNote, editMode, onSave, onCancel }) {
+  Note({ note = {}, copyNote, editNote, deleteNote, editMode, onSave, onCancel }) {
     const dataNote = JSON.stringify(note);
     const noteRef = editMode ? React.createRef() : null;
     const onOK = editMode ? () => onSave(noteRef, note) : null;
@@ -136,6 +144,7 @@ class NoteBoard extends ClickableComponent {
           操作策略
           <Icon className="note-copyBtn" name="copy outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={copyNote} onTouchEnd={copyNote} />
           <Icon className="note-editBtn" name="edit outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={editNote} onTouchEnd={editNote} />
+          <Icon className="note-deleteBtn" name="trash alternate outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={deleteNote} onTouchEnd={deleteNote} />
           <Label className="note-date" as="span" color="orange" size="tiny" tag style={show(!editMode)}>{ toDateInTW(createTime) }</Label>
         </Header>
         { this.Paragraph({ className: 'note-trade', texts: commentOf(trade), editMode }) }
@@ -150,14 +159,14 @@ class NoteBoard extends ClickableComponent {
   }
 
   Notes() {
-    const { copyNote, editNote, updateNote, cancelEditNote } = this;
+    const { copyNote, editNote, deleteNote, updateNote, cancelEditNote } = this;
     const { stockNote, noteEdited } = this.state;
     if (stockNote) {
       return stockNote.notes.map(note => {
         const onSave = updateNote;
         const onCancel = cancelEditNote;
         const editMode = !!(noteEdited && noteEdited.createTime === note.createTime);
-        return <section className="note" key={note.createTime}>{ this.Note({ note, copyNote, editNote, editMode, onSave, onCancel }) }</section>;
+        return <section className="note" key={note.createTime}>{ this.Note({ note, copyNote, editNote, deleteNote, editMode, onSave, onCancel }) }</section>;
       });
     }
     return null;
