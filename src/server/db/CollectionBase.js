@@ -78,11 +78,11 @@ class CollectionBase {
     }
   }
 
-  async update(id, payload) {
-    if (!id || !payload) return;
+  async update(id, params) {
+    if (!id || !params) return;
     try {
       const collection = await this.getCollection();
-      await this._update(collection, id, payload);
+      await this._update(collection, id, params);
     } catch (e) {
       throw e;
     }

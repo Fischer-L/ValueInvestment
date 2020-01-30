@@ -22,11 +22,12 @@ const stockNoteProvider = {
 
     try {
       note = clone(note);
+      note.createTime = Date.now();
       this._createPromises[id] = apiClient.put('/stocknote', { payload: { id, note } });
       await this._createPromises[id];
       this._stockNotes[id] = {
         id,
-        notes: [ { ...note, createTime: Date.now() } ],
+        notes: [ note ],
       };
     } catch (e) {
       console.error(e);
@@ -60,9 +61,10 @@ const stockNoteProvider = {
 
     try {
       note = clone(note);
-      this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}`, { payload: { note } });
+      note.createTime = Date.now();
+      this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}/note`, { action: 'add', payload: { note } });
       await this._ongoingPromises[id];
-      this._stockNotes[id].notes.push({ ...note, createTime: Date.now() });
+      this._stockNotes[id].notes.push(note);
     } catch (e) {
       console.error(e);
     }
@@ -83,7 +85,7 @@ const stockNoteProvider = {
         throw new Error(`Update an unknown note: ${note}`);
       }
       note = clone(note);
-      this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}`, { payload: { note } });
+      this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}/note`, { action: 'update', payload: { note } });
       await this._ongoingPromises[id];
       this._stockNotes[id].notes[i] = note;
     } catch (e) {

@@ -21,6 +21,20 @@ const reverseNotes = {
 };
 reverseNotes.run();
 
+function collectAction(req, res, next) {
+  try {
+    if (req.body.action) {
+      res.locals.action = req.body.action;
+    } else {
+      throw new Error(`No action in body to collect - ${JSON.stringify(req.body)}`);
+    }
+  } catch (e) {
+    res.status(HTTP.BAD_REQUEST).send(e.toString());
+    return;
+  }
+  next();
+}
+
 function initStocknoteRoute(app) {
   app.put('/stocknote/', collectPayload, async (req, res) => {
     const { payload } = res.locals;
@@ -52,11 +66,11 @@ function initStocknoteRoute(app) {
     res.json(data);
   });
 
-  app.post('/stocknote/:id', collectPayload, async (req, res) => {
+  app.post('/stocknote/:id/note', collectPayload, collectAction, async (req, res) => {
     const id = req.params.id;
-    const { payload } = res.locals;
+    const { payload, action } = res.locals;
     try {
-      await getCollection('stockNotes').then(collection => collection.update(id, payload));
+      await getCollection('stockNotes').then(collection => collection.update(id, { ...payload, action }));
       res.sendStatus(HTTP.OK);
     } catch (e) {
       console.error(e);
