@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Divider, Header, Label, Icon, Button } from 'semantic-ui-react';
 
+import Prompt, { ACTION } from '@/components/Prompt';
 import stockNoteProvider from '@/api/stockNoteProvider';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/NoteBoard.scss';
@@ -18,6 +19,7 @@ class NoteBoard extends ClickableComponent {
       stockId: null,
       stockNote: null,
       noteEdited: null,
+      noteToDelete: null,
 
       loading: false,
 
@@ -104,15 +106,21 @@ class NoteBoard extends ClickableComponent {
       }
     });
 
-    this.deleteNote = this.onClickDo(async e => {
+    this.cancelEditNote = () => this.setState({ noteEdited: null });
+
+    this.promptDeleteNote = this.onClickDo(async e => {
       if (e.target.dataset.note) {
-        this.setState({ loading: true });
-        await stockNoteProvider.deleteNote(this.state.stockId, JSON.parse(e.target.dataset.note));
-        this.loadStockNote(this.state.stockId, true);
+        this.setState({ noteToDelete: JSON.parse(e.target.dataset.note) });
       }
     });
 
-    this.cancelEditNote = () => this.setState({ noteEdited: null });
+    this.deleteNote = async noteToDelete => {
+      if (noteToDelete) {
+        this.setState({ loading: true });
+        await stockNoteProvider.deleteNote(this.state.stockId, noteToDelete);
+        this.loadStockNote(this.state.stockId, true);
+      }
+    };
   }
 
   Paragraph({ texts, editMode, className }) {
@@ -132,7 +140,7 @@ class NoteBoard extends ClickableComponent {
       </div>);
   }
 
-  Note({ note = {}, copyNote, editNote, deleteNote, editMode, onSave, onCancel }) {
+  Note({ note = {}, copyNote, editNote, promptDeleteNote, editMode, onSave, onCancel }) {
     const dataNote = JSON.stringify(note);
     const noteRef = editMode ? React.createRef() : null;
     const onOK = editMode ? () => onSave(noteRef, note) : null;
@@ -144,7 +152,7 @@ class NoteBoard extends ClickableComponent {
           操作策略
           <Icon className="note-copyBtn" name="copy outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={copyNote} onTouchEnd={copyNote} />
           <Icon className="note-editBtn" name="edit outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={editNote} onTouchEnd={editNote} />
-          <Icon className="note-deleteBtn" name="trash alternate outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={deleteNote} onTouchEnd={deleteNote} />
+          <Icon className="note-deleteBtn" name="trash alternate outline" size="tiny" data-note={dataNote} style={show(!editMode)} onClick={promptDeleteNote} onTouchEnd={promptDeleteNote} />
           <Label className="note-date" as="span" color="orange" size="tiny" tag style={show(!editMode)}>{ toDateInTW(createTime) }</Label>
         </Header>
         { this.Paragraph({ className: 'note-trade', texts: commentOf(trade), editMode }) }
@@ -159,14 +167,14 @@ class NoteBoard extends ClickableComponent {
   }
 
   Notes() {
-    const { copyNote, editNote, deleteNote, updateNote, cancelEditNote } = this;
+    const { copyNote, editNote, promptDeleteNote, updateNote, cancelEditNote } = this;
     const { stockNote, noteEdited } = this.state;
     if (stockNote) {
       return stockNote.notes.map(note => {
         const onSave = updateNote;
         const onCancel = cancelEditNote;
         const editMode = !!(noteEdited && noteEdited.createTime === note.createTime);
-        return <section className="note" key={note.createTime}>{ this.Note({ note, copyNote, editNote, deleteNote, editMode, onSave, onCancel }) }</section>;
+        return <section className="note" key={note.createTime}>{ this.Note({ note, copyNote, editNote, promptDeleteNote, editMode, onSave, onCancel }) }</section>;
       });
     }
     return null;
@@ -208,6 +216,19 @@ class NoteBoard extends ClickableComponent {
     );
   }
 
+  DeleteNotePrompt() {
+    if (!this.state.noteToDelete) {
+      return null;
+    }
+    const onClose = ({ action }) => {
+      if (action === ACTION.OK) {
+        this.deleteNote(this.state.noteToDelete);
+      }
+      this.setState({ noteToDelete: null });
+    };
+    return <Prompt msg="Do you really want to delete this note?" onClose={onClose} />;
+  }
+
   render() {
     return (
       <section className="noteBoard">
@@ -215,6 +236,7 @@ class NoteBoard extends ClickableComponent {
           { (() => (this.state.loading ? <span>Loading...</span> : this.newNoteElem()))() }
         </section>
         { this.Notes() }
+        { this.DeleteNotePrompt() }
       </section>
     );
   }
