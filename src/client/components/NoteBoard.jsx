@@ -63,34 +63,40 @@ class NoteBoard extends ClickableComponent {
       if (this.state.loading) {
         return;
       }
-      this.closeNewNoteMode();
 
       const note = this.extraNoteFromDOM(noteRef);
       if (!note) {
         return;
       }
+
       this.setState({ loading: true });
-
-      if (this.state.stockNote) {
-        await stockNoteProvider.addNote(this.state.stockId, note);
-      } else {
-        await stockNoteProvider.create(this.state.stockId, note);
+      try {
+        if (this.state.stockNote) {
+          await stockNoteProvider.addNote(this.state.stockId, note);
+        } else {
+          await stockNoteProvider.create(this.state.stockId, note);
+        }
+        this.closeNewNoteMode();
+        this.loadStockNote(this.state.stockId, true);
+      } catch (e) {
+        this.setState({ loading: false });
       }
-
-      this.loadStockNote(this.state.stockId, true);
     };
 
     this.updateNote = async (noteRef, originalNote) => {
-      if (this.state.loading) {
+      const note = this.extraNoteFromDOM(noteRef);
+      if (!note || !originalNote.createTime) {
         return;
       }
-      this.cancelEditNote();
-      const note = this.extraNoteFromDOM(noteRef);
-      if (note && originalNote.createTime) {
+
+      this.setState({ loading: true });
+      try {
         note.createTime = originalNote.createTime;
-        this.setState({ loading: true });
         await stockNoteProvider.updateNote(this.state.stockId, note);
         this.loadStockNote(this.state.stockId, true);
+        this.closeEditNote();
+      } catch (e) {
+        this.setState({ loading: false });
       }
     };
 
@@ -101,12 +107,12 @@ class NoteBoard extends ClickableComponent {
     });
 
     this.editNote = this.onClickDo(e => {
-      if (e.target.dataset.note) {
+      if (e.target.dataset.note && !this.state.loading) {
         this.setState({ noteToEdit: JSON.parse(e.target.dataset.note) });
       }
     });
 
-    this.cancelEditNote = () => this.setState({ noteToEdit: null });
+    this.closeEditNote = () => this.setState({ noteToEdit: null });
 
     this.promptDeleteNote = this.onClickDo(async e => {
       if (e.target.dataset.note) {
@@ -167,12 +173,12 @@ class NoteBoard extends ClickableComponent {
   }
 
   Notes() {
-    const { copyNote, editNote, promptDeleteNote, updateNote, cancelEditNote } = this;
+    const { copyNote, editNote, promptDeleteNote, updateNote, closeEditNote } = this;
     const { stockNote, noteToEdit } = this.state;
     if (stockNote) {
       return stockNote.notes.map(note => {
         const onSave = updateNote;
-        const onCancel = cancelEditNote;
+        const onCancel = closeEditNote;
         const editMode = !!(noteToEdit && noteToEdit.createTime === note.createTime);
         return <section className="note" key={note.createTime}>{ this.Note({ note, copyNote, editNote, promptDeleteNote, editMode, onSave, onCancel }) }</section>;
       });
@@ -231,14 +237,14 @@ class NoteBoard extends ClickableComponent {
 
   render() {
     const { loading } = this.state;
-    const Notes = loading ? null : this.Notes();
-    const NewNoteElem = loading ? null : this.NewNoteElem();
     const Loading = loading ? <span>Loading...</span> : null;
     return (
       <section className="noteBoard">
         { Loading }
-        { NewNoteElem }
-        { Notes }
+        <div style={show(!loading)}>
+          { this.NewNoteElem() }
+          { this.Notes() }
+        </div>
         { this.DeleteNotePrompt() }
       </section>
     );
