@@ -31,6 +31,9 @@ const stockNoteProvider = {
       };
     } catch (e) {
       console.error(e);
+      throw e;
+    } finally {
+      this._createPromises[id] = null;
     }
   },
 
@@ -67,8 +70,10 @@ const stockNoteProvider = {
       this._stockNotes[id].notes.push(note);
     } catch (e) {
       console.error(e);
+      throw e;
+    } finally {
+      this._ongoingPromises[id] = null;
     }
-    this._ongoingPromises[id] = null;
   },
 
   async updateNote(id, note) {
@@ -90,8 +95,10 @@ const stockNoteProvider = {
       this._stockNotes[id].notes[i] = note;
     } catch (e) {
       console.error(e);
+      throw e;
+    } finally {
+      this._ongoingPromises[id] = null;
     }
-    this._ongoingPromises[id] = null;
   },
 
   async deleteNote(id, note) {
@@ -113,8 +120,9 @@ const stockNoteProvider = {
       this._stockNotes[id].notes.splice(i, 1);
     } catch (e) {
       console.error(e);
+    } finally {
+      this._ongoingPromises[id] = null;
     }
-    this._ongoingPromises[id] = null;
   },
 
   async remove(id) {
