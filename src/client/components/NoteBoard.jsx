@@ -18,7 +18,7 @@ class NoteBoard extends ClickableComponent {
     this.state = {
       stockId: null,
       stockNote: null,
-      noteEdited: null,
+      noteToEdit: null,
       noteToDelete: null,
 
       loading: false,
@@ -102,11 +102,11 @@ class NoteBoard extends ClickableComponent {
 
     this.editNote = this.onClickDo(e => {
       if (e.target.dataset.note) {
-        this.setState({ noteEdited: JSON.parse(e.target.dataset.note) });
+        this.setState({ noteToEdit: JSON.parse(e.target.dataset.note) });
       }
     });
 
-    this.cancelEditNote = () => this.setState({ noteEdited: null });
+    this.cancelEditNote = () => this.setState({ noteToEdit: null });
 
     this.promptDeleteNote = this.onClickDo(async e => {
       if (e.target.dataset.note) {
@@ -168,12 +168,12 @@ class NoteBoard extends ClickableComponent {
 
   Notes() {
     const { copyNote, editNote, promptDeleteNote, updateNote, cancelEditNote } = this;
-    const { stockNote, noteEdited } = this.state;
+    const { stockNote, noteToEdit } = this.state;
     if (stockNote) {
       return stockNote.notes.map(note => {
         const onSave = updateNote;
         const onCancel = cancelEditNote;
-        const editMode = !!(noteEdited && noteEdited.createTime === note.createTime);
+        const editMode = !!(noteToEdit && noteToEdit.createTime === note.createTime);
         return <section className="note" key={note.createTime}>{ this.Note({ note, copyNote, editNote, promptDeleteNote, editMode, onSave, onCancel }) }</section>;
       });
     }
@@ -195,24 +195,24 @@ class NoteBoard extends ClickableComponent {
       </div>);
   }
 
-  newNoteElem() {
-    const { newNoteMode, defaultNote, noteEdited } = this.state;
+  NewNoteElem() {
+    const { newNoteMode, defaultNote, noteToEdit } = this.state;
     const { saveNote, openNewNoteMode, closeNewNoteMode } = this;
-    if (noteEdited) {
+    if (noteToEdit) {
       return null;
     }
     if (!newNoteMode) {
       return (
-        <div>
+        <section className="note">
           <Icon className="noteBoard-addBtn" name="add" size="large" onClick={openNewNoteMode} onTouchEnd={openNewNoteMode} />
           <Divider clearing hidden />
-        </div>
+        </section>
       );
     }
     return (
-      <div>
+      <section className="note">
         { this.Note({ editMode: newNoteMode, onSave: saveNote, onCancel: closeNewNoteMode, note: defaultNote }) }
-      </div>
+      </section>
     );
   }
 
@@ -230,12 +230,15 @@ class NoteBoard extends ClickableComponent {
   }
 
   render() {
+    const { loading } = this.state;
+    const Notes = loading ? null : this.Notes();
+    const NewNoteElem = loading ? null : this.NewNoteElem();
+    const Loading = loading ? <span>Loading...</span> : null;
     return (
       <section className="noteBoard">
-        <section className="note">
-          { (() => (this.state.loading ? <span>Loading...</span> : this.newNoteElem()))() }
-        </section>
-        { this.Notes() }
+        { Loading }
+        { NewNoteElem }
+        { Notes }
         { this.DeleteNotePrompt() }
       </section>
     );
