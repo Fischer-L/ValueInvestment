@@ -45,6 +45,20 @@
   right: 0;
 }
 
+.mainBar-Btn {
+  margin: 0;
+  margin-left: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+i.mainBar-Btn-icon.icon {
+ margin: 0;
+}
+
 @media only screen and (max-width: $input-max-width + 160px) {
   .mainBar-input {
     width: calc(var(--input-max-width) * 0.88);
@@ -66,7 +80,7 @@
   }
 
   .mainBar-inputHolder {
-    width: 66%;
+    flex: 1;
   }
 
   .mainBar-input {

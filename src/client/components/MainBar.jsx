@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, Button } from 'semantic-ui-react';
+import { Input, Button, Icon } from 'semantic-ui-react';
 
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/MainBar.scss';
@@ -52,6 +52,15 @@ class MainBar extends ClickableComponent {
     );
   }
 
+  renderBookmarkBtn({ iconName, title, onClick }) {
+    return (
+      <button className="mainBar-Btn" onClick={onClick} onTouchEnd={onClick} type="button">
+        <Icon className="mainBar-Btn-icon" name={iconName} size="large" />
+        <p>{title}</p>
+      </button>
+    );
+  }
+
   render() {
     return (
       <div className="mainBar" onClick={this.onRequestStockValue} onKeyPress={this.onRequestStockValue} onTouchEnd={this.onRequestStockValue}>
@@ -65,7 +74,7 @@ class MainBar extends ClickableComponent {
           />
         </section>
         <section className="mainBar-buttonsArea">
-          <Button className="mainBar-bookmarkBtn" icon="bookmark" onClick={this.onClickBookmarkBtn} onTouchEnd={this.onClickBookmarkBtn} />
+          { this.renderBookmarkBtn({ title: 'tw', iconName: 'bookmark outline', onClick: this.onClickBookmarkBtn }) }
           { this.renderLoginButton() }
         </section>
       </div>
