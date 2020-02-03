@@ -16,6 +16,10 @@ const COLLECTION_OPTIONS = {
           bsonType: 'string',
           description: 'Stock name',
         },
+        market: {
+          bsonType: 'string',
+          description: 'Market where stock is traded',
+        },
       },
     },
   },
@@ -23,11 +27,11 @@ const COLLECTION_OPTIONS = {
 
 class BookmarksCollection extends CollectionBase {
   constructor(db) {
-    super(db, COLLECTION_OPTIONS);
+    super(db, { options: COLLECTION_OPTIONS });
   }
 
   _sanitizeDocs(bookmarks) {
-    return bookmarks.map(bookmark => ({ ...bookmark }));
+    return bookmarks.map(bookmark => ({ ...bookmark, id: bookmark.id.toUpperCase() }));
   }
 }
 

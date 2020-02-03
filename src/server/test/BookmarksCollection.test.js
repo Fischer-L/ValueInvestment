@@ -14,6 +14,7 @@ function verifyData(expected, actual) {
 const fakeData = [
   { id: '2317', name: '鴻海' },
   { id: '2330', name: '台積電' },
+  { id: 'APPL', name: 'Apple', market: 'us' },
 ];
 
 let bookmarks = null;
@@ -38,7 +39,7 @@ describe('BookmarksCollection', () => {
   // NOTICE: Bad smell, this test relies on the saved data from the above test.
   // This is faster but should refactor once tests get complicated.
   it('should remove bookmarks', async () => {
-    await bookmarks.remove([fakeData[1].id]);
+    await bookmarks.remove([fakeData[1].id, fakeData[2].id]);
     const data = await bookmarks.getAll();
     verifyData(data, fakeData.slice(0, 1));
   });

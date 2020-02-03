@@ -1,11 +1,11 @@
 const { env } = require('../../build/config_server');
 
 class CollectionBase {
-  constructor(db, options) {
+  constructor(db, params = {}) {
     this._db = db;
-    this._version = 0;
+    this._options = params.options;
+    this._version = params.version || 0;
     this._name = `${this.constructor.name}_v${this._version}${env === 'production' ? '' : '_dev'}`;
-    this._options = options;
   }
 
   // Called before saving docs, should return correct docs to save
@@ -94,12 +94,11 @@ class CollectionBase {
     let result = null;
     try {
       const collection = await this.getCollection();
-      const queries = ids.map(id => ({ _id: id }));
-      const queryCount = queries.length;
+      const queryCount = ids.length;
       if (queryCount === 1) {
-        result = await collection.deleteOne(queries[0]);
+        result = await collection.deleteOne({ _id: ids[0] });
       } else {
-        result = await collection.deleteMany(queries);
+        result = await collection.deleteMany({ _id: { $in: ids } });
       }
       if (result.deletedCount !== queryCount) {
         throw new Error(`Remove ${this._name} exception: expect to remove ${queryCount} docs but only ${result.deletedCount}`);
