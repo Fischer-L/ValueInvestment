@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Header, List } from 'semantic-ui-react';
 import { round } from '@/utils/index';
 import { TableByYears, TableByDividends } from '@/components/Table';
-import StockLinks from '@/components/StockLinks';
+import StockLinksTW from '@/components/StockLinksTW';
 
 import '@/css/ValueBoard.scss';
 
@@ -62,7 +62,7 @@ class ValueBoard extends Component {
       <section className="valueBoard">
         <Header as="h2" dividing>
           <span className="valueBoard-stockTitle">{name} {this.props.stockId}</span>
-          <StockLinks stock={{ id, name }} className="valueBoard-stockLinks" />
+          <StockLinksTW stock={{ id, name }} className="valueBoard-stockLinks" />
         </Header>
         <List horizontal size="big">
           <List.Item>
