@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Icon, Input, Button } from 'semantic-ui-react';
 
-import getLink from '@/utils/getLink';
+import getURL from '@/utils/getURL';
 import openLink from '@/utils/openLink';
 import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
-import StockLinks from '@/components/StockLinks';
+import StockLinksTW from '@/components/StockLinksTW';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
 import '@/css/BookmarkBoard.scss';
@@ -46,9 +46,9 @@ class BookmarkBoard extends ClickableComponent {
     this.onClickPttUsersLinks = this.onClickDo(() => {
       const urls = this.state.pttUsers.reduce((_urls, { id }) => {
         if (id === '標的') {
-          _urls.push(getLink('pttpost', { q: id }));
+          _urls.push(getURL('pttpost', { q: id }));
         } else {
-          _urls.push(getLink('ptt', { q: id }), getLink('pttuser', { q: id }));
+          _urls.push(getURL('ptt', { q: id }), getURL('pttuser', { q: id }));
         }
         return _urls;
       }, []);
@@ -121,7 +121,7 @@ class BookmarkBoard extends ClickableComponent {
             <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
             <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onRequestLookupStock} onTouchEnd={this.onRequestLookupStock} />
           </List.Header>
-          <StockLinks className="bookmark-itemLinks" stock={stock} onAskForURLs={onAskForURLs} />
+          <StockLinksTW className="bookmark-itemLinks" stock={stock} onAskForURLs={onAskForURLs} />
         </List.Item>);
     });
     return <List className="bookmark-list" size="large">{ items }</List>;
@@ -133,9 +133,9 @@ class BookmarkBoard extends ClickableComponent {
     const items = pttUsers.map(({ id }) => {
       const links = [];
       if (id === '標的') {
-        links.push(getLink('pttpost', { q: id }));
+        links.push(getURL('pttpost', { q: id }));
       } else {
-        links.push(getLink('ptt', { q: id }), getLink('pttuser', { q: id }));
+        links.push(getURL('ptt', { q: id }), getURL('pttuser', { q: id }));
       }
       return (
         <li className="bookmark-pttUser" key={id} onClick={this.onClickPttUser} onTouchEnd={this.onClickPttUser}>

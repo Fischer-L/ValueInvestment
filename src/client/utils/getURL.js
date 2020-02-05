@@ -6,7 +6,7 @@ const middleName = {
   cmy: [ 'c', 'a', 'm', 'p', 'o', 'q', 'n', '3', 'e', '1', 'y'],
 };
 
-export default function getLink(site, query, pathParams) {
+export default function getURL(site, query, pathParams) {
   switch (site) {
     case 'gw':
       return `https://www.${middleName.of('gw')}.com/stock/astock/techchart?stockno=${encodeURIComponent(query.stockId)}`;
