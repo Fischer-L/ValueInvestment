@@ -7,7 +7,7 @@ import { apiClient, loginManager, getStockProvider } from '@/api/index';
 import MainBar from '@/components/MainBar';
 import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
-import BookmarkBoard from '@/components/BookmarkBoard';
+import BookmarkBoardTW from '@/components/BookmarkBoardTW';
 import Prompt, { ACTION } from '@/components/Prompt';
 
 import icoDuck from '@/assets/ico_duck.jpg';
@@ -30,7 +30,7 @@ class App extends Component {
       allowLogin: loginManager.allowLogin(),
     };
 
-    this.onRequestCloseBookmark = this.onClickBookmarkBtn = () => {
+    this.whenCloseBookmark = this.onClickBookmarkBtn = () => {
       this.setState((prevState) => {
         const showBookmarkBoard = !prevState.showBookmarkBoard;
         document.body.style.overflow = showBookmarkBoard ? 'hidden' : '';
@@ -38,7 +38,7 @@ class App extends Component {
       });
     };
 
-    this.onRequestLookupStock = this.onRequestStockValue = async ({ stockId }) => {
+    this.whenLookupStock = this.onRequestStockValue = async ({ stockId }) => {
       let noCache = false;
       if (stockId.toLowerCase().startsWith('n')) {
         noCache = true;
@@ -123,8 +123,8 @@ class App extends Component {
     };
 
     this.bookmarkBoardCallbacks = {
-      onRequestLookupStock: this.onRequestLookupStock,
-      onRequestCloseBookmark: this.onRequestCloseBookmark,
+      whenLookupStock: this.whenLookupStock,
+      whenCloseBookmark: this.whenCloseBookmark,
     };
   }
 
@@ -140,7 +140,7 @@ class App extends Component {
     } else {
       appContent.push(this.renderBeginComponent());
     }
-    appContent.push(<BookmarkBoard key="BookmarkBoard" show={this.state.showBookmarkBoard} {...this.bookmarkBoardCallbacks} />);
+    appContent.push(<BookmarkBoardTW key="BookmarkBoardTW" show={this.state.showBookmarkBoard} {...this.bookmarkBoardCallbacks} />);
 
     return (
       <div className="app">

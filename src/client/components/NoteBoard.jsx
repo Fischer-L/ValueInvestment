@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Divider, Header, Label, Icon, Button } from 'semantic-ui-react';
 
+import showDisplay from '@/utils/showDisplay';
 import Prompt, { ACTION } from '@/components/Prompt';
 import stockNoteProvider from '@/api/stockNoteProvider';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/NoteBoard.scss';
 
-const show = _show => ({ display: _show ? '' : 'none' });
+const show = showDisplay;
 const commentOf = data => (data && data.comment ? data.comment.trim() : '');
 const toDateInTW = time => (time ? (new Date(time + 8 * 60 * 60 * 1000)).toISOString().split('T')[0] : '');
 

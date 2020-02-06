@@ -17,10 +17,12 @@ class ClickableComponent extends Component {
     };
   }
 
+  hasCallback(name) {
+    return typeof this.props[name] === 'function';
+  }
+
   fireCallback(name, payload) {
-    if (typeof this.props[name] === 'function') {
-      this.props[name](payload);
-    }
+    if (this.hasCallback(name)) this.props[name](payload);
   }
 }
 

@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon, Header, Modal, Input } from 'semantic-ui-react';
 
+import showDisplay from '@/utils/showDisplay';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
-const show = _show => ({ display: _show ? '' : 'none' });
+const show = showDisplay;
 
 const ACTION = {
   OK: 'OK',
