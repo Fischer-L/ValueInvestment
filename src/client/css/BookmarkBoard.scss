@@ -36,7 +36,6 @@
 
 .bookmarkBoard-inputSection {
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(34, 36, 38, 0.15)
 }
 
 .bookmarkBoard-inputSection,
@@ -51,7 +50,7 @@
 }
 
 .bookmark-pttUsers-holder {
-  margin-top: 16px;
+  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
   display: flex;
   align-items: baseline;
 }
@@ -84,7 +83,8 @@
   transform: scale(0.68);
 }
 
-.bookmark-list {
+.bookmark-list.ui.list {
+  margin-top: 28px;
   flex: 1;
   overflow-y: auto;
   padding-bottom: 28px;

@@ -4,56 +4,25 @@ import { List, Icon, Input, Button } from 'semantic-ui-react';
 
 import getURL from '@/utils/getURL';
 import openLink from '@/utils/openLink';
-import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
+import showDisplay from '@/utils/showDisplay';
 import StockLinksTW from '@/components/StockLinksTW';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
 import '@/css/BookmarkBoard.scss';
 
-class BookmarkBoard extends ClickableComponent {
+export class PttUsersBookmark extends ClickableComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      pttUsers: [],
-      bookmarks: [],
-      stockIdToLookup: '',
-      bookmarkInputString: '',
+    this.urlsOf = id => {
+      const urls = [];
+      if (id === '標的') {
+        urls.push(getURL('pttpost', { q: id }));
+      } else {
+        urls.push(getURL('ptt', { q: id }), getURL('pttuser', { q: id }));
+      }
+      return urls;
     };
-
-    this.onInputChange = (e) => {
-      this.setState({ bookmarkInputString: e.target.value });
-    };
-
-    this.onAskForURLs = ({ urls }) => {
-      this.setState({ stockIdToLookup: '' });
-      openLink(...urls);
-    };
-
-    this.onRequestLookupStock = this.onClickDo(e => {
-      const stockId = e.target.dataset.id;
-      this.setState({ stockIdToLookup: stockId });
-      this.fireCallback('onRequestLookupStock', { stockId });
-    });
-
-    this.onClickBakground = this.onClickDo(() => this.fireCallback('onRequestCloseBookmark'));
-
-    this.onClickRemoveBookmarkBtn = this.onClickDo(e => {
-      bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, e.target.dataset.id)
-        .then(() => this.populateBookmarks());
-    });
-
-    this.onClickPttUsersLinks = this.onClickDo(() => {
-      const urls = this.state.pttUsers.reduce((_urls, { id }) => {
-        if (id === '標的') {
-          _urls.push(getURL('pttpost', { q: id }));
-        } else {
-          _urls.push(getURL('ptt', { q: id }), getURL('pttuser', { q: id }));
-        }
-        return _urls;
-      }, []);
-      openLink(...urls);
-    });
 
     this.onClickPttUser = this.onClickDo(e => {
       if (e.target.dataset.links) {
@@ -61,9 +30,109 @@ class BookmarkBoard extends ClickableComponent {
         return;
       }
       if (e.target.classList.contains('bookmark-removePttUserBtn')) {
-        bookmarkProvider.remove(BOOKMARK_TYPE.PTT_USER, e.target.dataset.id).then(() => this.populatePttUsers());
+        this.fireCallback('whenRemovePttUser', { id: e.target.dataset.id });
       }
     });
+
+    this.onClickPttUsersLinks = this.onClickDo(() => {
+      const urls = this.getPttUsers().reduce((_urls, { id }) => _urls.concat(...this.urlsOf(id)), []);
+      openLink(...urls);
+    });
+
+    this.getPttUsers = () => {
+      const { pttUsers } = this.props;
+      return (pttUsers && pttUsers.length) ? [ { id: '標的' }, ...pttUsers ] : [];
+    };
+  }
+
+  render() {
+    const items = this.getPttUsers().map(({ id }) => (
+      <li className="bookmark-pttUser" key={id} onClick={this.onClickPttUser} onTouchEnd={this.onClickPttUser}>
+        <a data-links={this.urlsOf(id).join(',')} href="javascript:void(0)">{id}</a>
+        <Icon className="bookmark-removePttUserBtn" name="close" data-id={id} />
+      </li>));
+    if (items.length === 0) {
+      return null;
+    }
+    return (
+      <div className="bookmark-pttUsers-holder">
+        <Button className="pttUsersLinks-openBtn" icon="globe" circular onClick={this.onClickPttUsersLinks} onTouchEnd={this.onClickPttUsersLinks} />
+        <ul className="bookmark-pttUsers">
+          { items }
+        </ul>
+      </div>);
+  }
+}
+PttUsersBookmark.propTypes = {
+  pttUsers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  })),
+  whenRemovePttUser: PropTypes.func,
+};
+
+export class StocksBookmark extends ClickableComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      stockIdToLookup: '',
+    };
+
+    this.onAskForURLs = ({ urls }) => {
+      this.setState({ stockIdToLookup: '' });
+      openLink(...urls);
+    };
+
+    this.onLookupStock = this.onClickDo(e => {
+      const stockId = e.target.dataset.id;
+      this.setState({ stockIdToLookup: stockId });
+      this.fireCallback('whenLookupStock', { stockId });
+    });
+
+    this.onRemoveStock = this.onClickDo(e => {
+      this.fireCallback('whenRemoveStock', { id: e.target.dataset.id });
+    });
+  }
+
+  render() {
+    const items = this.props.stocks.map(stock => {
+      const showLookupBtn = showDisplay(this.hasCallback('whenLookupStock'));
+      const onAskForURLs = stock.id === this.state.stockIdToLookup ? this.onAskForURLs : null;
+      return (
+        <List.Item className="bookmark-item" key={stock.id}>
+          <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onRemoveStock} onTouchEnd={this.onRemoveStock} />
+          <List.Header className="bookmark-itemHeader">
+            <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
+            <Icon className="bookmark-lookupBtn" name="search" style={showLookupBtn} data-id={stock.id} onClick={this.onLookupStock} onTouchEnd={this.onLookupStock} />
+          </List.Header>
+          <StockLinksTW className="bookmark-itemLinks" stock={stock} onAskForURLs={onAskForURLs} />
+        </List.Item>);
+    });
+    return <List className="bookmark-list" size="large">{ items }</List>;
+  }
+}
+StocksBookmark.propTypes = {
+  stocks: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  })),
+  whenLookupStock: PropTypes.func,
+  whenRemoveStock: PropTypes.func,
+};
+
+class BookmarkBoard extends ClickableComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      bookmarkInputString: '',
+    };
+
+    this.onInputChange = (e) => {
+      this.setState({ bookmarkInputString: e.target.value });
+    };
+
+    this.onClickBakground = this.onClickDo(() => this.fireCallback('whenCloseBookmark'));
 
     this.onBookmark = this.onClickDo(e => {
       let submit = false;
@@ -77,79 +146,10 @@ class BookmarkBoard extends ClickableComponent {
           submit = e.key.toLowerCase() === 'enter';
           break;
       }
-      if (!submit) return;
-
-      const values = this.state.bookmarkInputString.trim().split(' ');
-      if (values.length > 1) {
-        const bookmarkPayload = {};
-        if (Number.isNaN(parseInt(values[1], 10))) {
-          bookmarkPayload.id = values[0];
-          bookmarkPayload.name = values[1];
-        } else {
-          bookmarkPayload.id = values[1];
-          bookmarkPayload.name = values[0];
-        }
-        bookmarkProvider.put(BOOKMARK_TYPE.STOCK, bookmarkPayload.id, bookmarkPayload)
-          .then(() => this.populateBookmarks());
-      } else if (values.length === 1) {
-        const id = values[0];
-        bookmarkProvider.put(BOOKMARK_TYPE.PTT_USER, id, { id }).then(() => this.populatePttUsers());
+      if (submit) {
+        this.fireCallback('whenBookmark', { values: this.state.bookmarkInputString.trim().split(' ') });
       }
     });
-
-    this.populatePttUsers = () => {
-      bookmarkProvider.toArray(BOOKMARK_TYPE.PTT_USER).then(pttUsers => {
-        this.setState({ pttUsers: [ { id: '標的' }, ...pttUsers ] });
-      });
-    };
-
-    this.populateBookmarks = () => {
-      bookmarkProvider.toArray(BOOKMARK_TYPE.STOCK).then(bookmarks => this.setState({ bookmarks }));
-    };
-
-    this.populatePttUsers();
-    this.populateBookmarks();
-  }
-
-  renderItemsSaved(stocks) {
-    const items = stocks.map(stock => {
-      const onAskForURLs = stock.id === this.state.stockIdToLookup ? this.onAskForURLs : null;
-      return (
-        <List.Item className="bookmark-item" key={stock.id}>
-          <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onClickRemoveBookmarkBtn} onTouchEnd={this.onClickRemoveBookmarkBtn} />
-          <List.Header className="bookmark-itemHeader">
-            <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
-            <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onRequestLookupStock} onTouchEnd={this.onRequestLookupStock} />
-          </List.Header>
-          <StockLinksTW className="bookmark-itemLinks" stock={stock} onAskForURLs={onAskForURLs} />
-        </List.Item>);
-    });
-    return <List className="bookmark-list" size="large">{ items }</List>;
-  }
-
-  renderPttUsers(pttUsers) {
-    if (pttUsers.length === 0) return null;
-
-    const items = pttUsers.map(({ id }) => {
-      const links = [];
-      if (id === '標的') {
-        links.push(getURL('pttpost', { q: id }));
-      } else {
-        links.push(getURL('ptt', { q: id }), getURL('pttuser', { q: id }));
-      }
-      return (
-        <li className="bookmark-pttUser" key={id} onClick={this.onClickPttUser} onTouchEnd={this.onClickPttUser}>
-          <a data-links={links.join(',')} href="javascript:void(0)">{id}</a>
-          <Icon className="bookmark-removePttUserBtn" name="close" data-id={id} />
-        </li>);
-    });
-    return (
-      <div className="bookmark-pttUsers-holder">
-        <Button className="pttUsersLinks-openBtn" icon="globe" circular onClick={this.onClickPttUsersLinks} onTouchEnd={this.onClickPttUsersLinks} />
-        <ul className="bookmark-pttUsers">
-          { items }
-        </ul>
-      </div>);
   }
 
   render() {
@@ -169,9 +169,8 @@ class BookmarkBoard extends ClickableComponent {
               value={this.state.bookmarkInputString}
               onChange={this.onInputChange}
             />
-            { this.renderPttUsers(this.state.pttUsers) }
           </section>
-          { this.renderItemsSaved(this.state.bookmarks) }
+          { this.props.children }
         </div>
       </section>
     );
@@ -183,11 +182,10 @@ class BookmarkBoard extends ClickableComponent {
     }
   }
 }
-
 BookmarkBoard.propTypes = {
   show: PropTypes.bool,
-  onRequestLookupStock: PropTypes.func,
-  onRequestCloseBookmark: PropTypes.func,
+  whenBookmark: PropTypes.func,
+  whenCloseBookmark: PropTypes.func,
 };
 
 export default BookmarkBoard;
