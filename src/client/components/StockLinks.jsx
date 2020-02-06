@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Button } from 'semantic-ui-react';
 
-import openLink from '@/utils/openLink';
+import openURL from '@/utils/openURL';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/StockLinks.scss';
 
 class StockLinks extends ClickableComponent {
   constructor(props) {
     super(props);
-    this.openLinks = this.onClickDo(() => openLink(...this.props.links.map(link => link.url)));
+    this.openLinks = this.onClickDo(() => openURL(...this.props.links.map(link => link.url)));
   }
 
   render() {

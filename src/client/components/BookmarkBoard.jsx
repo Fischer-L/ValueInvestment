@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { List, Icon, Input, Button } from 'semantic-ui-react';
 
 import getURL from '@/utils/getURL';
-import openLink from '@/utils/openLink';
+import openURL from '@/utils/openURL';
 import showDisplay from '@/utils/showDisplay';
 import StockLinksTW from '@/components/StockLinksTW';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
@@ -26,7 +26,7 @@ export class PttUsersBookmark extends ClickableComponent {
 
     this.onClickPttUser = this.onClickDo(e => {
       if (e.target.dataset.links) {
-        openLink(...e.target.dataset.links.split(','));
+        openURL(...e.target.dataset.links.split(','));
         return;
       }
       if (e.target.classList.contains('bookmark-removePttUserBtn')) {
@@ -36,7 +36,7 @@ export class PttUsersBookmark extends ClickableComponent {
 
     this.onClickPttUsersLinks = this.onClickDo(() => {
       const urls = this.getPttUsers().reduce((_urls, { id }) => _urls.concat(...this.urlsOf(id)), []);
-      openLink(...urls);
+      openURL(...urls);
     });
 
     this.getPttUsers = () => {
@@ -80,7 +80,7 @@ export class StocksBookmark extends ClickableComponent {
 
     this.onAskForURLs = ({ urls }) => {
       this.setState({ stockIdToLookup: '' });
-      openLink(...urls);
+      openURL(...urls);
     };
 
     this.onLookupStock = this.onClickDo(e => {
