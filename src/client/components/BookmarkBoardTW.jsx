@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import MARKET_TYPE from '@/utils/marketType';
 import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
+import StockLinksTW from '@/components/StockLinksTW';
 import BookmarkBoard, { StocksBookmark, PttUsersBookmark } from '@/components/BookmarkBoard';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
@@ -11,7 +13,7 @@ class BookmarkBoardTW extends ClickableComponent {
 
     this.state = {
       pttUsers: [],
-      bookmarks: [],
+      stocks: [],
     };
 
     this.whenRemovePttUser = ({ id }) => {
@@ -19,7 +21,7 @@ class BookmarkBoardTW extends ClickableComponent {
     };
 
     this.whenRemoveStock = ({ id }) => {
-      bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, id).then(() => this.populateBookmarks());
+      bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, id).then(() => this.populateStocks());
     };
 
     this.whenBookmark = ({ values }) => {
@@ -33,35 +35,39 @@ class BookmarkBoardTW extends ClickableComponent {
           bookmarkPayload.name = values[0];
         }
         bookmarkProvider.put(BOOKMARK_TYPE.STOCK, bookmarkPayload.id, bookmarkPayload)
-          .then(() => this.populateBookmarks());
+          .then(() => this.populateStocks());
       } else if (values.length === 1) {
         const id = values[0];
         bookmarkProvider.put(BOOKMARK_TYPE.PTT_USER, id, { id }).then(() => this.populatePttUsers());
       }
     };
 
+    this._whenLookUpStock = ({ stockId }) => {
+      this.fireCallback('whenLookUpStock', { stockId, market: MARKET_TYPE.TW });
+    };
+
     this.populatePttUsers = () => {
       bookmarkProvider.toArray(BOOKMARK_TYPE.PTT_USER).then(pttUsers => this.setState({ pttUsers }));
     };
 
-    this.populateBookmarks = () => {
-      bookmarkProvider.toArray(BOOKMARK_TYPE.STOCK).then(bookmarks => this.setState({ bookmarks }));
+    this.populateStocks = () => {
+      bookmarkProvider.toArray(BOOKMARK_TYPE.STOCK).then(stocks => {
+        this.setState({ stocks: stocks.filter(s => s.market === MARKET_TYPE.TW) });
+      });
     };
 
     this.populatePttUsers();
-    this.populateBookmarks();
+    this.populateStocks();
   }
 
   render() {
-    const { pttUsers, bookmarks } = this.state;
-
+    const { pttUsers, stocks } = this.state;
     const { show, whenCloseBookmark } = this.props;
-    const bookmarkBoardProps = { show, whenCloseBookmark, whenBookmark: this.whenBookmark };
-
+    const bookmarkBoardProps = { show, whenCloseBookmark, whenBookmark: this.whenBookmark, placeholder: '2330 台積電' };
     return (
       <BookmarkBoard {...bookmarkBoardProps}>
         <PttUsersBookmark pttUsers={pttUsers} whenRemovePttUser={this.whenRemovePttUser} />
-        <StocksBookmark stocks={bookmarks} whenLookUpStock={this.props.whenLookUpStock} whenRemoveStock={this.whenRemoveStock} />
+        <StocksBookmark stocks={stocks} whenLookUpStock={this._whenLookUpStock} whenRemoveStock={this.whenRemoveStock} StockLinksComponent={StockLinksTW} />
       </BookmarkBoard>
     );
   }

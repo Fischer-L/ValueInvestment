@@ -13,6 +13,7 @@ const stockNoteProvider = {
     if (!id || !note) {
       throw new Error(`Create a stock note with invalid id, note = ${id}, ${JSON.stringify(note)}`);
     }
+    id = id.toUpperCase();
 
     const stockNote = await this.get(id);
     if (this._createPromises[id] || stockNote) {

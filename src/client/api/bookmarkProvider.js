@@ -1,22 +1,5 @@
 import { apiClient } from '@/api/index';
-
-function clearLegacyLocalStorage() {
-  function isBookmarkType(payload) {
-    return Object.prototype.toString.call(payload) === '[object Object]' && payload.id && payload.name;
-  }
-  const legacyBookmarks = [];
-  for (let i = 0; i < localStorage.length; ++i) {
-    try {
-      const item = JSON.parse(localStorage.getItem(localStorage.key(i)));
-      if (isBookmarkType(item)) {
-        legacyBookmarks.push(item);
-      }
-    } catch (e) {} // eslint-disable-line no-empty
-  }
-  legacyBookmarks.forEach(item => localStorage.removeItem(item.id));
-  console.log('Done with clearLegacyLocalStorage');
-}
-clearLegacyLocalStorage();
+import MARKET_TYPE from '@/utils/marketType';
 
 export const BOOKMARK_TYPE = {
   STOCK: 'stock',
@@ -51,13 +34,22 @@ const bookmarkProvider = {
 
   async toArray(type) {
     await this._init();
-    return Object.values(this._bookmarks[type]);
+    return Object.values(this._bookmarks[type]).map(item => ({
+      ...item,
+      // For the legacy reason, the TW market is stored without a market type,
+      // so add the type locally.
+      market: !item.market ? MARKET_TYPE.TW : item.market,
+    }));
   },
 
   async put(type, id, payload) {
     await this._init();
     const data = this._bookmarks[type];
-    if (!data[id]) {
+    if (!data[id] && payload) {
+      payload = {
+        ...payload,
+        id: payload.id.toUpperCase(),
+      };
       try {
         apiClient.post(`/bookmarks/${type}`, { payloads: [ payload ] });
       } catch (e) {

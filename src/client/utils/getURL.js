@@ -2,6 +2,7 @@ const middleName = {
   of(key) {
     return this[key].filter((v, i) => i % 2 === 0).join('');
   },
+  ya: [ 'y', '6', 'a', 'd', 'h', 'b', 'o', 'f', 'o' ],
   gw: [ 'w', '5', 'a', 'q', 'n', 'n', 't', 'a', 'g', 'o', 'o', 'p', 'o' ],
   cmy: [ 'c', 'a', 'm', 'p', 'o', 'q', 'n', '3', 'e', '1', 'y'],
 };
@@ -31,6 +32,9 @@ export default function getURL(site, query, pathParams) {
 
     case '24hrs_news':
       return `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${encodeURIComponent(query.q)}`;
+
+    case 'ya_us':
+      return `https://finance.${middleName.of('ya')}.com/quote/${pathParams.stockId}?p=${encodeURIComponent(query.stockId)}&.tsrc=fin-srch`;
   }
   return '';
 }

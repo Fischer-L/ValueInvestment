@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button, Icon } from 'semantic-ui-react';
 
+import MARKET_TYPE from '@/utils/marketType';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/MainBar.scss';
 
@@ -17,7 +18,8 @@ class MainBar extends ClickableComponent {
       this.setState({ stockId: e.target.value });
     };
 
-    this.onClickBookmarkBtn = this.onClickDo(() => this.fireCallback('whenToggleBookmark'));
+    this.onToggleBookmarkTW = this.onClickDo(() => this.fireCallback('whenToggleBookmark', { market: MARKET_TYPE.TW }));
+    this.onToggleBookmarkUS = this.onClickDo(() => this.fireCallback('whenToggleBookmark', { market: MARKET_TYPE.US }));
 
     this.onLogin = this.onClickDo(() => this.fireCallback('whenLogin'));
 
@@ -35,7 +37,10 @@ class MainBar extends ClickableComponent {
       }
       const { stockId } = this.state;
       if (submit && stockId) {
-        this.fireCallback('whenLookUpStock', { stockId });
+        this.fireCallback('whenLookUpStock', {
+          stockId,
+          market: Number.isNaN(parseInt(stockId, 10)) ? MARKET_TYPE.US : MARKET_TYPE.TW,
+        });
       }
     });
   }
@@ -52,10 +57,10 @@ class MainBar extends ClickableComponent {
     );
   }
 
-  renderBookmarkBtn({ iconName, title, onClick }) {
+  renderBookmarkBtn({ title, onClick }) {
     return (
       <button className="mainBar-Btn" onClick={onClick} onTouchEnd={onClick} type="button">
-        <Icon className="mainBar-Btn-icon" name={iconName} size="large" />
+        <Icon className="mainBar-Btn-icon" name="bookmark outline" size="large" />
         <p>{title}</p>
       </button>
     );
@@ -74,7 +79,8 @@ class MainBar extends ClickableComponent {
           />
         </section>
         <section className="mainBar-buttonsArea">
-          { this.renderBookmarkBtn({ title: 'tw', iconName: 'bookmark outline', onClick: this.onClickBookmarkBtn }) }
+          { this.renderBookmarkBtn({ title: 'tw', onClick: this.onToggleBookmarkTW }) }
+          { this.renderBookmarkBtn({ title: 'us', onClick: this.onToggleBookmarkUS }) }
           { this.renderLoginButton() }
         </section>
       </div>
