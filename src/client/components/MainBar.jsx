@@ -17,11 +17,11 @@ class MainBar extends ClickableComponent {
       this.setState({ stockId: e.target.value });
     };
 
-    this.onClickBookmarkBtn = this.onClickDo(() => this.fireCallback('onClickBookmarkBtn'));
+    this.onClickBookmarkBtn = this.onClickDo(() => this.fireCallback('whenToggleBookmark'));
 
-    this.onRequestLogin = this.onClickDo(() => this.fireCallback('onRequestLogin'));
+    this.onLogin = this.onClickDo(() => this.fireCallback('whenLogin'));
 
-    this.onRequestStockValue = this.onClickDo(e => {
+    this.onLookUpStock = this.onClickDo(e => {
       let submit = false;
       switch (e.type) {
         case 'click':
@@ -35,7 +35,7 @@ class MainBar extends ClickableComponent {
       }
       const { stockId } = this.state;
       if (submit && stockId) {
-        this.fireCallback('onRequestStockValue', { stockId });
+        this.fireCallback('whenLookUpStock', { stockId });
       }
     });
   }
@@ -46,7 +46,7 @@ class MainBar extends ClickableComponent {
       return null;
     }
     return (
-      <Button className="mainBar-loginBtn" onClick={this.onRequestLogin} onTouchEnd={this.onRequestLogin}>
+      <Button className="mainBar-loginBtn" onClick={this.onLogin} onTouchEnd={this.onLogin}>
         { isLogin ? 'Logout' : 'Login' }
       </Button>
     );
@@ -63,7 +63,7 @@ class MainBar extends ClickableComponent {
 
   render() {
     return (
-      <div className="mainBar" onClick={this.onRequestStockValue} onKeyPress={this.onRequestStockValue} onTouchEnd={this.onRequestStockValue}>
+      <div className="mainBar" onClick={this.onLookUpStock} onKeyPress={this.onLookUpStock} onTouchEnd={this.onLookUpStock}>
         <section className="mainBar-inputHolder">
           <Input
             className="mainBar-input"
@@ -85,9 +85,9 @@ class MainBar extends ClickableComponent {
 MainBar.propTypes = {
   isLogin: PropTypes.bool,
   allowLogin: PropTypes.bool,
-  onRequestLogin: PropTypes.func,
-  onClickBookmarkBtn: PropTypes.func,
-  onRequestStockValue: PropTypes.func,
+  whenLogin: PropTypes.func,
+  whenLookUpStock: PropTypes.func,
+  whenToggleBookmark: PropTypes.func,
 };
 
 export default MainBar;

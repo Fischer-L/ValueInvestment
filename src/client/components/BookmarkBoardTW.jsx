@@ -61,14 +61,14 @@ class BookmarkBoardTW extends ClickableComponent {
     return (
       <BookmarkBoard {...bookmarkBoardProps}>
         <PttUsersBookmark pttUsers={pttUsers} whenRemovePttUser={this.whenRemovePttUser} />
-        <StocksBookmark stocks={bookmarks} whenLookupStock={this.props.whenLookupStock} whenRemoveStock={this.whenRemoveStock} />
+        <StocksBookmark stocks={bookmarks} whenLookUpStock={this.props.whenLookUpStock} whenRemoveStock={this.whenRemoveStock} />
       </BookmarkBoard>
     );
   }
 }
 BookmarkBoardTW.propTypes = {
   show: PropTypes.bool,
-  whenLookupStock: PropTypes.func,
+  whenLookUpStock: PropTypes.func,
   whenCloseBookmark: PropTypes.func,
 };
 
