@@ -78,7 +78,7 @@ export class StocksBookmark extends ClickableComponent {
       stockIdToLookup: '',
     };
 
-    this.onAskForURLs = ({ urls }) => {
+    this.whenAskForURLs = ({ urls }) => {
       this.setState({ stockIdToLookup: '' });
       openURL(...urls);
     };
@@ -86,7 +86,7 @@ export class StocksBookmark extends ClickableComponent {
     this.onLookupStock = this.onClickDo(e => {
       const stockId = e.target.dataset.id;
       this.setState({ stockIdToLookup: stockId });
-      this.fireCallback('whenLookupStock', { stockId });
+      this.fireCallback('whenLookUpStock', { stockId });
     });
 
     this.onRemoveStock = this.onClickDo(e => {
@@ -96,8 +96,8 @@ export class StocksBookmark extends ClickableComponent {
 
   render() {
     const items = this.props.stocks.map(stock => {
-      const showLookupBtn = showDisplay(this.hasCallback('whenLookupStock'));
-      const onAskForURLs = stock.id === this.state.stockIdToLookup ? this.onAskForURLs : null;
+      const showLookupBtn = showDisplay(this.hasCallback('whenLookUpStock'));
+      const whenAskForURLs = stock.id === this.state.stockIdToLookup ? this.whenAskForURLs : null;
       return (
         <List.Item className="bookmark-item" key={stock.id}>
           <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onRemoveStock} onTouchEnd={this.onRemoveStock} />
@@ -105,7 +105,7 @@ export class StocksBookmark extends ClickableComponent {
             <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
             <Icon className="bookmark-lookupBtn" name="search" style={showLookupBtn} data-id={stock.id} onClick={this.onLookupStock} onTouchEnd={this.onLookupStock} />
           </List.Header>
-          <StockLinksTW className="bookmark-itemLinks" stock={stock} onAskForURLs={onAskForURLs} />
+          <StockLinksTW className="bookmark-itemLinks" stock={stock} whenAskForURLs={whenAskForURLs} />
         </List.Item>);
     });
     return <List className="bookmark-list" size="large">{ items }</List>;
@@ -116,7 +116,7 @@ StocksBookmark.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })),
-  whenLookupStock: PropTypes.func,
+  whenLookUpStock: PropTypes.func,
   whenRemoveStock: PropTypes.func,
 };
 

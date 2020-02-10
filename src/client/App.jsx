@@ -30,7 +30,7 @@ class App extends Component {
       allowLogin: loginManager.allowLogin(),
     };
 
-    this.whenCloseBookmark = this.onClickBookmarkBtn = () => {
+    this.whenToggleBookmark = () => {
       this.setState((prevState) => {
         const showBookmarkBoard = !prevState.showBookmarkBoard;
         document.body.style.overflow = showBookmarkBoard ? 'hidden' : '';
@@ -38,7 +38,7 @@ class App extends Component {
       });
     };
 
-    this.whenLookupStock = this.onRequestStockValue = async ({ stockId }) => {
+    this.whenLookUpStock = async ({ stockId }) => {
       let noCache = false;
       if (stockId.toLowerCase().startsWith('n')) {
         noCache = true;
@@ -55,7 +55,7 @@ class App extends Component {
       }
     };
 
-    this.onRequestLogin = async () => {
+    this.whenLogin = async () => {
       const { isLogin, askLogin, allowLogin } = this.state;
       if (isLogin || !allowLogin) {
         await loginManager.logout();
@@ -117,14 +117,14 @@ class App extends Component {
     };
 
     this.mainBarCallbacks = {
-      onRequestLogin: this.onRequestLogin,
-      onClickBookmarkBtn: this.onClickBookmarkBtn,
-      onRequestStockValue: this.onRequestStockValue,
+      whenLogin: this.whenLogin,
+      whenLookUpStock: this.whenLookUpStock,
+      whenToggleBookmark: this.whenToggleBookmark,
     };
 
     this.bookmarkBoardCallbacks = {
-      whenLookupStock: this.whenLookupStock,
-      whenCloseBookmark: this.whenCloseBookmark,
+      whenLookUpStock: this.whenLookUpStock,
+      whenCloseBookmark: this.whenToggleBookmark,
     };
   }
 

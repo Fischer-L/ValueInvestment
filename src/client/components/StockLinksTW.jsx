@@ -24,11 +24,11 @@ class StockLinksTW extends ClickableComponent {
   }
 
   componentDidMount() {
-    this.fireCallback('onAskForURLs', { stock: this.props.stock, urls: this._links.map(link => link.url) });
+    this.fireCallback('whenAskForURLs', { stock: this.props.stock, urls: this._links.map(link => link.url) });
   }
 
   componentDidUpdate() {
-    this.fireCallback('onAskForURLs', { stock: this.props.stock, urls: this._links.map(link => link.url) });
+    this.fireCallback('whenAskForURLs', { stock: this.props.stock, urls: this._links.map(link => link.url) });
   }
 }
 
@@ -38,7 +38,7 @@ StockLinksTW.propTypes = {
     name: PropTypes.string.isRequired,
   }),
   className: PropTypes.string,
-  onAskForURLs: PropTypes.func,
+  whenAskForURLs: PropTypes.func,
 };
 
 export default StockLinksTW;
