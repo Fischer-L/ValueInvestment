@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import MARKET_TYPE from '@/utils/marketType';
 import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
-import StockLinksTW from '@/components/StockLinksTW';
+import { StockLinksTW } from '@/components/StockLinks';
 import BookmarkBoard, { StocksBookmark, PttUsersBookmark } from '@/components/BookmarkBoard';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 

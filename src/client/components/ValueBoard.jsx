@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Header, List } from 'semantic-ui-react';
 import { round } from '@/utils/index';
 import { TableByYears, TableByDividends } from '@/components/Table';
-import StockLinksTW from '@/components/StockLinksTW';
+import { StockLinksTW } from '@/components/StockLinks';
 
 import '@/css/ValueBoard.scss';
 
