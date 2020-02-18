@@ -4,8 +4,6 @@ import { List, Icon, Input, Button } from 'semantic-ui-react';
 
 import getURL from '@/utils/getURL';
 import openURL from '@/utils/openURL';
-import showDisplay from '@/utils/showDisplay';
-import StockLinksTW from '@/components/StockLinksTW';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
 import '@/css/BookmarkBoard.scss';
@@ -96,16 +94,16 @@ export class StocksBookmark extends ClickableComponent {
 
   render() {
     const items = this.props.stocks.map(stock => {
-      const showLookupBtn = showDisplay(this.hasCallback('whenLookUpStock'));
+      const { StockLinksComponent } = this.props;
       const whenAskForURLs = stock.id === this.state.stockIdToLookup ? this.whenAskForURLs : null;
       return (
         <List.Item className="bookmark-item" key={stock.id}>
           <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onRemoveStock} onTouchEnd={this.onRemoveStock} />
           <List.Header className="bookmark-itemHeader">
             <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
-            <Icon className="bookmark-lookupBtn" name="search" style={showLookupBtn} data-id={stock.id} onClick={this.onLookupStock} onTouchEnd={this.onLookupStock} />
+            <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onLookupStock} onTouchEnd={this.onLookupStock} />
           </List.Header>
-          <StockLinksTW className="bookmark-itemLinks" stock={stock} whenAskForURLs={whenAskForURLs} />
+          <StockLinksComponent className="bookmark-itemLinks" stock={stock} whenAskForURLs={whenAskForURLs} />
         </List.Item>);
     });
     return <List className="bookmark-list" size="large">{ items }</List>;
@@ -118,6 +116,7 @@ StocksBookmark.propTypes = {
   })),
   whenLookUpStock: PropTypes.func,
   whenRemoveStock: PropTypes.func,
+  StockLinksComponent: PropTypes.elementType.isRequired,
 };
 
 class BookmarkBoard extends ClickableComponent {
@@ -165,7 +164,7 @@ class BookmarkBoard extends ClickableComponent {
               className="bookmarkBoard-input"
               size="small"
               icon="save"
-              placeholder="2330 台積電"
+              placeholder={this.props.placeholder}
               value={this.state.bookmarkInputString}
               onChange={this.onInputChange}
             />
@@ -184,6 +183,7 @@ class BookmarkBoard extends ClickableComponent {
 }
 BookmarkBoard.propTypes = {
   show: PropTypes.bool,
+  placeholder: PropTypes.string,
   whenBookmark: PropTypes.func,
   whenCloseBookmark: PropTypes.func,
 };

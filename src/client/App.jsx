@@ -8,6 +8,8 @@ import MainBar from '@/components/MainBar';
 import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoardTW from '@/components/BookmarkBoardTW';
+import BookmarkBoardUS from '@/components/BookmarkBoardUS';
+import MARKET_TYPE from '@/utils/marketType';
 import Prompt, { ACTION } from '@/components/Prompt';
 
 import icoDuck from '@/assets/ico_duck.jpg';
@@ -22,29 +24,46 @@ class App extends Component {
 
     this.state = {
       error: null,
+      market: null,
       stockId: null,
       stockData: null,
-      showBookmarkBoard: false,
+      loadingData: false,
+      showBookmarkBoard: null,
       askLogin: false,
       isLogin: loginManager.isLogin(),
       allowLogin: loginManager.allowLogin(),
     };
 
-    this.whenToggleBookmark = () => {
+    this.whenToggleBookmark = ({ market }) => {
       this.setState((prevState) => {
-        const showBookmarkBoard = !prevState.showBookmarkBoard;
+        const showBookmarkBoard = prevState.showBookmarkBoard === market ? null : market;
         document.body.style.overflow = showBookmarkBoard ? 'hidden' : '';
         return { showBookmarkBoard };
       });
     };
 
-    this.whenLookUpStock = async ({ stockId }) => {
+    this.whenCloseBookmark = () => {
+      this.whenToggleBookmark({ market: this.state.showBookmarkBoard });
+    };
+
+    this.whenLookUpStock = async ({ stockId, market }) => {
+      if (this.state.loadingData) {
+        return;
+      }
+
       let noCache = false;
-      if (stockId.toLowerCase().startsWith('n')) {
+      if (stockId.startsWith('-')) {
         noCache = true;
         stockId = stockId.substr(1);
       }
-      this.setState({ stockId, stockData: null, error: null });
+      stockId = stockId.toUpperCase();
+
+      this.setState({ stockId, market, stockData: null, error: null });
+      if (market !== MARKET_TYPE.TW) {
+        return;
+      }
+
+      this.setState({ loadingData: true });
       try {
         const stockData = await stockProvider.get(stockId, noCache);
         if (stockId === stockData.id) {
@@ -53,6 +72,7 @@ class App extends Component {
       } catch (e) {
         this.setState({ stockId: null, error: e.toString() });
       }
+      this.setState({ loadingData: false });
     };
 
     this.whenLogin = async () => {
@@ -100,16 +120,36 @@ class App extends Component {
       </div>
     );
 
-    this.renderBoards = ({ stockId, stockData, isLogin, allowLogin }) => {
-      const boards = [ <ValueBoard stockId={stockId} stockData={stockData} key="ValueBoard" /> ];
+    this.renderValueBoard = ({ stockId, stockData }) => <ValueBoard stockId={stockId} stockData={stockData} key="ValueBoard" />;
+
+    this.renderNoteBoard = ({ stockId, isLogin, allowLogin }) => {
       if (allowLogin && isLogin) {
-        boards.push(<NoteBoard key="NoteBoard" stockId={stockId} />);
+        return <NoteBoard key="NoteBoard" stockId={stockId} />;
       }
+      return null;
+    };
+
+    this.renderBookmarkBoards = ({ showBookmarkBoard }) => {
+      const boards = [];
+
+      const propsOfBookmarkBoardTW = {
+        whenLookUpStock: this.whenLookUpStock,
+        whenCloseBookmark: this.whenCloseBookmark,
+        show: showBookmarkBoard === MARKET_TYPE.TW,
+      };
+      boards.push(<BookmarkBoardTW key="BookmarkBoardTW" {...propsOfBookmarkBoardTW} />);
+
+      const propsOfBookmarkBoardUS = {
+        whenLookUpStock: this.whenLookUpStock,
+        whenCloseBookmark: this.whenCloseBookmark,
+        show: showBookmarkBoard === MARKET_TYPE.US,
+      };
+      boards.push(<BookmarkBoardUS key="BookmarkBoardUS" {...propsOfBookmarkBoardUS} />);
+
       return boards;
     };
 
-    this.renderLoginPrompt = () => {
-      const { isLogin, askLogin, allowLogin } = this.state;
+    this.renderLoginPrompt = ({ isLogin, askLogin, allowLogin }) => {
       if (!isLogin && askLogin && allowLogin) {
         return <Prompt hasInput title="Passcode" onClose={this.onLoginPromptClose} />;
       }
@@ -121,32 +161,33 @@ class App extends Component {
       whenLookUpStock: this.whenLookUpStock,
       whenToggleBookmark: this.whenToggleBookmark,
     };
-
-    this.bookmarkBoardCallbacks = {
-      whenLookUpStock: this.whenLookUpStock,
-      whenCloseBookmark: this.whenToggleBookmark,
-    };
   }
 
   render() {
-    let appContent = [];
-    const { stockId, stockData, error, isLogin, allowLogin } = this.state;
+    const { stockId, market, error, isLogin, allowLogin, loadingData } = this.state;
+
+    const appContent = [];
     if (error) {
       appContent.push(this.renderErrorComponent(error));
-    } else if (stockId && !stockData) {
-      appContent.push(this.renderLoadingComponent());
-    } else if (stockId && stockData) {
-      appContent = this.renderBoards(this.state);
-    } else {
+    } else if (!stockId) {
       appContent.push(this.renderBeginComponent());
+    } else {
+      if (loadingData) {
+        appContent.push(this.renderLoadingComponent());
+      } else if (market === MARKET_TYPE.TW) {
+        appContent.push(this.renderValueBoard(this.state));
+      }
+      appContent.push(this.renderNoteBoard(this.state));
     }
-    appContent.push(<BookmarkBoardTW key="BookmarkBoardTW" show={this.state.showBookmarkBoard} {...this.bookmarkBoardCallbacks} />);
+    appContent.push(...this.renderBookmarkBoards(this.state));
 
     return (
       <div className="app">
         <MainBar isLogin={isLogin} allowLogin={allowLogin} {...this.mainBarCallbacks} />
-        <section className="appContent">{appContent}</section>
-        { this.renderLoginPrompt() }
+        <section className="appContent">
+          {appContent}
+        </section>
+        { this.renderLoginPrompt(this.state) }
       </div>
     );
   }
