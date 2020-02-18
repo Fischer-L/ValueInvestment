@@ -3,9 +3,11 @@ const cloudscraper = require('cloudscraper');
 const CacheProvider = require('../cacheProvider');
 const { env } = require('../../build/config_server');
 const GwServer = require('../../lib/stockProvider/GwServer');
+const GooServer = require('../../lib/stockProvider/GooServer');
 
 const stockdataCache = new CacheProvider();
 const gwStockProvider = new GwServer({ env, cloudscraper, challenge: true });
+const gooStockProvider = new GooServer({ env, cloudscraper, challenge: false });
 
 function shouldInvalidateCache(req) {
   const { noCache } = req.query;
@@ -24,6 +26,7 @@ function initStockdataRoute(app) {
     if (!data) {
       const providers = [
         [ 'gwStockData', gwStockProvider ],
+        [ 'gooStockData', gooStockProvider ],
       ];
       const dataArray = await Promise.all(
         providers.map(provider => provider[1].get(req.params.id)),

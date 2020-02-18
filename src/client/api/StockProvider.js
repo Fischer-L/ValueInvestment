@@ -1,4 +1,5 @@
 import GwClient from '~/lib/stockProvider/GwClient';
+import GooClient from '~/lib/stockProvider/GooClient';
 import { StockProviderClient } from '~/lib/stockProvider/StockProviderClient';
 
 let provider = null;
@@ -9,6 +10,7 @@ export default function getStockProvider(params) {
       ...params,
       dataParsers: {
         gwStockData: new GwClient(params),
+        gooStockData: new GooClient(params),
       },
     });
   }
