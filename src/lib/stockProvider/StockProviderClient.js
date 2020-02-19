@@ -5,7 +5,15 @@
 //   price: 100,
 //   eps: 12,
 //   netValue: 30,
-//   dividends: [5, 4.5, 4.8, 4.2, 4],
+//   dividends: [
+//     5, 4.5, 4.8, 4.2, 4,
+//   ],
+//   dividendPolicy: {
+//     in5yrs: {
+//       avg: 0.66,
+//       smoothAvg: 0.68 // Rid of the highest and lowest rate
+//     },
+//   },
 //   pe: {
 //     in5yrs: {
 //       top: 50,
