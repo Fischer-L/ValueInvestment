@@ -8,7 +8,7 @@ class GooClient extends StockDataParserClient {
 
   parseData({ dividendPolicyPage }) {
     const doc = this._parseDomFromString(dividendPolicyPage);
-    const table = doc.querySelectorAll('table.solid_1_padding_4_0_tbl')[2];
+    const table = doc.querySelector('#divDetail table');
     const tBodies = Array.from(table.tBodies);
     const dividendRates = [];
     while (tBodies.length && dividendRates.length < YEARS_TO_EXTRACT) {
