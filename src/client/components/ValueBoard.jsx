@@ -43,12 +43,16 @@ class ValueBoard extends Component {
     };
 
     this.calcPricesByDividends = () => {
-      const { dividends } = this.props.stockData;
+      const { eps, dividends, dividendPolicy: { in5yrs: rate } } = this.props.stockData;
       const currDividend = dividends[0];
       const avgDividend = dividends.reduce((sum, v) => sum + v, 0) / dividends.length;
+      const estDividend = eps * rate.avg;
+      const smoothEstDividend = eps * rate.smoothAvg;
       return {
         current: this._round([ currDividend, currDividend * 40, currDividend * 25, currDividend * 16 ]),
         average: this._round([ avgDividend, avgDividend * 40, avgDividend * 25, avgDividend * 16 ]),
+        estimated: this._round([ estDividend, estDividend * 40, estDividend * 25, estDividend * 16 ]),
+        smoothEstimated: this._round([ smoothEstDividend, smoothEstDividend * 40, smoothEstDividend * 25, smoothEstDividend * 16 ]),
       };
     };
   }
@@ -77,10 +81,10 @@ class ValueBoard extends Component {
         </List>
         <Header as="h3">Costs By PE</Header>
         <TableByYears prices5yrs={pricesByPE.in5yrs} prices3yrs={pricesByPE.in3yrs} color="blue" />
+        <Header as="h3">Costs By Dividend</Header>
+        <TableByDividends pricesByDividends={pricesByDividends} color="green" />
         <Header as="h3">Costs By PB</Header>
         <TableByYears prices5yrs={pricesByPB.in5yrs} prices3yrs={pricesByPB.in3yrs} color="teal" />
-        <Header as="h3">Costs By Dividend</Header>
-        <TableByDividends priceByCurrDividend={pricesByDividends.current} priceByAvgDividend={pricesByDividends.average} color="green" />
       </section>
     );
   }

@@ -23,7 +23,7 @@ function renderHeader(headerSubText = {}) {
   );
 }
 
-function renderRow({ title, cells }) {
+function Row({ title, cells }) {
   const tableCells = cells.map(([ content, subText ], i) => {
     const key = i + content + (subText || '');
     return <Table.Cell key={key}>{ content || '' }<p className={subTextClass(subText)}>{ subText }</p></Table.Cell>;
@@ -35,7 +35,7 @@ function renderRow({ title, cells }) {
     </Table.Row>
   );
 }
-renderRow.propTypes = {
+Row.propTypes = {
   title: PropTypes.arrayOf(PropTypes.string).isRequired,
   cells: PropTypes.array.isRequired,
 };
@@ -48,7 +48,7 @@ class TableByYears extends Component {
       <Table unstackable selectable color={this.props.color} className="table">
         { renderHeader() }
         <Table.Body>
-          { renderRow({
+          { Row({
             title: [ '5 Years' ],
             cells: [
               [ low5Price, `(${low5Eps})` ],
@@ -58,7 +58,7 @@ class TableByYears extends Component {
               [ top5Price, `(${top5Eps})` ],
             ],
           }) }
-          { renderRow({
+          { Row({
             title: [ '3 Years' ],
             cells: [
               [ low3Price, `(${low3Eps})` ],
@@ -83,33 +83,31 @@ TableByYears.propTypes = {
 };
 
 class TableByDividends extends Component {
+
+  renderRow(title, data) {
+    const [ dividend, topPrice, midPrice, lowPrice ] = data;
+    return Row({
+      title: [ title, `(${dividend})` ],
+      cells: [
+        [ lowPrice ],
+        [ '', round((lowPrice + midPrice) / 2) ],
+        [ midPrice ],
+        [ '', round((midPrice + topPrice) / 2) ],
+        [ topPrice ],
+      ],
+    });
+  }
+
   render() {
-    const [ currDividend, topCurrPrice, midCurrPrice, lowCurrPrice ] = this.props.priceByCurrDividend;
-    const [ AvgDividend, topAvgPrice, midAvgPrice, lowAvgPrice ] = this.props.priceByAvgDividend;
+    const { current, average, estimated, smoothEstimated } = this.props.pricesByDividends;
     return (
       <Table unstackable selectable color={this.props.color} className="table">
         { renderHeader({ low: '6.25%', mid: '4%', top: '2.5%' }) }
         <Table.Body>
-          { renderRow({
-            title: [ 'Current Dividends', `(${currDividend})` ],
-            cells: [
-              [ lowCurrPrice ],
-              [ '', round((lowCurrPrice + midCurrPrice) / 2) ],
-              [ midCurrPrice ],
-              [ '', round((midCurrPrice + topCurrPrice) / 2) ],
-              [ topCurrPrice ],
-            ],
-          }) }
-          { renderRow({
-            title: [ 'Average Dividends', `(${AvgDividend})` ],
-            cells: [
-              [ lowAvgPrice ],
-              [ '', round((lowAvgPrice + midAvgPrice) / 2) ],
-              [ midAvgPrice ],
-              [ '', round((midAvgPrice + topAvgPrice) / 2) ],
-              [ topAvgPrice ],
-            ],
-          }) }
+          { this.renderRow('Est.', estimated) }
+          { this.renderRow('Smooth Est.', smoothEstimated) }
+          { this.renderRow('Current', current) }
+          { this.renderRow('Average', average) }
         </Table.Body>
       </Table>
     );
@@ -118,8 +116,12 @@ class TableByDividends extends Component {
 
 TableByDividends.propTypes = {
   color: PropTypes.string,
-  priceByAvgDividend: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
-  priceByCurrDividend: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  pricesByDividends: PropTypes.shape({
+    current: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    average: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    estimated: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    smoothEstimated: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  }).isRequired,
 };
 
 export { TableByYears, TableByDividends };
