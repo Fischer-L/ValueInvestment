@@ -18,7 +18,7 @@
 }
 
 .noteBoard-addBtn.large.icon {
-  transform: scale(0.88);
+  transform: scale(0.98) translateY(16px);
   cursor: pointer;
   float: right;
 }
@@ -58,7 +58,7 @@
 }
 
 .note:first-child {
-  padding-bottom: 18px;
+  padding-bottom: 32px;
 }
 
 .note-pararaph--editMode {

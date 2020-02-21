@@ -107,7 +107,7 @@ switch (env) {
   case 'local-dev':
     // eslint-disable-next-line import/no-extraneous-dependencies, import/order, global-require
     const LiveReloadPlugin = require('webpack-livereload-plugin');
-    webpackConfig.plugins.push(new LiveReloadPlugin({ appendScriptTag: true, delay: 700 }));
+    webpackConfig.plugins.push(new LiveReloadPlugin({ appendScriptTag: true, delay: 660 }));
 
     webpackConfig.watch = true;
     webpackConfig.watchOptions = {
