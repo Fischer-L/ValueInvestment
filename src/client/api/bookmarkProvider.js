@@ -46,10 +46,12 @@ const bookmarkProvider = {
     await this._init();
     const data = this._bookmarks[type];
     if (!data[id] && payload) {
-      payload = {
-        ...payload,
-        id: payload.id.toUpperCase(),
-      };
+      if (type === BOOKMARK_TYPE.STOCK) {
+        payload = {
+          ...payload,
+          id: payload.id.toUpperCase(),
+        };
+      }
       try {
         apiClient.post(`/bookmarks/${type}`, { payloads: [ payload ] });
       } catch (e) {
