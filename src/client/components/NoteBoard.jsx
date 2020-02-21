@@ -3,40 +3,52 @@ import PropTypes from 'prop-types';
 import { Divider, Header, Label, Icon, Button } from 'semantic-ui-react';
 
 import showDisplay from '@/utils/showDisplay';
-import Prompt, { ACTION } from '@/components/Prompt';
 import stockNoteProvider from '@/api/stockNoteProvider';
+import Loading from '@/components/Loading';
+import ErrorDuck from '@/components/ErrorDuck';
+import Prompt, { ACTION } from '@/components/Prompt';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
+
 import '@/css/NoteBoard.scss';
 
 const show = showDisplay;
 const commentOf = data => (data && data.comment ? data.comment.trim() : '');
 const toDateInTW = time => (time ? (new Date(time + 8 * 60 * 60 * 1000)).toISOString().split('T')[0] : '');
 
+const defaultState = () => ({
+  stockId: null,
+  stockNote: null,
+  noteToEdit: null,
+  noteToDelete: null,
+
+  error: null,
+  loading: false,
+
+  newNoteMode: false,
+  defaultNote: null,
+});
+
 class NoteBoard extends ClickableComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      stockId: null,
-      stockNote: null,
-      noteToEdit: null,
-      noteToDelete: null,
+    this.state = defaultState();
 
-      loading: false,
-
-      newNoteMode: false,
-      defaultNote: null,
-    };
-
-    this.loadStockNote = (id, forceLoad) => {
-      if (!forceLoad && (this.state.loading || id === this.state.stockId)) {
+    this.loadStockNote = async (stockId, forceLoad) => {
+      if (!forceLoad && (this.state.loading || stockId === this.state.stockId)) {
         return;
       }
-      this.setState({ stockId: id, loading: true });
-      stockNoteProvider.get(id).then(stockNote => {
-        if (stockNote) stockNote.notes.sort((a, b) => b.createTime - a.createTime);
-        this.setState({ stockNote, loading: false });
-      });
+      this.setState({ ...defaultState(), stockId, loading: true });
+      try {
+        const stockNote = await stockNoteProvider.get(stockId);
+        if (stockNote) {
+          stockNote.notes && stockNote.notes.sort((a, b) => b.createTime - a.createTime);
+          this.setState({ stockNote });
+        }
+      } catch (error) {
+        this.setState({ error });
+      }
+      this.setState({ loading: false });
     };
 
     this.closeNewNoteMode = this.onClickDo(() => {
@@ -70,7 +82,7 @@ class NoteBoard extends ClickableComponent {
         return;
       }
 
-      this.setState({ loading: true });
+      this.setState({ error: null, loading: true });
       try {
         if (this.state.stockNote) {
           await stockNoteProvider.addNote(this.state.stockId, note);
@@ -79,8 +91,8 @@ class NoteBoard extends ClickableComponent {
         }
         this.closeNewNoteMode();
         this.loadStockNote(this.state.stockId, true);
-      } catch (e) {
-        this.setState({ loading: false });
+      } catch (error) {
+        this.setState({ error, loading: false });
       }
     };
 
@@ -90,14 +102,14 @@ class NoteBoard extends ClickableComponent {
         return;
       }
 
-      this.setState({ loading: true });
+      this.setState({ error: null, loading: true });
       try {
         note.createTime = originalNote.createTime;
         await stockNoteProvider.updateNote(this.state.stockId, note);
         this.loadStockNote(this.state.stockId, true);
         this.closeEditNote();
-      } catch (e) {
-        this.setState({ loading: false });
+      } catch (error) {
+        this.setState({ error, loading: false });
       }
     };
 
@@ -122,10 +134,15 @@ class NoteBoard extends ClickableComponent {
     });
 
     this.deleteNote = async noteToDelete => {
-      if (noteToDelete) {
-        this.setState({ loading: true });
+      if (!noteToDelete) {
+        return;
+      }
+      try {
+        this.setState({ error: null, loading: true });
         await stockNoteProvider.deleteNote(this.state.stockId, noteToDelete);
         this.loadStockNote(this.state.stockId, true);
+      } catch (error) {
+        this.setState({ error, loading: false });
       }
     };
   }
@@ -210,14 +227,14 @@ class NoteBoard extends ClickableComponent {
     }
     if (!newNoteMode) {
       return (
-        <section className="note">
+        <section className="note" key="NewNoteElem">
           <Icon className="noteBoard-addBtn" name="add" size="large" onClick={openNewNoteMode} onTouchEnd={openNewNoteMode} />
           <Divider clearing hidden />
         </section>
       );
     }
     return (
-      <section className="note">
+      <section className="note" key="NewNoteElem">
         { this.Note({ editMode: newNoteMode, onSave: saveNote, onCancel: closeNewNoteMode, note: defaultNote }) }
       </section>
     );
@@ -237,15 +254,23 @@ class NoteBoard extends ClickableComponent {
   }
 
   render() {
-    const { loading } = this.state;
-    const Loading = loading ? <span>Loading...</span> : null;
+    let content = null;
+    const { error, loading } = this.state;
+
+    if (error) {
+      content = ErrorDuck(error.toString());
+    } else if (loading) {
+      content = Loading();
+    } else {
+      content = [
+        this.NewNoteElem(),
+        this.Notes(),
+      ];
+    }
+
     return (
       <section className="noteBoard">
-        { Loading }
-        <div style={show(!loading)}>
-          { this.NewNoteElem() }
-          { this.Notes() }
-        </div>
+        { content }
         { this.DeleteNotePrompt() }
       </section>
     );
