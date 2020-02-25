@@ -3,35 +3,32 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import '@/css/App.scss';
 
-import { apiClient, loginManager, getStockProvider } from '@/api/index';
+import { loginManager } from '@/api/index';
+import MARKET_TYPE from '@/utils/marketType';
 import MainBar from '@/components/MainBar';
 import NoteBoard from '@/components/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoardTW from '@/components/BookmarkBoardTW';
 import BookmarkBoardUS from '@/components/BookmarkBoardUS';
-import MARKET_TYPE from '@/utils/marketType';
 import Prompt, { ACTION } from '@/components/Prompt';
 
-import icoDuck from '@/assets/ico_duck.jpg';
 import icoHen from '@/assets/ico_hen.svg';
-import icoLoading from '@/assets/ico_loading.svg';
-
-const stockProvider = getStockProvider({ apiClient, domParser: new DOMParser() });
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: null,
-      market: null,
+      market: '',
       stockId: null,
-      stockData: null,
-      loadingData: false,
       showBookmarkBoard: null,
       askLogin: false,
       isLogin: loginManager.isLogin(),
       allowLogin: loginManager.allowLogin(),
+    };
+
+    this.whenLookUpStock = ({ stockId, market }) => {
+      this.setState({ stockId, market });
     };
 
     this.whenToggleBookmark = ({ market }) => {
@@ -44,35 +41,6 @@ class App extends Component {
 
     this.whenCloseBookmark = () => {
       this.whenToggleBookmark({ market: this.state.showBookmarkBoard });
-    };
-
-    this.whenLookUpStock = async ({ stockId, market }) => {
-      if (this.state.loadingData) {
-        return;
-      }
-
-      let noCache = false;
-      if (stockId.startsWith('-')) {
-        noCache = true;
-        stockId = stockId.substr(1);
-      }
-      stockId = stockId.toUpperCase();
-
-      this.setState({ stockId, market, stockData: null, error: null });
-      if (market !== MARKET_TYPE.TW) {
-        return;
-      }
-
-      this.setState({ loadingData: true });
-      try {
-        const stockData = await stockProvider.get(stockId, noCache);
-        if (stockId === stockData.id) {
-          this.setState({ stockData });
-        }
-      } catch (e) {
-        this.setState({ stockId: null, error: e.toString() });
-      }
-      this.setState({ loadingData: false });
     };
 
     this.whenLogin = async () => {
@@ -99,28 +67,14 @@ class App extends Component {
       }
     };
 
-    this.renderErrorComponent = msg => (
-      <div className="appContent-error" key="appContent-error">
-        <h3>Quack~something wrong.<br />Please search again</h3>
-        <p>{msg}</p>
-        <img src={icoDuck} width="32px" alt="Duck..." />
-      </div>
-    );
-
-    this.renderLoadingComponent = () => (
-      <div className="appContent-loading" key="appContent-loading">
-        <img src={icoLoading} width="52px" alt="Loading..." />
-      </div>
-    );
-
     this.renderBeginComponent = () => (
       <div className="appContent-begin" key="appContent-begin">
         <img src={icoHen} width="88px" alt="Hen..." />
-        <p>Enter the id of the stock to look up</p>
+        <p>Enter the stock id to look up</p>
       </div>
     );
 
-    this.renderValueBoard = ({ stockId, stockData }) => <ValueBoard stockId={stockId} stockData={stockData} key="ValueBoard" />;
+    this.renderValueBoard = ({ stockId, market }) => <ValueBoard stockId={stockId} market={market} key="ValueBoard" />;
 
     this.renderNoteBoard = ({ stockId, isLogin, allowLogin }) => {
       if (allowLogin && isLogin) {
@@ -164,17 +118,13 @@ class App extends Component {
   }
 
   render() {
-    const { stockId, market, error, isLogin, allowLogin, loadingData } = this.state;
-
     const appContent = [];
-    if (error) {
-      appContent.push(this.renderErrorComponent(error));
-    } else if (!stockId) {
+    const { stockId, market, isLogin, allowLogin } = this.state;
+
+    if (!stockId) {
       appContent.push(this.renderBeginComponent());
     } else {
-      if (loadingData) {
-        appContent.push(this.renderLoadingComponent());
-      } else if (market === MARKET_TYPE.TW) {
+      if (market === MARKET_TYPE.TW) {
         appContent.push(this.renderValueBoard(this.state));
       }
       appContent.push(this.renderNoteBoard(this.state));

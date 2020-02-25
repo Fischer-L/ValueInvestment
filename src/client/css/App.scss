@@ -9,6 +9,12 @@
 .appContent-begin,
 .appContent-error,
 .appContent-loading {
+  position: relative;
+  top: 50%;
+  text-align: center;
+}
+
+.appContent-begin {
   position: absolute;
   top: 50%;
   transform: translateY(-120%);
