@@ -14,6 +14,32 @@
   font-weight: normal;
 }
 
+.valueBoard-panel {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.valueBoard-penalCell {
+  padding-right: 10px;
+}
+
+.valueBoard-input {
+  width: 88px;
+}
+
+.valueBoard-input.ui.input > input {
+  padding-top: 0.26em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em !important;
+  font-size: 1.05rem;
+}
+
+.valueBoard-input.ui.icon.input > i.icon {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
 @media only screen and (max-width: $large-screen-width) {
   .valueBoard {
     width: calc(var(--input-max-width));

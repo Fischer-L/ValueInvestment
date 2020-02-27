@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Header, List } from 'semantic-ui-react';
+import { Header, Input } from 'semantic-ui-react';
 
 import { apiClient, getStockProvider } from '@/api/index';
 import { round } from '@/utils/index';
@@ -9,20 +9,25 @@ import Loading from '@/components/Loading';
 import ErrorDuck from '@/components/ErrorDuck';
 import { StockLinksTW } from '@/components/StockLinks';
 import { TableByYears, TableByDividends } from '@/components/Table';
+import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
 import '@/css/ValueBoard.scss';
 
 const stockProvider = getStockProvider({ apiClient, domParser: new DOMParser() });
 
+const MS_EST_DEALY = 500;
+
 const defaultState = () => ({
   stockId: null,
   stockData: null,
+  forecastEPS: 0,
+  forecastDividend: 0,
 
   error: null,
   loading: false,
 });
 
-class ValueBoard extends Component {
+class ValueBoard extends ClickableComponent {
   constructor(props) {
     super(props);
 
@@ -33,11 +38,27 @@ class ValueBoard extends Component {
       return round(v);
     });
 
+    this.onScheduleForecast = e => {
+      if (this._timer) {
+        clearTimeout(this._timer);
+      }
+      const { value, parentNode } = e.target;
+      const isEPS = parentNode.classList.contains('valueBoard-input--eps');
+      this._timer = setTimeout(() => {
+        const v = Number(value);
+        const k = isEPS ? 'forecastEPS' : 'forecastDividend';
+        this.setState({ [k]: v > 0 ? v : 0 });
+      }, MS_EST_DEALY);
+    };
+
+    this.onInputChange = this.onScheduleForecast;
+
     this.loadStockData = async () => {
-      let { stockId, market } = this.props;
-      if (this.state.loading || stockId === this.state.stockId) {
+      if (this.state.loading) {
         return;
       }
+
+      let { stockId, market } = this.props;
 
       let noCache = false;
       if (stockId.startsWith('-')) {
@@ -45,6 +66,10 @@ class ValueBoard extends Component {
         stockId = stockId.substr(1);
       }
       stockId = stockId.toUpperCase();
+
+      if (stockId === this.state.stockId) {
+        return;
+      }
 
       this.setState({ ...defaultState(), stockId });
       if (market !== MARKET_TYPE.TW) {
@@ -63,20 +88,36 @@ class ValueBoard extends Component {
       this.setState({ loading: false });
     };
 
-    this.calcPricesByPE = stockData => {
+    this.calcPricesByPE = ({ stockData, forecastEPS }) => {
       const { eps, pe } = stockData;
+      const currEPS = forecastEPS || eps;
       return ['in5yrs', 'in3yrs'].reduce((pricesByPE, period) => {
         const { top, mid, low } = pe[period];
         pricesByPE[period] = this._round([
-          [eps * top, top],
-          [eps * mid, mid],
-          [eps * low, low],
+          [ currEPS * top, top ],
+          [ currEPS * mid, mid ],
+          [ currEPS * low, low ],
         ]);
         return pricesByPE;
       }, {});
     };
 
-    this.calcPricesByPB = stockData => {
+    this.calcPricesByDividends = ({ stockData, forecastEPS, forecastDividend }) => {
+      const { eps, dividends, dividendPolicy: { in5yrs: rate } } = stockData;
+      const currEPS = forecastEPS || eps;
+      const currDividend = forecastDividend || dividends[0];
+      const avgDividend = dividends.reduce((sum, v) => sum + v, 0) / dividends.length;
+      const estDividend = currEPS * rate.avg;
+      const smoothEstDividend = currEPS * rate.smoothAvg;
+      return {
+        current: this._round([ currDividend, currDividend * 40, currDividend * 25, currDividend * 16 ]),
+        average: this._round([ avgDividend, avgDividend * 40, avgDividend * 25, avgDividend * 16 ]),
+        estimated: this._round([ estDividend, estDividend * 40, estDividend * 25, estDividend * 16 ]),
+        smoothEstimated: this._round([ smoothEstDividend, smoothEstDividend * 40, smoothEstDividend * 25, smoothEstDividend * 16 ]),
+      };
+    };
+
+    this.calcPricesByPB = ({ stockData }) => {
       const { netValue, pb } = stockData;
       return ['in5yrs', 'in3yrs'].reduce((pricesByPB, period) => {
         const { top, mid, low } = pb[period];
@@ -88,44 +129,62 @@ class ValueBoard extends Component {
         return pricesByPB;
       }, {});
     };
-
-    this.calcPricesByDividends = stockData => {
-      const { eps, dividends, dividendPolicy: { in5yrs: rate } } = stockData;
-      const currDividend = dividends[0];
-      const avgDividend = dividends.reduce((sum, v) => sum + v, 0) / dividends.length;
-      const estDividend = eps * rate.avg;
-      const smoothEstDividend = eps * rate.smoothAvg;
-      return {
-        current: this._round([ currDividend, currDividend * 40, currDividend * 25, currDividend * 16 ]),
-        average: this._round([ avgDividend, avgDividend * 40, avgDividend * 25, avgDividend * 16 ]),
-        estimated: this._round([ estDividend, estDividend * 40, estDividend * 25, estDividend * 16 ]),
-        smoothEstimated: this._round([ smoothEstDividend, smoothEstDividend * 40, smoothEstDividend * 25, smoothEstDividend * 16 ]),
-      };
-    };
   }
 
-  renderStockData(stockData) {
-    const { id, name, eps, price, netValue } = stockData;
-    const pricesByPE = this.calcPricesByPE(stockData);
-    const pricesByPB = this.calcPricesByPB(stockData);
-    const pricesByDividends = this.calcPricesByDividends(stockData);
+  renderPanel() {
+    const { eps, price, dividends } = this.state.stockData;
+    return (
+      <table className="valueBoard-panel">
+        <tbody>
+          <tr>
+            <th className="valueBoard-penalCell">Price</th>
+            <th className="valueBoard-penalCell">EPS</th>
+            <th className="valueBoard-penalCell">DIV</th>
+            <th className="valueBoard-penalCell">Est. EPS</th>
+            <th className="valueBoard-penalCell">Est. DIV</th>
+          </tr>
+          <tr>
+            <td className="valueBoard-penalCell">
+              { round(price) }
+            </td>
+            <td className="valueBoard-penalCell">
+              { round(eps) }
+            </td>
+            <td className="valueBoard-penalCell">
+              { round(dividends[0]) }
+            </td>
+            <td className="valueBoard-penalCell">
+              <Input
+                className="valueBoard-input valueBoard-input--eps"
+                size="mini"
+                onChange={this.onInputChange}
+              />
+            </td>
+            <td className="valueBoard-penalCell">
+              <Input
+                className="valueBoard-input valueBoard-input--dividend"
+                size="mini"
+                onChange={this.onInputChange}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    );
+  }
+
+  renderStockData() {
+    const { id, name } = this.state.stockData;
+    const pricesByPE = this.calcPricesByPE(this.state);
+    const pricesByPB = this.calcPricesByPB(this.state);
+    const pricesByDividends = this.calcPricesByDividends(this.state);
     return (
       <div>
         <Header as="h2" dividing>
           <span className="valueBoard-stockTitle">{id} {name}</span>
           <StockLinksTW stock={{ id, name }} className="valueBoard-stockLinks" />
         </Header>
-        <List horizontal size="big">
-          <List.Item>
-            <List.Header>Price</List.Header>{round(price)}
-          </List.Item>
-          <List.Item>
-            <List.Header>EPS</List.Header>{round(eps)}
-          </List.Item>
-          <List.Item>
-            <List.Header>Net value</List.Header>{round(netValue)}
-          </List.Item>
-        </List>
+        { this.renderPanel() }
         <Header as="h3">Costs By PE</Header>
         <TableByYears prices5yrs={pricesByPE.in5yrs} prices3yrs={pricesByPE.in3yrs} color="blue" />
         <Header as="h3">Costs By Dividend</Header>
@@ -145,7 +204,7 @@ class ValueBoard extends Component {
     } else if (loading) {
       content = Loading();
     } else if (stockData) {
-      content = this.renderStockData(stockData);
+      content = this.renderStockData();
     }
 
     return (
