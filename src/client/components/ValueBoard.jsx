@@ -61,7 +61,7 @@ class ValueBoard extends ClickableComponent {
       let { stockId, market } = this.props;
 
       let noCache = false;
-      if (stockId.startsWith('-')) {
+      if (stockId.startsWith('.')) {
         noCache = true;
         stockId = stockId.substr(1);
       }
