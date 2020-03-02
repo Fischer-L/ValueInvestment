@@ -152,7 +152,7 @@ class NoteBoard extends ClickableComponent {
       return <textarea className={`note-pararaph--editMode ${className}`} rows="6" defaultValue={texts} />;
     }
     const lines = [];
-    texts.split('\n').forEach((text, i) => lines.push(text, <br key={i} />));
+    texts.split('\n').forEach((text, i) => lines.push(text.replace(/\s/g, '\u00A0'), <br key={i} />));
     return <p className={`note-pararaph ${className}`} style={show(texts)}>{ lines }</p>;
   }
 

@@ -110,7 +110,7 @@ class StockNotesCollection extends CollectionBase {
 
     let docs = await super.get(ids);
     docs = docs.map(doc => {
-      if (doc.notes.length > limit) {
+      if (doc && doc.notes.length > limit) {
         doc.notes.splice(0, doc.notes.length - limit);
         docsOverLimit.push(doc);
       }
