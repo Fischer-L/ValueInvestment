@@ -45,7 +45,7 @@ class BookmarkBoardUS extends ClickableComponent {
     const { stocks } = this.state;
 
     const { show, whenCloseBookmark } = this.props;
-    const bookmarkBoardProps = { show, whenCloseBookmark, whenBookmark: this.whenBookmark, placeholder: 'APPL Apple' };
+    const bookmarkBoardProps = { show, whenCloseBookmark, whenBookmark: this.whenBookmark, placeholder: 'AAPL Apple' };
 
     return (
       <BookmarkBoard {...bookmarkBoardProps}>
