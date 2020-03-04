@@ -1,3 +1,6 @@
+let yaUsHash = '';
+import('./getYaUsHash').then(resp => yaUsHash = resp.default());
+
 const middleName = {
   of(key) {
     return this[key].filter((v, i) => i % 2 === 0).join('');
@@ -34,7 +37,7 @@ export default function getURL(site, query, pathParams) {
       return `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${encodeURIComponent(query.q)}`;
 
     case 'ya_us':
-      return `https://finance.${middleName.of('ya')}.com/quote/${pathParams.stockId}?p=${encodeURIComponent(query.stockId)}&.tsrc=fin-srch`;
+      return `https://finance.${middleName.of('ya')}.com/quote/${pathParams.stockId}/chart?p=${encodeURIComponent(query.stockId)}#${yaUsHash}`;
   }
   return '';
 }
