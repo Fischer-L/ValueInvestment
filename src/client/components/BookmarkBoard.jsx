@@ -4,6 +4,7 @@ import { List, Icon, Input, Button } from 'semantic-ui-react';
 
 import getURL from '@/utils/getURL';
 import openURL from '@/utils/openURL';
+import StockLinks from '@/components/StockLinks';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
 import '@/css/BookmarkBoard.scss';
@@ -94,7 +95,7 @@ export class StocksBookmark extends ClickableComponent {
 
   render() {
     const items = this.props.stocks.map(stock => {
-      const { StockLinksComponent } = this.props;
+      const { market } = this.props;
       const whenAskForURLs = stock.id === this.state.stockIdToLookup ? this.whenAskForURLs : null;
       return (
         <List.Item className="bookmark-item" key={stock.id}>
@@ -103,7 +104,7 @@ export class StocksBookmark extends ClickableComponent {
             <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
             <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onLookupStock} onTouchEnd={this.onLookupStock} />
           </List.Header>
-          <StockLinksComponent className="bookmark-itemLinks" stock={stock} whenAskForURLs={whenAskForURLs} />
+          <StockLinks className="bookmark-itemLinks" stock={stock} market={market} whenAskForURLs={whenAskForURLs} />
         </List.Item>);
     });
     return <List className="bookmark-list" size="large">{ items }</List>;
@@ -114,9 +115,9 @@ StocksBookmark.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })),
+  market: PropTypes.string.isRequired,
   whenLookUpStock: PropTypes.func,
   whenRemoveStock: PropTypes.func,
-  StockLinksComponent: PropTypes.elementType.isRequired,
 };
 
 class BookmarkBoard extends ClickableComponent {
