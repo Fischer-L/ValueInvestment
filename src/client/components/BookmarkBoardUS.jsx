@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import MARKET_TYPE from '@/utils/marketType';
 import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
-import { StockLinksUS } from '@/components/StockLinks';
 import BookmarkBoard, { StocksBookmark } from '@/components/BookmarkBoard';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
@@ -49,7 +48,7 @@ class BookmarkBoardUS extends ClickableComponent {
 
     return (
       <BookmarkBoard {...bookmarkBoardProps}>
-        <StocksBookmark stocks={stocks} whenLookUpStock={this._whenLookUpStock} whenRemoveStock={this.whenRemoveStock} StockLinksComponent={StockLinksUS} />
+        <StocksBookmark stocks={stocks} market={MARKET_TYPE.US} whenLookUpStock={this._whenLookUpStock} whenRemoveStock={this.whenRemoveStock} />
       </BookmarkBoard>
     );
   }

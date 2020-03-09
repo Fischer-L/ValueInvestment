@@ -7,7 +7,7 @@ import { round } from '@/utils/index';
 import MARKET_TYPE from '@/utils/marketType';
 import Loading from '@/components/Loading';
 import ErrorDuck from '@/components/ErrorDuck';
-import { StockLinksTW } from '@/components/StockLinks';
+import StockLinks from '@/components/StockLinks';
 import { TableByYears, TableByDividends } from '@/components/Table';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
@@ -182,7 +182,7 @@ class ValueBoard extends ClickableComponent {
       <div>
         <Header as="h2" dividing>
           <span className="valueBoard-stockTitle">{id} {name}</span>
-          <StockLinksTW stock={{ id, name }} className="valueBoard-stockLinks" />
+          <StockLinks className="valueBoard-stockLinks" stock={{ id, name }} market={MARKET_TYPE.TW} />
         </Header>
         { this.renderPanel() }
         <Header as="h3">Costs By PE</Header>
