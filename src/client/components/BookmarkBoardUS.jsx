@@ -18,8 +18,7 @@ class BookmarkBoardUS extends ClickableComponent {
       bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, id).then(() => this.populateStocks());
     };
 
-    this.whenBookmark = ({ values }) => {
-      let [ id, name ] = values; // eslint-disable-line prefer-const
+    this.whenBookmark = ({ id, name }) => {
       if (!id || !name) {
         throw new Error('Bookmark a US stock without enough params: id, name', id, name);
       }

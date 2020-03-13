@@ -23,20 +23,10 @@ class BookmarkBoardTW extends ClickableComponent {
       bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, id).then(() => this.populateStocks());
     };
 
-    this.whenBookmark = ({ values }) => {
-      if (values.length > 1) {
-        const bookmarkPayload = {};
-        if (Number.isNaN(parseInt(values[1], 10))) {
-          bookmarkPayload.id = values[0];
-          bookmarkPayload.name = values[1];
-        } else {
-          bookmarkPayload.id = values[1];
-          bookmarkPayload.name = values[0];
-        }
-        bookmarkProvider.put(BOOKMARK_TYPE.STOCK, bookmarkPayload.id, bookmarkPayload)
-          .then(() => this.populateStocks());
-      } else if (values.length === 1) {
-        const id = values[0];
+    this.whenBookmark = ({ id, name }) => {
+      if (name) {
+        bookmarkProvider.put(BOOKMARK_TYPE.STOCK, id, { id, name }).then(() => this.populateStocks());
+      } else {
         bookmarkProvider.put(BOOKMARK_TYPE.PTT_USER, id, { id }).then(() => this.populatePttUsers());
       }
     };
