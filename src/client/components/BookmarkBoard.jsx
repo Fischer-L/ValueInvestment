@@ -101,7 +101,7 @@ export class StocksBookmark extends ClickableComponent {
         <List.Item className="bookmark-item" key={stock.id}>
           <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onRemoveStock} onTouchEnd={this.onRemoveStock} />
           <List.Header className="bookmark-itemHeader">
-            <span className="bookmark-stockTitle">{stock.name} {stock.id}</span>
+            <span className="bookmark-stockTitle">{stock.id} {stock.name}</span>
             <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onLookupStock} onTouchEnd={this.onLookupStock} />
           </List.Header>
           <StockLinks className="bookmark-itemLinks" stock={stock} market={market} whenAskForURLs={whenAskForURLs} />
@@ -135,6 +135,10 @@ class BookmarkBoard extends ClickableComponent {
     this.onClickBakground = this.onClickDo(() => this.fireCallback('whenCloseBookmark'));
 
     this.onBookmark = this.onClickDo(e => {
+      if (!this.state.bookmarkInputString) {
+        return;
+      }
+
       let submit = false;
       switch (e.type) {
         case 'click':
@@ -147,9 +151,17 @@ class BookmarkBoard extends ClickableComponent {
           break;
       }
       if (submit) {
-        this.fireCallback('whenBookmark', { values: this.state.bookmarkInputString.trim().split(' ') });
+        this.fireCallback('whenBookmark', this.decodeInput(this.state.bookmarkInputString));
       }
     });
+
+    this.decodeInput = input => {
+      const [ id, ...names ] = input.trim().split(' ');
+      return {
+        id,
+        name: names.join(' '),
+      };
+    };
   }
 
   render() {
