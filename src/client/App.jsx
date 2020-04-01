@@ -23,12 +23,13 @@ class App extends Component {
       stockId: null,
       showBookmarkBoard: null,
       askLogin: false,
+      lookupTime: 0,
       isLogin: loginManager.isLogin(),
       allowLogin: loginManager.allowLogin(),
     };
 
     this.whenLookUpStock = ({ stockId, market }) => {
-      this.setState({ stockId, market });
+      this.setState({ stockId, market, lookupTime: Date.now() });
     };
 
     this.whenToggleBookmark = ({ market }) => {
@@ -74,7 +75,7 @@ class App extends Component {
       </div>
     );
 
-    this.renderValueBoard = ({ stockId, market }) => <ValueBoard stockId={stockId} market={market} key="ValueBoard" />;
+    this.renderValueBoard = ({ stockId, market, lookupTime }) => <ValueBoard stockId={stockId} market={market} lookupTime={lookupTime} key="ValueBoard" />;
 
     this.renderNoteBoard = ({ stockId, isLogin, allowLogin }) => {
       if (allowLogin && isLogin) {

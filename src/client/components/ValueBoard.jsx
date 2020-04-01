@@ -53,7 +53,7 @@ class ValueBoard extends ClickableComponent {
 
     this.onInputChange = this.onScheduleForecast;
 
-    this.loadStockData = async () => {
+    this.loadStockData = async force => {
       if (this.state.loading) {
         return;
       }
@@ -67,7 +67,7 @@ class ValueBoard extends ClickableComponent {
       }
       stockId = stockId.toUpperCase();
 
-      if (stockId === this.state.stockId) {
+      if (stockId === this.state.stockId && !force) {
         return;
       }
 
@@ -218,14 +218,15 @@ class ValueBoard extends ClickableComponent {
     this.loadStockData();
   }
 
-  componentDidUpdate() {
-    this.loadStockData();
+  componentDidUpdate(prevProps) {
+    this.loadStockData(prevProps.lookupTime !== this.props.lookupTime);
   }
 }
 
 ValueBoard.propTypes = {
   market: PropTypes.string.isRequired,
   stockId: PropTypes.string.isRequired,
+  lookupTime: PropTypes.number.isRequired,
 };
 
 export default ValueBoard;
