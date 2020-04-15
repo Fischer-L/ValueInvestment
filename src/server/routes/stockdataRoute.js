@@ -1,3 +1,4 @@
+const axios = require('axios');
 const cloudscraper = require('cloudscraper');
 
 const CacheProvider = require('../cacheProvider');
@@ -6,8 +7,8 @@ const GwServer = require('../../lib/stockProvider/GwServer');
 const GooServer = require('../../lib/stockProvider/GooServer');
 
 const stockdataCache = new CacheProvider();
-const gwStockProvider = new GwServer({ env, cloudscraper, challenge: true });
-const gooStockProvider = new GooServer({ env, cloudscraper, challenge: false });
+const gwStockProvider = new GwServer({ env, cloudscraper });
+const gooStockProvider = new GooServer({ env, axios });
 
 function shouldInvalidateCache(req) {
   const { noCache } = req.query;
