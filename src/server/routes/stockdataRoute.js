@@ -1,5 +1,5 @@
 const axios = require('axios');
-const cloudscraper = require('cloudscraper');
+const cloudscraper = require('../../lib/myCloudscraper');
 
 const CacheProvider = require('../cacheProvider');
 const { env } = require('../../build/config_server');
