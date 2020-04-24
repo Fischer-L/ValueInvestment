@@ -6,8 +6,10 @@ const middleName = {
     return this[key].filter((v, i) => i % 2 === 0).join('');
   },
   ya: [ 'y', '6', 'a', 'd', 'h', 'b', 'o', 'f', 'o' ],
+  gi: [ 'g', 'z', 'o', '5', 'o', '1', 'd', 'p', 'i', 'u', 'n', '9', 'f', 'j', 'o' ],
   gw: [ 'w', '5', 'a', 'q', 'n', 'n', 't', 'a', 'g', 'o', 'o', 'p', 'o' ],
   cmy: [ 'c', 'a', 'm', 'p', 'o', 'q', 'n', '3', 'e', '1', 'y'],
+  hi: [ 'h', 'n', 'i', 'p', 's', 'r', 't', 'z', 'o', 'a', 'c', 'q', 'k' ],
 };
 
 export default function getURL(site, query, pathParams) {
@@ -27,8 +29,8 @@ export default function getURL(site, query, pathParams) {
     case 'pttpost':
       return `https://www.ptt.cc/bbs/Stock/search?q=${encodeURIComponent(query.q)}`;
 
-    case 'goodinfo':
-      return `https://goodinfo.tw/StockInfo/ShowBuySaleChart.asp?CHT_CAT=DATE&STOCK_ID=${encodeURIComponent(query.stockId)}`;
+    case 'chips':
+      return `https://${middleName.of('gi')}.tw/StockInfo/ShowBuySaleChart.asp?CHT_CAT=DATE&STOCK_ID=${encodeURIComponent(query.stockId)}`;
 
     case 'news':
       return `https://www.google.com/search?tbm=nws&q=${encodeURIComponent(query.q)}`;
@@ -38,6 +40,9 @@ export default function getURL(site, query, pathParams) {
 
     case 'ya_us':
       return `https://finance.${middleName.of('ya')}.com/quote/${pathParams.stockId}/chart?p=${encodeURIComponent(query.stockId)}#${yaUsHash}`;
+
+    case 'hi_buyer':
+      return `https://${middleName.of('hi')}.tw/stock/main.aspx?no=${encodeURIComponent(query.stockId)}`
   }
   return '';
 }
