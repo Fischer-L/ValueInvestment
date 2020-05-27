@@ -26,6 +26,8 @@ class GwServer extends StockProviderServerBase {
   }
 
   async _getPage(pageType, id) {
+    await this._delay(); // Delay a bit to avoid a batch of requests found on the server side
+
     let path = '';
     switch (pageType) {
       case 'pe':
@@ -50,6 +52,11 @@ class GwServer extends StockProviderServerBase {
     } catch (e) {
       throw new Error(e.name + ' : ' + e.message);
     }
+  }
+
+  _delay() {
+    const ms = Math.floor(Math.random() * 100);
+    return new Promise(resolve => setTimeout(resolve, Math.max(ms, 50)));
   }
 }
 
