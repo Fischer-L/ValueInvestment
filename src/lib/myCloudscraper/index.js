@@ -273,7 +273,7 @@ function validateResponse (options, response, body) {
     throw new CaptchaError('captcha', options, response);
   }
 
-  // TMP: This part seems useless because Cloudflare returns `cf-error-code` to pretend sth wrong
+  // TMP XXX: This part seems useless because Cloudflare returns `cf-error-code` to pretend sth wrong
   // Trying to find '<span class="cf-error-code">1006</span>'
   // const match = body.match(/<\w+\s+class="cf-error-code">(.*)<\/\w+>/i);
   // if (match) {
@@ -311,9 +311,9 @@ function onChallenge (options, response, body) {
     payload[hiddenInputName] = match[2];
   }
 
-  // TMP: Update because Cloudflare ahas changed the html structure.
-  match = body.match(/value="(\w+)" id="jschl-vc" name="jschl_vc"/);
+  // TMP XXX: Update because Cloudflare has changed the html structure.
   // match = body.match(/name="jschl_vc" value="(\w+)"/);
+  match = body.match(/value="(\w+)" id="jschl-vc" name="jschl_vc"/);
 
   if (!match) {
     cause = 'challengeId (jschl_vc) extraction failed';
@@ -330,7 +330,12 @@ function onChallenge (options, response, body) {
 
   payload.pass = match[1];
 
-  match = body.match(/getElementById\('cf-content'\)[\s\S]+?setTimeout.+?\r?\n([\s\S]+?a\.value\s*=.+?)\r?\n(?:[^{<>]*},\s*(\d{4,}))?/);
+  // TMP XXX: Fix Cloudflare challange setTimeout callback update
+  // match = body.match(/getElementById\('cf-content'\)[\s\S]+?setTimeout.+?\r?\n([\s\S]+?a\.value\s*=.+?)\r?\n(?:[^{<>]*},\s*(\d{4,}))?/);
+  const start = body.indexOf('setTimeout(function(){') + 'setTimeout(function(){'.length
+  const end = body.indexOf('f.action');
+  match = [ '', body.substring(start, end), 4000 ]
+
   if (!match) {
     cause = 'setTimeout callback extraction failed';
     return callback(new ParserError(cause, options, response));
@@ -344,7 +349,6 @@ function onChallenge (options, response, body) {
         if (debugging) {
           console.warn('Cloudflare\'s timeout is excessive: ' + (timeout / 1000) + 's');
         }
-
         timeout = options.cloudflareMaxTimeout;
       }
     } else {

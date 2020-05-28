@@ -14,7 +14,7 @@ const VM_ENV = `
     const cache = Object.create(null);
     const keys = [];
     const { body, href } = global;
-    
+
     Object.defineProperties(global, {
       document: {
         value: {
@@ -25,16 +25,14 @@ const VM_ENV = `
             if (keys.indexOf(id) === -1) {
               const re = new RegExp(' id=[\\'"]?' + id + '[^>]*>([^<]*)');
               const match = body.match(re);
-      
               keys.push(id);
               cache[id] = match === null ? match : { innerHTML: match[1] };
             }
-      
             return cache[id];
           }
         }
       },
-      location: { value: { reload: function () {} } }  
+      location: { value: { reload: function () {} } }
     })
   }(this));
 `;
@@ -58,6 +56,10 @@ function Context (options) {
   return Object.setPrototypeOf({
     body: options.body,
     href: 'http://' + options.hostname + '/',
-    atob
+    atob,
+    // TMP XXX: Fix Cloudflare challange update
+    setInterval: function (job, time) {
+      return Math.floor(Math.random() * Math.floor(time));
+    },
   }, null);
 }
