@@ -11,6 +11,7 @@ import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoardTW from '@/components/BookmarkBoardTW';
 import BookmarkBoardUS from '@/components/BookmarkBoardUS';
 import Prompt, { ACTION } from '@/components/Prompt';
+import CalculationPanel from '@/components/CalculationPanel';
 
 import icoHen from '@/assets/ico_hen.svg';
 
@@ -139,6 +140,7 @@ class App extends Component {
           {appContent}
         </section>
         { this.renderLoginPrompt(this.state) }
+        <CalculationPanel />
       </div>
     );
   }
