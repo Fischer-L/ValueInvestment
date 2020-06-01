@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Header, Input } from 'semantic-ui-react';
 
 import { apiClient, getStockProvider } from '@/api/index';
-import { round } from '@/utils/index';
+import { round } from '@/utils/round';
 import MARKET_TYPE from '@/utils/marketType';
 import Loading from '@/components/Loading';
 import ErrorDuck from '@/components/ErrorDuck';
