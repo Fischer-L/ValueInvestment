@@ -2,12 +2,10 @@ import React from 'react';
 import { Icon, Button, Input, Divider } from 'semantic-ui-react';
 
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
+import calcProfitRiskValues from '@/utils/calcProfitRiskValues';
+import { round } from '@/utils/round';
 
 import '@/css/CalculationPanel.scss';
-
-// function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward }) {
-//   // TMP TODO
-// }
 
 class CalculationPanel extends ClickableComponent {
   constructor(props) {
@@ -16,12 +14,19 @@ class CalculationPanel extends ClickableComponent {
     this.state = {
       open: false,
 
-      // TMP: TODO Profit & risk
-      // profitPrice: 0,
-      // buyPrice: 0,
-      // riskPrice: 0,
-      // profitRiskRatio: 0,
-      // reward: 0,
+      // Profit & risk
+      profitPrice: 0,
+      buyPrice: 0,
+      riskPrice: 0,
+      profitRiskRatio: 0,
+      reward: 0,
+      lock: {
+        profitPrice: false,
+        buyPrice: false,
+        riskPrice: false,
+        profitRiskRatio: false,
+        reward: false,
+      },
 
       // EPS
       epsQ1: 0,
@@ -65,34 +70,59 @@ class CalculationPanel extends ClickableComponent {
 
     this.toggleOpen = this.onClickDo(() => this.setState(state => ({ open: !state.open })));
 
-    this.calcProfitRisk = this.onClickDo(() => {}); // TMP TODO
+    this.calcProfitRisk = this.onClickDo(() => {
+      this.setState(state => {
+        const [ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward ] = this.normalizeValues('profitPrice', 'buyPrice', 'riskPrice', 'profitRiskRatio', 'reward');
+        return calcProfitRiskValues({ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward, lock: state.lock });
+      });
+    });
 
     this.calcEPS = this.onClickDo(() => {
       const estEPS = [ 1, 2, 3, 4 ].reduce((eps, quarter) => {
         const [ quarterEPS, quarterGrowth ] = this.normalizeValues(`epsQ${quarter}`, `growthQ${quarter}`);
         return eps + quarterEPS * quarterGrowth;
       }, 0);
-      this.setState({ estEPS });
+      this.setState({ estEPS: round(estEPS) });
+    });
+
+    this.onClickInput = this.onClickDo(e => {
+      const key = e.currentTarget.dataset.key;
+      if (this.state.lock[key] !== undefined && e.target.classList.contains('icon')) {
+        this.setState(state => ({
+          lock: {
+            ...state.lock,
+            [key]: !state.lock[key],
+          },
+        }));
+      }
     });
   }
 
-  renderInput(label, key, className) {
+  renderInput({ label, key, className = '', inputProps }) {
     return (
-      <label className={`calculationPanel-inputHolder ${className}`} key={key}>
+      <label className={`calculationPanel-inputHolder ${className}`} key={key} data-key={key} onClick={this.onClickInput}>
         <h5 className="calculationPanel-title">{ label }</h5>
-        <Input className="calculationPanel-input" size="mini" onChange={e => this.setState({ [key]: e.target.value })} />
+        <Input className="calculationPanel-input" size="mini" value={this.state[key]} {...inputProps} onChange={e => this.setState({ [key]: e.target.value })} />
       </label>
     );
   }
 
   renderProfitRiskBlock() {
-    if (1) return null; // TMP TODO
     const inputs = [
       [ '獲利價', 'profitPrice' ], [ '買進價', 'buyPrice' ], [ '轉利價', 'riskPrice' ], [ '風報', 'profitRiskRatio' ], [ '報酬', 'reward' ],
     ];
+    const inputElms = inputs.map(([ label, key ]) => {
+      const inputProps = {
+        action: {
+          icon: this.state.lock[key] ? 'lock' : 'lock open',
+          color: this.state.lock[key] ? 'black' : 'vk',
+        },
+      };
+      return this.renderInput({ label, key, inputProps });
+    });
     return (
       <div className="calculationPanel-block">
-        { inputs.map(([ label, key ]) => this.renderInput(label, key)) }
+        { inputElms }
         <Button size="small" onClick={this.calcProfitRisk}>Go</Button>
       </div>
     );
@@ -106,7 +136,7 @@ class CalculationPanel extends ClickableComponent {
     const inputElms = inputs.map(([ label, key ], idx) => {
       let className = 'epsInput';
       if (idx % 2 === 1) className += ' title--small';
-      return this.renderInput(label, key, className);
+      return this.renderInput({ label, key, className });
     });
     return (
       <div className="calculationPanel-block">

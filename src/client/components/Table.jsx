@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
-import { round } from '@/utils/index';
+import { round } from '@/utils/round';
 import show from '@/utils/showDisplay';
 
 import '@/css/Table.scss';
