@@ -1,4 +1,4 @@
-import calcProfitRiskValues from '../calcProfitRiskValues';
+import calcProfitRiskValues from '@/utils/calcProfitRiskValues';
 
 const fakeValues = () => ({
   profitPrice: 130,

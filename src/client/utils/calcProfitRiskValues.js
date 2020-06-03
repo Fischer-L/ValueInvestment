@@ -1,4 +1,4 @@
-import { roundObject } from './round'; // TODO: Find a way to import from '@/utils/round'
+import { roundObject } from '@/utils/round';
 
 function calcProfitRiskRatio(profitPrice, buyPrice, riskPrice) {
   return (profitPrice - buyPrice) / (buyPrice - riskPrice);
