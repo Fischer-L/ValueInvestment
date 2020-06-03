@@ -113,5 +113,10 @@
     "ignore": [
       "/node_modules/"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/client/$1"
+    }
   }
 }
