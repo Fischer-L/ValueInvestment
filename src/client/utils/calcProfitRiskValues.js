@@ -19,9 +19,7 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
       profitRiskRatio: calcProfitRiskRatio(profitPrice, buyPrice, riskPrice),
       reward: (profitPrice / buyPrice) - 1,
     };
-  }
-
-  if (lock.profitPrice && lock.buyPrice && lock.profitRiskRatio) {
+  } else if (lock.profitPrice && lock.buyPrice && lock.profitRiskRatio) {
     values = {
       profitPrice,
       buyPrice,
@@ -29,9 +27,7 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
       riskPrice: calcRiskPriceByRatio(profitPrice, buyPrice, profitRiskRatio),
       reward: (profitPrice / buyPrice) - 1,
     };
-  }
-
-  if (lock.profitPrice && lock.riskPrice && lock.profitRiskRatio) {
+  } else if (lock.profitPrice && lock.riskPrice && lock.profitRiskRatio) {
     const buy = (profitPrice + profitRiskRatio * riskPrice) / (profitRiskRatio + 1);
     values = {
       profitPrice,
@@ -40,9 +36,7 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
       buyPrice: buy,
       reward: (profitPrice / buy) - 1,
     };
-  }
-
-  if (lock.buyPrice && lock.riskPrice && lock.profitRiskRatio) {
+  } else if (lock.buyPrice && lock.riskPrice && lock.profitRiskRatio) {
     const profit = (profitRiskRatio + 1) * buyPrice - profitRiskRatio * riskPrice;
     values = {
       buyPrice,
@@ -51,9 +45,7 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
       profitPrice: profit,
       reward: (profit / buyPrice) - 1,
     };
-  }
-
-  if (lock.buyPrice && lock.profitRiskRatio && lock.reward) {
+  } else if (lock.buyPrice && lock.profitRiskRatio && lock.reward) {
     const profit = (reward + 1) * buyPrice;
     values = {
       buyPrice,
@@ -62,9 +54,7 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
       profitPrice: profit,
       riskPrice: calcRiskPriceByRatio(profit, buyPrice, profitRiskRatio),
     };
-  }
-
-  if (lock.profitPrice && lock.profitRiskRatio && lock.reward) {
+  } else if (lock.profitPrice && lock.profitRiskRatio && lock.reward) {
     const buy = profitPrice / (reward + 1);
     values = {
       profitPrice,
@@ -73,10 +63,9 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
       buyPrice: buy,
       riskPrice: calcRiskPriceByRatio(profitPrice, buy, profitRiskRatio),
     };
+  } else {
+    throw new Error(`calcProfitRiskValues without lock given: ${JSON.stringify(lock)}`);
   }
-
-  if (values) {
-    return roundObject(values, 3);
-  }
-  throw new Error(`calcProfitRiskValues without lock given: ${JSON.stringify(lock)}`);
+  
+  return roundObject(values, 3);
 }
