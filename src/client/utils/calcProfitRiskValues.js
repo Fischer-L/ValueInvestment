@@ -76,7 +76,7 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
   }
 
   if (values) {
-    return roundObject(values);
+    return roundObject(values, 3);
   }
   throw new Error(`calcProfitRiskValues without lock given: ${JSON.stringify(lock)}`);
 }

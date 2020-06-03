@@ -72,8 +72,13 @@ class CalculationPanel extends ClickableComponent {
 
     this.calcProfitRisk = this.onClickDo(() => {
       this.setState(state => {
-        const [ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward ] = this.normalizeValues('profitPrice', 'buyPrice', 'riskPrice', 'profitRiskRatio', 'reward');
-        return calcProfitRiskValues({ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward, lock: state.lock });
+        try {
+          const [ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward ] = this.normalizeValues('profitPrice', 'buyPrice', 'riskPrice', 'profitRiskRatio', 'reward');
+          return calcProfitRiskValues({ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward, lock: state.lock });
+        } catch (e) {
+          alert(e.toString());
+          return state;
+        }
       });
     });
 
