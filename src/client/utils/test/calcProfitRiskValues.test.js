@@ -1,13 +1,5 @@
 import calcProfitRiskValues from '@/utils/calcProfitRiskValues';
 
-const fakeValues = () => ({
-  profitPrice: 130,
-  buyPrice: 100,
-  riskPrice: 90,
-  profitRiskRatio: 3,
-  reward: 0.3,
-});
-
 const givenLock = (...keys) => keys.reduce((lock, key) => {
   lock[key] = true;
   return lock;
@@ -15,20 +7,73 @@ const givenLock = (...keys) => keys.reduce((lock, key) => {
 
 describe('calcProfitRiskValues', () => {
   const cases = [
-    [ 'profitPrice', 'buyPrice', 'riskPrice' ],
-    [ 'profitPrice', 'buyPrice', 'profitRiskRatio' ],
-    [ 'profitPrice', 'riskPrice', 'profitRiskRatio' ],
-    [ 'buyPrice', 'riskPrice', 'profitRiskRatio' ],
-    [ 'buyPrice', 'profitRiskRatio', 'reward' ],
-    [ 'profitPrice', 'profitRiskRatio', 'reward' ],
+    {
+      values: {
+        profitPrice: 188.88,
+        buyPrice: 168.465,
+        riskPrice: 158.258,
+        profitRiskRatio: 2,
+        reward: 0.121,
+      },
+      locks: [ 'profitPrice', 'buyPrice', 'riskPrice' ],
+    },
+    {
+      values: {
+        profitPrice: 188.88,
+        buyPrice: 168.465,
+        riskPrice: 158.258,
+        profitRiskRatio: 2,
+        reward: 0.121,
+      },
+      locks: [ 'profitPrice', 'buyPrice', 'profitRiskRatio' ],
+    },
+    {
+      values: {
+        profitPrice: 188.88,
+        buyPrice: 168.465,
+        riskPrice: 158.258,
+        profitRiskRatio: 2,
+        reward: 0.121,
+      },
+      locks: [ 'profitPrice', 'riskPrice', 'profitRiskRatio' ],
+    },
+    {
+      values: {
+        profitPrice: 188.849,
+        buyPrice: 168.465,
+        riskPrice: 158.273,
+        profitRiskRatio: 2,
+        reward: 0.121,
+      },
+      locks: [ 'buyPrice', 'profitRiskRatio', 'reward' ],
+    },
+    {
+      values: {
+        profitPrice: 188.879,
+        buyPrice: 168.465,
+        riskPrice: 158.258,
+        profitRiskRatio: 2,
+        reward: 0.121,
+      },
+      locks: [ 'buyPrice', 'riskPrice', 'profitRiskRatio' ],
+    },
+    {
+      values: {
+        profitPrice: 188.88,
+        buyPrice: 168.492,
+        riskPrice: 158.299,
+        profitRiskRatio: 2,
+        reward: 0.121,
+      },
+      locks: [ 'profitPrice', 'profitRiskRatio', 'reward' ],
+    },
   ];
 
-  cases.forEach(keys => {
-    it('Given ' + keys.join(', '), () => {
-      const values = fakeValues();
-      const lock = givenLock(...keys);
-      const result = calcProfitRiskValues({ ...values, lock });
-      expect(result).toMatchObject(values);
+  cases.forEach(testCase => {
+    it('Given ' + testCase.locks.join(', '), () => {
+      const lock = givenLock(...testCase.locks);
+      const result = calcProfitRiskValues({ ...testCase.values, lock });
+      expect(result).toMatchObject(testCase.values);
     });
   });
 });
