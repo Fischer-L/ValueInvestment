@@ -1,5 +1,5 @@
 export function round(v, radix = 2) {
-  const radixFactor = radix * 10;
+  const radixFactor = 10 ** radix;
   return Math.round(v * radixFactor) / radixFactor;
 }
 
