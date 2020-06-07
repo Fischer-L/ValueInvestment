@@ -42,7 +42,7 @@ export default function getURL(site, query, pathParams) {
       return `https://finance.${middleName.of('ya')}.com/quote/${pathParams.stockId}/chart?p=${encodeURIComponent(query.stockId)}#${yaUsHash}`;
 
     case 'hi_buyer':
-      return `https://${middleName.of('hi')}.tw/stock/main.aspx?no=${encodeURIComponent(query.stockId)}`
+      return `https://${middleName.of('hi')}.tw/stock/branch.aspx?no=${encodeURIComponent(query.stockId)}`
   }
   return '';
 }
