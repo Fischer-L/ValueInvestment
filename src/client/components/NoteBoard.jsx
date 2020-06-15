@@ -12,8 +12,46 @@ import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/NoteBoard.scss';
 
 const show = showDisplay;
-const commentOf = data => (data && data.comment ? data.comment.trim() : '');
+const commentOf = data => (data && data.comment ? data.comment : '');
 const toDateInTW = time => (time ? (new Date(time + 8 * 60 * 60 * 1000)).toISOString().split('T')[0] : '');
+
+/* eslint-disable */
+const getNoteTemplate = () => ({
+  value: {
+    comment:
+      '- By PE: \n' +
+      '  - Good: \n' +
+      '  - Fair: \n' +
+      '  - Bad: \n' +
+      '\n' +
+      '- By Dividend: ',
+  },
+  fundamentals: {
+    comment:
+      '- 月營收: \n' +
+      '- 毛利: \n' +
+      '- 營利: \n' +
+      '- 公司: \n' +
+      '- 法人: ',
+  },
+  technicals: {
+    comment:
+      '- \n' +
+      '- 週K: \n' +
+      '- 月K: ',
+  },
+  chips: {
+    comment:
+      '- 外資: \n' +
+      '- 投信: \n' +
+      '- 主力: \n' +
+      '- 大戶: \n' +
+      '- 散戶: \n' +
+      '- 融資: \n' +
+      '- 融券: ',
+  },
+});
+/* eslint-enable */
 
 const defaultState = () => ({
   stockId: null,
@@ -56,7 +94,8 @@ class NoteBoard extends ClickableComponent {
     });
 
     this.openNewNoteMode = this.onClickDo((e, payload) => {
-      this.setState({ newNoteMode: true, defaultNote: payload && payload.defaultNote });
+      const defaultNote = (payload && payload.defaultNote) || getNoteTemplate();
+      this.setState({ newNoteMode: true, defaultNote });
     });
 
     this.extraNoteFromDOM = noteRef => {
