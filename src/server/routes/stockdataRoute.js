@@ -1,5 +1,8 @@
 const axios = require('axios');
-const cloudscraper = require('../../lib/myCloudscraper');
+
+// XXX: The challenge has been updated and is unable to solve.
+// This scraper has no user but hope one day we may break the challenge again so keep it for now.
+// const cloudscraper = require('../../lib/myCloudscraper');
 
 const CacheProvider = require('../cacheProvider');
 const { env } = require('../../build/config_server');
@@ -7,7 +10,7 @@ const GwServer = require('../../lib/stockProvider/GwServer');
 const GooServer = require('../../lib/stockProvider/GooServer');
 
 const stockdataCache = new CacheProvider();
-const gwStockProvider = new GwServer({ env, cloudscraper });
+const gwStockProvider = new GwServer({ env, axios });
 const gooStockProvider = new GooServer({ env, axios });
 
 function shouldInvalidateCache(req) {
@@ -30,7 +33,7 @@ function initStockdataRoute(app) {
         [ 'gooStockData', gooStockProvider ],
       ];
       const dataArray = await Promise.all(
-        providers.map(provider => provider[1].get(req.params.id)),
+        providers.map(provider => provider[1].get(req.params.id, req.query)),
       );
 
       data = { error: '' };

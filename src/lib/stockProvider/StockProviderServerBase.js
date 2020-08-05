@@ -1,6 +1,9 @@
 class StockProviderServerBase {
   // - baseURL: A instance of URL
   constructor({ env, axios, cloudscraper, baseURL, timeout = 10000 }) {
+    if (cloudscraper) {
+      throw new Error('Now only accept axios');
+    }
     Object.entries({ env, axios, cloudscraper, baseURL, timeout }).forEach(([ k, v ]) => {
       this[`_${k}`] = v;
     });
