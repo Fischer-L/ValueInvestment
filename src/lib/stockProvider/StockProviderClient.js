@@ -46,11 +46,8 @@ class StockProviderClient {
     this._dataParsers = dataParsers;
   }
 
-  get(id, noCache = false) {
-    let params;
-
-    if (noCache === true) {
-      params = { noCache };
+  get(id, params = {}) {
+    if (params.noCache === true) {
       this._stocks[id] = null;
     }
 

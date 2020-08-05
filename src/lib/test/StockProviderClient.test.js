@@ -1,6 +1,7 @@
 import { StockProviderClient, StockDataParserClient } from '../stockProvider/StockProviderClient';
 
 const FAKE_DEFAULT_DATA = { fake: 123 };
+const FAKE_QUERY = { cfCookie: '1', uaString: '2' };
 
 function fakeAxios(data) {
   const axios = {
@@ -26,9 +27,7 @@ function create(fakeData, fakeParsers) {
   };
 }
 
-function verifyAxios(axios, { stockId, times = 1, noCache = false }) {
-  let params;
-  if (noCache) params = { noCache };
+function verifyAxios(axios, { stockId, times = 1, params }) {
   expect(axios.get).toBeCalledTimes(times);
   expect(axios.get).nthCalledWith(times, `/stockdata/${stockId}`, { params });
 }
@@ -37,8 +36,8 @@ describe('StockProviderClient', () => {
   it('should return stock data', async () => {
     const stockId = '2330';
     const { axios, stockProvider } = create();
-    const data = await stockProvider.get(stockId);
-    verifyAxios(axios, { stockId });
+    const data = await stockProvider.get(stockId, FAKE_QUERY);
+    verifyAxios(axios, { stockId, params: FAKE_QUERY });
     expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
   });
 
@@ -46,27 +45,27 @@ describe('StockProviderClient', () => {
     const stockId = '2330';
     const { axios, stockProvider } = create();
 
-    let data = await stockProvider.get(stockId);
+    let data = await stockProvider.get(stockId, FAKE_QUERY);
     expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
 
-    data = await stockProvider.get(stockId);
+    data = await stockProvider.get(stockId, FAKE_QUERY);
     expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
 
-    verifyAxios(axios, { stockId });
+    verifyAxios(axios, { stockId, params: FAKE_QUERY });
   });
 
   it('should not cache stock data', async () => {
     const stockId = '2330';
     const { axios, stockProvider } = create();
 
-    let data = await stockProvider.get(stockId);
+    let data = await stockProvider.get(stockId, FAKE_QUERY);
     expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
-    verifyAxios(axios, { stockId });
+    verifyAxios(axios, { stockId, params: FAKE_QUERY });
 
-    const noCache = true;
-    data = await stockProvider.get(stockId, noCache);
+    const paramsWithNoCache = { ...FAKE_QUERY, noCache: true };
+    data = await stockProvider.get(stockId, paramsWithNoCache);
     expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, id: stockId });
-    verifyAxios(axios, { stockId, noCache, times: 2 });
+    verifyAxios(axios, { stockId, times: 2, params: paramsWithNoCache });
   });
 
   it('should not dispatch multiple api requests if there is an on-going request', async () => {
@@ -74,12 +73,12 @@ describe('StockProviderClient', () => {
     const { axios, stockProvider } = create();
 
     axios.delay = 1000;
-    stockProvider.get(stockId);
+    stockProvider.get(stockId, FAKE_QUERY);
 
     axios.delay = 0;
-    stockProvider.get(stockId);
+    stockProvider.get(stockId, FAKE_QUERY);
 
-    verifyAxios(axios, { stockId });
+    verifyAxios(axios, { stockId, params: FAKE_QUERY });
   });
 
   it('should accept multiple stock data parsers', async () => {
@@ -89,8 +88,8 @@ describe('StockProviderClient', () => {
     }, {
       second: fakeDataParser(),
     });
-    const data = await stockProvider.get(stockId);
-    verifyAxios(axios, { stockId });
+    const data = await stockProvider.get(stockId, FAKE_QUERY);
+    verifyAxios(axios, { stockId, params: FAKE_QUERY });
     expect(data).toMatchObject({ ...FAKE_DEFAULT_DATA, a: 567, id: stockId });
   });
 });

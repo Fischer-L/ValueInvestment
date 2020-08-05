@@ -11,13 +11,30 @@ class GwServer extends StockProviderServerBase {
     });
   }
 
-  async get(id) {
+  _headers(cfCookie, uaString) {
+    if (!cfCookie || !uaString) {
+      throw new Error('Lack of cf and ua');
+    }
+    return {
+      accept: '*/*',
+      'Cache-Control': 'no-cache',
+      'Accept-Encoding': 'gzip, deflate',
+      'Accept-Language': 'en-US,en;q=0.5',
+      Host: this._baseURL.host,
+      Referer: this._baseURL.origin,
+      'User-Agent': uaString,
+      Cookie: `cf_clearance=${cfCookie}`,
+    };
+  }
+
+  async get(id, { cfCookie, uaString }) {
     try {
+      const headers = this._headers(cfCookie, uaString);
       const [ pePage, pbPage, epsPage, dividendPage ] = await Promise.all([
-        this._getPage('pe', id),
-        this._getPage('pb', id),
-        this._getPage('eps', id),
-        this._getPage('dividend', id),
+        this._getPage('pe', id, headers),
+        this._getPage('pb', id, headers),
+        this._getPage('eps', id, headers),
+        this._getPage('dividend', id, headers),
       ]);
       return { pePage, pbPage, epsPage, dividendPage };
     } catch (e) {
@@ -25,7 +42,7 @@ class GwServer extends StockProviderServerBase {
     }
   }
 
-  async _getPage(pageType, id) {
+  async _getPage(pageType, id, headers) {
     await this._delay(); // Delay a bit to avoid a batch of requests found on the server side
 
     let path = '';
@@ -47,7 +64,7 @@ class GwServer extends StockProviderServerBase {
         break;
     }
     try {
-      const html = await this.crawler.get(path);
+      const html = await this.crawler.get(path, { headers });
       return html;
     } catch (e) {
       throw new Error(e.name + ' : ' + e.message);
@@ -56,7 +73,7 @@ class GwServer extends StockProviderServerBase {
 
   _delay() {
     const ms = Math.floor(Math.random() * 100);
-    return new Promise(resolve => setTimeout(resolve, Math.max(ms, 50)));
+    return new Promise(resolve => setTimeout(resolve, Math.max(ms, 100)));
   }
 }
 

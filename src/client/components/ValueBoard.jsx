@@ -78,7 +78,15 @@ class ValueBoard extends ClickableComponent {
 
       this.setState({ loading: true });
       try {
-        const stockData = await stockProvider.get(stockId, noCache);
+        const params = {
+          noCache,
+          uaString: window.tmpua || navigator.userAgent,
+        };
+        if (window.tmpcf) {
+          params.cfCookie = window.tmpcf;
+        }
+
+        const stockData = await stockProvider.get(stockId, params);
         if (stockId === stockData.id) {
           this.setState({ stockData });
         }
