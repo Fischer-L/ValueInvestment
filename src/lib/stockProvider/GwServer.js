@@ -13,11 +13,11 @@ class GwServer extends StockProviderServerBase {
 
   _headers(cfCookie, uaString) {
     const lacks = [];
-    if (!cfCookie) lacks.push('cf');
+    // if (!cfCookie) lacks.push('cf');
     if (!uaString) lacks.push('ua');
     if (lacks.length) throw new Error(`Lack of ${lacks.join(', ')}`);
 
-    return {
+    const headers = {
       accept: '*/*',
       'Cache-Control': 'no-cache',
       'Accept-Encoding': 'gzip, deflate',
@@ -25,8 +25,9 @@ class GwServer extends StockProviderServerBase {
       Host: this._baseURL.host,
       Referer: this._baseURL.origin,
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:80.0) Gecko/20100101 Firefox/80.0',
-      Cookie: `cf_clearance=${cfCookie}`,
     };
+    if (cfCookie) headers.Cookie = `cf_clearance=${cfCookie}`;
+    return headers;
   }
 
   async get(id, { cfCookie, uaString }) {
@@ -69,7 +70,7 @@ class GwServer extends StockProviderServerBase {
       const html = await this.crawler.get(path, { headers });
       return html;
     } catch (e) {
-      throw new Error(e.name + ' : ' + e.message);
+      throw e;
     }
   }
 

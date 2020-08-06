@@ -29,6 +29,9 @@ class StockProviderServerBase {
             if (resp.status === 200) {
               return resp.data;
             }
+            console.log('\n\n<<<<<<<<<<');
+            console.error(resp);
+            console.log('>>>>>>>>>>\n\n');
             throw new Error(resp.status + ':' + resp.statusText);
           } catch (e) {
             throw e;
