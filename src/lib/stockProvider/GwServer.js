@@ -24,7 +24,7 @@ class GwServer extends StockProviderServerBase {
       'Accept-Language': 'en-US,en;q=0.5',
       Host: this._baseURL.host,
       Referer: this._baseURL.origin,
-      'User-Agent': uaString,
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:80.0) Gecko/20100101 Firefox/80.0',
       Cookie: `cf_clearance=${cfCookie}`,
     };
   }
