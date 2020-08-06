@@ -12,9 +12,11 @@ class GwServer extends StockProviderServerBase {
   }
 
   _headers(cfCookie, uaString) {
-    if (!cfCookie || !uaString) {
-      throw new Error('Lack of cf and ua');
-    }
+    const lacks = [];
+    if (!cfCookie) lacks.push('cf');
+    if (!uaString) lacks.push('ua');
+    if (lacks.length) throw new Error(`Lack of ${lacks.join(', ')}`);
+
     return {
       accept: '*/*',
       'Cache-Control': 'no-cache',
