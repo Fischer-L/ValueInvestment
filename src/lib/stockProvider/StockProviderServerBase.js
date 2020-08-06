@@ -1,10 +1,11 @@
+const handleError = require('../../server/utils/handleError');
+
 class StockProviderServerBase {
   // - baseURL: A instance of URL
-  constructor({ env, axios, cloudscraper, baseURL, timeout = 10000 }) {
-    Object.entries({ env, axios, cloudscraper, baseURL, timeout }).forEach(([ k, v ]) => {
+  constructor({ axios, cloudscraper, baseURL, timeout = 10000 }) {
+    Object.entries({ axios, cloudscraper, baseURL, timeout }).forEach(([ k, v ]) => {
       this[`_${k}`] = v;
     });
-    this._isProd = env === 'production';
   }
 
   async get(id) { // eslint-disable-line no-unused-vars
@@ -62,21 +63,7 @@ class StockProviderServerBase {
   }
 
   _handleError(e) {
-    console.log('\n\n<<<<<<<<<<');
-    if (this._isProd) {
-      // Log less info to save server resources on the production mode
-      const { url, method, headers } = e.config;
-      console.error({
-        error: e.toString(),
-        url,
-        method,
-        headers,
-      });
-    } else {
-      console.error(e);
-    }
-    console.log('>>>>>>>>>>\n\n');
-    return { error: e.toString() };
+    return handleError(e);
   }
 }
 
