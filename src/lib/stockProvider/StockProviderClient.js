@@ -59,7 +59,6 @@ class StockProviderClient {
       this._stocks[id].promise = new Promise(async (resolve, reject) => {
         try {
           const { data } = await this._api.get(`/stockdata/${id}`, { params });
-
           if (data.error) throw data.error;
 
           this._stocks[id].data = Object.entries(this._dataParsers).reduce((_data, [ key, parser ]) => ({

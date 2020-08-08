@@ -15,7 +15,7 @@
     "build-local": "yarn clean && webpack --config src/build/webpack.client.config.js",
     "build-prod": "yarn clean; ENV=production webpack --config src/build/webpack.client.config.js",
     "run-svr": "nodemon ./src/server/server.js",
-    "docker-run-test": "docker build --target test --force-rm -t local/value-investment:test .; docker run -p 9000:9000 --name value-investment local/value-investment:test",
+    "docker-run-test": "yarn docker-stop-test; docker build --target test --force-rm -t local/value-investment:test .; docker run -p 9000:9000 --name value-investment local/value-investment:test",
     "docker-stop-test": "docker stop value-investment; docker container rm value-investment; docker image rm local/value-investment:test"
   },
   "devDependencies": {
