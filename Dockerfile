@@ -11,7 +11,7 @@ COPY public public
 
 FROM base AS test
 COPY node_modules node_modules
-CMD ENV=docker-testTMP node src/server/server.js
+CMD ENV=docker-test node src/server/server.js
 
 FROM base AS production
 
