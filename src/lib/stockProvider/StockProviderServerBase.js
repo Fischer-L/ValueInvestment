@@ -1,4 +1,5 @@
 const handleError = require('../../server/utils/handleError');
+const proxyPy = require('./proxyPy');
 
 class StockProviderServerBase {
   // - baseURL: A instance of URL
@@ -39,17 +40,7 @@ class StockProviderServerBase {
   get _cloudscraperCrawler() {
     if (!this._crawler) {
       this._crawler = {
-        get: (path, params) => {
-          const options = {
-            uri: this._baseURL.origin + path,
-            cloudflareMaxTimeout: this._timeout,
-            ...params,
-          };
-          if (!this._challengeRequest) {
-            this._challengeRequest = this._cloudscraper.get(this._baseURL.origin);
-          }
-          return this._challengeRequest.then(() => this._cloudscraper.get(options));
-        },
+        get: (path) => proxyPy.get(this._baseURL.origin + path),
       };
     }
     return this._crawler;

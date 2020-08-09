@@ -1,4 +1,4 @@
-FROM node:10.15.1-alpine AS base
+FROM foxbrush/node10-15-1-py2 AS base
 
 RUN mkdir -p /app
 WORKDIR /app
@@ -7,11 +7,9 @@ COPY package.json yarn.lock ./
 COPY src src
 COPY public public
 
-
 FROM base AS test
 COPY node_modules node_modules
 CMD ENV=docker-test node src/server/server.js
-
 
 FROM base AS production
 

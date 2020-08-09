@@ -1,0 +1,4 @@
+# docker build --force-rm --file Dockerfile_node10_15_1_py2 -t node10-15-1-py2 .
+FROM node:10.15.1-slim
+
+RUN apt-get update || : && apt-get install -y python && apt-get install -y python-pip && pip install cloudscraper
