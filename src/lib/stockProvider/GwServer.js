@@ -15,9 +15,9 @@ class GwServer extends StockProviderServerBase {
     try {
       const [ pePage, pbPage, epsPage, dividendPage ] = await Promise.all([
         this._getPage('pe', id),
-        this._getPage('pb', id),
-        this._getPage('eps', id),
-        this._getPage('dividend', id),
+        // this._getPage('pb', id),
+        // this._getPage('eps', id),
+        // this._getPage('dividend', id),
       ]);
       return { pePage, pbPage, epsPage, dividendPage };
     } catch (e) {
