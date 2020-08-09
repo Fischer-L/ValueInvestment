@@ -4,9 +4,9 @@ import time
 import codecs
 import cloudscraper
 
+# interpreter = 'nodejs',
 scraper = cloudscraper.create_scraper(
   debug = True,
-  interpreter = 'nodejs',
   browser = {
     'browser': 'firefox',
     'platform': 'windows',

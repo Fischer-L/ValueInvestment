@@ -73,7 +73,7 @@ class App extends Component {
       <div className="appContent-begin" key="appContent-begin">
         <img src={icoHen} width="88px" alt="Hen..." />
         <p>Enter the stock id to look up</p>
-        <h3>Try debug = True</h3>
+        <h3>Try default interpreter</h3>
       </div>
     );
 
