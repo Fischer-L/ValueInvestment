@@ -5,7 +5,7 @@ import codecs
 import cloudscraper
 
 scraper = cloudscraper.create_scraper(
-  # debug = True,
+  debug = True,
   interpreter = 'nodejs',
   browser = {
     'browser': 'firefox',
