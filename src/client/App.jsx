@@ -22,6 +22,7 @@ class App extends Component {
     this.state = {
       market: '',
       stockId: null,
+      extensionId: null,
       showBookmarkBoard: null,
       askLogin: false,
       lookupTime: 0,
@@ -43,6 +44,10 @@ class App extends Component {
 
     this.whenCloseBookmark = () => {
       this.whenToggleBookmark({ market: this.state.showBookmarkBoard });
+    };
+
+    this.whenUpdateExtensionId = extensionId => {
+      this.setState({ extensionId });
     };
 
     this.whenLogin = async () => {
@@ -76,7 +81,7 @@ class App extends Component {
       </div>
     );
 
-    this.renderValueBoard = ({ stockId, market, lookupTime }) => <ValueBoard stockId={stockId} market={market} lookupTime={lookupTime} key="ValueBoard" />;
+    this.renderValueBoard = ({ stockId, extensionId, market, lookupTime }) => <ValueBoard stockId={stockId} extensionId={extensionId} market={market} lookupTime={lookupTime} key="ValueBoard" />;
 
     this.renderNoteBoard = ({ stockId, isLogin, allowLogin }) => {
       if (allowLogin && isLogin) {
@@ -116,6 +121,7 @@ class App extends Component {
       whenLogin: this.whenLogin,
       whenLookUpStock: this.whenLookUpStock,
       whenToggleBookmark: this.whenToggleBookmark,
+      whenUpdateExtensionId: this.whenUpdateExtensionId,
     };
   }
 

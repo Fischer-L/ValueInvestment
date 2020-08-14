@@ -4,7 +4,7 @@ import { LOGIN_CLIENT_KEY, LOGIN_CLIENT_VALUE } from '~/build/config_client';
 
 const loginManager = {
   allowLogin() {
-    return window.location.protocol === 'https:' || window.location.host === 'localhost:9000';
+    return window.location.protocol === 'https:' || window.location.host === 'localhost:9981';
   },
 
   isLogin() {

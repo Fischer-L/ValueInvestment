@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Input, Button, Icon } from 'semantic-ui-react';
 
 import MARKET_TYPE from '@/utils/marketType';
+import Prompt, { ACTION } from '@/components/Prompt';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/MainBar.scss';
 
@@ -12,6 +13,7 @@ class MainBar extends ClickableComponent {
 
     this.state = {
       stockId: '',
+      promptConfig: null,
     };
 
     this.onInputChange = (e) => {
@@ -43,6 +45,29 @@ class MainBar extends ClickableComponent {
         });
       }
     });
+
+    this.onClickExtensionIdBtn = this.onClickDo(() => {
+      this.setState({ promptConfig: {
+        title: 'Extension ID',
+        onClose: ({ action, input }) => {
+          if (action === ACTION.OK && input) {
+            this.fireCallback('whenUpdateExtensionId', input);
+          }
+        },
+      } });
+    });
+  }
+
+  renderPrompt() {
+    if (this.state.promptConfig) {
+      const { title, onClose } = this.state.promptConfig;
+      const onClosePrompt = (msg) => {
+        this.setState({ promptConfig: null });
+        onClose(msg);
+      };
+      return <Prompt hasInput title={title} onClose={onClosePrompt} />;
+    }
+    return null;
   }
 
   renderLoginButton() {
@@ -66,6 +91,14 @@ class MainBar extends ClickableComponent {
     );
   }
 
+  renderExtensionIdBtn() {
+    return (
+      <button className="mainBar-Btn" onClick={this.onClickExtensionIdBtn} onTouchEnd={this.onClickExtensionIdBtn} type="button">
+        <Icon className="mainBar-Btn-icon" name="meh outline" size="large" />
+      </button>
+    );
+  }
+
   render() {
     return (
       <div className="mainBar" onClick={this.onLookUpStock} onKeyPress={this.onLookUpStock} onTouchEnd={this.onLookUpStock}>
@@ -81,7 +114,9 @@ class MainBar extends ClickableComponent {
         <section className="mainBar-buttonsArea">
           { this.renderBookmarkBtn({ title: 'tw', onClick: this.onToggleBookmarkTW }) }
           { this.renderBookmarkBtn({ title: 'us', onClick: this.onToggleBookmarkUS }) }
+          { this.renderExtensionIdBtn() }
           { this.renderLoginButton() }
+          { this.renderPrompt() }
         </section>
       </div>
     );
@@ -94,6 +129,7 @@ MainBar.propTypes = {
   whenLogin: PropTypes.func,
   whenLookUpStock: PropTypes.func,
   whenToggleBookmark: PropTypes.func,
+  whenUpdateExtensionId: PropTypes.func,
 };
 
 export default MainBar;

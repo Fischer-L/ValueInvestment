@@ -46,11 +46,8 @@ class StockProviderClient {
     this._dataParsers = dataParsers;
   }
 
-  get(id, noCache = false) {
-    let params;
-
+  get({ id, extensionId, noCache = false }) {
     if (noCache === true) {
-      params = { noCache };
       this._stocks[id] = null;
     }
 
@@ -58,24 +55,34 @@ class StockProviderClient {
       this._stocks[id] = {};
       this._stocks[id].promise = new Promise(async (resolve, reject) => {
         try {
-          const { data } = await this._api.get(`/stockdata/${id}`, { params });
+          const data = await this._fetch(id, extensionId);
           if (data.error) throw data.error;
 
           this._stocks[id].data = Object.entries(this._dataParsers).reduce((_data, [ key, parser ]) => ({
             ..._data,
-            ...parser.parseData(data[key]),
+            ...parser.parseData(data.result[key]),
           }), {});
           this._stocks[id].data.id = id;
 
           resolve(this._stocks[id].data);
         } catch (e) {
-          delete this._stocks[id];
+          this._stocks[id] = null;
           console.error(e);
           reject(e);
         }
       });
     }
     return this._stocks[id].promise;
+  }
+
+  _fetch(id, extensionId) {
+    return new Promise((resolve, reject) => {
+      if (extensionId) {
+        chrome.runtime.sendMessage(extensionId, { cmd: 'CMD_STOCK_DATA', params: { id } }, data => resolve(data));
+      } else {
+        reject(new Error('Lack of Chrome extension id'));
+      }
+    });
   }
 }
 

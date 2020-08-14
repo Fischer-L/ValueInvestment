@@ -41,6 +41,8 @@
 
 .mainBar-buttonsArea {
   width: calc((100% - var(--input-max-width)) / 2);
+  display: flex;
+  align-items: center;
   position: absolute;
   right: 0;
 }

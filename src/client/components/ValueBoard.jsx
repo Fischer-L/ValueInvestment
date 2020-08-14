@@ -58,7 +58,7 @@ class ValueBoard extends ClickableComponent {
         return;
       }
 
-      let { stockId, market } = this.props;
+      let { stockId, extensionId, market } = this.props;
 
       let noCache = false;
       if (stockId.startsWith('.')) {
@@ -78,7 +78,7 @@ class ValueBoard extends ClickableComponent {
 
       this.setState({ loading: true });
       try {
-        const stockData = await stockProvider.get(stockId, noCache);
+        const stockData = await stockProvider.get({ id: stockId, extensionId, noCache });
         if (stockId === stockData.id) {
           this.setState({ stockData });
         }
@@ -226,6 +226,7 @@ class ValueBoard extends ClickableComponent {
 ValueBoard.propTypes = {
   market: PropTypes.string.isRequired,
   stockId: PropTypes.string.isRequired,
+  extensionId: PropTypes.string.isRequired,
   lookupTime: PropTypes.number.isRequired,
 };
 
