@@ -8,7 +8,7 @@ const env = process.env.ENV || 'local-dev';
 
 const publicDir = utils.resolve('public');
 
-let port = 9000;
+let port = 9981;
 if (env === 'production') {
   port = 443;
 }

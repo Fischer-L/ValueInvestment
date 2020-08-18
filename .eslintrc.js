@@ -43,6 +43,7 @@ module.exports = {
     "jsx-a11y/no-noninteractive-element-interactions": "off",
   },
   "env": {
+    "webextensions": true,
     "browser": true,
     "jest": true,
     "es6": true,
