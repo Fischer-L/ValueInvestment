@@ -44,16 +44,20 @@ class StockProviderClient {
     this._stocks = {};
     this._api = apiClient;
     this._dataParsers = dataParsers;
+    this._ongoingFetch = null;
   }
 
-  get(id, noCache = false) {
+  async get(id, noCache = false) {
     if (noCache === true) {
       this._stocks[id] = null;
     }
 
     if (!this._stocks[id]) {
+      if (this._ongoingFetch) await this._ongoingFetch;
+      this._ongoingFetch = null;
+
       this._stocks[id] = {};
-      this._stocks[id].promise = new Promise(async (resolve, reject) => {
+      this._stocks[id].promise = this._ongoingFetch = new Promise(async (resolve, reject) => {
         try {
           const data = await this._fetch(id);
           if (data.error) throw data.error;
@@ -77,12 +81,16 @@ class StockProviderClient {
 
   _fetch(id) {
     return new Promise(resolve => {
-      window.addEventListener('message', evt => {
-        if (evt.data.from === 'extension') resolve(evt.data.content);
-      });
+      const onMsg = evt => {
+        if (evt.data && evt.data.from === 'extension') {
+          window.removeEventListener('message', onMsg);
+          resolve(evt.data.body);
+        }
+      };
+      window.addEventListener('message', onMsg);
       window.postMessage({
         from: 'web',
-        content: { cmd: 'CMD_STOCK_DATA', params: { id } },
+        body: { cmd: 'CMD_STOCK_DATA', params: { id } },
       });
     });
   }
