@@ -14,13 +14,15 @@ async function messageBackground(msg) {
 window.addEventListener('message', async function (event) {
   if (event.source !== window) return; // We only accept messages from ourselves
 
-  if (event.data.from !== 'web') return;
+  const data = event.data;
+
+  if (!data || data.from !== 'web') return;
 
   let resp = null;
   try {
-    resp = await messageBackground(event.data.content);
+    resp = await messageBackground(data.body);
   } catch (e) {
     resp = { error: e.toString() };
   }
-  window.postMessage({ from: 'extension', content: resp });
+  window.postMessage({ from: 'extension', body: resp });
 });
