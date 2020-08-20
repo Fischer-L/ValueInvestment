@@ -79,7 +79,7 @@ class ValueBoard extends ClickableComponent {
       this.setState({ loading: true });
       try {
         const stockData = await stockProvider.get(stockId, noCache);
-        if (stockId === stockData.id) {
+        if (stockData && stockId === stockData.id) {
           this.setState({ stockData });
         }
       } catch (error) {
