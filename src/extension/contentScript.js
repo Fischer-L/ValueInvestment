@@ -20,7 +20,15 @@ window.addEventListener('message', async function (event) {
 
   let resp = null;
   try {
-    resp = await messageBackground(data.body);
+    switch (data.body.cmd) {
+      case 'CMD_STOCK_DATA':
+        resp = await messageBackground(data.body);
+        break;
+
+      case 'CMD_EXTENSION_ACK':
+        resp = data.body;
+        break;
+    }
   } catch (e) {
     resp = { error: e.toString() };
   }

@@ -44,7 +44,6 @@ class StockProviderClient {
     this._stocks = {};
     this._api = apiClient;
     this._dataParsers = dataParsers;
-    this._ongoingFetch = null;
   }
 
   async get(id, noCache = false) {
@@ -60,7 +59,14 @@ class StockProviderClient {
       this._stocks[id].promise = this._ongoingFetch = new Promise(async (resolve, reject) => {
         try {
           const data = await this._fetch(id);
-          if (data.error) throw data.error;
+          if (!data) {
+            // Maybe no extension. This is expected so simply return null.
+            resolve(null);
+            return;
+          }
+          if (data.error) {
+            throw data.error;
+          }
 
           this._stocks[id].data = Object.entries(this._dataParsers).reduce((_data, [ key, parser ]) => ({
             ..._data,
@@ -80,6 +86,21 @@ class StockProviderClient {
   }
 
   _fetch(id) {
+    return this._talkToExtension({ cmd: 'CMD_STOCK_DATA', params: { id } });
+  }
+
+  async _talkToExtension(msgBody) {
+    let extension;
+    if (!this._extensionACK) {
+      extension = await this._helloExtension();
+    } else if (this._extensionACK.asked) {
+      extension = await this._helloExtension();
+    } else {
+      // Not yet ask so let the request pass
+    }
+    if (extension === false) {
+      return null;
+    }
     return new Promise(resolve => {
       const onMsg = evt => {
         if (evt.data && evt.data.from === 'extension') {
@@ -88,11 +109,30 @@ class StockProviderClient {
         }
       };
       window.addEventListener('message', onMsg);
-      window.postMessage({
-        from: 'web',
-        body: { cmd: 'CMD_STOCK_DATA', params: { id } },
-      });
+      window.postMessage({ from: 'web', body: msgBody });
     });
+  }
+
+  _helloExtension() {
+    if (!this._extensionACK) {
+      this._extensionACK = {
+        asked: false,
+      };
+      this._extensionACK.promise = new Promise(resolve => {
+        this._talkToExtension({ cmd: 'CMD_EXTENSION_ACK' })
+          .then(() => resolve(true))
+          .catch(e => {
+            console.error(e);
+            resolve(false);
+          });
+        setTimeout(() => {
+          console.warn('No ACK from the extension');
+          resolve(false);
+        }, 100);
+        this._extensionACK.asked = true;
+      });
+    }
+    return this._extensionACK.promise;
   }
 }
 
