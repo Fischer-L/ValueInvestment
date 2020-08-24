@@ -41,9 +41,23 @@
 // }
 class StockProviderClient {
   constructor({ apiClient, dataParsers }) {
+    this._names = {};
     this._stocks = {};
     this._api = apiClient;
     this._dataParsers = dataParsers;
+  }
+
+  async getName(id) {
+    if (!this._names[id]) {
+      const { data } = await this._api.get(`/stockinfo/${id}`);
+      if (!data || !data.name) {
+        throw new Error(`Find no name of ${id}`);
+      } else if (data.error) {
+        throw data.error;
+      }
+      this._names[id] = data.name;
+    }
+    return this._names[id];
   }
 
   async get(id, noCache = false) {

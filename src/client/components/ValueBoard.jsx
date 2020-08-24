@@ -19,6 +19,7 @@ const MS_EST_DEALY = 500;
 
 const defaultState = () => ({
   stockId: null,
+  stockName: null,
   stockData: null,
   forecastEPS: 0,
   forecastDividend: 0,
@@ -70,8 +71,8 @@ class ValueBoard extends ClickableComponent {
       if (stockId === this.state.stockId && !force) {
         return;
       }
-
       this.setState({ ...defaultState(), stockId });
+
       if (market !== MARKET_TYPE.TW) {
         return;
       }
@@ -79,8 +80,12 @@ class ValueBoard extends ClickableComponent {
       this.setState({ loading: true });
       try {
         const stockData = await stockProvider.get(stockId, noCache);
-        if (stockData && stockId === stockData.id) {
-          this.setState({ stockData });
+        if (!stockData) {
+          // Maybe no data because of no extension so fallback to load name only.
+          const name = await stockProvider.getName(stockId);
+          this.setState({ stockName: name });
+        } else if (stockId === stockData.id) {
+          this.setState({ stockData, stockName: stockData.name });
         }
       } catch (error) {
         this.setState({ error });
@@ -174,16 +179,14 @@ class ValueBoard extends ClickableComponent {
   }
 
   renderStockData() {
-    const { id, name } = this.state.stockData;
+    if (!this.state.stockData) {
+      return null;
+    }
     const pricesByPE = this.calcPricesByPE(this.state);
     const pricesByPB = this.calcPricesByPB(this.state);
     const pricesByDividends = this.calcPricesByDividends(this.state);
     return (
       <div>
-        <Header as="h2" dividing>
-          <span className="valueBoard-stockTitle">{id} {name}</span>
-          <StockLinks className="valueBoard-stockLinks" stock={{ id, name }} market={MARKET_TYPE.TW} />
-        </Header>
         { this.renderPanel() }
         <Header as="h3">Costs By PE</Header>
         <TableByYears prices5yrs={pricesByPE.in5yrs} prices3yrs={pricesByPE.in3yrs} color="blue" />
@@ -195,16 +198,35 @@ class ValueBoard extends ClickableComponent {
     );
   }
 
+  renderStock() {
+    let stockLinksElem = null;
+    const { stockId, stockName } = this.state;
+    if (stockId && stockName) {
+      stockLinksElem = (
+        <Header as="h2" dividing>
+          <span className="valueBoard-stockTitle">{stockId} {stockName}</span>
+          <StockLinks className="valueBoard-stockLinks" stock={{ id: stockId, name: stockName }} market={MARKET_TYPE.TW} />
+        </Header>
+      );
+    }
+    return (
+      <div>
+        { stockLinksElem }
+        { this.renderStockData() }
+      </div>
+    );
+  }
+
   render() {
     let content = null;
-    const { error, loading, stockData } = this.state;
+    const { error, loading } = this.state;
 
     if (error) {
       content = ErrorDuck(error.toString());
     } else if (loading) {
       content = Loading();
-    } else if (stockData) {
-      content = this.renderStockData();
+    } else {
+      content = this.renderStock();
     }
 
     return (
