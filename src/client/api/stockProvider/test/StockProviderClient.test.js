@@ -1,4 +1,4 @@
-import { StockProviderClient, StockDataParserClient } from '../stockProvider/StockProviderClient';
+import { StockProviderClient, StockDataParserClient } from '../StockProviderClient';
 
 const FAKE_DEFAULT_DATA = { fake: 123 };
 
