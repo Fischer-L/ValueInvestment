@@ -1,6 +1,6 @@
 import fakeDOMParser from './utils/fakeDOMParser';
 import dividendPolicyPage from './data/gooDividendPolicyPage';
-import GooClient from '../stockProvider/GooClient';
+import GooClient from '../GooClient';
 
 const EXPECTED_DATA = {
   dividendPolicy: {

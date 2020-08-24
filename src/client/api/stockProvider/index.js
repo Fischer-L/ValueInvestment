@@ -1,6 +1,6 @@
-import GwClient from '~/lib/stockProvider/GwClient';
-import GooClient from '~/lib/stockProvider/GooClient';
-import { StockProviderClient } from '~/lib/stockProvider/StockProviderClient';
+import GwClient from './GwClient';
+import GooClient from './GooClient';
+import { StockProviderClient } from './StockProviderClient';
 
 let provider = null;
 

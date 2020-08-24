@@ -1,4 +1,3 @@
-src/lib/test/data/*
-src/lib/myCloudscraper/*
+src/**/test/data/*
 # getURL.js calls `import` for dynamic import, which causes undesirable lint error so ignore this file
 src/client/utils/getURL.js

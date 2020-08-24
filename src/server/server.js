@@ -6,7 +6,6 @@ const { env, port, publicDir } = require('../build/config_server');
 const middlewares = require('./middlewares');
 const initStocknoteRoute = require('./routes/stocknoteRoute');
 const initStockinfoRoute = require('./routes/stockinfoRoute');
-const initStockdataRoute = require('./routes/stockdataRoute');
 const initBookmarksRoute = require('./routes/bookmarksRoute');
 
 const PUBLIC_DIR = publicDir;
@@ -25,7 +24,6 @@ app.use(express.static(PUBLIC_DIR, {
 }));
 
 initStocknoteRoute(app);
-initStockdataRoute(app);
 initStockinfoRoute(app);
 initBookmarksRoute(app);
 
