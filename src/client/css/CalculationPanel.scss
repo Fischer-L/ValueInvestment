@@ -30,12 +30,12 @@
 .calculationPanel-block {
   display: flex;
   flex-wrap: wrap;
-  align-items: last baseline;
+  align-items: flex-end;
 }
 
 .calculationPanel-inputHolder {
   margin-right: 16px;
-  margin-bottom: 8px;
+  margin-top: 8px;
 }
 
 .calculationPanel-inputHolder.epsInput {
