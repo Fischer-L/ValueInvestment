@@ -10,6 +10,7 @@ const middleName = {
   gw: [ 'w', '5', 'a', 'q', 'n', 'n', 't', 'a', 'g', 'o', 'o', 'p', 'o' ],
   cmy: [ 'c', 'a', 'm', 'p', 'o', 'q', 'n', '3', 'e', '1', 'y'],
   hi: [ 'h', 'n', 'i', 'p', 's', 'r', 't', 'z', 'o', 'a', 'c', 'q', 'k' ],
+  nt: [ 'n', 'b' ,'o', 'd', 'r', 'l', 'w', 'r', 'a', 'a', 'y', '5', '.', '8', 't', 'y', 'w', '0', 's', 'e', 't', 'g', 'h', '1', 'r' ],
 };
 
 export default function getURL(site, query, pathParams) {
@@ -43,6 +44,9 @@ export default function getURL(site, query, pathParams) {
 
     case 'hi_buyer':
       return `https://${middleName.of('hi')}.tw/stock/main.aspx?no=${encodeURIComponent(query.stockId)}`;
+
+    case 'big_holder':
+      return `https://${middleName.of('nt')}.info/StockHolders.aspx?stock=${encodeURIComponent(query.stockId)}`;
   }
   return '';
 }
