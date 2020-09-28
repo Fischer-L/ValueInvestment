@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, Button, Input, Divider } from 'semantic-ui-react';
 
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
-import calcProfitRiskValues from '@/utils/calcProfitRiskValues';
+import { calcLongProfitRiskValues, calcShortProfitRiskValues } from '@/utils/calcProfitRiskValues';
 import { round } from '@/utils/round';
 
 import '@/css/CalculationPanel.scss';
@@ -16,13 +16,13 @@ class CalculationPanel extends ClickableComponent {
 
       // Profit & risk
       profitPrice: 0,
-      buyPrice: 0,
+      executionPrice: 0,
       riskPrice: 0,
       profitRiskRatio: 0,
       reward: 0,
       lock: {
         profitPrice: false,
-        buyPrice: false,
+        executionPrice: false,
         riskPrice: false,
         profitRiskRatio: false,
         reward: false,
@@ -51,7 +51,7 @@ class CalculationPanel extends ClickableComponent {
           break;
 
         case 'profitPrice':
-        case 'buyPrice':
+        case 'executionPrice':
         case 'riskPrice':
         case 'profitRiskRatio':
         case 'reward':
@@ -69,18 +69,6 @@ class CalculationPanel extends ClickableComponent {
     });
 
     this.toggleOpen = this.onClickDo(() => this.setState(state => ({ open: !state.open })));
-
-    this.calcProfitRisk = this.onClickDo(() => {
-      this.setState(state => {
-        try {
-          const [ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward ] = this.normalizeValues('profitPrice', 'buyPrice', 'riskPrice', 'profitRiskRatio', 'reward');
-          return calcProfitRiskValues({ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward, lock: state.lock });
-        } catch (e) {
-          alert(e.toString());
-          return state;
-        }
-      });
-    });
 
     this.calcEPS = this.onClickDo(() => {
       const estEPS = [ 1, 2, 3, 4 ].reduce((eps, quarter) => {
@@ -101,6 +89,23 @@ class CalculationPanel extends ClickableComponent {
         }));
       }
     });
+
+    this.calcLongProfitRisk = this.onClickDo(() => this.calcProfitRisk());
+    this.calcShortProfitRisk = this.onClickDo(() => this.calcProfitRisk(false));
+    this.calcProfitRisk = (long = true) => {
+      this.setState(state => {
+        try {
+          const [ profitPrice, executionPrice, riskPrice, profitRiskRatio, reward ] = this.normalizeValues('profitPrice', 'executionPrice', 'riskPrice', 'profitRiskRatio', 'reward');
+          if (long) {
+            return calcLongProfitRiskValues({ profitPrice, executionPrice, riskPrice, profitRiskRatio, reward, lock: state.lock });
+          }
+          return calcShortProfitRiskValues({ profitPrice, executionPrice, riskPrice, profitRiskRatio, reward, lock: state.lock });
+        } catch (e) {
+          alert(e.toString());
+          return state;
+        }
+      });
+    };
   }
 
   renderInput({ label, key, className = '', inputProps }) {
@@ -114,7 +119,7 @@ class CalculationPanel extends ClickableComponent {
 
   renderProfitRiskBlock() {
     const inputs = [
-      [ '獲利價', 'profitPrice' ], [ '買進價', 'buyPrice' ], [ '轉利價', 'riskPrice' ], [ '風報', 'profitRiskRatio' ], [ '報酬', 'reward' ],
+      [ '獲利價', 'profitPrice' ], [ '執行價', 'executionPrice' ], [ '轉利價', 'riskPrice' ], [ '風報', 'profitRiskRatio' ], [ '報酬', 'reward' ],
     ];
     const inputElms = inputs.map(([ label, key ]) => {
       const inputProps = {
@@ -128,7 +133,10 @@ class CalculationPanel extends ClickableComponent {
     return (
       <div className="calculationPanel-block">
         { inputElms }
-        <Button size="small" onClick={this.calcProfitRisk}>Go</Button>
+        <div className="calculationPanel-btns">
+          <Button size="small" onClick={this.calcLongProfitRisk}>Long</Button>
+          <Button size="small" onClick={this.calcShortProfitRisk}>Short</Button>
+        </div>
       </div>
     );
   }
@@ -146,7 +154,9 @@ class CalculationPanel extends ClickableComponent {
     return (
       <div className="calculationPanel-block">
         { inputElms }
-        <Button size="small" onClick={this.calcEPS}>{ this.state.estEPS }</Button>
+        <div className="calculationPanel-btns">
+          <Button size="small" onClick={this.calcEPS}>{ this.state.estEPS }</Button>
+        </div>
       </div>
     );
   }
