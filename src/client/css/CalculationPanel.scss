@@ -54,6 +54,10 @@
   font-size: 0.88em;
 }
 
+.calculationPanel-btns {
+  margin-top: 8px;
+}
+
 @media only screen and (min-width: $large-screen-width) {
   .calculationPanel-block {
     justify-content: center;

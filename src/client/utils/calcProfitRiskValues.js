@@ -1,33 +1,33 @@
 import { roundObject } from '@/utils/round';
 
-function calcProfitRiskRatio(profitPrice, buyPrice, riskPrice) {
-  return (profitPrice - buyPrice) / (buyPrice - riskPrice);
+function calcProfitRiskRatio(profitPrice, executionPrice, riskPrice) {
+  return (profitPrice - executionPrice) / (executionPrice - riskPrice);
 }
 
-function calcRiskPriceByRatio(profitPrice, buyPrice, profitRiskRatio) {
-  return ((profitRiskRatio + 1) * buyPrice - profitPrice) / profitRiskRatio;
+function calcLongRiskPriceByRatio(profitPrice, executionPrice, profitRiskRatio) {
+  return ((profitRiskRatio + 1) * executionPrice - profitPrice) / profitRiskRatio;
 }
 
-export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice, profitRiskRatio, reward, lock }) {
+export function calcLongProfitRiskValues({ profitPrice, executionPrice, riskPrice, profitRiskRatio, reward, lock }) {
   let values = null;
 
-  if (lock.profitPrice && lock.buyPrice && lock.riskPrice) {
+  if (lock.profitPrice && lock.executionPrice && lock.riskPrice) {
     values = {
       profitPrice,
-      buyPrice,
+      executionPrice,
       riskPrice,
-      profitRiskRatio: calcProfitRiskRatio(profitPrice, buyPrice, riskPrice),
-      reward: (profitPrice / buyPrice) - 1,
+      profitRiskRatio: calcProfitRiskRatio(profitPrice, executionPrice, riskPrice),
+      reward: (profitPrice / executionPrice) - 1,
     };
   }
 
-  if (lock.profitPrice && lock.buyPrice && lock.profitRiskRatio) {
+  if (lock.profitPrice && lock.executionPrice && lock.profitRiskRatio) {
     values = {
       profitPrice,
-      buyPrice,
+      executionPrice,
       profitRiskRatio,
-      riskPrice: calcRiskPriceByRatio(profitPrice, buyPrice, profitRiskRatio),
-      reward: (profitPrice / buyPrice) - 1,
+      riskPrice: calcLongRiskPriceByRatio(profitPrice, executionPrice, profitRiskRatio),
+      reward: (profitPrice / executionPrice) - 1,
     };
   }
 
@@ -37,30 +37,30 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
       profitPrice,
       riskPrice,
       profitRiskRatio,
-      buyPrice: buy,
+      executionPrice: buy,
       reward: (profitPrice / buy) - 1,
     };
   }
 
-  if (lock.buyPrice && lock.riskPrice && lock.profitRiskRatio) {
-    const profit = (profitRiskRatio + 1) * buyPrice - profitRiskRatio * riskPrice;
+  if (lock.executionPrice && lock.riskPrice && lock.profitRiskRatio) {
+    const profit = (profitRiskRatio + 1) * executionPrice - profitRiskRatio * riskPrice;
     values = {
-      buyPrice,
+      executionPrice,
       riskPrice,
       profitRiskRatio,
       profitPrice: profit,
-      reward: (profit / buyPrice) - 1,
+      reward: (profit / executionPrice) - 1,
     };
   }
 
-  if (lock.buyPrice && lock.profitRiskRatio && lock.reward) {
-    const profit = (reward + 1) * buyPrice;
+  if (lock.executionPrice && lock.profitRiskRatio && lock.reward) {
+    const profit = (reward + 1) * executionPrice;
     values = {
-      buyPrice,
+      executionPrice,
       profitRiskRatio,
       reward,
       profitPrice: profit,
-      riskPrice: calcRiskPriceByRatio(profit, buyPrice, profitRiskRatio),
+      riskPrice: calcLongRiskPriceByRatio(profit, executionPrice, profitRiskRatio),
     };
   }
 
@@ -70,13 +70,94 @@ export default function calcProfitRiskValues({ profitPrice, buyPrice, riskPrice,
       profitPrice,
       profitRiskRatio,
       reward,
-      buyPrice: buy,
-      riskPrice: calcRiskPriceByRatio(profitPrice, buy, profitRiskRatio),
+      executionPrice: buy,
+      riskPrice: calcLongRiskPriceByRatio(profitPrice, buy, profitRiskRatio),
     };
   }
 
   if (values) {
     return roundObject(values, 3);
   }
-  throw new Error(`calcProfitRiskValues without lock given: ${JSON.stringify(lock)}`);
+  throw new Error(`calcLongProfitRiskValues without lock given: ${JSON.stringify(lock)}`);
+}
+
+function calcShortRiskPriceByRatio(profitPrice, executionPrice, profitRiskRatio) {
+  return executionPrice + (executionPrice - profitPrice) / profitRiskRatio;
+}
+
+function calcShortReward(profitPrice, executionPrice) {
+  return (executionPrice - profitPrice) / executionPrice;
+}
+
+export function calcShortProfitRiskValues({ profitPrice, executionPrice, riskPrice, profitRiskRatio, reward, lock }) {
+  let values = null;
+
+  if (lock.profitPrice && lock.executionPrice && lock.riskPrice) {
+    values = {
+      profitPrice,
+      executionPrice,
+      riskPrice,
+      profitRiskRatio: calcProfitRiskRatio(profitPrice, executionPrice, riskPrice),
+      reward: calcShortReward(profitPrice, executionPrice),
+    };
+  }
+
+  if (lock.profitPrice && lock.executionPrice && lock.profitRiskRatio) {
+    values = {
+      profitPrice,
+      executionPrice,
+      profitRiskRatio,
+      riskPrice: calcShortRiskPriceByRatio(profitPrice, executionPrice, profitRiskRatio),
+      reward: calcShortReward(profitPrice, executionPrice),
+    };
+  }
+
+  if (lock.profitPrice && lock.riskPrice && lock.profitRiskRatio) {
+    const execution = riskPrice - (riskPrice - profitPrice) / (1 + profitRiskRatio);
+    values = {
+      profitPrice,
+      riskPrice,
+      profitRiskRatio,
+      executionPrice: execution,
+      reward: calcShortReward(profitPrice, execution),
+    };
+  }
+
+  if (lock.executionPrice && lock.riskPrice && lock.profitRiskRatio) {
+    const profit = executionPrice - (riskPrice - executionPrice) * profitRiskRatio;
+    values = {
+      executionPrice,
+      riskPrice,
+      profitRiskRatio,
+      profitPrice: profit,
+      reward: calcShortReward(profit, executionPrice),
+    };
+  }
+
+  if (lock.executionPrice && lock.profitRiskRatio && lock.reward) {
+    const profit = executionPrice * (1 - reward);
+    values = {
+      executionPrice,
+      profitRiskRatio,
+      reward,
+      profitPrice: profit,
+      riskPrice: calcShortRiskPriceByRatio(profit, executionPrice, profitRiskRatio),
+    };
+  }
+
+  if (lock.profitPrice && lock.profitRiskRatio && lock.reward) {
+    const execution = profitPrice / (1 - reward);
+    values = {
+      profitPrice,
+      profitRiskRatio,
+      reward,
+      executionPrice: execution,
+      riskPrice: calcShortRiskPriceByRatio(profitPrice, execution, profitRiskRatio),
+    };
+  }
+
+  if (values) {
+    return roundObject(values, 3);
+  }
+  throw new Error(`calcShortProfitRiskValues without lock given: ${JSON.stringify(lock)}`);
 }
