@@ -1,11 +1,13 @@
 import { StockDataParserClient } from './StockProviderClient';
 
 class GwClient extends StockDataParserClient {
-  parseData({ pePage, pbPage, epsPage, dividendPage }) {
-    const pe = this._extractPEorPB(pePage);
-    const pb = this._extractPEorPB(pbPage);
-    const dividends = this._extractDividends(dividendPage).slice(0, 5);
-    const { name, price, eps, netValue } = this._extractBasicInfo(epsPage);
+  parseData({ epsPage, DATA_PE_PB_DIVIDEND }) {
+    const dataPePbDividend = JSON.parse(DATA_PE_PB_DIVIDEND);
+    const pe = this._extractPE(dataPePbDividend);
+    const pb = this._extractPB(dataPePbDividend);
+    const dividends = this._extractDividends(dataPePbDividend).slice(0, 5);
+    // TODO: Upgrade EPS data
+    const { name = 'TODO_EPS_DATA', price = 168, eps = 10, netValue = 10 } = epsPage ? this._extractBasicInfo(epsPage) : {};
     return {
       pe,
       pb,
@@ -37,11 +39,20 @@ class GwClient extends StockDataParserClient {
     return rows.slice(0, 4).reduce((eps, row) => eps + parseFloat(row.children[1].textContent), 0);
   }
 
-  _extractPEorPB(page) {
-    const doc = this._parseDomFromString(page);
-    const table = doc.querySelector('table.tb.rw4n.tbhl');
-    const rows = Array.from(table.querySelectorAll('tr')).slice(1);
-    const values = rows.map(tr => +tr.children[1].textContent).filter(v => !Number.isNaN(v));
+  _extractDividends(data) {
+    return data.map(v => v.dividendYield);
+  }
+
+  _extractPE(data) {
+    const values = data.map(v => v.priceToEarningRatio);
+    return {
+      in5yrs: this._getFeaturedValues(values.slice(0, 60)),
+      in3yrs: this._getFeaturedValues(values.slice(0, 30)),
+    };
+  }
+
+  _extractPB(data) {
+    const values = data.map(v => v.priceBookRatio);
     return {
       in5yrs: this._getFeaturedValues(values.slice(0, 60)),
       in3yrs: this._getFeaturedValues(values.slice(0, 30)),
@@ -65,13 +76,6 @@ class GwClient extends StockDataParserClient {
     }
 
     return { top, mid, low };
-  }
-
-  _extractDividends(page) {
-    const doc = this._parseDomFromString(page);
-    const table = doc.querySelector('table.tb.rw5n.tbhl');
-    const rows = Array.from(table.querySelectorAll('tr')).slice(1);
-    return rows.map(tr => +tr.children[3].textContent);
   }
 }
 

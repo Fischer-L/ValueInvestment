@@ -1,3 +1,5 @@
+const EXTENSION_VERSION = '1.0';
+
 async function messageBackground(msg) {
   return new Promise((resolve, reject) => {
     chrome.runtime.sendMessage(msg, resp => {
@@ -26,6 +28,10 @@ window.addEventListener('message', async function (event) {
         break;
 
       case 'CMD_EXTENSION_ACK':
+        const { CLIENT_VERSION } = data.body.params || {};
+        if (CLIENT_VERSION !== EXTENSION_VERSION) {
+          throw new Error(`CLIENT_VERSION: ${CLIENT_VERSION} mismatches EXTENSION_VERSION: ${EXTENSION_VERSION}`);
+        }
         resp = data.body;
         break;
     }
