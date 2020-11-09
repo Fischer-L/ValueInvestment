@@ -40,10 +40,11 @@
 //   },
 // }
 class StockProviderClient {
-  constructor({ apiClient, dataParsers }) {
+  constructor({ apiClient, extensionClient, dataParsers }) {
     this._names = {};
     this._stocks = {};
     this._api = apiClient;
+    this._extension = extensionClient;
     this._dataParsers = dataParsers;
   }
 
@@ -100,53 +101,7 @@ class StockProviderClient {
   }
 
   _fetch(id) {
-    return this._talkToExtension({ cmd: 'CMD_STOCK_DATA', params: { id } });
-  }
-
-  async _talkToExtension(msgBody) {
-    let extension;
-    if (!this._extensionACK) {
-      extension = await this._helloExtension();
-    } else if (this._extensionACK.asked) {
-      extension = await this._helloExtension();
-    } else {
-      // Not yet ask so let the request pass
-    }
-    if (extension === false) {
-      return null;
-    }
-    return new Promise(resolve => {
-      const onMsg = evt => {
-        if (evt.data && evt.data.from === 'extension') {
-          window.removeEventListener('message', onMsg);
-          resolve(evt.data.body);
-        }
-      };
-      window.addEventListener('message', onMsg);
-      window.postMessage({ from: 'web', body: msgBody });
-    });
-  }
-
-  _helloExtension() {
-    if (!this._extensionACK) {
-      this._extensionACK = {
-        asked: false,
-      };
-      this._extensionACK.promise = new Promise(resolve => {
-        this._talkToExtension({ cmd: 'CMD_EXTENSION_ACK' })
-          .then(() => resolve(true))
-          .catch(e => {
-            console.error(e);
-            resolve(false);
-          });
-        setTimeout(() => {
-          console.warn('No ACK from the extension');
-          resolve(false);
-        }, 100);
-        this._extensionACK.asked = true;
-      });
-    }
-    return this._extensionACK.promise;
+    return this._extension.talkToExtension({ cmd: 'CMD_STOCK_DATA', params: { id } });
   }
 }
 

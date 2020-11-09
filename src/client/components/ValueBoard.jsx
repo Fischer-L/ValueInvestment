@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Header, Input } from 'semantic-ui-react';
 
-import { apiClient, getStockProvider } from '@/api/index';
+import { apiClient, extensionClient, getStockProvider } from '@/api/index';
 import { round } from '@/utils/round';
 import MARKET_TYPE from '@/utils/marketType';
 import Loading from '@/components/Loading';
@@ -13,7 +13,7 @@ import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
 import '@/css/ValueBoard.scss';
 
-const stockProvider = getStockProvider({ apiClient, domParser: new DOMParser() });
+const stockProvider = getStockProvider({ apiClient, extensionClient, domParser: new DOMParser() });
 
 const MS_EST_DEALY = 500;
 
