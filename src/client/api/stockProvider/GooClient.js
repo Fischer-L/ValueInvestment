@@ -8,6 +8,22 @@ class GooClient extends StockDataParserClient {
 
   parseData({ dividendPolicyPage }) {
     const doc = this._parseDomFromString(dividendPolicyPage);
+    return {
+      name: this._extractName(doc),
+      price: this._extractPrice(doc),
+      dividendPolicy: this._extractDividendPolicy(doc),
+    };
+  }
+
+  _extractName(doc) {
+    return doc.title.split(' ')[1];
+  }
+
+  _extractPrice(doc) {
+    return +doc.querySelectorAll('table.solid_1_padding_3_1_tbl tr')[3].querySelectorAll('td')[0].textContent;
+  }
+
+  _extractDividendPolicy(doc) {
     const table = doc.querySelector('#divDetail table');
     const tBodies = Array.from(table.tBodies);
     const dividendRates = [];
@@ -27,9 +43,7 @@ class GooClient extends StockDataParserClient {
     const smoothAvg = sumOf(smoothRatesIn5yrs) / smoothRatesIn5yrs.length;
 
     return {
-      dividendPolicy: {
-        in5yrs: { avg, smoothAvg },
-      },
+      in5yrs: { avg, smoothAvg },
     };
   }
 

@@ -15,6 +15,7 @@
 //     },
 //   },
 //   pe: {
+//     all: [ 10, 11, 12, ... ],
 //     in5yrs: {
 //       top: 50,
 //       mid: 30,
@@ -27,6 +28,7 @@
 //     },
 //   },
 //   pb: {
+//     all: [ 1, 1.1, 1.2, ... ],
 //     in5yrs: {
 //       top: 1.5,
 //       mid: 1.2,
@@ -66,37 +68,44 @@ class StockProviderClient {
       this._stocks[id] = null;
     }
 
-    if (!this._stocks[id]) {
-      if (this._ongoingFetch) await this._ongoingFetch;
-      this._ongoingFetch = null;
-
-      this._stocks[id] = {};
-      this._stocks[id].promise = this._ongoingFetch = new Promise(async (resolve, reject) => {
-        try {
-          const data = await this._fetch(id);
-          if (!data) {
-            // Maybe no extension. This is expected so simply return null.
-            resolve(null);
-            return;
-          }
-          if (data.error) {
-            throw data.error;
-          }
-
-          this._stocks[id].data = Object.entries(this._dataParsers).reduce((_data, [ key, parser ]) => ({
-            ..._data,
-            ...parser.parseData(data.result[key]),
-          }), {});
-          this._stocks[id].data.id = id;
-
-          resolve(this._stocks[id].data);
-        } catch (e) {
-          this._stocks[id] = null;
-          console.error(e);
-          reject(e);
-        }
-      });
+    if (this._ongoingFetch) {
+      await this._ongoingFetch;
     }
+    this._ongoingFetch = null;
+
+    if (this._stocks[id]) {
+      return this._stocks[id].promise;
+    }
+    this._stocks[id] = {};
+
+    this._stocks[id].promise = this._ongoingFetch = new Promise(async (resolve, reject) => {
+      try {
+        const rawData = await this._fetch(id);
+        if (!rawData) {
+          // Maybe no extension. This is expected so simply return null.
+          resolve(null);
+          return;
+        }
+        if (rawData.error) {
+          throw rawData.error;
+        }
+
+        const data = Object.entries(this._dataParsers).reduce((_data, [ key, parser ]) => ({
+          ..._data,
+          ...parser.parseData(rawData.result[key]),
+        }), {});
+
+        data.id = id;
+        data.netValue = data.price / data.pb.all[0];
+
+        this._stocks[id].data = data;
+        resolve(this._stocks[id].data);
+      } catch (e) {
+        this._stocks[id] = null;
+        console.error(e);
+        reject(e);
+      }
+    });
     return this._stocks[id].promise;
   }
 
