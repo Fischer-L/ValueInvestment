@@ -43,7 +43,7 @@ class GwClient extends StockDataParserClient {
   }
 
   _getFeaturedValues(values) {
-    const sorted = values.slice().sort((a, b) => b - a);
+    const sorted = values.filter(v => v > 0).sort((a, b) => b - a);
     const len = sorted.length;
     const top = sorted[0];
     const low = sorted[len - 1];
