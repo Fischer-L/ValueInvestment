@@ -4,11 +4,11 @@
 //   name: 'Stock',
 //   price: 100,
 //   eps: 12,
-//   netValue: 30,
-//   dividends: [
+//   bookValue: 30,
+//   cashDivs: [
 //     5, 4.5, 4.8, 4.2, 4,
 //   ],
-//   dividendPolicy: {
+//   cashPayoutRatio: {
 //     in5yrs: {
 //       avg: 0.66,
 //       smoothAvg: 0.68 // Rid of the highest and lowest rate
@@ -96,7 +96,7 @@ class StockProviderClient {
         }), {});
 
         data.id = id;
-        data.netValue = data.price / data.pb.all[0];
+        data.bookValue = data.price / data.pb.all[0];
 
         this._stocks[id].data = data;
         resolve(this._stocks[id].data);

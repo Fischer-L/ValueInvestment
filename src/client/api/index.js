@@ -8,7 +8,7 @@ const apiClient = axios.create({
 });
 
 const extensionClient = {
-  _version: '1.2',
+  _version: '1.3',
 
   async talkToExtension(msgBody) {
     let extension;

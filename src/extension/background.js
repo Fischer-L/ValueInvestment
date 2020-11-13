@@ -6,11 +6,11 @@ class GwServer {
 
   async get(id) {
     try {
-      const [ DATA_EPS, DATA_PE_PB_DIVIDEND ] = await Promise.all([
+      const [ DATA_EPS, DATA_PE_PB ] = await Promise.all([
         this._getPage('DATA_EPS', id),
-        this._getPage('DATA_PE_PB_DIVIDEND', id),
+        this._getPage('DATA_PE_PB', id),
       ]);
-      return { DATA_EPS, DATA_PE_PB_DIVIDEND };
+      return { DATA_EPS, DATA_PE_PB };
     } catch (e) {
       throw e;
     }
@@ -25,7 +25,7 @@ class GwServer {
         path = `/stock/${id}/financial-statements/eps-data`;
         break;
 
-      case 'DATA_PE_PB_DIVIDEND':
+      case 'DATA_PE_PB':
         path = `/stock/${id}/enterprise-value/data`;
         break;
     }

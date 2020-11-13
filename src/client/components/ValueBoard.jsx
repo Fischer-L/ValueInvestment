@@ -108,12 +108,12 @@ class ValueBoard extends ClickableComponent {
     };
 
     this.calcPricesByDividends = ({ stockData, forecastEPS, forecastDividend }) => {
-      const { eps, dividends, dividendPolicy: { in5yrs: rate } } = stockData;
+      const { eps, cashDivs, cashPayoutRatio: { in5yrs: ratio } } = stockData;
       const currEPS = forecastEPS || eps;
-      const currDividend = forecastDividend || dividends[0];
-      const avgDividend = dividends.reduce((sum, v) => sum + v, 0) / dividends.length;
-      const estDividend = currEPS * rate.avg;
-      const smoothEstDividend = currEPS * rate.smoothAvg;
+      const currDividend = forecastDividend || cashDivs[0];
+      const avgDividend = cashDivs.reduce((sum, v) => sum + v, 0) / cashDivs.length;
+      const estDividend = currEPS * ratio.avg;
+      const smoothEstDividend = currEPS * ratio.smoothAvg;
       return {
         current: this._round([ currDividend, currDividend * 40, currDividend * 25, currDividend * 16 ]),
         average: this._round([ avgDividend, avgDividend * 40, avgDividend * 25, avgDividend * 16 ]),
@@ -123,13 +123,13 @@ class ValueBoard extends ClickableComponent {
     };
 
     this.calcPricesByPB = ({ stockData }) => {
-      const { netValue, pb } = stockData;
+      const { bookValue, pb } = stockData;
       return ['in5yrs', 'in3yrs'].reduce((pricesByPB, period) => {
         const { top, mid, low } = pb[period];
         pricesByPB[period] = this._round([
-          [netValue * top, top],
-          [netValue * mid, mid],
-          [netValue * low, low],
+          [bookValue * top, top],
+          [bookValue * mid, mid],
+          [bookValue * low, low],
         ]);
         return pricesByPB;
       }, {});
@@ -137,7 +137,7 @@ class ValueBoard extends ClickableComponent {
   }
 
   renderPanel() {
-    const { eps, price, dividends } = this.state.stockData;
+    const { eps, price, cashDivs } = this.state.stockData;
     return (
       <table className="valueBoard-panel">
         <tbody>
@@ -156,7 +156,7 @@ class ValueBoard extends ClickableComponent {
               { round(eps) }
             </td>
             <td className="valueBoard-penalCell">
-              { round(dividends[0]) }
+              { round(cashDivs[0]) }
             </td>
             <td className="valueBoard-penalCell">
               <Input

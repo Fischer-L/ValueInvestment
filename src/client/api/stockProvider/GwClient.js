@@ -1,27 +1,21 @@
 import { StockDataParserClient } from './StockProviderClient';
 
 class GwClient extends StockDataParserClient {
-  parseData({ DATA_EPS, DATA_PE_PB_DIVIDEND }) {
+  parseData({ DATA_EPS, DATA_PE_PB }) {
     const dataEps = JSON.parse(DATA_EPS);
-    const dataPePbDividend = JSON.parse(DATA_PE_PB_DIVIDEND);
+    const dataPePb = JSON.parse(DATA_PE_PB);
     const eps = this._extractEPS(dataEps);
-    const pe = this._extractPE(dataPePbDividend);
-    const pb = this._extractPB(dataPePbDividend);
-    const dividends = this._extractDividends(dataPePbDividend);
+    const pe = this._extractPE(dataPePb);
+    const pb = this._extractPB(dataPePb);
     return {
       pe,
       pb,
-      dividends,
       eps,
     };
   }
 
   _extractEPS(data) {
     return data.map(v => v.beps).slice(0, 4).reduce((quarterly, total) => quarterly + total, 0);
-  }
-
-  _extractDividends(data) {
-    return data.map(v => v.dividendYield).slice(0, 5);
   }
 
   _extractPE(data) {
