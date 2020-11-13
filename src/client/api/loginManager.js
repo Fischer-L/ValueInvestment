@@ -1,10 +1,10 @@
 import { cookies } from '@/utils';
 import { apiClient } from '@/api/index';
-import { LOGIN_CLIENT_KEY, LOGIN_CLIENT_VALUE } from '~/build/config_client';
+import { LOCAL_PORT, LOGIN_CLIENT_KEY, LOGIN_CLIENT_VALUE } from '~/build/config_client';
 
 const loginManager = {
   allowLogin() {
-    return window.location.protocol === 'https:' || window.location.host === 'localhost:9981';
+    return window.location.protocol === 'https:' || window.location.host === `localhost:${LOCAL_PORT}`;
   },
 
   isLogin() {
