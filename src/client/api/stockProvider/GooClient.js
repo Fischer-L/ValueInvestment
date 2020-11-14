@@ -1,17 +1,17 @@
 import { StockDataParserClient } from './StockProviderClient';
 
-const YEARS_TO_EXTRACT = 8;
-
 const sumOf = nums => nums.reduce((sum, n) => sum + n, 0);
 
 class GooClient extends StockDataParserClient {
 
   parseData({ dividendPolicyPage }) {
     const doc = this._parseDomFromString(dividendPolicyPage);
+    const rows = this._extracTableRows(doc, 8);
     return {
       name: this._extractName(doc),
       price: this._extractPrice(doc),
-      dividendPolicy: this._extractDividendPolicy(doc),
+      cashDivs: this._extractCashDivs(rows.slice(0, 5)),
+      cashPayoutRatio: this._extractCashPayoutRatio(rows),
     };
   }
 
@@ -23,47 +23,59 @@ class GooClient extends StockDataParserClient {
     return +doc.querySelectorAll('table.solid_1_padding_3_1_tbl tr')[3].querySelectorAll('td')[0].textContent;
   }
 
-  _extractDividendPolicy(doc) {
-    const table = doc.querySelector('#divDetail table');
-    const tBodies = Array.from(table.tBodies);
-    const dividendRates = [];
-    while (tBodies.length && dividendRates.length < YEARS_TO_EXTRACT) {
-      dividendRates.push(...this._extractRates(tBodies.shift()));
-    }
+  _extractCashDivs(tableRows) {
+    return tableRows
+      .map(tr => {
+        const div = parseFloat(tr.querySelectorAll('td')[3].textContent);
+        return Number.isNaN(div) ? 0 : div;
+      });
+  }
 
-    const ratesIn5yrs = dividendRates.slice(0, 5);
-    const avg = sumOf(ratesIn5yrs) / ratesIn5yrs.length;
+  _extractCashPayoutRatio(tableRows) {
+    const ratios = tableRows
+      .map(tr => {
+        const ratio = parseFloat(tr.querySelectorAll('td')[21].textContent);
+        return Number.isNaN(ratio) || ratio <= 0 ? null : ratio / 100;
+      })
+      .filter(ratio => ratio !== null);
 
-    const smoothRatesIn5yrs = dividendRates.slice(0, 7);
-    if (smoothRatesIn5yrs.length >= 4) {
-      smoothRatesIn5yrs.sort();
-      smoothRatesIn5yrs.pop();
-      smoothRatesIn5yrs.shift();
+    const ratiosIn5yrs = ratios.slice(0, 5);
+    const avg = sumOf(ratiosIn5yrs) / ratiosIn5yrs.length;
+
+    const smoothRatiosIn5yrs = ratios.slice(0, 7);
+    if (smoothRatiosIn5yrs.length >= 4) {
+      smoothRatiosIn5yrs.sort();
+      smoothRatiosIn5yrs.pop();
+      smoothRatiosIn5yrs.shift();
     }
-    const smoothAvg = sumOf(smoothRatesIn5yrs) / smoothRatesIn5yrs.length;
+    const smoothAvg = sumOf(smoothRatiosIn5yrs) / smoothRatiosIn5yrs.length;
 
     return {
       in5yrs: { avg, smoothAvg },
     };
   }
 
-  _extractRates(tBody) {
-    const trs = Array.from(tBody.querySelectorAll('tr'));
+  _extracTableRows(doc, YEARS_TO_EXTRACT) {
     let yrNow = (new Date()).getFullYear();
     const yrEnd = yrNow - YEARS_TO_EXTRACT + 1;
-    const rates = [];
-    while (trs.length && yrNow >= yrEnd) {
-      const tr = trs.shift();
-      const tds = tr.querySelectorAll('td');
-      if (yrNow === parseInt(tds[0].textContent, 10)) {
-        const rate = parseFloat(tds[21].textContent);
-        if (!Number.isNaN(rate)) {
-          rates.push(rate / 100);
+
+    const tBodies = Array.from(doc.querySelector('#divDetail table').tBodies);
+    const rows = [];
+
+    while (tBodies.length && rows.length < YEARS_TO_EXTRACT) {
+      const tBody = tBodies.shift();
+      const trs = Array.from(tBody.querySelectorAll('tr'));
+      while (trs.length && yrNow >= yrEnd) {
+        const tr = trs.shift();
+        const tds = tr.querySelectorAll('td');
+        if (yrNow === parseInt(tds[0].textContent, 10)) {
+          rows.push(tr);
+          yrNow--;
         }
-        yrNow--;
       }
     }
-    return rates;
+
+    return rows;
   }
 }
 
