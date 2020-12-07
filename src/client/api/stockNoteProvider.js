@@ -39,6 +39,11 @@ const stockNoteProvider = {
   },
 
   async get(id) {
+    if (!id) {
+      throw new Error(`Get a stock note with invalid id, note = ${id}`);
+    }
+    id = id.toUpperCase();
+
     if (this._ongoingPromises[id]) {
       await this._ongoingPromises[id];
     }
@@ -56,6 +61,11 @@ const stockNoteProvider = {
   },
 
   async addNote(id, note) {
+    if (!id || !note) {
+      throw new Error(`Add a stock note with invalid id, note = ${id}, ${JSON.stringify(note)}`);
+    }
+    id = id.toUpperCase();
+
     if (this._ongoingPromises[id]) {
       await this._ongoingPromises[id];
     }
@@ -78,6 +88,11 @@ const stockNoteProvider = {
   },
 
   async updateNote(id, note) {
+    if (!id || !note) {
+      throw new Error(`Update a stock note with invalid id, note = ${id}, ${JSON.stringify(note)}`);
+    }
+    id = id.toUpperCase();
+
     if (this._ongoingPromises[id]) {
       await this._ongoingPromises[id];
     }
@@ -103,6 +118,11 @@ const stockNoteProvider = {
   },
 
   async deleteNote(id, note) {
+    if (!id || !note) {
+      throw new Error(`Delete a stock note with invalid id, note = ${id}, ${JSON.stringify(note)}`);
+    }
+    id = id.toUpperCase();
+
     if (this._ongoingPromises[id]) {
       await this._ongoingPromises[id];
     }
@@ -115,6 +135,8 @@ const stockNoteProvider = {
       const i = notes.findIndex(currentNote => currentNote.createTime === note.createTime);
       if (i < 0) {
         throw new Error(`Delete an unknown note: ${note}`);
+      } else if (i === 0 && notes.length === 1) {
+        return this.clear(id);
       }
       this._ongoingPromises[id] = apiClient.post(`/stocknote/${id}/note`, { action: 'delete', payload: { note } });
       await this._ongoingPromises[id];
@@ -126,12 +148,17 @@ const stockNoteProvider = {
     }
   },
 
-  async remove(id) {
+  async clear(id) {
+    if (!id) {
+      throw new Error(`Clear a stock note with invalid id, note = ${id}`);
+    }
+    id = id.toUpperCase();
+
     if (this._ongoingPromises[id]) {
       await this._ongoingPromises[id];
     }
     if (!this._stockNotes[id]) {
-      console.warn(`Remove an unknown stock note: ${id}`);
+      console.warn(`Clear an unknown stock note: ${id}`);
       return;
     }
 
