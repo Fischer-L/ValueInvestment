@@ -1,4 +1,4 @@
-FROM foxbrush/node10-15-1-py2 AS base
+FROM node:10.15.1-alpine AS base
 
 RUN mkdir -p /app
 WORKDIR /app
