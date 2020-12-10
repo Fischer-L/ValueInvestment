@@ -68,17 +68,12 @@ class StockProviderClient {
       this._stocks[id] = null;
     }
 
-    if (this._ongoingFetch) {
-      await this._ongoingFetch;
-    }
-    this._ongoingFetch = null;
-
     if (this._stocks[id]) {
       return this._stocks[id].promise;
     }
     this._stocks[id] = {};
 
-    this._stocks[id].promise = this._ongoingFetch = new Promise(async (resolve, reject) => {
+    this._stocks[id].promise = new Promise(async resolve => {
       try {
         const rawData = await this._fetch(id);
         if (!rawData) {
@@ -103,7 +98,7 @@ class StockProviderClient {
       } catch (e) {
         this._stocks[id] = null;
         console.error(e);
-        reject(e);
+        resolve(null);
       }
     });
     return this._stocks[id].promise;
