@@ -18,7 +18,10 @@ const toDateInTW = time => (time ? (new Date(time + 8 * 60 * 60 * 1000)).toISOSt
 /* eslint-disable */
 const getNoteTemplate = () => ({
   trade: {
-    comment: '- 獲利價, 進場價, 轉利價, 風報比, 報酬率%',
+    comment:
+      '- 獲利價, 進場價, 轉利價, 風報比, 報酬率% \n' +
+      '- 買進理由: \n' +
+      '- 賣出理由: ',
   },
   value: {
     comment:
