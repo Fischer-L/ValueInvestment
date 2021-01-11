@@ -17,10 +17,9 @@ const EXPECTED_DATA = {
 const gooClient = new GooClient({ domParser: fakeDOMParser() });
 
 describe('GooClient', () => {
-  it('should parse name and price', async () => {
+  it('should parse name', async () => {
     const data = gooClient.parseData({ dividendPolicyPage });
     expect(data.name).toBe(EXPECTED_DATA.name);
-    expect(data.price).toBe(EXPECTED_DATA.price);
   });
 
   it('should parse cash dividends data', async () => {

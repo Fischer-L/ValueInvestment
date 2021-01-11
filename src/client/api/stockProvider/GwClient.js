@@ -1,9 +1,10 @@
 import { StockDataParserClient } from './StockProviderClient';
 
 class GwClient extends StockDataParserClient {
-  parseData({ DATA_EPS, DATA_PE_PB }) {
+  parseData({ DATA_PRICE, DATA_EPS, DATA_PE_PB }) {
     const dataEps = JSON.parse(DATA_EPS);
     const dataPePb = JSON.parse(DATA_PE_PB);
+    const dataPrice = JSON.parse(DATA_PRICE);
     const eps = this._extractEPS(dataEps);
     const pe = this._extractPE(dataPePb);
     const pb = this._extractPB(dataPePb);
@@ -11,6 +12,7 @@ class GwClient extends StockDataParserClient {
       pe,
       pb,
       eps,
+      price: dataPrice.close,
     };
   }
 

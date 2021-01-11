@@ -9,7 +9,6 @@ class GooClient extends StockDataParserClient {
     const rows = this._extracTableRows(doc, 8);
     return {
       name: this._extractName(doc),
-      price: this._extractPrice(doc),
       cashDivs: this._extractCashDivs(rows.slice(0, 5)),
       cashPayoutRatio: this._extractCashPayoutRatio(rows),
     };
@@ -17,10 +16,6 @@ class GooClient extends StockDataParserClient {
 
   _extractName(doc) {
     return doc.title.split(' ')[1];
-  }
-
-  _extractPrice(doc) {
-    return +doc.querySelectorAll('table.solid_1_padding_3_1_tbl tr')[3].querySelectorAll('td')[0].textContent;
   }
 
   _extractCashDivs(tableRows) {
@@ -55,22 +50,19 @@ class GooClient extends StockDataParserClient {
     };
   }
 
-  _extracTableRows(doc, YEARS_TO_EXTRACT) {
-    let yrNow = (new Date()).getFullYear();
-    const yrEnd = yrNow - YEARS_TO_EXTRACT + 1;
-
-    const tBodies = Array.from(doc.querySelector('#divDetail table').tBodies);
+  _extracTableRows(doc, yearsToExtract) {
     const rows = [];
+    const tBodies = Array.from(doc.querySelector('#divDetail table').tBodies);
 
-    while (tBodies.length && rows.length < YEARS_TO_EXTRACT) {
+    while (yearsToExtract && tBodies.length) {
       const tBody = tBodies.shift();
       const trs = Array.from(tBody.querySelectorAll('tr'));
-      while (trs.length && yrNow >= yrEnd) {
+      while (yearsToExtract && trs.length) {
         const tr = trs.shift();
         const tds = tr.querySelectorAll('td');
-        if (yrNow === parseInt(tds[0].textContent, 10)) {
+        if (!Number.isNaN(parseInt(tds[0].textContent, 10))) {
           rows.push(tr);
-          yrNow--;
+          yearsToExtract--;
         }
       }
     }

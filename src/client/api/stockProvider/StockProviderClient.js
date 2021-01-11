@@ -85,7 +85,7 @@ class StockProviderClient {
           throw rawData.error;
         }
 
-        const data = Object.entries(this._dataParsers).reduce((_data, [ key, parser ]) => ({
+        const data = this._dataParsers.reduce((_data, [ key, parser ]) => ({
           ..._data,
           ...parser.parseData(rawData.result[key]),
         }), {});

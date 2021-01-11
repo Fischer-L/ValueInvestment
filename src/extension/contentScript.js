@@ -1,4 +1,4 @@
-const EXTENSION_VERSION = '1.3';
+const EXTENSION_VERSION = '1.3.1';
 
 async function messageBackground(msg) {
   return new Promise((resolve, reject) => {
