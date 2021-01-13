@@ -8,7 +8,7 @@ const apiClient = axios.create({
 });
 
 const extensionClient = {
-  _version: '1.3',
+  _version: '1.3.1',
 
   async talkToExtension(msgBody) {
     let extension;
@@ -17,7 +17,7 @@ const extensionClient = {
     } else if (this._extensionACK.asked) {
       extension = await this._helloExtension();
     } else {
-      // Not yet ask so let the request pass
+      // Not yet ask so this must be the 1st `_helloExtension` call. Let the request pass.
     }
     if (extension === false) {
       return null;

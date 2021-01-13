@@ -8,10 +8,11 @@ export default function getStockProvider(params) {
   if (!provider) {
     provider = new StockProviderClient({
       ...params,
-      dataParsers: {
-        gwStockData: new GwClient(params),
-        gooStockData: new GooClient(params),
-      },
+      dataParsers: [
+        // Notice: The order matters.
+        [ 'gooStockData', new GooClient(params) ],
+        [ 'gwStockData', new GwClient(params) ],
+      ],
     });
   }
   return provider;
