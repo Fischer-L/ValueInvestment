@@ -18,6 +18,6 @@ script:
 deploy:
   skip_cleanup: true
   provider: script
-  script: yarn docker-run-test && yarn docker-stop-test && bash src/build/heroku_release.sh
+  script: yarn docker-build-latest && yarn docker-test-latest && yarn docker-stop-latest && bash src/build/heroku_release.sh
   on:
     branch: master

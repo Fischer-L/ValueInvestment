@@ -15,8 +15,10 @@
     "build-local": "yarn clean && webpack --config src/build/webpack.client.config.js",
     "build-prod": "yarn clean; ENV=production webpack --config src/build/webpack.client.config.js",
     "run-svr": "nodemon ./src/server/server.js",
-    "docker-run-test": "yarn docker-stop-test; docker build --target test --force-rm -t local/value-investment:test .; docker run -p 9000:9000 --name value-investment local/value-investment:test",
-    "docker-stop-test": "docker stop value-investment; docker container rm value-investment; docker image rm local/value-investment:test"
+    "docker-build-latest": "docker build --force-rm -t registry.heroku.com/value-investment/web:latest .",
+    "docker-test-latest": "docker run -p 9000:9000 -e=TEST_INIT=TEST_INIT --name value-investment registry.heroku.com/value-investment/web:latest",
+    "docker-stop-latest": "docker stop value-investment; docker container rm value-investment",
+    "docker-rm-latest": "docker image rm registry.heroku.com/value-investment/web:latest"
   },
   "devDependencies": {
     "@babel/cli": "7.1.0",

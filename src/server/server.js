@@ -2,7 +2,7 @@ const express = require('express');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 
-const { env, port, publicDir } = require('../build/config_server');
+const { port, publicDir } = require('../build/config_server');
 const middlewares = require('./middlewares');
 const initStocknoteRoute = require('./routes/stocknoteRoute');
 const initStockinfoRoute = require('./routes/stockinfoRoute');
@@ -33,5 +33,8 @@ app.post('/logout', middlewares.logout);
 
 app.listen(PORT, function () {
   console.log('listening on port:', PORT, __dirname);
-  if (env === 'docker-test') process.exit(0);
+  if (process.env.TEST_INIT === 'TEST_INIT') {
+    console.log('TEST_INIT succeeds, leaving...');
+    setTimeout(() => process.exit(0));
+  }
 });
