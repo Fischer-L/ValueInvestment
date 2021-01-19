@@ -299,23 +299,20 @@ class NoteBoard extends ClickableComponent {
   }
 
   render() {
-    let content = null;
     const { error, loading } = this.state;
 
-    if (error) {
-      content = ErrorDuck(error.toString());
-    } else if (loading) {
-      content = Loading();
-    } else {
-      content = [
-        this.NewNoteElem(),
-        this.Notes(),
-      ];
-    }
+    const errorMsg = error ? error.toString() : '';
+
+    const content = [
+      this.NewNoteElem(),
+      this.Notes(),
+    ];
 
     return (
       <section className="noteBoard">
-        { content }
+        <div style={show(loading)}>{ Loading() }</div>
+        <div style={show(!loading && errorMsg)}>{ ErrorDuck(errorMsg) }</div>
+        <div style={show(!loading)}>{ content }</div>
         { this.DeleteNotePrompt() }
       </section>
     );
