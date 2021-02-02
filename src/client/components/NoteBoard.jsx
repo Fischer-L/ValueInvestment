@@ -42,7 +42,8 @@ const getNoteTemplate = () => ({
   },
   technicals: {
     comment:
-      '- \n' +
+      '- 60分K: \n' +
+      '- 日K: \n' +
       '- 週K: \n' +
       '- 月K: ',
   },
