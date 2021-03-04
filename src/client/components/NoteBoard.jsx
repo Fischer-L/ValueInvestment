@@ -51,7 +51,6 @@ const getNoteTemplate = () => ({
     comment:
       '- 外資: \n' +
       '- 投信: \n' +
-      '- 主力: \n' +
       '- 大戶: \n' +
       '- 散戶: \n' +
       '- 融資: \n' +
