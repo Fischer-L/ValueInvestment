@@ -6,7 +6,7 @@ import '@/css/App.scss';
 import { loginManager } from '@/api/index';
 import MARKET_TYPE from '@/utils/marketType';
 import MainBar from '@/components/MainBar';
-import NoteBoard from '@/components/NoteBoard';
+import NoteBoard from '@/components/NoteBoard/NoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoardTW from '@/components/BookmarkBoardTW';
 import BookmarkBoardUS from '@/components/BookmarkBoardUS';
