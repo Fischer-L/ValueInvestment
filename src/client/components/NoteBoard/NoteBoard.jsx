@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { show } from '@/utils/showDisplay';
-import stockNoteProvider from '@/api/stockNoteProvider';
 import Loading from '@/components/Loading';
 import ErrorDuck from '@/components/ErrorDuck';
 import Prompt, { ACTION } from '@/components/Prompt';
@@ -12,61 +11,11 @@ import { Note, NewNoteElem } from './utilComponents';
 
 import '@/css/NoteBoard.scss';
 
-/* eslint-disable */
-const getNoteTemplate = () => ({
-  trade: {
-    comment:
-      '- 獲利價, 進場價, 轉利價, 風報比, 報酬率% \n' +
-      '- 買進理由: \n' +
-      '- 賣出理由: ',
-  },
-  value: {
-    comment:
-      '- By PE: \n' +
-      '  - Good: \n' +
-      '  - Fair: \n' +
-      '  - Bad: \n' +
-      '\n' +
-      '- By Dividend: ',
-  },
-  fundamentals: {
-    comment:
-      '- 月營收: \n' +
-      '- 毛利: \n' +
-      '- 營利: \n' +
-      '- 公司: \n' +
-      '- 法人: ',
-  },
-  technicals: {
-    comment:
-      '- 60分K: \n' +
-      '- 日K: \n' +
-      '- 週K: \n' +
-      '- 月K: ',
-  },
-  chips: {
-    comment:
-      '- 外資: \n' +
-      '- 投信: \n' +
-      '- 大戶: \n' +
-      '- 散戶: \n' +
-      '- 融資: \n' +
-      '- 融券: ',
-  },
-});
-/* eslint-enable */
-
 const defaultState = () => ({
-  stockId: null,
-  stockNote: null,
   noteToEdit: null,
-  noteToDelete: null,
-
-  error: null,
-  loading: false,
-
   newNoteMode: false,
   defaultNote: null,
+  noteToDelete: null,
 });
 
 class NoteBoard extends ClickableComponent {
@@ -75,66 +24,13 @@ class NoteBoard extends ClickableComponent {
 
     this.state = defaultState();
 
-    this.loadStockNote = async (stockId, forceLoad) => {
-      if (!forceLoad && (this.state.loading || stockId === this.state.stockId)) {
-        return;
-      }
-      this.setState({ ...defaultState(), stockId, loading: true });
-      try {
-        const stockNote = await stockNoteProvider.get(stockId);
-        if (stockNote) {
-          stockNote.notes && stockNote.notes.sort((a, b) => b.createTime - a.createTime);
-          this.setState({ stockNote });
-        }
-      } catch (error) {
-        this.setState({ error });
-      }
-      this.setState({ loading: false });
-    };
-
-    this.closeNewNoteMode = () => {
-      this.setState({ newNoteMode: false, defaultNote: null });
-    };
-
-    this.openNewNoteMode = this.onClickDo((e, payload) => {
-      const defaultNote = (payload && payload.defaultNote) || getNoteTemplate();
-      this.setState({ newNoteMode: true, defaultNote });
-    });
-
-    this.saveNote = async ({ newNote }) => {
-      if (this.state.loading || !newNote) {
-        return;
-      }
-
-      this.setState({ error: null, loading: true });
-      try {
-        if (this.state.stockNote) {
-          await stockNoteProvider.addNote(this.state.stockId, newNote);
-        } else {
-          await stockNoteProvider.create(this.state.stockId, newNote);
-        }
-        this.closeNewNoteMode();
-        this.loadStockNote(this.state.stockId, true);
-      } catch (error) {
-        this.setState({ error, loading: false });
+    this.editNote = ({ originalNote }) => {
+      if (originalNote && !this.state.loading) {
+        this.setState({ noteToEdit: originalNote });
       }
     };
 
-    this.updateNote = async ({ newNote, originalNote }) => {
-      if (!newNote || !originalNote.createTime) {
-        return;
-      }
-
-      this.setState({ error: null, loading: true });
-      try {
-        newNote.createTime = originalNote.createTime;
-        await stockNoteProvider.updateNote(this.state.stockId, newNote);
-        this.loadStockNote(this.state.stockId, true);
-        this.closeEditNote();
-      } catch (error) {
-        this.setState({ error, loading: false });
-      }
-    };
+    this.closeEditNote = () => this.setState(() => ({ noteToEdit: null }));
 
     this.copyNote = ({ originalNote }) => {
       if (originalNote) {
@@ -142,49 +38,37 @@ class NoteBoard extends ClickableComponent {
       }
     };
 
-    this.editNote = ({ originalNote }) => {
-      if (originalNote && !this.state.loading) {
-        this.setState({ noteToEdit: originalNote });
-      }
-    };
+    this.openNewNoteMode = this.onClickDo((e, payload) => {
+      const defaultNote = (payload && payload.defaultNote) || this.props.noteTemplate;
+      this.setState({ newNoteMode: true, defaultNote });
+    });
+
+    this.closeNewNoteMode = () => this.setState(() => ({ newNoteMode: false, defaultNote: null }));
 
     this.promptDeleteNote = ({ originalNote }) => {
       if (originalNote) {
         this.setState({ noteToDelete: originalNote });
       }
     };
-
-    this.closeEditNote = () => this.setState({ noteToEdit: null });
-
-    this.deleteNote = async noteToDelete => {
-      if (!noteToDelete) {
-        return;
-      }
-      try {
-        this.setState({ error: null, loading: true });
-        await stockNoteProvider.deleteNote(this.state.stockId, noteToDelete);
-        this.loadStockNote(this.state.stockId, true);
-      } catch (error) {
-        this.setState({ error, loading: false });
-      }
-    };
   }
 
   renderNotes() {
-    const { copyNote, editNote, promptDeleteNote, updateNote, closeEditNote } = this;
-    const { stockNote, noteToEdit } = this.state;
-    if (stockNote) {
-      return stockNote.notes.map(note => {
+    const { copyNote, editNote, promptDeleteNote, closeEditNote } = this;
+    const { noteToEdit } = this.state;
+    const { notesData, whenUpdateNote } = this.props;
+
+    if (notesData) {
+      return notesData.map(note => {
         const editMode = !!(noteToEdit && noteToEdit.createTime === note.createTime);
         return (
           <section className="note" key={note.createTime}>
             <Note
               note={note}
               editMode={editMode}
-              whenSaveNote={updateNote}
-              whenCancelEditNote={closeEditNote}
-              whenCopyNote={copyNote}
               whenEditNote={editNote}
+              whenCancelEditNote={closeEditNote}
+              whenSaveNote={whenUpdateNote}
+              whenCopyNote={copyNote}
               whenDeleteNote={promptDeleteNote}
             />
           </section>
@@ -196,7 +80,6 @@ class NoteBoard extends ClickableComponent {
 
   renderNewNoteElem() {
     const { newNoteMode, defaultNote, noteToEdit } = this.state;
-    const { saveNote, openNewNoteMode, closeNewNoteMode } = this;
     if (noteToEdit) {
       return null;
     }
@@ -205,9 +88,9 @@ class NoteBoard extends ClickableComponent {
         key="NewNoteElem"
         newNoteMode={newNoteMode}
         defaultNote={defaultNote}
-        whenSaveNote={saveNote}
-        whenCancelNewNote={closeNewNoteMode}
-        whenOpenNewNoteMode={openNewNoteMode}
+        whenOpenNewNoteMode={this.openNewNoteMode}
+        whenCancelNewNote={this.closeNewNoteMode}
+        whenSaveNote={this.props.whenSaveNote}
       />
     );
   }
@@ -218,7 +101,7 @@ class NoteBoard extends ClickableComponent {
     }
     const onClose = ({ action }) => {
       if (action === ACTION.OK) {
-        this.deleteNote(this.state.noteToDelete);
+        this.fireCallback('whenDeleteNote', this.state.noteToDelete);
       }
       this.setState({ noteToDelete: null });
     };
@@ -226,9 +109,7 @@ class NoteBoard extends ClickableComponent {
   }
 
   render() {
-    const { error, loading } = this.state;
-
-    const errorMsg = error ? error.toString() : '';
+    const { loading, errorMsg } = this.props;
 
     const content = [
       this.renderNewNoteElem(),
@@ -245,17 +126,24 @@ class NoteBoard extends ClickableComponent {
     );
   }
 
-  componentDidMount() {
-    this.loadStockNote(this.props.stockId);
-  }
-
-  componentDidUpdate() {
-    this.loadStockNote(this.props.stockId);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.noteToEdit) {
+      this.closeEditNote();
+    }
+    if (prevState.newNoteMode || prevState.defaultNote) {
+      this.closeNewNoteMode();
+    }
   }
 }
 
 NoteBoard.propTypes = {
-  stockId: PropTypes.string.isRequired,
+  notesData: PropTypes.array,
+  noteTemplate: PropTypes.object.isRequired,
+  loading: PropTypes.bool,
+  errorMsg: PropTypes.string,
+  whenUpdateNote: PropTypes.func.isRequired,
+  whenDeleteNote: PropTypes.func.isRequired,
+  whenSaveNote: PropTypes.func.isRequired,
 };
 
 export default NoteBoard;
