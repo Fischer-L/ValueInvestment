@@ -6,7 +6,7 @@ import '@/css/App.scss';
 import { loginManager } from '@/api/index';
 import MARKET_TYPE from '@/utils/marketType';
 import MainBar from '@/components/MainBar';
-import NoteBoard from '@/components/NoteBoard/NoteBoard';
+import StockNoteBoard from '@/components/NoteBoard/StockNoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoardTW from '@/components/BookmarkBoardTW';
 import BookmarkBoardUS from '@/components/BookmarkBoardUS';
@@ -80,7 +80,7 @@ class App extends Component {
 
     this.renderNoteBoard = ({ stockId, isLogin, allowLogin }) => {
       if (allowLogin && isLogin) {
-        return <NoteBoard key="NoteBoard" stockId={stockId} />;
+        return <StockNoteBoard key="StockNoteBoard" stockId={stockId} />;
       }
       return null;
     };
