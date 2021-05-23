@@ -69,9 +69,12 @@ class Note extends ClickableComponent {
     };
 
     this.extraNoteFromDOM = noteRef => {
-      const note = [ 'trade', 'value', 'story', 'fundamentals', 'technicals', 'chips' ]
-        .map(key => [ key, noteRef.current.querySelector(`textarea.note-${key}`).value ])
+      // Don't know why. This is not a stateless functional component.
+      // But have to disable react/no-this-in-sfc, otherwise the Lint would complain.
+      const note = this.props.noteMate.fields // eslint-disable-line react/no-this-in-sfc
+        .map(([ key ]) => [ key, noteRef.current.querySelector(`textarea.note-${key}`).value ])
         .filter(([ key, comment ]) => !!comment); // eslint-disable-line no-unused-vars
+
       if (note.length) {
         return note.reduce((_note, [ key, comment ]) => {
           _note[key] = { comment };
@@ -91,9 +94,12 @@ class Note extends ClickableComponent {
     this.toDateInTW = time => (time ? (new Date(time + 8 * 60 * 60 * 1000)).toISOString().split('T')[0] : '');
   }
 
+  renderComments(note, noteMate, editMode) {
+    return noteMate.fields.map(([ key, header ]) => <Comment key={key} header={header} className={`note-${key}`} texts={this.commentOf(note[key])} editMode={editMode} />);
+  }
+
   render() {
-    const { note = {}, editMode } = this.props;
-    const { trade, value, story, fundamentals, technicals, chips, createTime } = note;
+    const { note = {}, noteMate, editMode } = this.props;
 
     this._data = {
       noteRef: React.createRef(),
@@ -104,18 +110,13 @@ class Note extends ClickableComponent {
       <div ref={this._data.noteRef}>
         { editMode ? <EditModeButtons whenOK={this.saveNote} whenCancel={this.cancelEditNote} /> : null }
         <Header className="note-header" as="h3">
-          操作策略
+          { noteMate.title }
           <Icon className="note-copyBtn" name="copy outline" size="tiny" style={show(!editMode)} onClick={this.onCopyNote} onTouchEnd={this.onCopyNote} />
           <Icon className="note-editBtn" name="edit outline" size="tiny" style={show(!editMode)} onClick={this.onEditNote} onTouchEnd={this.onEditNote} />
           <Icon className="note-deleteBtn" name="trash alternate outline" size="tiny" style={show(!editMode)} onClick={this.onDeletNote} onTouchEnd={this.onDeletNote} />
-          <Label className="note-date" as="span" color="orange" size="tiny" tag style={show(!editMode)}>{ this.toDateInTW(createTime) }</Label>
+          <Label className="note-date" as="span" color="orange" size="tiny" tag style={show(!editMode)}>{ this.toDateInTW(note.createTime) }</Label>
         </Header>
-        <Comment className="note-trade" texts={this.commentOf(trade)} editMode={editMode} style={{ marginTop: '0' }} />
-        <Comment header="價值面" className="note-value" texts={this.commentOf(value)} editMode={editMode} />
-        <Comment header="題材面" className="note-story" texts={this.commentOf(story)} editMode={editMode} />
-        <Comment header="基本面" className="note-fundamentals" texts={this.commentOf(fundamentals)} editMode={editMode} />
-        <Comment header="技術面" className="note-technicals" texts={this.commentOf(technicals)} editMode={editMode} />
-        <Comment header="籌碼面" className="note-chips" texts={this.commentOf(chips)} editMode={editMode} />
+        { this.renderComments(note, noteMate, editMode) }
         { editMode ? <EditModeButtons whenOK={this.saveNote} whenCancel={this.cancelEditNote} /> : null }
       </div>
     );
@@ -123,6 +124,7 @@ class Note extends ClickableComponent {
 }
 Note.propTypes = {
   note: PropTypes.object,
+  noteMate: PropTypes.object.isRequired,
   editMode: PropTypes.bool,
   whenSaveNote: PropTypes.func.isRequired,
   whenCancelEditNote: PropTypes.func.isRequired,
@@ -140,13 +142,14 @@ class NewNoteElem extends ClickableComponent {
   }
 
   render() {
-    const { newNoteMode, defaultNote, whenSaveNote } = this.props;
+    const { noteMate, newNoteMode, defaultNote, whenSaveNote } = this.props;
 
     if (newNoteMode) {
       return (
         <section className="note">
           <Note
             note={defaultNote}
+            noteMate={noteMate}
             editMode={newNoteMode}
             whenSaveNote={whenSaveNote}
             whenCancelEditNote={this.cancelNewNote}
@@ -165,6 +168,7 @@ class NewNoteElem extends ClickableComponent {
 NewNoteElem.propTypes = {
   newNoteMode: PropTypes.bool,
   defaultNote: PropTypes.object,
+  noteMate: PropTypes.object.isRequired,
   whenSaveNote: PropTypes.func.isRequired,
   whenCancelNewNote: PropTypes.func.isRequired,
   whenOpenNewNoteMode: PropTypes.func.isRequired,

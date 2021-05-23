@@ -7,6 +7,18 @@ import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import NoteBoard from './NoteBoard';
 
 /* eslint-disable */
+const NOTE_MATE = {
+  title: '操作策略',
+  fields: [
+    [ 'trade', '' ],
+    [ 'value', '價值面' ],
+    [ 'story', '題材面' ],
+    [ 'fundamentals', '基本面' ],
+    [ 'technicals', '技術面' ],
+    [ 'chips', '籌碼面' ],
+  ],
+};
+
 const getNoteTemplate = () => ({
   trade: {
     comment:
@@ -136,6 +148,7 @@ class StockNoteBoard extends ClickableComponent {
       <NoteBoard
         loading={loading}
         errorMsg={errorMsg}
+        noteMate={NOTE_MATE}
         notesData={stockNote && stockNote.notes}
         noteTemplate={getNoteTemplate()}
         whenSaveNote={this.whenSaveNote}
