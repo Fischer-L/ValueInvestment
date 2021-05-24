@@ -2,7 +2,7 @@ const Mongo = require('mongodb').MongoClient;
 const { DB_URL } = require('../../build/config_server');
 const PttUsersCollection = require('./PttUsersCollection');
 const BookmarksCollection = require('./BookmarksCollection');
-const StockNotesCollection = require('./StockNotesCollection');
+const StockNotesCollection = require('./NotesCollection/StockNotesCollection');
 
 const options = {
   useUnifiedTopology: true,
@@ -35,9 +35,19 @@ async function closeMongoDB() {
   }
 }
 
+function isMongoConnected() {
+  if (mongoClient) {
+    if (mongoClient.isConnected()) {
+      return true;
+    }
+    closeMongoDB().catch(e => console.error(e));
+  }
+  return false;
+}
+
 async function connectMongoDB() {
   if (connectPromise) await connectPromise;
-  if (mongoDB && mongoClient && mongoClient.isConnected()) return mongoDB;
+  if (mongoDB && isMongoConnected()) return mongoDB;
 
   try {
     connectPromise = Mongo.connect(DB_URL, options);
@@ -56,7 +66,7 @@ async function getCollection(name) {
   if (!collection) {
     throw new Error(`Access unknown collection of ${name}`);
   }
-  if (mongoClient && !mongoClient.isConnected()) {
+  if (!isMongoConnected()) {
     collection.instance = null;
   }
   if (!collection.instance) {
