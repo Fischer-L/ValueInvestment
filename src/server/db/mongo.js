@@ -3,6 +3,7 @@ const { DB_URL } = require('../../build/config_server');
 const PttUsersCollection = require('./PttUsersCollection');
 const BookmarksCollection = require('./BookmarksCollection');
 const StockNotesCollection = require('./NotesCollection/StockNotesCollection');
+const StoryNotesCollection = require('./NotesCollection/StoryNotesCollection');
 
 const options = {
   useUnifiedTopology: true,
@@ -24,6 +25,10 @@ const collections = {
   stockNotes: {
     instance: null,
     Clazz: StockNotesCollection,
+  },
+  storyNotes: {
+    instance: null,
+    Clazz: StoryNotesCollection,
   },
 };
 

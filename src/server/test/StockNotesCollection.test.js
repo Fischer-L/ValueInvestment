@@ -1,4 +1,4 @@
-const { verifyEmptyArray, verifyNoteDta } = require('./utils/index');
+const { verifyEmptyArray, verifyNoteData } = require('./utils/index');
 const createTestCollection = require('./utils/createTestCollection');
 const StockNotesCollection = require('../db/NotesCollection/StockNotesCollection');
 
@@ -78,7 +78,7 @@ describe('StockNotesCollection', () => {
     });
     await stockNotes.save(payloads);
     const data = await stockNotes.getAll();
-    verifyNoteDta(data, fakeData);
+    verifyNoteData(data, fakeData);
   });
 
   // NOTICE: Bad smell, the below tests rely on the saved data from the above test
@@ -89,7 +89,7 @@ describe('StockNotesCollection', () => {
       fakeData[1].notes.push(note);
       await stockNotes.update(fakeData[1].id, { action: 'add', note });
       const data = await stockNotes.get([ fakeData[1].id ]);
-      verifyNoteDta(data, [ fakeData[1] ]);
+      verifyNoteData(data, [ fakeData[1] ]);
     });
 
     it('should update one note in notes', async () => {
@@ -102,7 +102,7 @@ describe('StockNotesCollection', () => {
       await stockNotes.update(fakeData[1].id, { action: 'update', note: note0 });
       const [ updatedfakeData1 ] = await stockNotes.get([ fakeData1.id ]);
       expect(updatedfakeData1.createTime).toBe(fakeData1.createTime);
-      verifyNoteDta([ updatedfakeData1 ], [ fakeData1 ]);
+      verifyNoteData([ updatedfakeData1 ], [ fakeData1 ]);
     });
 
     it('should delete one note in notes', async () => {
@@ -111,13 +111,13 @@ describe('StockNotesCollection', () => {
       await stockNotes.update(fakeData[1].id, { action: 'delete', note: note0 });
       const [ updatedfakeData1 ] = await stockNotes.get([ fakeData1.id ]);
       expect(updatedfakeData1.createTime).toBe(fakeData1.createTime);
-      verifyNoteDta([ updatedfakeData1 ], [ fakeData1 ]);
+      verifyNoteData([ updatedfakeData1 ], [ fakeData1 ]);
     });
 
     it('should remove stock notes', async () => {
       await stockNotes.remove([ fakeData[1].id ]);
       const data = await stockNotes.getAll();
-      verifyNoteDta(data, [ fakeData[0], fakeData[2] ]);
+      verifyNoteData(data, [ fakeData[0], fakeData[2] ]);
     });
   });
 });

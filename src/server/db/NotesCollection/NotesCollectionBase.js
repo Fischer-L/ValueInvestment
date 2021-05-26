@@ -3,15 +3,18 @@ const CollectionBase = require('../CollectionBase');
 // Schema:
 // {
 //   _id: this.id,
-//   id: string; stock id,
+//   id: string; note id,
 //   lastUpdateTime: int, ms elapsed since January 1, 1970 00:00:00 UTC,
 //   notes: [ // Ordered by `createTime` in the ASC order
 //     {
 //       createTime: int, ms, will also be the note id
-//
+
 //       // Custom note data
 //     }
-//   ]
+//   ],
+//   noteMeta: {
+//     // Custome note meta data
+//   }
 // }
 class NotesCollectionBase extends CollectionBase {
 
