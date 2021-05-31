@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import stockNoteProvider from '@/api/stockNoteProvider';
+import stockNoteProvider from '@/api/NoteProvider/stockNoteProvider';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
 import NoteBoard from './NoteBoard';
@@ -83,7 +83,6 @@ class StockNoteBoard extends ClickableComponent {
       try {
         const stockNote = await stockNoteProvider.get(stockId);
         if (stockNote) {
-          stockNote.notes && stockNote.notes.sort((a, b) => b.createTime - a.createTime);
           this.setState({ stockNote });
         }
       } catch (error) {
