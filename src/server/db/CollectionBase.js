@@ -62,6 +62,7 @@ class CollectionBase {
         doc._id = doc.id;
         return doc;
       });
+
       const saveCount = docs.length;
       if (saveCount === 1) {
         result = await collection.insertOne(docs[0]);
