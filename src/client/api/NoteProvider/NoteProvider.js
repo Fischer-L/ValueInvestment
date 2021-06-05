@@ -10,24 +10,28 @@ class NoteProvider {
     this._ongoingPromises = {};
   }
 
+  _normalizeCreationPayload(payload) { // eslint-disable-line
+    throw new Error(`${this._className} should implement _normalizeCreationPayload which returns id and data for creation`);
+  }
+
   _normalizeId(id) { // eslint-disable-line
     throw new Error(`${this._className} should implement _normalizeId`);
   }
 
   async _create(apiClient, id, data) { // eslint-disable-line
-    throw new Error(`${this._className} should implement _create`);
+    throw new Error(`${this._className} should implement _create which returns newly created note data`);
   }
 
   async _get(apiClient, id) { // eslint-disable-line
-    throw new Error(`${this._className} should implement _get`);
+    throw new Error(`${this._className} should implement _get which returns fetched note data`);
   }
 
-  async _addNote(apiClient, id, data) { // eslint-disable-line
-    throw new Error(`${this._className} should implement _addNote`);
+  async _addNote(apiClient, id, note) { // eslint-disable-line
+    throw new Error(`${this._className} should implement _addNote which returns newly added note`);
   }
 
-  async _updateNote(apiClient, id, data) { // eslint-disable-line
-    throw new Error(`${this._className} should implement _updateNote`);
+  async _updateNote(apiClient, id, note) { // eslint-disable-line
+    throw new Error(`${this._className} should implement _updateNote which returns updated note`);
   }
 
   async _deleteNote(apiClient, id, data) { // eslint-disable-line
@@ -45,11 +49,11 @@ class NoteProvider {
     return -1;
   }
 
-  async create(id, data) {
+  async create(payload) {
+    const { id, data } = payload ? this._normalizeCreationPayload(payload) : {};
     if (!id || !data) {
-      throw new Error(`Create ${this._className} note with invalid id, data = ${id}, ${JSON.stringify(data)}`);
+      throw new Error(`Create ${this._className} note with invalid payload = ${JSON.stringify(payload)}`);
     }
-    id = this._normalizeId(id);
 
     const noteExist = this._createPromises[id] || await this.get(id);
     if (noteExist) {
@@ -59,6 +63,8 @@ class NoteProvider {
 
     try {
       this._createPromises[id] = this._create(apiClient, id, clone(data));
+      const noteData = await this._createPromises[id];
+      this._noteData[noteData.id] = noteData;
     } catch (e) {
       this._createPromises[id] = null;
       console.error(e);
@@ -78,23 +84,23 @@ class NoteProvider {
 
     if (!this._noteData[id]) {
       try {
-        this._ongoingPromises[id] = await this._get(apiClient, id);
+        this._ongoingPromises[id] = this._get(apiClient, id);
+        const noteData = await this._ongoingPromises[id];
+        if (noteData) {
+          this._noteData[id] = clone(noteData);
+          this._noteData[id].notes.sort((a, b) => b.createTime - a.createTime);
+        }
       } catch (e) {
         console.error(e);
       }
-
       this._ongoingPromises[id] = null;
-
-      if (this._noteData[id]) {
-        this._noteData[id].notes.sort((a, b) => b.createTime - a.createTime);
-      }
     }
     return this._noteData[id] ? clone(this._noteData[id]) : null;
   }
 
-  async addNote(id, data) {
-    if (!id || !data) {
-      throw new Error(`Add ${this._className} note with invalid id, data = ${id}, ${JSON.stringify(data)}`);
+  async addNote(id, note) {
+    if (!id || !note) {
+      throw new Error(`Add ${this._className} note with invalid id, note = ${id}, ${JSON.stringify(note)}`);
     }
     id = this._normalizeId(id);
 
@@ -107,8 +113,9 @@ class NoteProvider {
     }
 
     try {
-      this._ongoingPromises[id] = this._addNote(apiClient, id, clone(data));
-      await this._ongoingPromises[id];
+      this._ongoingPromises[id] = this._addNote(apiClient, id, clone(note));
+      const noteAdded = await this._ongoingPromises[id];
+      this._noteData[id].notes.unshift(noteAdded);
     } catch (e) {
       console.error(e);
       throw e;
@@ -117,10 +124,9 @@ class NoteProvider {
     }
   }
 
-
-  async updateNote(id, data) {
-    if (!id || !data) {
-      throw new Error(`Update ${this._className} note with invalid id, data = ${id}, ${JSON.stringify(data)}`);
+  async updateNote(id, note) {
+    if (!id || !note) {
+      throw new Error(`Update ${this._className} note with invalid id, note = ${id}, ${JSON.stringify(note)}`);
     }
     id = this._normalizeId(id);
 
@@ -132,9 +138,15 @@ class NoteProvider {
       throw new Error(`Update note for an unknown ${this._className} note: ${id}`);
     }
 
+    const i = this._findNoteIndex(id, note);
+    if (i < 0) {
+      throw new Error(`Update an unknown note: id, note = ${id}, ${JSON.stringify(note)}`);
+    }
+
     try {
-      this._ongoingPromises[id] = this._updateNote(apiClient, id, clone(data));
-      await this._ongoingPromises[id];
+      this._ongoingPromises[id] = this._updateNote(apiClient, id, clone(note));
+      const noteUpdated = await this._ongoingPromises[id];
+      this._noteData[id].notes[i] = noteUpdated;
     } catch (e) {
       console.error(e);
       throw e;
@@ -143,9 +155,9 @@ class NoteProvider {
     }
   }
 
-  async deleteNote(id, data) {
-    if (!id || !data) {
-      console.warn(`Delete ${this._className} note with invalid id, data = ${id}, ${JSON.stringify(data)}`);
+  async deleteNote(id, note) {
+    if (!id || !note) {
+      console.warn(`Delete ${this._className} note with invalid id, note = ${id}, ${JSON.stringify(note)}`);
       return;
     }
     id = this._normalizeId(id);
@@ -159,11 +171,18 @@ class NoteProvider {
       return;
     }
 
+    const i = this._findNoteIndex(id, note);
+    if (i < 0) {
+      throw new Error(`Delete an unknown note: id, note = ${id}, ${JSON.stringify(note)}`);
+    } else if (this._noteData[id].notes.length === 1) {
+      return this.clear(id);
+    }
+
     try {
-      this._ongoingPromises[id] = this._deleteNote(apiClient, id, clone(data));
-      await this._ongoingPromises[id];
+      this._ongoingPromises[id] = await this._deleteNote(apiClient, id, clone(note));
+      this._noteData[id].notes.splice(i, 1);
     } catch (e) {
-      console.warn(e);
+      console.error(e);
     } finally {
       this._ongoingPromises[id] = null;
     }
@@ -186,8 +205,8 @@ class NoteProvider {
     }
 
     try {
-      this._ongoingPromises[id] = this._clear(apiClient, id);
-      await this._ongoingPromises[id];
+      this._ongoingPromises[id] = await this._clear(apiClient, id);
+      this._noteData[id] = null;
     } catch (e) {
       console.error(e);
     } finally {
