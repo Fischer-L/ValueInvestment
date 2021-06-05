@@ -55,7 +55,7 @@ class NoteBoard extends ClickableComponent {
   renderNotes() {
     const { copyNote, editNote, promptDeleteNote, closeEditNote } = this;
     const { noteToEdit } = this.state;
-    const { noteMate, notesData, whenUpdateNote } = this.props;
+    const { noteSchema, notesData, whenUpdateNote } = this.props;
 
     if (notesData) {
       return notesData.map(note => {
@@ -64,7 +64,7 @@ class NoteBoard extends ClickableComponent {
           <section className="note" key={note.createTime}>
             <Note
               note={note}
-              noteMate={noteMate}
+              noteSchema={noteSchema}
               editMode={editMode}
               whenEditNote={editNote}
               whenCancelEditNote={closeEditNote}
@@ -89,7 +89,7 @@ class NoteBoard extends ClickableComponent {
         key="NewNoteElem"
         newNoteMode={newNoteMode}
         defaultNote={defaultNote}
-        noteMate={this.props.noteMate}
+        noteSchema={this.props.noteSchema}
         whenOpenNewNoteMode={this.openNewNoteMode}
         whenCancelNewNote={this.closeNewNoteMode}
         whenSaveNote={this.props.whenSaveNote}
@@ -141,7 +141,7 @@ class NoteBoard extends ClickableComponent {
 NoteBoard.propTypes = {
   notesData: PropTypes.array,
   noteTemplate: PropTypes.object,
-  noteMate: PropTypes.object.isRequired,
+  noteSchema: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   errorMsg: PropTypes.string,
   whenUpdateNote: PropTypes.func.isRequired,
