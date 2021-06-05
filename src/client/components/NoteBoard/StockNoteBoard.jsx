@@ -7,7 +7,7 @@ import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import NoteBoard from './NoteBoard';
 
 /* eslint-disable */
-const NOTE_MATE = {
+const NOTE_SCHEME = {
   title: '操作策略',
   fields: [
     [ 'trade', '' ],
@@ -147,7 +147,7 @@ class StockNoteBoard extends ClickableComponent {
       <NoteBoard
         loading={loading}
         errorMsg={errorMsg}
-        noteMate={NOTE_MATE}
+        noteSchema={NOTE_SCHEME}
         notesData={stockNote && stockNote.notes}
         noteTemplate={getNoteTemplate()}
         whenSaveNote={this.whenSaveNote}
