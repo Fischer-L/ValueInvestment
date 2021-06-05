@@ -101,7 +101,7 @@ class StockNoteBoard extends ClickableComponent {
         if (this.state.stockNote) {
           await stockNoteProvider.addNote(this.state.stockId, newNote);
         } else {
-          await stockNoteProvider.create(this.state.stockId, newNote);
+          await stockNoteProvider.create({ stockId: this.state.stockId, note: newNote });
         }
         this.loadStockNote(this.state.stockId, true);
       } catch (error) {
