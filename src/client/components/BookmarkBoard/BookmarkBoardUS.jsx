@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import MARKET_TYPE from '@/utils/marketType';
 import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
-import BookmarkBoard, { StocksBookmark } from '@/components/BookmarkBoard';
+import BookmarkBoard, { StocksBookmark } from '@/components/BookmarkBoard/BookmarkBoard';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 
 class BookmarkBoardUS extends ClickableComponent {
