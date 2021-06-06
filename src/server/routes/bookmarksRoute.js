@@ -6,12 +6,14 @@ const { collectIDs, collectPayloads } = require('../middlewares');
 const mongoCache = new CacheProvider({ maxAge: -1 });
 
 const BOOKMARK_TYPE = {
-  STOCK: 'stock',
-  PTT_USER: 'pttuser',
+  STOCK: 'stocks',
+  STORY: 'stories',
+  PTT_USER: 'pttUsers',
 };
 
 const COLLECTION_NAME = {
   [ BOOKMARK_TYPE.STOCK ]: 'bookmarks',
+  [ BOOKMARK_TYPE.STORY ]: 'stories',
   [ BOOKMARK_TYPE.PTT_USER ]: 'pttUsers',
 };
 
@@ -26,19 +28,15 @@ async function getBookmarks(type) {
 
 function initBookmarksRoute(app) {
   app.get('/bookmarks', async (req, res) => {
-    let data = null;
-    if (!data) {
-      try {
-        const [ stocks, pttUsers ] = await Promise.all([
-          getBookmarks(BOOKMARK_TYPE.STOCK),
-          getBookmarks(BOOKMARK_TYPE.PTT_USER),
-        ]);
-        data = { stocks, pttUsers };
-      } catch (e) {
-        console.error(e);
-        res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
-        return;
-      }
+    const data = {};
+    try {
+      await Promise.all(Object.values(BOOKMARK_TYPE).map(type => getBookmarks(type).then(results => {
+        data[type] = results;
+      })));
+    } catch (e) {
+      console.error(e);
+      res.status(HTTP.INTERNAL_SERVER_ERROR).send(e.toString());
+      return;
     }
     res.json(data);
   });

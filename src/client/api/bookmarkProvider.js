@@ -2,8 +2,9 @@ import { apiClient } from '@/api/index';
 import MARKET_TYPE from '@/utils/marketType';
 
 export const BOOKMARK_TYPE = {
-  STOCK: 'stock',
-  PTT_USER: 'pttuser',
+  STOCK: 'stocks',
+  STORY: 'stories',
+  PTT_USER: 'pttUsers',
 };
 
 const bookmarkProvider = {
@@ -14,16 +15,14 @@ const bookmarkProvider = {
     if (this._initPromise) return this._initPromise;
 
     this._initPromise = apiClient.get('/bookmarks')
-      .then(({ data: { stocks, pttUsers } }) => {
+      .then(({ data }) => {
         this._bookmarks = {};
-        this._bookmarks[BOOKMARK_TYPE.STOCK] = stocks.reduce((acc, item) => {
-          acc[item.id] = item;
-          return acc;
-        }, {});
-        this._bookmarks[BOOKMARK_TYPE.PTT_USER] = pttUsers.reduce((users, item) => {
-          users[item.id] = item;
-          return users;
-        }, {});
+        Object.values(BOOKMARK_TYPE).forEach(type => {
+          this._bookmarks[type] = data[type].reduce((acc, item) => {
+            acc[item.id] = item;
+            return acc;
+          }, {});
+        });
       })
       .catch(e => {
         this._initPromise = null;
@@ -34,12 +33,17 @@ const bookmarkProvider = {
 
   async toArray(type) {
     await this._init();
-    return Object.values(this._bookmarks[type]).map(item => ({
-      ...item,
-      // For the legacy reason, the TW market is stored without a market type,
-      // so add the type locally.
-      market: !item.market ? MARKET_TYPE.TW : item.market,
-    }));
+    return Object.values(this._bookmarks[type]).map(item => {
+      if (type !== BOOKMARK_TYPE.STOCK) {
+        return item;
+      }
+      return {
+        ...item,
+        // For the legacy reason, the TW market is stored without a market type,
+        // so add the type locally.
+        market: !item.market ? MARKET_TYPE.TW : item.market,
+      };
+    });
   },
 
   async put(type, id, payload) {

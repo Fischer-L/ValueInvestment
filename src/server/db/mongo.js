@@ -1,5 +1,6 @@
 const Mongo = require('mongodb').MongoClient;
 const { DB_URL } = require('../../build/config_server');
+const StoriesCollection = require('./StoriesCollection');
 const PttUsersCollection = require('./PttUsersCollection');
 const BookmarksCollection = require('./BookmarksCollection');
 const StockNotesCollection = require('./NotesCollection/StockNotesCollection');
@@ -14,6 +15,10 @@ let mongoClient = null;
 let connectPromise = null;
 
 const collections = {
+  stories: {
+    instance: null,
+    Clazz: StoriesCollection,
+  },
   pttUsers: {
     instance: null,
     Clazz: PttUsersCollection,
