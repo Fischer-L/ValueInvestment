@@ -8,8 +8,8 @@ import MARKET_TYPE from '@/utils/marketType';
 import MainBar from '@/components/MainBar';
 import StockNoteBoard from '@/components/NoteBoard/StockNoteBoard';
 import ValueBoard from '@/components/ValueBoard';
-import BookmarkBoardTW from '@/components/BookmarkBoardTW';
-import BookmarkBoardUS from '@/components/BookmarkBoardUS';
+import BookmarkBoardTW from '@/components/BookmarkBoard/BookmarkBoardTW';
+import BookmarkBoardUS from '@/components/BookmarkBoard/BookmarkBoardUS';
 import Prompt, { ACTION } from '@/components/Prompt';
 import CalculationPanel from '@/components/CalculationPanel';
 
