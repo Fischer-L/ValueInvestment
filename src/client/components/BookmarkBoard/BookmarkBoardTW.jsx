@@ -15,20 +15,29 @@ class BookmarkBoardTW extends ClickableComponent {
       stocks: [],
     };
 
-    this.whenRemovePttUser = ({ id }) => {
-      bookmarkProvider.remove(BOOKMARK_TYPE.PTT_USER, id).then(() => this.populatePttUsers());
+    this.decodeInput = input => {
+      const [ id, ...names ] = input.trim().split(' ');
+      return {
+        id,
+        name: names.join(' '),
+      };
     };
 
-    this.whenRemoveStock = ({ id }) => {
-      bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, id).then(() => this.populateStocks());
-    };
-
-    this.whenBookmark = ({ id, name }) => {
+    this.whenBookmark = (input) => {
+      const { id, name } = this.decodeInput(input);
       if (name) {
-        bookmarkProvider.put(BOOKMARK_TYPE.STOCK, id, { id, name }).then(() => this.populateStocks());
+        bookmarkProvider.put(BOOKMARK_TYPE.STOCKS, id, { id, name }).then(() => this.populateStocks());
       } else {
-        bookmarkProvider.put(BOOKMARK_TYPE.PTT_USER, id, { id }).then(() => this.populatePttUsers());
+        bookmarkProvider.put(BOOKMARK_TYPE.PTT_USERS, id, { id }).then(() => this.populatePttUsers());
       }
+    };
+
+    this.whenRemovePttUser = ({ id }) => {
+      bookmarkProvider.remove(BOOKMARK_TYPE.PTT_USERS, id).then(() => this.populatePttUsers());
+    };
+
+    this.whenRemoveStock = ({ stockId }) => {
+      bookmarkProvider.remove(BOOKMARK_TYPE.STOCKS, stockId).then(() => this.populateStocks());
     };
 
     this._whenLookUpStock = ({ stockId }) => {
@@ -36,11 +45,11 @@ class BookmarkBoardTW extends ClickableComponent {
     };
 
     this.populatePttUsers = () => {
-      bookmarkProvider.toArray(BOOKMARK_TYPE.PTT_USER).then(pttUsers => this.setState({ pttUsers }));
+      bookmarkProvider.toArray(BOOKMARK_TYPE.PTT_USERS).then(pttUsers => this.setState({ pttUsers }));
     };
 
     this.populateStocks = () => {
-      bookmarkProvider.toArray(BOOKMARK_TYPE.STOCK).then(stocks => {
+      bookmarkProvider.toArray(BOOKMARK_TYPE.STOCKS).then(stocks => {
         this.setState({ stocks: stocks.filter(s => s.market === MARKET_TYPE.TW) });
       });
     };

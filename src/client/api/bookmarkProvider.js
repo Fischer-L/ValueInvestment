@@ -2,14 +2,24 @@ import { apiClient } from '@/api/index';
 import MARKET_TYPE from '@/utils/marketType';
 
 export const BOOKMARK_TYPE = {
-  STOCK: 'stocks',
-  STORY: 'stories',
-  PTT_USER: 'pttUsers',
+  STOCKS: 'stocks',
+  STORIES: 'stories',
+  PTT_USERS: 'pttUsers',
 };
 
 const bookmarkProvider = {
 
   _bookmarks: null,
+
+  _normalizeId(type, id) {
+    if (!id) {
+      return null;
+    }
+    if (type === BOOKMARK_TYPE.STOCKS) {
+      return id.toUpperCase();
+    }
+    return id;
+  },
 
   _init() {
     if (this._initPromise) return this._initPromise;
@@ -34,7 +44,7 @@ const bookmarkProvider = {
   async toArray(type) {
     await this._init();
     return Object.values(this._bookmarks[type]).map(item => {
-      if (type !== BOOKMARK_TYPE.STOCK) {
+      if (type !== BOOKMARK_TYPE.STOCKS) {
         return item;
       }
       return {
@@ -48,12 +58,16 @@ const bookmarkProvider = {
 
   async put(type, id, payload) {
     await this._init();
+
+    id = this._normalizeId(type, id);
+
     const data = this._bookmarks[type];
+
     if (!data[id] && payload) {
-      if (type === BOOKMARK_TYPE.STOCK) {
+      if (type === BOOKMARK_TYPE.STOCKS) {
         payload = {
           ...payload,
-          id: payload.id.toUpperCase(),
+          id,
         };
       }
       try {
@@ -67,6 +81,8 @@ const bookmarkProvider = {
 
   async remove(type, id) {
     await this._init();
+
+    id = this._normalizeId(type, id);
     const data = this._bookmarks[type];
     if (data[id]) {
       try {
