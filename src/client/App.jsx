@@ -5,11 +5,12 @@ import '@/css/App.scss';
 
 import { loginManager } from '@/api/index';
 import MARKET_TYPE from '@/utils/marketType';
-import MainBar from '@/components/MainBar';
+import MainBar, { BOOKMARK_BTN_ID } from '@/components/MainBar';
 import StockNoteBoard from '@/components/NoteBoard/StockNoteBoard';
 import ValueBoard from '@/components/ValueBoard';
 import BookmarkBoardTW from '@/components/BookmarkBoard/BookmarkBoardTW';
 import BookmarkBoardUS from '@/components/BookmarkBoard/BookmarkBoardUS';
+import BookmarkBoardStory from '@/components/BookmarkBoard/BookmarkBoardStory';
 import Prompt, { ACTION } from '@/components/Prompt';
 import CalculationPanel from '@/components/CalculationPanel';
 
@@ -22,7 +23,7 @@ class App extends Component {
     this.state = {
       market: '',
       stockId: null,
-      showBookmarkBoard: null,
+      currentBookmarkBtnId: null,
       askLogin: false,
       lookupTime: 0,
       isLogin: loginManager.isLogin(),
@@ -33,16 +34,16 @@ class App extends Component {
       this.setState({ stockId, market, lookupTime: Date.now() });
     };
 
-    this.whenToggleBookmark = ({ market }) => {
+    this.whenToggleBookmark = ({ btnId }) => {
       this.setState((prevState) => {
-        const showBookmarkBoard = prevState.showBookmarkBoard === market ? null : market;
-        document.body.style.overflow = showBookmarkBoard ? 'hidden' : '';
-        return { showBookmarkBoard };
+        const currentBookmarkBtnId = prevState.currentBookmarkBtnId === btnId ? null : btnId;
+        document.body.style.overflow = currentBookmarkBtnId ? 'hidden' : '';
+        return { currentBookmarkBtnId };
       });
     };
 
     this.whenCloseBookmark = () => {
-      this.whenToggleBookmark({ market: this.state.showBookmarkBoard });
+      this.whenToggleBookmark({ btnId: null });
     };
 
     this.whenLogin = async () => {
@@ -85,22 +86,28 @@ class App extends Component {
       return null;
     };
 
-    this.renderBookmarkBoards = ({ showBookmarkBoard }) => {
+    this.renderBookmarkBoards = ({ currentBookmarkBtnId }) => {
       const boards = [];
 
       const propsOfBookmarkBoardTW = {
         whenLookUpStock: this.whenLookUpStock,
         whenCloseBookmark: this.whenCloseBookmark,
-        show: showBookmarkBoard === MARKET_TYPE.TW,
+        show: currentBookmarkBtnId === BOOKMARK_BTN_ID.TW,
       };
       boards.push(<BookmarkBoardTW key="BookmarkBoardTW" {...propsOfBookmarkBoardTW} />);
 
       const propsOfBookmarkBoardUS = {
         whenLookUpStock: this.whenLookUpStock,
         whenCloseBookmark: this.whenCloseBookmark,
-        show: showBookmarkBoard === MARKET_TYPE.US,
+        show: currentBookmarkBtnId === BOOKMARK_BTN_ID.US,
       };
       boards.push(<BookmarkBoardUS key="BookmarkBoardUS" {...propsOfBookmarkBoardUS} />);
+
+      const propsOfBookmarkBoardStory = {
+        whenCloseBookmark: this.whenCloseBookmark,
+        show: currentBookmarkBtnId === BOOKMARK_BTN_ID.STORY,
+      };
+      boards.push(<BookmarkBoardStory key="BookmarkBoardStory" {...propsOfBookmarkBoardStory} />);
 
       return boards;
     };

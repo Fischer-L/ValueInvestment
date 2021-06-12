@@ -9,8 +9,8 @@ const CollectionBase = require('./CollectionBase');
 class StoriesCollection extends CollectionBase {
   _sanitizeDocs(stories) {
     return stories
-      .map(({ id, title }) => ({ id: String(id), title: String(title) }))
-      .filter(({ id, title }) => !!id && !!title);
+      .filter(({ id, title }) => !!id && !!title)
+      .map(({ id, title }) => ({ id: String(id), title: String(title) }));
   }
 }
 

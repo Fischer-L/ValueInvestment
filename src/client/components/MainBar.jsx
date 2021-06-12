@@ -6,6 +6,12 @@ import MARKET_TYPE from '@/utils/marketType';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/MainBar.scss';
 
+export const BOOKMARK_BTN_ID = {
+  TW: 'TW',
+  US: 'US',
+  STORY: 'STORY',
+};
+
 class MainBar extends ClickableComponent {
   constructor(props) {
     super(props);
@@ -18,8 +24,9 @@ class MainBar extends ClickableComponent {
       this.setState({ stockId: e.target.value });
     };
 
-    this.onToggleBookmarkTW = this.onClickDo(() => this.fireCallback('whenToggleBookmark', { market: MARKET_TYPE.TW }));
-    this.onToggleBookmarkUS = this.onClickDo(() => this.fireCallback('whenToggleBookmark', { market: MARKET_TYPE.US }));
+    this.onToggleBookmarkTW = this.onClickDo(() => this.fireCallback('whenToggleBookmark', { btnId: BOOKMARK_BTN_ID.TW }));
+    this.onToggleBookmarkUS = this.onClickDo(() => this.fireCallback('whenToggleBookmark', { btnId: BOOKMARK_BTN_ID.US }));
+    this.onToggleBookmarkStory = this.onClickDo(() => this.fireCallback('whenToggleBookmark', { btnId: BOOKMARK_BTN_ID.STORY }));
 
     this.onLogin = this.onClickDo(() => this.fireCallback('whenLogin'));
 
@@ -81,6 +88,7 @@ class MainBar extends ClickableComponent {
         <section className="mainBar-buttonsArea">
           { this.renderBookmarkBtn({ title: 'tw', onClick: this.onToggleBookmarkTW }) }
           { this.renderBookmarkBtn({ title: 'us', onClick: this.onToggleBookmarkUS }) }
+          { this.renderBookmarkBtn({ title: '題材', onClick: this.onToggleBookmarkStory }) }
           { this.renderLoginButton() }
         </section>
       </div>

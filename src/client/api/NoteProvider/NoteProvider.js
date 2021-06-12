@@ -55,16 +55,23 @@ class NoteProvider {
       throw new Error(`Create ${this._className} note with invalid payload = ${JSON.stringify(payload)}`);
     }
 
-    const noteExist = this._createPromises[id] || await this.get(id);
-    if (noteExist) {
+    if (this._createPromises[id]) {
       console.warn(`Double create ${this._className} note: id, data = ${id}, ${JSON.stringify(data)}`);
-      return this._createPromises[id];
+      await this._createPromises[id];
+      return id;
+    }
+
+    const result = await this.get(id);
+    if (result) {
+      console.warn(`Create an existing ${this._className} note: id, data = ${id}, ${JSON.stringify(data)}`);
+      return id;
     }
 
     try {
       this._createPromises[id] = this._create(apiClient, id, clone(data));
       const noteData = await this._createPromises[id];
-      this._noteData[noteData.id] = noteData;
+      this._noteData[id] = noteData;
+      return id;
     } catch (e) {
       this._createPromises[id] = null;
       console.error(e);
@@ -173,13 +180,14 @@ class NoteProvider {
 
     const i = this._findNoteIndex(id, note);
     if (i < 0) {
-      throw new Error(`Delete an unknown note: id, note = ${id}, ${JSON.stringify(note)}`);
+      throw new Error(`Delete an unknown ${this._className} note: id, note = ${id}, ${JSON.stringify(note)}`);
     } else if (this._noteData[id].notes.length === 1) {
       return this.clear(id);
     }
 
     try {
-      this._ongoingPromises[id] = await this._deleteNote(apiClient, id, clone(note));
+      this._ongoingPromises[id] = this._deleteNote(apiClient, id, clone(note));
+      await this._ongoingPromises[id];
       this._noteData[id].notes.splice(i, 1);
     } catch (e) {
       console.error(e);
@@ -194,19 +202,18 @@ class NoteProvider {
       return;
     }
     id = this._normalizeId(id);
-
     if (this._ongoingPromises[id]) {
       await this._ongoingPromises[id];
     }
 
     if (!this._noteData[id]) {
-      console.warn(`Delete note for an unknown ${this._className} note: ${id}`);
-      return;
+      console.warn(`Clear note for an unknown ${this._className} note: ${id}`);
     }
 
     try {
-      this._ongoingPromises[id] = await this._clear(apiClient, id);
-      this._noteData[id] = null;
+      this._ongoingPromises[id] = this._clear(apiClient, id);
+      await this._ongoingPromises[id];
+      this._createPromises[id] = this._noteData[id] = null;
     } catch (e) {
       console.error(e);
     } finally {

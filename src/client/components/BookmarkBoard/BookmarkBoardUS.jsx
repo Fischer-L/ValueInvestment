@@ -14,16 +14,25 @@ class BookmarkBoardUS extends ClickableComponent {
       stocks: [],
     };
 
-    this.whenRemoveStock = ({ id }) => {
-      bookmarkProvider.remove(BOOKMARK_TYPE.STOCK, id).then(() => this.populateStocks());
+    this.decodeInput = input => {
+      const [ id, ...names ] = input.trim().split(' ');
+      return {
+        id,
+        name: names.join(' '),
+      };
     };
 
-    this.whenBookmark = ({ id, name }) => {
+    this.whenRemoveStock = ({ stockId }) => {
+      bookmarkProvider.remove(BOOKMARK_TYPE.STOCKS, stockId).then(() => this.populateStocks());
+    };
+
+    this.whenBookmark = (input) => {
+      let { id, name } = this.decodeInput(input);
       if (!id || !name) {
         throw new Error('Bookmark a US stock without enough params: id, name', id, name);
       }
       id = id.toUpperCase();
-      bookmarkProvider.put(BOOKMARK_TYPE.STOCK, id, { id, name, market: MARKET_TYPE.US }).then(() => this.populateStocks());
+      bookmarkProvider.put(BOOKMARK_TYPE.STOCKS, id, { id, name, market: MARKET_TYPE.US }).then(() => this.populateStocks());
     };
 
     this._whenLookUpStock = ({ stockId }) => {
@@ -31,7 +40,7 @@ class BookmarkBoardUS extends ClickableComponent {
     };
 
     this.populateStocks = () => {
-      bookmarkProvider.toArray(BOOKMARK_TYPE.STOCK).then(stocks => {
+      bookmarkProvider.toArray(BOOKMARK_TYPE.STOCKS).then(stocks => {
         this.setState({ stocks: stocks.filter(s => s.market === MARKET_TYPE.US) });
       });
     };

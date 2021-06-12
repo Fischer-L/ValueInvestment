@@ -82,30 +82,23 @@ export class StocksBookmark extends ClickableComponent {
       openURL(...urls);
     };
 
-    this.onLookupStock = this.onClickDo(e => {
-      const stockId = e.target.dataset.id;
-      this.setState({ stockIdToLookup: stockId });
-      this.fireCallback('whenLookUpStock', { stockId });
-    });
+    this.whenQuery = ({ id }) => {
+      this.setState({ stockIdToLookup: id });
+      this.fireCallback('whenLookUpStock', { stockId: id });
+    };
 
-    this.onRemoveStock = this.onClickDo(e => {
-      this.fireCallback('whenRemoveStock', { id: e.target.dataset.id });
-    });
+    this.whenRemove = ({ id }) => this.fireCallback('whenRemoveStock', { stockId: id });
   }
 
   render() {
     const items = this.props.stocks.map(stock => {
-      const { market } = this.props;
+      const title = stock.id + ' ' + stock.name;
       const whenAskForURLs = stock.id === this.state.stockIdToLookup ? this.whenAskForURLs : null;
       return (
-        <List.Item className="bookmark-item" key={stock.id}>
-          <Icon className="bookmark-removeItemBtn" name="close" data-id={stock.id} onClick={this.onRemoveStock} onTouchEnd={this.onRemoveStock} />
-          <List.Header className="bookmark-itemHeader">
-            <span className="bookmark-stockTitle">{stock.id} {stock.name}</span>
-            <Icon className="bookmark-lookupBtn" name="search" data-id={stock.id} onClick={this.onLookupStock} onTouchEnd={this.onLookupStock} />
-          </List.Header>
-          <StockLinks className="bookmark-itemLinks" stock={stock} market={market} whenAskForURLs={whenAskForURLs} />
-        </List.Item>);
+        <BookmarkItem key={stock.id} id={stock.id} title={title} whenQuery={this.whenQuery} whenRemove={this.whenRemove}>
+          <StockLinks className="bookmark-itemLinks" stock={stock} market={this.props.market} whenAskForURLs={whenAskForURLs} />
+        </BookmarkItem>
+      );
     });
     return <List className="bookmark-list" size="large">{ items }</List>;
   }
@@ -116,8 +109,35 @@ StocksBookmark.propTypes = {
     name: PropTypes.string.isRequired,
   })),
   market: PropTypes.string.isRequired,
-  whenLookUpStock: PropTypes.func,
-  whenRemoveStock: PropTypes.func,
+  whenLookUpStock: PropTypes.func.isRequired,
+  whenRemoveStock: PropTypes.func.isRequired,
+};
+
+export class BookmarkItem extends ClickableComponent {
+  constructor(props) {
+    super(props);
+    this.onQuery = this.onClickDo(() => this.fireCallback('whenQuery', { id: this.props.id }));
+    this.onRemove = this.onClickDo(() => this.fireCallback('whenRemove', { id: this.props.id }));
+  }
+
+  render() {
+    return (
+      <List.Item className="bookmark-item">
+        <Icon className="bookmark-removeItemBtn" name="close" onClick={this.onRemove} onTouchEnd={this.onRemove} />
+        <List.Header className="bookmark-itemHeader">
+          <span className="bookmark-stockTitle">{ this.props.title }</span>
+          <Icon className="bookmark-lookupBtn" name="search" onClick={this.onQuery} onTouchEnd={this.onQuery} />
+        </List.Header>
+        { this.props.children }
+      </List.Item>
+    );
+  }
+}
+BookmarkItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  whenQuery: PropTypes.func.isRequired,
+  whenRemove: PropTypes.func.isRequired,
 };
 
 class BookmarkBoard extends ClickableComponent {
@@ -151,17 +171,9 @@ class BookmarkBoard extends ClickableComponent {
           break;
       }
       if (submit) {
-        this.fireCallback('whenBookmark', this.decodeInput(this.state.bookmarkInputString));
+        this.fireCallback('whenBookmark', this.state.bookmarkInputString);
       }
     });
-
-    this.decodeInput = input => {
-      const [ id, ...names ] = input.trim().split(' ');
-      return {
-        id,
-        name: names.join(' '),
-      };
-    };
   }
 
   render() {

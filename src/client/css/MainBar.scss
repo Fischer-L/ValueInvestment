@@ -59,17 +59,19 @@ i.mainBar-Btn-icon.icon {
  margin: 0;
 }
 
-@media only screen and (max-width: $input-max-width + 160px) {
+$mainBar-input-width-ratio: 0.78;
+
+@media only screen and (max-width: 999px) {
   .mainBar-input {
-    width: calc(var(--input-max-width) * 0.88);
+    width: calc(var(--input-max-width) * #{$mainBar-input-width-ratio});
   }
 
   .mainBar-buttonsArea {
-    width: calc(var(--input-max-width) * 0.12 + (100% - var(--input-max-width)) / 2);
+    width: calc(var(--input-max-width) * #{1 - $mainBar-input-width-ratio} + (100% - var(--input-max-width)) / 2);
   }
 }
 
-@media only screen and (max-width: $input-max-width + 130px) {
+@media only screen and (max-width: 799px) {
   .mainBar::before {
     flex: unset;
     width: 6px;
@@ -80,7 +82,7 @@ i.mainBar-Btn-icon.icon {
   }
 
   .mainBar-inputHolder {
-    flex: 1;
+    width: 38%;
   }
 
   .mainBar-input {

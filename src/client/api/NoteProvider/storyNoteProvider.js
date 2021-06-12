@@ -5,7 +5,16 @@ const ID_PREFIX = '_ID_';
 export class StoryNoteProvider extends NoteProvider {
 
   _normalizeId(id) {
-    return id.startsWith(ID_PREFIX) ? id : ID_PREFIX + encodeURIComponent(id);
+    if (id.startsWith(ID_PREFIX)) {
+      return id;
+    }
+    // From: https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+      hash = ((hash << 5) - hash) + id.charCodeAt(i);
+      hash |= 0; // Convert to 32bit integer
+    }
+    return ID_PREFIX + hash;
   }
 
   _normalizeCreationPayload({ note, noteMeta }) {
@@ -18,11 +27,13 @@ export class StoryNoteProvider extends NoteProvider {
   }
 
   async _create(apiClient, id, { note, noteMeta }) {
-    note.createTime = Date.now();
+    if (note) {
+      note.createTime = Date.now();
+    }
     await apiClient.put('/storynote', { payload: { id, note, noteMeta } });
     return {
       id,
-      notes: [ note ],
+      notes: note ? [ note ] : [],
       noteMeta,
     };
   }
