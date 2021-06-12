@@ -32,64 +32,75 @@ afterAll(function () {
 });
 
 describe('StoryNotesCollection', () => {
-  it('should not save invalid story notes', async () => {
+
+  describe('should not save invalid story notes', () => {
+
     let data = null;
     let invalids = null;
 
-    await storyNotes.save(invalids).catch(() => {});
-    data = await storyNotes.getAll();
-    verifyEmptyArray(data);
+    it('null', async () => {
+      await storyNotes.save(invalids).catch(() => {});
+      data = await storyNotes.getAll();
+      verifyEmptyArray(data);
+    });
 
-    invalids = [
-      {
-        id: '1234',
-      }, {
-        id: '5678',
-      },
-    ];
-    await storyNotes.save(invalids).catch(() => {});
-    data = await storyNotes.getAll();
-    verifyEmptyArray(data);
+    it('no note and no noteMeta', async () => {
+      invalids = [
+        {
+          id: '1234',
+        }, {
+          id: '5678',
+        },
+      ];
+      await storyNotes.save(invalids).catch(() => {});
+      data = await storyNotes.getAll();
+      verifyEmptyArray(data);
+    });
 
-    invalids = [
-      {
-        id: '1234',
-        note: genNote('1234'),
-      }, {
-        id: '5678',
-        note: genNote('5678'),
-      },
-    ];
-    await storyNotes.save(invalids).catch(() => {});
-    data = await storyNotes.getAll();
-    verifyEmptyArray(data);
+    it('no noteMeta', async () => {
+      invalids = [
+        {
+          id: '1234',
+          note: genNote('1234'),
+        }, {
+          id: '5678',
+          note: genNote('5678'),
+        },
+      ];
+      await storyNotes.save(invalids).catch(() => {});
+      data = await storyNotes.getAll();
+      verifyEmptyArray(data);
+    });
 
-    invalids = [
-      {
-        id: '1234',
-        note: genNote(),
-        noteMeta: { title: '1234' },
-      }, {
-        id: '5678',
-        note: genNote(),
-        noteMeta: { title: '5678' },
-      },
-    ];
-    await storyNotes.save(invalids).catch(() => {});
-    data = await storyNotes.getAll();
-    verifyEmptyArray(data);
+    it('no note comment', async () => {
+      invalids = [
+        {
+          id: '1234',
+          note: genNote(),
+          noteMeta: { title: '1234' },
+        }, {
+          id: '5678',
+          note: genNote(),
+          noteMeta: { title: '5678' },
+        },
+      ];
+      await storyNotes.save(invalids).catch(() => {});
+      data = await storyNotes.getAll();
+      verifyEmptyArray(data);
+    });
   });
 
-  it('should save story notes', async () => {
-    const payloads = fakeData.map(({ notes, ...rest }) => ({ note: notes[0], ...rest }));
-    await storyNotes.save(payloads);
-    const data = await storyNotes.getAll();
-    verifyNoteData(data, fakeData);
-  });
+  describe('valid operations', () => {
 
-  // NOTICE: Bad smell, the below tests rely on the saved data from the above test
-  // and have the order-dependency. This is faster but should refactor once tests get complicated.
-  describe('', () => {
+    it('should save story notes', async () => {
+      const payloads = fakeData.map(({ notes, ...rest }) => ({ note: notes[0], ...rest }));
+      await storyNotes.save(payloads);
+      const data = await storyNotes.getAll();
+      verifyNoteData(data, fakeData);
+    });
+
+    // NOTICE: Bad smell, the below tests rely on the saved data from the above test
+    // and have the order-dependency. This is faster but should refactor once tests get complicated.
     it('should push one note into notes', async () => {
       const note = genNote('fakeData1-2');
       fakeData[1].notes.push(note);
@@ -124,6 +135,17 @@ describe('StoryNotesCollection', () => {
       await storyNotes.remove([ fakeData[1].id ]);
       const data = await storyNotes.getAll();
       verifyNoteData(data, [ fakeData[0], fakeData[2] ]);
+    });
+
+    // Put this in the end so test data before it is not affected to speed up the entire test
+    it('should allow to create a story note without note body', async () => {
+      const payload = {
+        id: 'xyz',
+        noteMeta: { title: 'xyz' },
+      };
+      await storyNotes.save([ payload ]);
+      const data = await storyNotes.get([ payload.id ]);
+      verifyNoteData(data, [ payload ], true);
     });
   });
 });

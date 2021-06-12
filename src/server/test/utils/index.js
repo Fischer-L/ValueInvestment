@@ -17,14 +17,23 @@ function verifyNotes(notesActual, notesExpected) {
   });
 }
 
-function verifyNoteData(dataActual, dataExpected) {
+function verifyNoteData(dataActual, dataExpected, allowEmptyNoteBody) {
   expect(dataActual.length).toBe(dataExpected.length);
+
   dataExpected.sort((a, b) => a.id.localeCompare(b.id));
   dataActual.sort((a, b) => a.id.localeCompare(b.id));
+
   dataActual.forEach((actual, i) => {
     expect(actual.id).toBe(dataExpected[i].id);
-    expect(actual.lastUpdateTime).toBeGreaterThanOrEqual(actual.notes[actual.notes.length - 1].createTime);
-    verifyNotes(actual.notes, dataExpected[i].notes);
+
+    if (allowEmptyNoteBody) {
+      expect(actual.lastUpdateTime).toBeGreaterThan(0);
+      verifyEmptyArray(actual.notes);
+    } else {
+      expect(actual.lastUpdateTime).toBeGreaterThanOrEqual(actual.notes[actual.notes.length - 1].createTime);
+      verifyNotes(actual.notes, dataExpected[i].notes);
+    }
+
     verifyObjectsExactly(actual.noteMeta, dataExpected[i].noteMeta);
   });
 }

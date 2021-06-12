@@ -30,6 +30,7 @@ class NotesCollectionBase extends CollectionBase {
     };
   }
 
+  // Called before updating a note
   _noteHasContent(note) { // eslint-disable-line no-unused-vars
     throw new Error(`${this.constructor.name} should implement _noteHasContent`);
   }
