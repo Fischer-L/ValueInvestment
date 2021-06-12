@@ -36,7 +36,7 @@ class StoryNotesCollection extends NotesCollectionBase {
           console.error('StoryNotesCollection - _sanitizeDocs - item without id:', item);
           return false;
         }
-        if (!this._noteHasContent(item.note)) {
+        if (item.note && !this._noteHasContent(item.note)) {
           console.error('StoryNotesCollection - _sanitizeDocs - item without note:', item);
           return false;
         }
@@ -48,7 +48,7 @@ class StoryNotesCollection extends NotesCollectionBase {
       })
       .map(item => ({
         id: String(item.id),
-        notes: [ clone(item.note) ],
+        notes: item.note ? [ clone(item.note) ] : [],
         noteMeta: item.noteMeta,
         lastUpdateTime: now,
       }));
