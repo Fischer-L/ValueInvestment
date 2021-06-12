@@ -116,6 +116,7 @@
   "jest": {
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/client/$1"
-    }
+    },
+    "setupFilesAfterEnv": [ "<rootDir>/jest.setup.js" ]
   }
 }
