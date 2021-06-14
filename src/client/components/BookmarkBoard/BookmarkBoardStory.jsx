@@ -53,13 +53,13 @@ class BookmarkBoardStory extends ClickableComponent {
     if (!this.state.storyToDelete) {
       return null;
     }
-    const onClose = ({ action }) => {
+    const whenClose = ({ action }) => {
       if (action === ACTION.OK) {
         this.clearStory(this.state.storyToDelete.id);
       }
       this.setState({ storyToDelete: null });
     };
-    return <Prompt msg="The bookmark and all notes of this story will be deleted together. Are you sure?" onClose={onClose} />;
+    return <Prompt msg="The bookmark and all notes of this story will be deleted together. Are you sure?" whenClose={whenClose} />;
   }
 
   renderStoryItems() {
