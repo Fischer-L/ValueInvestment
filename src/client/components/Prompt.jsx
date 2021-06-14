@@ -33,7 +33,7 @@ class Prompt extends ClickableComponent {
         case ACTION.CANCEL:
           const payload = { action };
           if (this.props.hasInput) payload.input = this.state.input;
-          this.fireCallback('onClose', payload);
+          this.fireCallback('whenClose', payload);
           this.setState({ open: false });
           break;
       }
@@ -70,7 +70,7 @@ Prompt.propTypes = {
   msg: PropTypes.string,
   title: PropTypes.string,
   hasInput: PropTypes.bool,
-  onClose: PropTypes.func,
+  whenClose: PropTypes.func,
 };
 
 export default Prompt;

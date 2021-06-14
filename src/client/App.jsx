@@ -59,7 +59,7 @@ class App extends Component {
       }
     };
 
-    this.onLoginPromptClose = async ({ action, input }) => {
+    this.whenLoginPromptClose = async ({ action, input }) => {
       this.setState({ askLogin: false });
       if (action === ACTION.OK && input) {
         await loginManager.login(input);
@@ -70,60 +70,64 @@ class App extends Component {
       }
     };
 
-    this.renderBeginComponent = () => (
-      <div className="appContent-begin" key="appContent-begin">
-        <img src={icoHen} width="88px" alt="Hen..." />
-        <p>Enter the stock id to look up</p>
-      </div>
-    );
-
-    this.renderValueBoard = ({ stockId, market, lookupTime }) => <ValueBoard stockId={stockId} market={market} lookupTime={lookupTime} key="ValueBoard" />;
-
-    this.renderNoteBoard = ({ stockId, isLogin, allowLogin }) => {
-      if (allowLogin && isLogin) {
-        return <StockNoteBoard key="StockNoteBoard" stockId={stockId} />;
-      }
-      return null;
-    };
-
-    this.renderBookmarkBoards = ({ currentBookmarkBtnId }) => {
-      const boards = [];
-
-      const propsOfBookmarkBoardTW = {
-        whenLookUpStock: this.whenLookUpStock,
-        whenCloseBookmark: this.whenCloseBookmark,
-        show: currentBookmarkBtnId === BOOKMARK_BTN_ID.TW,
-      };
-      boards.push(<BookmarkBoardTW key="BookmarkBoardTW" {...propsOfBookmarkBoardTW} />);
-
-      const propsOfBookmarkBoardUS = {
-        whenLookUpStock: this.whenLookUpStock,
-        whenCloseBookmark: this.whenCloseBookmark,
-        show: currentBookmarkBtnId === BOOKMARK_BTN_ID.US,
-      };
-      boards.push(<BookmarkBoardUS key="BookmarkBoardUS" {...propsOfBookmarkBoardUS} />);
-
-      const propsOfBookmarkBoardStory = {
-        whenCloseBookmark: this.whenCloseBookmark,
-        show: currentBookmarkBtnId === BOOKMARK_BTN_ID.STORY,
-      };
-      boards.push(<BookmarkBoardStory key="BookmarkBoardStory" {...propsOfBookmarkBoardStory} />);
-
-      return boards;
-    };
-
-    this.renderLoginPrompt = ({ isLogin, askLogin, allowLogin }) => {
-      if (!isLogin && askLogin && allowLogin) {
-        return <Prompt hasInput title="Passcode" onClose={this.onLoginPromptClose} />;
-      }
-      return null;
-    };
-
     this.mainBarCallbacks = {
       whenLogin: this.whenLogin,
       whenLookUpStock: this.whenLookUpStock,
       whenToggleBookmark: this.whenToggleBookmark,
     };
+  }
+
+  renderBeginComponent() {
+    return (
+      <div className="appContent-begin" key="appContent-begin">
+        <img src={icoHen} width="88px" alt="Hen..." />
+        <p>Enter the stock id to look up</p>
+      </div>
+    );
+  }
+
+  renderLoginPrompt({ isLogin, askLogin, allowLogin }) {
+    if (!isLogin && askLogin && allowLogin) {
+      return <Prompt hasInput title="Passcode" whenClose={this.whenLoginPromptClose} />;
+    }
+    return null;
+  }
+
+  renderBookmarkBoards({ currentBookmarkBtnId }) {
+    const boards = [];
+
+    const propsOfBookmarkBoardTW = {
+      whenLookUpStock: this.whenLookUpStock,
+      whenCloseBookmark: this.whenCloseBookmark,
+      show: currentBookmarkBtnId === BOOKMARK_BTN_ID.TW,
+    };
+    boards.push(<BookmarkBoardTW key="BookmarkBoardTW" {...propsOfBookmarkBoardTW} />);
+
+    const propsOfBookmarkBoardUS = {
+      whenLookUpStock: this.whenLookUpStock,
+      whenCloseBookmark: this.whenCloseBookmark,
+      show: currentBookmarkBtnId === BOOKMARK_BTN_ID.US,
+    };
+    boards.push(<BookmarkBoardUS key="BookmarkBoardUS" {...propsOfBookmarkBoardUS} />);
+
+    const propsOfBookmarkBoardStory = {
+      whenCloseBookmark: this.whenCloseBookmark,
+      show: currentBookmarkBtnId === BOOKMARK_BTN_ID.STORY,
+    };
+    boards.push(<BookmarkBoardStory key="BookmarkBoardStory" {...propsOfBookmarkBoardStory} />);
+
+    return boards;
+  }
+
+  renderNoteBoard({ stockId, isLogin, allowLogin }) {
+    if (allowLogin && isLogin) {
+      return <StockNoteBoard key="StockNoteBoard" stockId={stockId} />;
+    }
+    return null;
+  }
+
+  renderValueBoard({ stockId, market, lookupTime }) {
+    return <ValueBoard stockId={stockId} market={market} lookupTime={lookupTime} key="ValueBoard" />;
   }
 
   render() {

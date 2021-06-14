@@ -101,13 +101,13 @@ class NoteBoard extends ClickableComponent {
     if (!this.state.noteToDelete) {
       return null;
     }
-    const onClose = ({ action }) => {
+    const whenClose = ({ action }) => {
       if (action === ACTION.OK) {
         this.fireCallback('whenDeleteNote', this.state.noteToDelete);
       }
       this.setState({ noteToDelete: null });
     };
-    return <Prompt msg="Do you really want to delete this note?" onClose={onClose} />;
+    return <Prompt msg="Do you really want to delete this note?" whenClose={whenClose} />;
   }
 
   render() {
