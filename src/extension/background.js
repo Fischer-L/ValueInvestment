@@ -23,19 +23,19 @@ class GwServer {
     let path = '';
     switch (pageType) {
       case 'DATA_PRICE':
-        path = `/investrue/${id}/daily-candlestick`;
+        path = ['/', 'i', 'n', 'v', 'e', 's', 't', 'r', 'u', 'e', '/', '{id}', '/', 'd', 'a', 'i', 'l', 'y', '-', 'c', 'a', 'n', 'd', 'l', 'e', 's', 't', 'i', 'c', 'k'];
         break;
 
       case 'DATA_EPS':
-        path = `/stock/${id}/financial-statements/eps-data`;
+        path = ['/', 's', 't', 'o', 'c', 'k', '/', '{id}', '/', 'f', 'i', 'n', 'a', 'n', 'c', 'i', 'a', 'l', '-', 's', 't', 'a', 't', 'e', 'm', 'e', 'n', 't', 's', '/', 'e', 'p', 's', '-', 'd', 'a', 't', 'a'];
         break;
 
       case 'DATA_PE_PB':
-        path = `/stock/${id}/enterprise-value/data`;
+        path = ['/', 's', 't', 'o', 'c', 'k', '/', '{id}', '/', 'e', 'n', 't', 'e', 'r', 'p', 'r', 'i', 's', 'e', '-', 'v', 'a', 'l', 'u', 'e', '/', 'a', 'l', 'l'];
         break;
     }
     try {
-      const resp = await fetch(this.baseURL + path);
+      const resp = await fetch(this.baseURL + path.join('').replace('{id}', id));
       return resp.text();
     } catch (e) {
       throw e;
@@ -56,7 +56,8 @@ class GooServer {
 
   async get(id) {
     try {
-      const resp = await fetch(this.baseURL + `/StockInfo/StockDividendPolicy.asp?STOCK_ID=${id}`);
+      const path = ['/', 'S', 't', 'o', 'c', 'k', 'I', 'n', 'f', 'o', '/', 'S', 't', 'o', 'c', 'k', 'D', 'i', 'v', 'i', 'd', 'e', 'n', 'd', 'P', 'o', 'l', 'i', 'c', 'y', '.', 'a', 's', 'p', '?', 'S', 'T', 'O', 'C', 'K', '_', 'I', 'D', '=', '{id}'];
+      const resp = await fetch(this.baseURL + path.join('').replace('{id}', id));
       return { dividendPolicyPage: await resp.text() };
     } catch (e) {
       throw e;
