@@ -52,7 +52,7 @@ const getNoteTemplate = () => ({
   },
   chips: {
     comment:
-      '- 股本 / 在外流通: \n' +
+      '- 股本 / 在外: \n' +
       '- 外資: \n' +
       '- 投信: \n' +
       '- 大戶: \n' +
