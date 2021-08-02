@@ -16,7 +16,7 @@ const middleName = {
 export default function getURL(site, query, pathParams) {
   switch (site) {
     case 'gw':
-      return `https://www.${middleName.of('gw')}.com/stock/astock/techchart?stockno=${encodeURIComponent(query.stockId)}`;
+      return `https://www.${middleName.of('gw')}.com/stock/${encodeURIComponent(query.stockId)}/technical-chart`;
 
     case 'cmy':
       return `https://www.${middleName.of('cmy')}.tw/follow/channel/stock-${pathParams.stockId}`;
