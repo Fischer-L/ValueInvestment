@@ -60,7 +60,7 @@ class GooClient extends StockDataParserClient {
       while (yearsToExtract && trs.length) {
         const tr = trs.shift();
         const tds = tr.querySelectorAll('td');
-        if (!Number.isNaN(parseInt(tds[0].textContent, 10))) {
+        if (tds.length && !Number.isNaN(parseInt(tds[0].textContent, 10))) {
           rows.push(tr);
           yearsToExtract--;
         }
