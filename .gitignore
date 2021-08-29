@@ -1,4 +1,5 @@
 config_local.js
+extension_dist/
 
 # Logs
 logs
