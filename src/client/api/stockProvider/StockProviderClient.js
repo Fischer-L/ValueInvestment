@@ -64,6 +64,10 @@ class StockProviderClient {
   }
 
   async get(id, noCache = false) {
+    if (1) {
+      // TODO: Skip before fixing gw
+      return null;
+    }
     if (noCache === true) {
       this._stocks[id] = null;
     }
