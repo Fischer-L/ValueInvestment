@@ -1,7 +1,8 @@
+import DOMAINS from '~/utils/domains';
+
 class GwServer {
   constructor() {
-    const h = [ 'w', 'a', 'a', 'b', 'n', 'c', 't', 'd', 'g', 'e', 'o', 'f', 'o' ].filter((l, i) => i % 2 === 0).join('');
-    this.baseURL = `https://www.${h}.com`;
+    this.baseURL = DOMAINS.gw;
   }
 
   async get(id) {
@@ -50,8 +51,7 @@ class GwServer {
 
 class GooServer {
   constructor() {
-    const h = [ 'a', 'g', 'r', 'o', '6', 'o', 'q', 'd', 'i', 'i', 'b', 'n', 'z', 'f', 'l', 'o' ].filter((l, i) => i % 2 === 1).join('');
-    this.baseURL = `https://${h}.tw`;
+    this.baseURL = DOMAINS.gi;
   }
 
   async get(id) {

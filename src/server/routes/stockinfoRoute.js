@@ -1,6 +1,7 @@
 const axios = require('axios');
 const CacheProvider = require('../cacheProvider');
 const handleError = require('../utils/handleError');
+const DOMAINS = require('../../utils/domains');
 
 const infoCache = new CacheProvider();
 
@@ -30,7 +31,7 @@ const infoFetcher = {
         ...this.headers,
         'user-agent': this.UAs[Date.now() % this.UAs.length],
       };
-      const resp = await axios.get(`https://${this.host}.tw/StockInfo/StockDetail.asp?STOCK_ID=${id}`, { headers });
+      const resp = await axios.get(`${DOMAINS.gi}/StockInfo/StockDetail.asp?STOCK_ID=${id}`, { headers });
       if (resp.status !== 200) {
         throw new Error(resp.status + ':' + resp.statusText);
       }
