@@ -124,6 +124,9 @@ class ValueBoard extends ClickableComponent {
 
     this.calcPricesByPB = ({ stockData }) => {
       const { bookValue, pb } = stockData;
+      if (!bookValue || !pb) {
+        return null;
+      }
       return ['in5yrs', 'in3yrs'].reduce((pricesByPB, period) => {
         const { top, mid, low } = pb[period];
         pricesByPB[period] = this._round([
@@ -183,17 +186,38 @@ class ValueBoard extends ClickableComponent {
       return null;
     }
     const pricesByPE = this.calcPricesByPE(this.state);
+    const peElem = !pricesByPE ? null
+      : (
+        <section className="valueBoard-dataSection">
+          <Header as="h3">Costs By PE</Header>
+          <TableByYears prices5yrs={pricesByPE.in5yrs} prices3yrs={pricesByPE.in3yrs} color="blue" />
+        </section>
+      );
+
     const pricesByPB = this.calcPricesByPB(this.state);
+    const pbElem = !pricesByPB ? null
+      : (
+        <section className="valueBoard-dataSection">
+          <Header as="h3">Costs By PB</Header>
+          <TableByYears prices5yrs={pricesByPB.in5yrs} prices3yrs={pricesByPB.in3yrs} color="teal" />
+        </section>
+      );
+
     const pricesByDividends = this.calcPricesByDividends(this.state);
+    const dividendElem = !pricesByDividends ? null
+      : (
+        <section className="valueBoard-dataSection">
+          <Header as="h3">Costs By Dividend</Header>
+          <TableByDividends pricesByDividends={pricesByDividends} color="green" />
+        </section>
+      );
+
     return (
       <div>
         { this.renderPanel() }
-        <Header as="h3">Costs By PE</Header>
-        <TableByYears prices5yrs={pricesByPE.in5yrs} prices3yrs={pricesByPE.in3yrs} color="blue" />
-        <Header as="h3">Costs By Dividend</Header>
-        <TableByDividends pricesByDividends={pricesByDividends} color="green" />
-        <Header as="h3">Costs By PB</Header>
-        <TableByYears prices5yrs={pricesByPB.in5yrs} prices3yrs={pricesByPB.in3yrs} color="teal" />
+        { peElem }
+        { dividendElem }
+        { pbElem }
       </div>
     );
   }

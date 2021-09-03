@@ -4,7 +4,6 @@
 //   name: 'Stock',
 //   price: 100,
 //   eps: 12,
-//   bookValue: 30,
 //   cashDivs: [
 //     5, 4.5, 4.8, 4.2, 4,
 //   ],
@@ -27,6 +26,9 @@
 //       low: 20,
 //     },
 //   },
+//
+//   // Because of blocking by the 3rd part, the below data is unavailable for now
+//   bookValue: 30,
 //   pb: {
 //     all: [ 1, 1.1, 1.2, ... ],
 //     in5yrs: {
@@ -64,10 +66,6 @@ class StockProviderClient {
   }
 
   async get(id, noCache = false) {
-    if (1) {
-      // TODO: Skip before fixing gw
-      return null;
-    }
     if (noCache === true) {
       this._stocks[id] = null;
     }
@@ -95,7 +93,9 @@ class StockProviderClient {
         }), {});
 
         data.id = id;
-        data.bookValue = data.price / data.pb.all[0];
+        if (data.pb) {
+          data.bookValue = data.price / data.pb.all[0];
+        }
 
         this._stocks[id].data = data;
         resolve(this._stocks[id].data);

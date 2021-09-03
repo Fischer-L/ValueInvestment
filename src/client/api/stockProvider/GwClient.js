@@ -1,31 +1,27 @@
 import { StockDataParserClient } from './StockProviderClient';
 
 class GwClient extends StockDataParserClient {
-  parseData({ DATA_PRICE, DATA_EPS, DATA_PE_PB }) {
-    const dataEps = JSON.parse(DATA_EPS);
-    const dataPePb = JSON.parse(DATA_PE_PB);
-    const dataPrice = JSON.parse(DATA_PRICE);
-    const eps = this._extractEPS(dataEps);
-    const pe = this._extractPE(dataPePb);
-    const pb = this._extractPB(dataPePb);
+  parseData({ DATA_PRICE, DATA_EPS, DATA_PE }) {
+    const eps = this._extractEPS(DATA_EPS);
+    const pe = this._extractPE(DATA_PE);
+    // const pb = this._extractPB(dataPb); // TODO: Before fixing the PB data source, skip always
     return {
       pe,
-      pb,
       eps,
-      price: dataPrice.close,
+      price: DATA_PRICE.close,
+      // pb: TODO: Before fixing the PB data source, skip always
     };
   }
 
   _extractEPS(data) {
-    return data.map(v => v.beps).slice(0, 4).reduce((quarterly, total) => quarterly + total, 0);
+    return data.slice(0, 4).reduce((quarterly, total) => quarterly + total, 0);
   }
 
   _extractPE(data) {
-    const values = data.map(v => v.priceToEarningRatio);
     return {
-      all: values,
-      in5yrs: this._getFeaturedValues(values.slice(0, 60)),
-      in3yrs: this._getFeaturedValues(values.slice(0, 30)),
+      all: data,
+      in5yrs: this._getFeaturedValues(data.slice(0, 60)),
+      in3yrs: this._getFeaturedValues(data.slice(0, 30)),
     };
   }
 

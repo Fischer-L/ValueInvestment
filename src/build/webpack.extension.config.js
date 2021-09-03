@@ -19,8 +19,9 @@ const webpackConfig = {
   mode: 'production',
 
   entry: {
-    contentScript: resolve('./src/extension/contentScript.js'),
     backgroundScript: resolve('./src/extension/background.js'),
+    contentScript: resolve('./src/extension/contentScript.js'),
+    gwContentScript: resolve('./src/extension/gwContentScript.js'),
   },
 
   resolve: {
