@@ -10,6 +10,10 @@ const apiClient = axios.create({
 const extensionClient = {
   _version: '1.4.1',
 
+  init() {
+    window.addEventListener('load', () => this._helloExtension(), { once: true });
+  },
+
   async talkToExtension(msgBody) {
     let extension;
     if (!this._extensionACK) {
@@ -64,6 +68,7 @@ const extensionClient = {
     return this._extensionACK.promise;
   },
 };
+extensionClient.init();
 
 export {
   apiClient,
