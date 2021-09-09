@@ -1,5 +1,6 @@
 /* eslint react/no-this-in-sfc: off */
 import DOMAINS from '~/utils/domains';
+import CacheProvider from '~/utils/cacheProvider';
 import gwURL, { PATH_TYPE } from './utils/gwURL';
 
 const gooServer = {
@@ -105,6 +106,8 @@ const gwServer = {
 
 const stockData = {
 
+  _cache: new CacheProvider(),
+
   _cleanUp() {
     this._id = this._sendResp = null;
   },
@@ -116,10 +119,14 @@ const stockData = {
       }
       this._id = id;
       this._sendResp = sendResp;
-      const [ gooStockData, gwStockData ] = await Promise.all([ gooServer.get(id), gwServer.get(id) ]);
-      this._sendResp({
-        result: { gooStockData, gwStockData },
-      });
+
+      let result = this._cache.get(this._id);
+      if (!result) {
+        const [ gooStockData, gwStockData ] = await Promise.all([ gooServer.get(id), gwServer.get(id) ]);
+        result = { gooStockData, gwStockData };
+        this._cache.set(this._id, result);
+      }
+      this._sendResp({ result });
     } catch (e) {
       sendResp({ error: e.toString() });
     } finally {

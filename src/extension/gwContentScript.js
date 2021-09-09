@@ -15,11 +15,11 @@ const peExtractor = {
     const table = document.querySelector('table');
     const cells = table ? Array.from(table.querySelectorAll('tbody > tr')) : [];
     const peValues = cells.map(tr => parseFloat(tr.querySelectorAll('td')[1].textContent)).filter(pe => !Number.isNaN(pe));
-    if (!peValues.length) {
+    if (peValues.length) {
+      callback(peValues);
+    } else {
       setTimeout(() => this._extractPEs(callback), MS_EXTRACT_WAITING_TIME);
-      return;
     }
-    callback(peValues);
   },
 
   extractPEs() {
@@ -44,17 +44,16 @@ const epsExtractor = {
   _extractEPS(callback) {
     const table = document.querySelector('table');
     const cells = table ? Array.from(table.querySelectorAll('tbody > tr')) : [];
-    if (!table || !cells.length) {
-      setTimeout(() => this._extractEPS(callback), MS_EXTRACT_WAITING_TIME);
-      return;
-    }
-
     const epsValues = cells.map(cell => {
       const tds = cell.querySelectorAll('td');
       return tds[0].textContent.trim() === '合計' ? null : parseFloat(tds[1].textContent.trim());
     }).filter(eps => typeof eps === 'number');
 
-    callback({ DATA_EPS: epsValues });
+    if (epsValues.length) {
+      callback({ DATA_EPS: epsValues });
+    } else {
+      setTimeout(() => this._extractEPS(callback), MS_EXTRACT_WAITING_TIME);
+    }
   },
 
   extractEPS() {
