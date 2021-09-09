@@ -1,79 +1,147 @@
+/* eslint react/no-this-in-sfc: off */
 import DOMAINS from '~/utils/domains';
+import gwURL, { PATH_TYPE } from './utils/gwURL';
 
-class GwServer {
-  constructor() {
-    this.baseURL = DOMAINS.gw;
-  }
-
-  async get(id) {
-    try {
-      const [ DATA_PRICE, DATA_EPS, DATA_PE_PB ] = await Promise.all([
-        this._getPage('DATA_PRICE', id),
-        this._getPage('DATA_EPS', id),
-        this._getPage('DATA_PE_PB', id),
-      ]);
-      return { DATA_PRICE, DATA_EPS, DATA_PE_PB };
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  async _getPage(pageType, id) {
-    await this._delay(); // Delay a bit to avoid a batch of requests found on the server side
-
-    let path = '';
-    switch (pageType) {
-      case 'DATA_PRICE':
-        path = ['/', 'i', 'n', 'v', 'e', 's', 't', 'r', 'u', 'e', '/', '{id}', '/', 'd', 'a', 'i', 'l', 'y', '-', 'c', 'a', 'n', 'd', 'l', 'e', 's', 't', 'i', 'c', 'k'];
-        break;
-
-      case 'DATA_EPS':
-        path = ['/', 's', 't', 'o', 'c', 'k', '/', '{id}', '/', 'f', 'i', 'n', 'a', 'n', 'c', 'i', 'a', 'l', '-', 's', 't', 'a', 't', 'e', 'm', 'e', 'n', 't', 's', '/', 'e', 'p', 's', '-', 'd', 'a', 't', 'a'];
-        break;
-
-      case 'DATA_PE_PB':
-        path = ['/', 's', 't', 'o', 'c', 'k', '/', '{id}', '/', 'e', 'n', 't', 'e', 'r', 'p', 'r', 'i', 's', 'e', '-', 'v', 'a', 'l', 'u', 'e', '/', 'a', 'l', 'l'];
-        break;
-    }
-    try {
-      const resp = await fetch(this.baseURL + path.join('').replace('{id}', id));
-      return resp.text();
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  _delay() {
-    const ms = Math.floor(Math.random() * 100);
-    return new Promise(resolve => setTimeout(resolve, Math.max(ms, 50)));
-  }
-}
-
-class GooServer {
-  constructor() {
-    this.baseURL = DOMAINS.gi;
-  }
+const gooServer = {
+  baseURL: DOMAINS.gi,
 
   async get(id) {
-    try {
-      const path = ['/', 'S', 't', 'o', 'c', 'k', 'I', 'n', 'f', 'o', '/', 'S', 't', 'o', 'c', 'k', 'D', 'i', 'v', 'i', 'd', 'e', 'n', 'd', 'P', 'o', 'l', 'i', 'c', 'y', '.', 'a', 's', 'p', '?', 'S', 'T', 'O', 'C', 'K', '_', 'I', 'D', '=', '{id}'];
-      const resp = await fetch(this.baseURL + path.join('').replace('{id}', id));
-      return { dividendPolicyPage: await resp.text() };
-    } catch (e) {
-      throw e;
+    const path = ['/', 'S', 't', 'o', 'c', 'k', 'I', 'n', 'f', 'o', '/', 'S', 't', 'o', 'c', 'k', 'D', 'i', 'v', 'i', 'd', 'e', 'n', 'd', 'P', 'o', 'l', 'i', 'c', 'y', '.', 'a', 's', 'p', '?', 'S', 'T', 'O', 'C', 'K', '_', 'I', 'D', '=', '{id}'];
+    const resp = await fetch(this.baseURL + path.join('').replace('{id}', id));
+    const result = { dividendPolicyPage: await resp.text() };
+    return result;
+  },
+};
+
+const gwServer = {
+  _cleanUp() {
+    if (this._tabs) {
+      this._tabs.forEach(tab => chrome.tabs.remove(tab.id));
     }
-  }
-}
+    if (this._timer) {
+      clearTimeout(this._timer);
+    }
+    this._data = {
+      DATA_PE: null,
+      DATA_EPS: null,
+      DATA_PRICE: null,
+    };
+    this._typesExtracted = this._timer = this._id = this._tabs = this._getPromise = null;
+  },
+
+  _timeoutIfTooLong() {
+    if (this._timer) {
+      clearTimeout(this._timer);
+    }
+    this._timer = setTimeout(() => {
+      if (this._getPromise) {
+        this._getPromise.reject(new Error(`gw tab timeout: id= ${this._id}`));
+      }
+    }, 15 * 1000);
+  },
+
+  _openGwForData() {
+    this._tabs = [];
+
+    chrome.tabs.create({
+      url: gwURL(PATH_TYPE.PE, this._id),
+      index: 999, // Wanna be the last one
+      active: false,
+    }, tab => {
+      this._tabs.push(tab);
+    });
+    chrome.tabs.create({
+      url: gwURL(PATH_TYPE.EPS, this._id),
+      index: 999, // Wanna be the last one
+      active: false,
+    }, tab => {
+      this._tabs.push(tab);
+    });
+  },
+
+  async get(id) {
+    if (this._id === id && this._getPromise) {
+      return this._getPromise.promise;
+    }
+    this._cleanUp();
+    this._id = id;
+
+    this._getPromise = {};
+    this._getPromise.promise = new Promise((resolve, reject) => {
+      this._getPromise.resolve = resolve;
+      this._getPromise.reject = reject;
+      this._openGwForData(this._id);
+      this._timeoutIfTooLong();
+    });
+    return this._getPromise.promise.finally(() => this._cleanUp());
+  },
+
+  shouldExtract({ type, url }) {
+    if (!this._typesExtracted) {
+      this._typesExtracted = {};
+    }
+    if (!this._typesExtracted[type] && gwURL(type, this._id) === url) {
+      this._typesExtracted[type] = true;
+      return this._id;
+    }
+    return null;
+  },
+
+  onDataFromContentScript({ DATA_PE, DATA_EPS, DATA_PRICE }) {
+    if (DATA_PE) {
+      this._data.DATA_PE = DATA_PE;
+    }
+    if (DATA_EPS) {
+      this._data.DATA_EPS = DATA_EPS;
+    }
+    if (DATA_PRICE) {
+      this._data.DATA_PRICE = DATA_PRICE;
+    }
+    if (Object.values(this._data).every(Boolean)) {
+      this._getPromise.resolve(this._data);
+    }
+  },
+};
+
+const stockData = {
+
+  _cleanUp() {
+    this._id = this._sendResp = null;
+  },
+
+  async get(id, sendResp) {
+    try {
+      if (this._sendResp) {
+        this._sendResp({ error: `Stop fetching ${this._id} and start fetching ${id}` });
+      }
+      this._id = id;
+      this._sendResp = sendResp;
+      const [ gooStockData, gwStockData ] = await Promise.all([ gooServer.get(id), gwServer.get(id) ]);
+      this._sendResp({
+        result: { gooStockData, gwStockData },
+      });
+    } catch (e) {
+      sendResp({ error: e.toString() });
+    } finally {
+      this._cleanUp();
+    }
+  },
+};
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResp) => {
   const { cmd, params } = msg;
   switch (cmd) {
     case 'CMD_STOCK_DATA':
-      const gw = new GwServer();
-      const goo = new GooServer();
-      Promise.all([ gw.get(params.id), goo.get(params.id) ])
-        .then(([ gwStockData, gooStockData ]) => sendResp({ result: { gwStockData, gooStockData } }))
-        .catch(e => sendResp({ error: e.toString() }));
+      stockData.get(params.id, sendResp);
+      break;
+
+    case 'CMD_GW_SHOULD_EXTRACT':
+      sendResp({ result: gwServer.shouldExtract(params) });
+      break;
+
+    case 'CMD_GW_RETURN_DATA':
+      gwServer.onDataFromContentScript(params.data);
+      sendResp(true);
       break;
   }
   return true;

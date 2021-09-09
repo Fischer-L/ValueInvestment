@@ -6,6 +6,7 @@ const utils = require('../build/utils');
 
 const { resolve } = utils;
 
+const DOMAINS = require(resolve('./src/utils/domains'));
 const config = require(resolve('./src/build/config_extension'));
 
 const manifest = {
@@ -25,6 +26,11 @@ const manifest = {
       matches: [ 'http://localhost:9858/*', 'https://value-investment.herokuapp.com/*' ],
       run_at: 'document_idle',
       js: [ 'contentScript.js' ],
+    },
+    {
+      matches: [ DOMAINS.gw + '/*' ],
+      run_at: 'document_idle',
+      js: [ 'gwContentScript.js' ],
     },
   ],
   permissions: [
