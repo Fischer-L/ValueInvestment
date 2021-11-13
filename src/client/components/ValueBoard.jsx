@@ -79,14 +79,12 @@ class ValueBoard extends ClickableComponent {
 
       this.setState({ loading: true });
       try {
-        const stockData = await stockProvider.get(stockId, noCache);
-        if (!stockData) {
-          // Maybe no data because of no extension so fallback to load name only.
-          const name = await stockProvider.getName(stockId);
-          this.setState({ stockName: name });
-        } else if (stockId === stockData.id) {
-          this.setState({ stockData, stockName: stockData.name });
-        }
+        // Because the speed of stockProvider is slow so we don't wait it and fetch the name first
+        stockProvider.get(stockId, noCache).then(stockData => {
+          if (stockData && stockData.id === stockId) this.setState({ stockData, stockName: stockData.name });
+        });
+        const name = await stockProvider.getName(stockId);
+        this.setState({ stockName: name });
       } catch (error) {
         this.setState({ error });
       }
