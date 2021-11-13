@@ -20,7 +20,7 @@ class StockLinks extends ClickableComponent {
         return [
           { title: '技術', url: getURL('gw', { stockId: stock.id }) },
           { title: '法人', url: getURL('chips', { stockId: stock.id }) },
-          { title: '主力', url: getURL('hi_buyer', { stockId: stock.id }) },
+          { title: '資券', url: getURL('hi_margin', { stockId: stock.id }) },
           { title: '大戶', url: getURL('big_holder', { stockId: stock.id }) },
           { title: 'News', url: getURL('news', { q: stock.name }) },
           { title: '24hrs News', url: getURL('24hrs_news', { q: stock.name }) },

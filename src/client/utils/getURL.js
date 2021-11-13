@@ -32,8 +32,8 @@ export default function getURL(site, query, pathParams) {
     case 'ya_us':
       return `${DOMAINS.yFinance}/quote/${pathParams.stockId}/chart?p=${encodeURIComponent(query.stockId)}#${yaUsHash}`;
 
-    case 'hi_buyer':
-      return `${DOMAINS.hi}/stock/chips.aspx?no=${encodeURIComponent(query.stockId)}`;
+    case 'hi_margin':
+      return `${DOMAINS.hi}/stock/chips.aspx?no=${encodeURIComponent(query.stockId)}&m=mg`;
 
     case 'big_holder':
       return `${DOMAINS.nt}/StockHolders.aspx?stock=${encodeURIComponent(query.stockId)}`;
