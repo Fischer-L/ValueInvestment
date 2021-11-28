@@ -1,21 +1,33 @@
 import giURL, { PATH_TYPE } from './utils/giURL';
 
 const stockListTable = {
-  trialCounts: 0,
-
   id: [ 'tx', 'tStoc', 'kList', 'Data' ].join(''),
 
-  enlarge() {
-    const tableContainer = document.querySelector(`#${this.id} > div`);
-    if (!tableContainer && this.trialCounts < 10) {
-      setTimeout(() => this.enlarge, 330);
-      this.trialCounts++;
+  autoEnlarge() {
+    let localVars = window.giContentScript.stockListTableLocalVars || {
+      trialCounts: 0,
+      observer: null,
+    };
+    window.giContentScript.stockListTableLocalVars = localVars;
+
+    if (localVars.observer) {
       return;
     }
-    this.trialCounts = 0;
 
-    if (tableContainer) {
-      tableContainer.style.width = 'auto';
+    const root = document.querySelector(`#${this.id}`);
+    if (!root && localVars.trialCounts < 10) {
+      setTimeout(() => this.autoEnlarge(), 330);
+      localVars.trialCounts++;
+      return;
+    }
+    localVars.trialCounts = 0;
+
+    if (root) {
+      root.querySelector('div').style.width = 'auto';
+      localVars.observer = new MutationObserver(() => {
+        root.querySelector('div').style.width = 'auto';
+      });
+      localVars.observer.observe(root, { childList: true, subtree: true });
     }
   },
 
@@ -25,7 +37,11 @@ const stockListTable = {
 };
 
 window.addEventListener('load', async function () {
+  if (!window.giContentScript) {
+    window.giContentScript = {};
+  }
+
   if (stockListTable.isTargetPage()) {
-    stockListTable.enlarge();
+    stockListTable.autoEnlarge();
   }
 });
