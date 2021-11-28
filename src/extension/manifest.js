@@ -32,6 +32,11 @@ const manifest = {
       run_at: 'document_idle',
       js: [ 'gwContentScript.js' ],
     },
+    {
+      matches: [ DOMAINS.gi + '/*' ],
+      run_at: 'document_idle',
+      js: [ 'giContentScript.js' ],
+    },
   ],
   permissions: [
     'activeTab',
