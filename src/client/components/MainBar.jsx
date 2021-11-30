@@ -6,6 +6,8 @@ import MARKET_TYPE from '@/utils/marketType';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/MainBar.scss';
 
+const LOCAL_VARS = {};
+
 export const BOOKMARK_BTN_ID = {
   TW: 'TW',
   US: 'US',
@@ -82,6 +84,7 @@ class MainBar extends ClickableComponent {
             icon="search"
             size="small"
             placeholder="Search..."
+            id="mainBarInput"
             onChange={this.onInputChange}
           />
         </section>
@@ -93,6 +96,17 @@ class MainBar extends ClickableComponent {
         </section>
       </div>
     );
+  }
+
+  componentDidMount() {
+    if (!LOCAL_VARS.autoFocusInput) {
+      LOCAL_VARS.autoFocusInput = true;
+      window.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') {
+          document.getElementById('mainBarInput').focus();
+        }
+      });
+    }
   }
 }
 
