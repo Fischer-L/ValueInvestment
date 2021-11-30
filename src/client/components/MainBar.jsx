@@ -103,7 +103,9 @@ class MainBar extends ClickableComponent {
       LOCAL_VARS.autoFocusInput = true;
       window.addEventListener('visibilitychange', function () {
         if (document.visibilityState === 'visible') {
-          document.getElementById('mainBarInput').focus();
+          const input = document.getElementById('mainBarInput');
+          input.value = '';
+          input.focus();
         }
       });
     }
