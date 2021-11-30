@@ -150,6 +150,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResp) => {
       gwServer.onDataFromContentScript(params.data);
       sendResp(true);
       break;
+
+    case 'CMD_STOCK_TECHNICAL':
+      chrome.tabs.create({
+        url: gwURL(PATH_TYPE.TECHNICAL, params.stockId),
+        index: 1,
+        active: true,
+      });
+      sendResp(true);
+      break;
   }
   return true;
 });
