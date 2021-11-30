@@ -1,15 +1,12 @@
 import giURL, { PATH_TYPE } from './utils/giURL';
 
 const stockListTable = {
+  _localVars: null,
+
   id: [ 'tx', 'tStoc', 'kList', 'Data' ].join(''),
 
   autoEnlarge() {
-    let localVars = window.giContentScript.stockListTableLocalVars || {
-      trialCounts: 0,
-      observer: null,
-    };
-    window.giContentScript.stockListTableLocalVars = localVars;
-
+    const localVars = this._localVars;
     if (localVars.observer) {
       return;
     }
@@ -31,8 +28,28 @@ const stockListTable = {
     }
   },
 
+  listenHotKeys() {
+    // document.addEventListener('keydown', e => {
+    //   const key = e.key.toLowerCase();
+    //   // TODO: meta + / + enter
+    // });
+  },
+
   isTargetPage() {
     return window.location.href.startsWith(giURL(PATH_TYPE.LIST));
+  },
+
+  init() {
+    if (this._localVars) {
+      return;
+    }
+    this._localVars = window.giContentScript.stockListTableLocalVars || {
+      trialCounts: 0,
+      observer: null,
+    };
+    window.giContentScript.stockListTableLocalVars = this._localVars;
+    this.autoEnlarge();
+    this.listenHotKeys();
   },
 };
 
@@ -42,6 +59,6 @@ window.addEventListener('load', async function () {
   }
 
   if (stockListTable.isTargetPage()) {
-    stockListTable.autoEnlarge();
+    stockListTable.init();
   }
 });
