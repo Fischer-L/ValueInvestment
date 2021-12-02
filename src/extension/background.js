@@ -154,7 +154,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResp) => {
     case 'CMD_STOCK_TECHNICAL':
       chrome.tabs.create({
         url: gwURL(PATH_TYPE.TECHNICAL, params.stockId),
-        index: 1,
+        index: 0,
         active: true,
       });
       sendResp(true);

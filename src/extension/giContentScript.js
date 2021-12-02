@@ -1,17 +1,27 @@
 import giURL, { PATH_TYPE } from './utils/giURL';
+import messageBackground from './utils/messageBackground';
+
+function localVarsOf(key, defaultVars = {}) {
+  if (!window.giContentScript) {
+    window.giContentScript = {};
+  }
+  const localVars = window.giContentScript[key] || defaultVars;
+  window.giContentScript[key] = localVars;
+  return localVars;
+}
 
 const stockListTable = {
   _localVars: null,
 
-  id: [ 'tx', 'tStoc', 'kList', 'Data' ].join(''),
+  _id: [ 'tx', 'tStoc', 'kList', 'Data' ].join(''),
 
-  autoEnlarge() {
+  _autoEnlarge() {
     const localVars = this._localVars;
     if (localVars.observer) {
       return;
     }
 
-    const root = document.querySelector(`#${this.id}`);
+    const root = document.querySelector(`#${this._id}`);
     if (!root && localVars.trialCounts < 10) {
       setTimeout(() => this.autoEnlarge(), 330);
       localVars.trialCounts++;
@@ -28,37 +38,82 @@ const stockListTable = {
     }
   },
 
-  listenHotKeys() {
-    // document.addEventListener('keydown', e => {
-    //   const key = e.key.toLowerCase();
-    //   // TODO: meta + / + enter
-    // });
-  },
-
   isTargetPage() {
     return window.location.href.startsWith(giURL(PATH_TYPE.LIST));
   },
 
   init() {
-    if (this._localVars) {
-      return;
-    }
-    this._localVars = window.giContentScript.stockListTableLocalVars || {
+    this._localVars = localVarsOf('stockListTableLocalVars', {
       trialCounts: 0,
       observer: null,
-    };
-    window.giContentScript.stockListTableLocalVars = this._localVars;
-    this.autoEnlarge();
-    this.listenHotKeys();
+    });
+    if (this._localVars.init) {
+      return;
+    }
+    if (this.isTargetPage()) {
+      this._localVars.init = true;
+      this._autoEnlarge();
+    }
   },
 };
 
-window.addEventListener('load', async function () {
-  if (!window.giContentScript) {
-    window.giContentScript = {};
-  }
+const hotKeysManager = {
+  _localVars: null,
 
-  if (stockListTable.isTargetPage()) {
-    stockListTable.init();
-  }
+  _activeKeys: {},
+
+  hotKeys: [],
+
+  _execHotKey() {
+    for (let i = 0; i < this.hotKeys.length; i++) {
+      const hotKey = this.hotKeys[i];
+      if (hotKey.targetKeys.every(key => this._activeKeys[key])) {
+        this._activeKeys = {};
+        hotKey.exec();
+        return;
+      }
+    }
+  },
+
+  init() {
+    this._localVars = localVarsOf('hotKeysManagerLocalVars');
+    if (this._localVars.init) {
+      return;
+    }
+
+    if (this.hotKeys.some(hotKey => hotKey.isTargetPage())) {
+
+      this._localVars.init = true;
+
+      document.addEventListener('keydown', e => {
+        const key = e.key.toLowerCase();
+        this._activeKeys[key] = true;
+        this._execHotKey();
+      });
+      document.addEventListener('keyup', e => {
+        const key = e.key.toLowerCase();
+        this._activeKeys[key] = false;
+      });
+    }
+  },
+};
+hotKeysManager.hotKeys.push({
+  targetKeys: [ 'meta', '\'', 'enter' ],
+  isTargetPage() {
+    return window.location.href.startsWith(giURL(PATH_TYPE.LIST));
+  },
+  exec() {
+    const stockId = window.prompt('Enter id');
+    if (stockId) {
+      messageBackground({
+        cmd: 'CMD_STOCK_TECHNICAL',
+        params: { stockId },
+      });
+    }
+  },
+});
+
+window.addEventListener('load', async function () {
+  stockListTable.init();
+  hotKeysManager.init();
 });
