@@ -7,6 +7,12 @@
 .valueBoard-stockTitle {
   margin-right: 18px;
   display: inline-block;
+  position: relative;
+}
+
+.valueBoard-bookmarkIcon {
+  position: absolute;;
+  cursor: pointer;
 }
 
 .valueBoard-stockLinks.ui.list {
