@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Header, Input } from 'semantic-ui-react';
+import { Header, Input, Icon } from 'semantic-ui-react';
 
 import { apiClient, extensionClient, getStockProvider } from '@/api/index';
+import bookmarkProvider, { BOOKMARK_TYPE } from '@/api/bookmarkProvider';
 import { round } from '@/utils/round';
 import MARKET_TYPE from '@/utils/marketType';
 import Loading from '@/components/Loading';
@@ -135,6 +136,11 @@ class ValueBoard extends ClickableComponent {
         return pricesByPB;
       }, {});
     };
+
+    this.onBookmark = this.onClickDo(() => {
+      const { stockId: id, stockName: name } = this.state;
+      bookmarkProvider.put(BOOKMARK_TYPE.STOCKS, id, { id, name });
+    });
   }
 
   renderPanel() {
@@ -226,7 +232,10 @@ class ValueBoard extends ClickableComponent {
     if (stockId && stockName) {
       stockLinksElem = (
         <Header as="h2" dividing>
-          <span className="valueBoard-stockTitle">{stockId} {stockName}</span>
+          <div className="valueBoard-stockTitle">
+            {stockId} {stockName}
+            <Icon className="valueBoard-bookmarkIcon" name="plus circle" size="small" onClick={this.onBookmark} onTouchEnd={this.onBookmark} />
+          </div>
           <StockLinks className="valueBoard-stockLinks" stock={{ id: stockId, name: stockName }} market={MARKET_TYPE.TW} />
         </Header>
       );

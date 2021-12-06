@@ -8,8 +8,8 @@ export const BOOKMARK_TYPE = {
 };
 
 const bookmarkProvider = {
-
-  _bookmarks: null,
+  _bookmarks: {},
+  _bookmarkUpdateMarks: {},
 
   _normalizeId(type, id) {
     if (!id) {
@@ -26,12 +26,12 @@ const bookmarkProvider = {
 
     this._initPromise = apiClient.get('/bookmarks')
       .then(({ data }) => {
-        this._bookmarks = {};
         Object.values(BOOKMARK_TYPE).forEach(type => {
           this._bookmarks[type] = data[type].reduce((acc, item) => {
             acc[item.id] = item;
             return acc;
           }, {});
+          this._bookmarkUpdateMarks[type] = Date.now();
         });
       })
       .catch(e => {
@@ -39,6 +39,11 @@ const bookmarkProvider = {
         console.error(e);
       });
     return this._initPromise;
+  },
+
+  async getUpdateMark(type) {
+    await this._init();
+    return this._bookmarkUpdateMarks[type];
   },
 
   async toArray(type) {
@@ -76,6 +81,7 @@ const bookmarkProvider = {
         console.error(e);
       }
       data[id] = payload;
+      this._bookmarkUpdateMarks[type] = Date.now();
     }
   },
 
@@ -91,6 +97,7 @@ const bookmarkProvider = {
         console.error(e);
       }
       delete data[id];
+      this._bookmarkUpdateMarks[type] = Date.now();
     }
   },
 };

@@ -13,6 +13,7 @@ class BookmarkBoardTW extends ClickableComponent {
     this.state = {
       pttUsers: [],
       stocks: [],
+      stocksUpdateMark: null,
     };
 
     this.decodeInput = input => {
@@ -49,8 +50,12 @@ class BookmarkBoardTW extends ClickableComponent {
     };
 
     this.populateStocks = () => {
-      bookmarkProvider.toArray(BOOKMARK_TYPE.STOCKS).then(stocks => {
-        this.setState({ stocks: stocks.filter(s => s.market === MARKET_TYPE.TW) });
+      bookmarkProvider.getUpdateMark(BOOKMARK_TYPE.STOCKS).then(stocksUpdateMark => {
+        if (this.state.stocksUpdateMark !== stocksUpdateMark) {
+          bookmarkProvider.toArray(BOOKMARK_TYPE.STOCKS).then(stocks => {
+            this.setState({ stocksUpdateMark, stocks: stocks.filter(s => s.market === MARKET_TYPE.TW) });
+          });
+        }
       });
     };
 
@@ -68,6 +73,10 @@ class BookmarkBoardTW extends ClickableComponent {
         <StocksBookmark stocks={stocks} market={MARKET_TYPE.TW} whenLookUpStock={this._whenLookUpStock} whenRemoveStock={this.whenRemoveStock} />
       </BookmarkBoard>
     );
+  }
+
+  componentDidUpdate() {
+    this.populateStocks();
   }
 }
 BookmarkBoardTW.propTypes = {
