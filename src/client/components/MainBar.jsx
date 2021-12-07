@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Input, Button, Icon } from 'semantic-ui-react';
 
 import MARKET_TYPE from '@/utils/marketType';
+import { isEditingNote } from '@/components/NoteBoard/NoteBoard';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
 import '@/css/MainBar.scss';
 
@@ -50,6 +51,7 @@ class MainBar extends ClickableComponent {
           stockId,
           market: Number.isNaN(parseInt(stockId, 10)) ? MARKET_TYPE.US : MARKET_TYPE.TW,
         });
+        document.getElementById('mainBarInput').value = '';
       }
     });
   }
@@ -102,10 +104,8 @@ class MainBar extends ClickableComponent {
     if (!LOCAL_VARS.autoFocusInput) {
       LOCAL_VARS.autoFocusInput = true;
       window.addEventListener('visibilitychange', function () {
-        if (document.visibilityState === 'visible') {
-          const input = document.getElementById('mainBarInput');
-          input.value = '';
-          input.focus();
+        if (!isEditingNote() && document.visibilityState === 'visible') {
+          document.getElementById('mainBarInput').focus();
         }
       });
     }
