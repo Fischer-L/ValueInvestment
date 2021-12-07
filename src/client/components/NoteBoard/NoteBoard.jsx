@@ -11,10 +11,23 @@ import { Note, NewNoteElem } from './utilComponents';
 
 import '@/css/NoteBoard.scss';
 
+function markEditingNote() {
+  document.body.dataset.editingNote = '1';
+}
+
+function unmarkEditingNote() {
+  delete document.body.dataset.editingNote;
+}
+
+export function isEditingNote() {
+  return document.body.dataset.editingNote === '1';
+}
+
+
 const defaultState = () => ({
-  noteToEdit: null,
-  newNoteMode: false,
   defaultNote: null,
+  newNoteMode: false,
+  noteToEdit: null,
   noteToDelete: null,
 });
 
@@ -27,10 +40,14 @@ class NoteBoard extends ClickableComponent {
     this.editNote = ({ originalNote }) => {
       if (originalNote && !this.state.loading) {
         this.setState({ noteToEdit: originalNote });
+        markEditingNote();
       }
     };
 
-    this.closeEditNote = () => this.setState(() => ({ noteToEdit: null }));
+    this.closeEditNote = () => {
+      this.setState(() => ({ noteToEdit: null }));
+      unmarkEditingNote();
+    };
 
     this.copyNote = ({ originalNote }) => {
       if (originalNote) {
@@ -41,9 +58,13 @@ class NoteBoard extends ClickableComponent {
     this.openNewNoteMode = this.onClickDo((e, payload) => {
       const defaultNote = (payload && payload.defaultNote) || this.props.noteTemplate;
       this.setState({ newNoteMode: true, defaultNote });
+      markEditingNote();
     });
 
-    this.closeNewNoteMode = () => this.setState(() => ({ newNoteMode: false, defaultNote: null }));
+    this.closeNewNoteMode = () => {
+      this.setState(() => ({ newNoteMode: false, defaultNote: null }));
+      unmarkEditingNote();
+    };
 
     this.promptDeleteNote = ({ originalNote }) => {
       if (originalNote) {
