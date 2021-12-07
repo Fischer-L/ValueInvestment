@@ -23,8 +23,6 @@ class MainBar extends ClickableComponent {
       stockId: '',
     };
 
-    this.mainBarInputRef = React.createRef();
-
     this.onInputChange = (e) => {
       this.setState({ stockId: e.target.value });
     };
