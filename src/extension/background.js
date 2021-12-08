@@ -1,7 +1,9 @@
 /* eslint react/no-this-in-sfc: off */
 import DOMAINS from '~/utils/domains';
+import delay from '~/utils/delay';
 import CacheProvider from '~/utils/cacheProvider';
 import gwURL, { PATH_TYPE } from './utils/gwURL';
+import getCurrentTab from './utils/getCurrentTab';
 import openTabs from './utils/openTabs';
 
 const gooServer = {
@@ -42,23 +44,33 @@ const gwServer = {
     }, 15 * 1000);
   },
 
-  _openGwForData() {
+  async _openGwForData() {
     this._tabs = [];
+
+    // Below we give each tab some time to be in the foreground so as to expedite page load
+    const currentTab = await getCurrentTab();
 
     chrome.tabs.create({
       url: gwURL(PATH_TYPE.PE, this._id),
       index: 999, // Wanna be the last one
-      active: false,
+      active: true,
     }, tab => {
       this._tabs.push(tab);
     });
+
+    await delay(600);
+
     chrome.tabs.create({
       url: gwURL(PATH_TYPE.EPS, this._id),
       index: 999, // Wanna be the last one
-      active: false,
+      active: true,
     }, tab => {
       this._tabs.push(tab);
     });
+
+    await delay(600);
+
+    chrome.tabs.update(currentTab.id, { active: true });
   },
 
   async get(id) {
