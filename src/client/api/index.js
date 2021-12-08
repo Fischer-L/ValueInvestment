@@ -8,7 +8,7 @@ const apiClient = axios.create({
 });
 
 const extensionClient = {
-  _version: '1.4.1',
+  _version: '1.5.1',
 
   init() {
     window.addEventListener('load', () => this._helloExtension(), { once: true });

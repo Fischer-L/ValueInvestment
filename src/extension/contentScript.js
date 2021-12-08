@@ -1,6 +1,6 @@
 import messageBackground from './utils/messageBackground';
 
-const EXTENSION_VERSION = '1.4.1';
+const EXTENSION_VERSION = '1.5.1';
 
 window.addEventListener('message', async function (event) {
   if (event.source !== window) return; // We only accept messages from ourselves
@@ -11,18 +11,14 @@ window.addEventListener('message', async function (event) {
 
   let resp = null;
   try {
-    switch (data.body.cmd) {
-      case 'CMD_STOCK_DATA':
-        resp = await messageBackground(data.body);
-        break;
-
-      case 'CMD_EXTENSION_ACK':
-        const { CLIENT_VERSION } = data.body.params || {};
-        if (CLIENT_VERSION !== EXTENSION_VERSION) {
-          throw new Error(`CLIENT_VERSION: ${CLIENT_VERSION} mismatches EXTENSION_VERSION: ${EXTENSION_VERSION}`);
-        }
-        resp = data.body;
-        break;
+    if (data.body.cmd === 'CMD_EXTENSION_ACK') {
+      const { CLIENT_VERSION } = data.body.params || {};
+      if (CLIENT_VERSION !== EXTENSION_VERSION) {
+        throw new Error(`CLIENT_VERSION: ${CLIENT_VERSION} mismatches EXTENSION_VERSION: ${EXTENSION_VERSION}`);
+      }
+      resp = data.body;
+    } else {
+      resp = await messageBackground(data.body);
     }
   } catch (e) {
     resp = { error: e.toString() };
