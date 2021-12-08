@@ -58,7 +58,7 @@ const gwServer = {
       this._tabs.push(tab);
     });
 
-    await delay(600);
+    await delay(100);
 
     chrome.tabs.create({
       url: gwURL(PATH_TYPE.EPS, this._id),
@@ -68,7 +68,11 @@ const gwServer = {
       this._tabs.push(tab);
     });
 
-    await delay(600);
+    await delay(1000);
+
+    chrome.tabs.update(this._tabs[0].id, { active: true });
+
+    await delay(1000);
 
     chrome.tabs.update(currentTab.id, { active: true });
   },
