@@ -41,7 +41,7 @@ const gwServer = {
       if (this._getPromise) {
         this._getPromise.reject(new Error(`gw tab timeout: id= ${this._id}`));
       }
-    }, 15 * 1000);
+    }, 20 * 1000);
   },
 
   async _openGwForData() {
@@ -52,27 +52,25 @@ const gwServer = {
 
     chrome.tabs.create({
       url: gwURL(PATH_TYPE.PE, this._id),
-      index: 999, // Wanna be the last one
+      index: currentTab.index + 1,
       active: true,
     }, tab => {
       this._tabs.push(tab);
     });
-
-    await delay(100);
 
     chrome.tabs.create({
       url: gwURL(PATH_TYPE.EPS, this._id),
-      index: 999, // Wanna be the last one
+      index: currentTab.index + 2,
       active: true,
     }, tab => {
       this._tabs.push(tab);
     });
 
-    await delay(1000);
+    await delay(800);
 
     chrome.tabs.update(this._tabs[0].id, { active: true });
 
-    await delay(1000);
+    await delay(800);
 
     chrome.tabs.update(currentTab.id, { active: true });
   },
