@@ -2,6 +2,7 @@
 import DOMAINS from '~/utils/domains';
 import CacheProvider from '~/utils/cacheProvider';
 import gwURL, { PATH_TYPE } from './utils/gwURL';
+import openTabs from './utils/openTabs';
 
 const gooServer = {
   baseURL: DOMAINS.gi,
@@ -138,6 +139,10 @@ const stockData = {
 chrome.runtime.onMessage.addListener((msg, sender, sendResp) => {
   const { cmd, params } = msg;
   switch (cmd) {
+    case 'CMD_OPEN_TABS':
+      openTabs(params);
+      break;
+
     case 'CMD_STOCK_DATA':
       stockData.get(params.id, sendResp);
       break;
