@@ -3,6 +3,7 @@ import DOMAINS from '~/utils/domains';
 import delay from '~/utils/delay';
 import CacheProvider from '~/utils/cacheProvider';
 import gwURL, { PATH_TYPE } from './utils/gwURL';
+import getURL from '~/utils/getURL';
 import getCurrentTab from './utils/getCurrentTab';
 import openTabs from './utils/openTabs';
 
@@ -173,6 +174,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResp) => {
     case 'CMD_STOCK_TECHNICAL':
       chrome.tabs.create({
         url: gwURL(PATH_TYPE.TECHNICAL, params.stockId),
+        index: 0,
+        active: true,
+      });
+      sendResp(true);
+      break;
+
+    case 'CM_STOCK_HOLDERS':
+      chrome.tabs.create({
+        url: getURL('big_holder', { stockId: params.stockId }),
         index: 0,
         active: true,
       });

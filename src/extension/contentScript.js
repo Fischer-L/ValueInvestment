@@ -1,27 +1,73 @@
+import localVarsOf from './utils/localVarsOf';
 import messageBackground from './utils/messageBackground';
 
-const EXTENSION_VERSION = '1.5.1';
+const hotKeysManager = {
+  _localVars: null,
 
-window.addEventListener('message', async function (event) {
-  if (event.source !== window) return; // We only accept messages from ourselves
+  _activeKeys: {},
 
-  const data = event.data;
+  hotKeys: [],
 
-  if (!data || data.from !== 'web') return;
-
-  let resp = null;
-  try {
-    if (data.body.cmd === 'CMD_EXTENSION_ACK') {
-      const { CLIENT_VERSION } = data.body.params || {};
-      if (CLIENT_VERSION !== EXTENSION_VERSION) {
-        throw new Error(`CLIENT_VERSION: ${CLIENT_VERSION} mismatches EXTENSION_VERSION: ${EXTENSION_VERSION}`);
+  _execHotKey() {
+    for (let i = 0; i < this.hotKeys.length; i++) {
+      const hotKey = this.hotKeys[i];
+      if (hotKey.targetKeys.every(key => this._activeKeys[key])) {
+        this._activeKeys = {};
+        hotKey.exec();
+        return;
       }
-      resp = data.body;
-    } else {
-      resp = await messageBackground(data.body);
     }
-  } catch (e) {
-    resp = { error: e.toString() };
-  }
-  window.postMessage({ from: 'extension', body: resp });
+  },
+
+  init() {
+    this._localVars = localVarsOf('hotKeysManagerLocalVars');
+    if (this._localVars.init) {
+      return;
+    }
+
+    if (this.hotKeys.some(hotKey => hotKey.isTargetPage())) {
+
+      this._localVars.init = true;
+
+      document.addEventListener('keydown', e => {
+        const key = e.key.toLowerCase();
+        this._activeKeys[key] = true;
+        this._execHotKey();
+      });
+      document.addEventListener('keyup', e => {
+        const key = e.key.toLowerCase();
+        this._activeKeys[key] = false;
+      });
+    }
+  },
+};
+hotKeysManager.hotKeys.push({
+  targetKeys: [ 'meta', '\'', 'enter' ],
+  isTargetPage() {
+    return true;
+  },
+  exec() {
+    let cmd = null;
+    let [ instruction, stockId ] = window.prompt('Enter id').split(' ');
+    switch (instruction) {
+      case 'h':
+        cmd = 'CM_STOCK_HOLDERS';
+        break;
+
+      default:
+        stockId = instruction;
+        cmd = 'CMD_STOCK_TECHNICAL';
+        break;
+    }
+    if (cmd && stockId) {
+      messageBackground({
+        cmd,
+        params: { stockId },
+      });
+    }
+  },
+});
+
+window.addEventListener('load', async function () {
+  hotKeysManager.init();
 });

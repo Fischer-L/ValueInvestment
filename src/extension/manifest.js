@@ -23,9 +23,14 @@ const manifest = {
   },
   content_scripts: [
     {
-      matches: [ 'http://localhost:9858/*', 'https://value-investment.herokuapp.com/*' ],
+      matches: [ 'https://*/*' ],
       run_at: 'document_idle',
       js: [ 'contentScript.js' ],
+    },
+    {
+      matches: [ 'http://localhost:9858/*', 'https://value-investment.herokuapp.com/*' ],
+      run_at: 'document_idle',
+      js: [ 'appContentScript.js' ],
     },
     {
       matches: [ DOMAINS.gw + '/*' ],

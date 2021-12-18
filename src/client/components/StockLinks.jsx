@@ -18,7 +18,7 @@ class StockLinks extends ClickableComponent {
     switch (market) {
       case MARKET_TYPE.TW:
         return [
-          { title: '技術', url: getURL('gw', { stockId: stock.id }) },
+          { title: '技術', url: getURL('technical', null, { stockId: stock.id }) },
           { title: '法人', url: getURL('chips', { stockId: stock.id }) },
           { title: '資券', url: getURL('hi_margin', { stockId: stock.id }) },
           { title: '大戶', url: getURL('big_holder', { stockId: stock.id }) },
