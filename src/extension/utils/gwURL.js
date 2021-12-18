@@ -1,4 +1,4 @@
-import DOMAINS from '~/utils/domains';
+import getURL from '~/utils/getURL';
 
 export const PATH_TYPE = {
   PE: 'PE',
@@ -6,19 +6,15 @@ export const PATH_TYPE = {
   TECHNICAL: 'TECHNICAL',
 };
 
-export default function gwURL(type, id) {
-  let path = '';
+export default function gwURL(type, stockId) {
   switch (type) {
     case PATH_TYPE.PE:
-      path = [ '/', 'stock', '/', id, '/', 'enterprise', '-', 'value', '/', 'price', '-', 'to', '-', 'earning', '-', 'ratio' ].join('');
-      break;
+      return getURL('pe', null, { stockId });
 
     case PATH_TYPE.EPS:
-      path = [ '/', 'stock', '/', id, '/', 'financial', '-', 'statements', '/', 'eps' ].join('');
-      break;
+      return getURL('eps', null, { stockId });
 
     case PATH_TYPE.TECHNICAL:
-      path = [ '/', 'stock/', id, '/technical', '-chart' ].join('');
+      return getURL('technical', null, { stockId });
   }
-  return DOMAINS.gw + path;
 }

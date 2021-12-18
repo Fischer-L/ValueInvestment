@@ -1,14 +1,6 @@
 import giURL, { PATH_TYPE } from './utils/giURL';
+import localVarsOf from './utils/localVarsOf';
 import messageBackground from './utils/messageBackground';
-
-function localVarsOf(key, defaultVars = {}) {
-  if (!window.giContentScript) {
-    window.giContentScript = {};
-  }
-  const localVars = window.giContentScript[key] || defaultVars;
-  window.giContentScript[key] = localVars;
-  return localVars;
-}
 
 const stockListTable = {
   _localVars: null,
