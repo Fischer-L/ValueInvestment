@@ -21,7 +21,7 @@ export default function getURL(site, query, pathParams) {
       return `https://www.ptt.cc/bbs/Stock/search?q=${encodeURIComponent(query.q)}`;
 
     case 'chips':
-      return `${DOMAINS.gi}/StockInfo/ShowBuySaleChart.asp?CHT_CAT=DATE&STOCK_ID=${encodeURIComponent(query.stockId)}`;
+      return [ DOMAINS.gi, '/t', 'w/Show', 'BuySal', 'eChart.a', 'sp?CHT_' ,'CAT=DAT', 'E&STO', 'CK_ID=', encodeURIComponent(query.stockId) ].join('');
 
     case 'news':
       return `https://www.google.com/search?tbm=nws&q=${encodeURIComponent(query.q)}`;
