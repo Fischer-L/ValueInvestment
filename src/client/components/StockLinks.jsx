@@ -30,7 +30,7 @@ class StockLinks extends ClickableComponent {
 
       case MARKET_TYPE.US:
         return [
-          { title: '技術', url: getURL('gw', { stockId: stock.id }) },
+          { title: '技術', url: getURL('technical', null, { stockId: stock.id }) },
           { title: 'finance', url: getURL('ya_us', { stockId: stock.id }, { stockId: stock.id }) },
           { title: 'News', url: getURL('news', { q: stock.name }) },
           { title: '24hrs News', url: getURL('24hrs_news', { q: stock.name }) },
