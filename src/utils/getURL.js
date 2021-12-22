@@ -29,8 +29,8 @@ export default function getURL(site, query, pathParams, hash) {
     case 'chips':
       return [ DOMAINS.gi, '/t', 'w/Show', 'BuySal', 'eChart.a', 'sp?CHT_', 'CAT=DAT', 'E&STO', 'CK_ID=', encodeURIComponent(query.stockId) ].join('');
 
-    case 'news':
-      return `https://www.google.com/search?tbm=nws&q=${encodeURIComponent(query.q)}`;
+    case 'info':
+      return `${DOMAINS.fg}/ai/${pathParams.stockId}`;
 
     case '24hrs_news':
       return `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${encodeURIComponent(query.q)}`;
