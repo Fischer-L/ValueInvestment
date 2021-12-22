@@ -22,8 +22,8 @@ class StockLinks extends ClickableComponent {
           { title: '法人', url: getURL('chips', { stockId: stock.id }) },
           { title: '資券', url: getURL('hi_margin', { stockId: stock.id }) },
           { title: '大戶', url: getURL('big_holder', { stockId: stock.id }) },
-          { title: 'News', url: getURL('news', { q: stock.name }) },
-          { title: '24hrs News', url: getURL('24hrs_news', { q: stock.name }) },
+          { title: '資訊', url: getURL('info', null, { stockId: stock.id }) },
+          { title: 'News', url: getURL('24hrs_news', { q: stock.name }) },
           { title: '討論', url: getURL('cmy', null, { stockId: stock.id }) },
           { title: 'Ptt', url: getURL('ptt', { q: stock.name }) },
         ];
@@ -31,9 +31,9 @@ class StockLinks extends ClickableComponent {
       case MARKET_TYPE.US:
         return [
           { title: '技術', url: getURL('technical', null, { stockId: stock.id }) },
-          { title: 'finance', url: getURL('ya_us', { stockId: stock.id }, { stockId: stock.id }) },
-          { title: 'News', url: getURL('news', { q: stock.name }) },
-          { title: '24hrs News', url: getURL('24hrs_news', { q: stock.name }) },
+          { title: '財務', url: getURL('ya_us', { stockId: stock.id }, { stockId: stock.id }) },
+          { title: '資訊', url: getURL('info', null, { stockId: stock.id }) },
+          { title: 'News', url: getURL('24hrs_news', { q: stock.name }) },
           { title: 'Ptt', url: getURL('ptt', { q: stock.name }) },
         ];
     }
