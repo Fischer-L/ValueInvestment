@@ -30,7 +30,7 @@ export default function getURL(site, query, pathParams, hash) {
       return [ DOMAINS.gi, '/t', 'w/Show', 'BuySal', 'eChart.a', 'sp?CHT_', 'CAT=DAT', 'E&STO', 'CK_ID=', encodeURIComponent(query.stockId) ].join('');
 
     case 'info':
-      return `${DOMAINS.fg}/ai/${pathParams.stockId}?p=1722864710`;
+      return `${DOMAINS.fg}/ai/${pathParams.stockId}`;
 
     case '24hrs_news':
       return `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${encodeURIComponent(query.q)}`;
