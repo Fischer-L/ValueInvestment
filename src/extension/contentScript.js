@@ -30,13 +30,17 @@ const hotKeysManager = {
       this._localVars.init = true;
 
       document.addEventListener('keydown', e => {
-        const key = e.key.toLowerCase();
-        this._activeKeys[key] = true;
-        this._execHotKey();
+        const key = (e.key || '').toLowerCase();
+        if (key) {
+          this._activeKeys[key] = true;
+          this._execHotKey();
+        }
       });
       document.addEventListener('keyup', e => {
-        const key = e.key.toLowerCase();
-        this._activeKeys[key] = false;
+        const key = (e.key || '').toLowerCase();
+        if (key) {
+          this._activeKeys[key] = false;
+        }
       });
     }
   },
