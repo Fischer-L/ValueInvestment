@@ -47,7 +47,6 @@ const gwServer = {
   async _openGwForData() {
     this._tabs = [];
 
-    // Below we give each tab some time to be in the foreground so as to expedite page load
     const currentTab = await getCurrentTab();
 
     chrome.tabs.create({
@@ -66,13 +65,9 @@ const gwServer = {
       this._tabs.push(tab);
     });
 
-    await delay(800);
+    await delay(50);
 
     chrome.tabs.update(this._tabs[0].id, { active: true });
-
-    await delay(800);
-
-    chrome.tabs.update(currentTab.id, { active: true });
   },
 
   async get(id) {
