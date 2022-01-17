@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Button } from 'semantic-ui-react';
 
-import getURL from '@/utils/getURL';
+import getURL, { SITE } from '@/utils/getURL';
 import openURL from '@/utils/openURL';
 import MARKET_TYPE from '@/utils/marketType';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
@@ -18,23 +18,23 @@ class StockLinks extends ClickableComponent {
     switch (market) {
       case MARKET_TYPE.TW:
         return [
-          { title: '技術', url: getURL('technical', null, { stockId: stock.id }) },
-          { title: '法人', url: getURL('chips', { stockId: stock.id }) },
-          { title: '資券', url: getURL('hi_margin', { stockId: stock.id }) },
-          { title: '大戶', url: getURL('big_holder', { stockId: stock.id }) },
-          { title: '資訊', url: getURL('info', null, { stockId: stock.id }) },
-          { title: 'News', url: getURL('24hrs_news', { q: stock.name }) },
-          { title: '討論', url: getURL('cmy', null, { stockId: stock.id }) },
-          { title: 'Ptt', url: getURL('ptt', { q: stock.name }) },
+          { title: '技術', url: getURL(SITE.technical, null, { stockId: stock.id }) },
+          { title: '法人', url: getURL(SITE.chips, { stockId: stock.id }) },
+          { title: '資券', url: getURL(SITE.margin, { stockId: stock.id }) },
+          { title: '大戶', url: getURL(SITE.big_holder, { stockId: stock.id }) },
+          { title: '資訊', url: getURL(SITE.info, null, { stockId: stock.id }) },
+          { title: 'News', url: getURL(SITE.news_24hrs, { q: stock.name }) },
+          { title: '討論', url: getURL(SITE.forum, null, { stockId: stock.id }) },
+          { title: 'Ptt', url: getURL(SITE.ptt, { q: stock.name }) },
         ];
 
       case MARKET_TYPE.US:
         return [
-          { title: '技術', url: getURL('technical', null, { stockId: stock.id }) },
-          { title: '財務', url: getURL('ya_us', { stockId: stock.id }, { stockId: stock.id }) },
-          { title: '資訊', url: getURL('info', null, { stockId: stock.id }) },
-          { title: 'News', url: getURL('24hrs_news', { q: stock.name }) },
-          { title: 'Ptt', url: getURL('ptt', { q: stock.name }) },
+          { title: '技術', url: getURL(SITE.technical, null, { stockId: stock.id }) },
+          { title: '財務', url: getURL(SITE.us_finance, { stockId: stock.id }, { stockId: stock.id }) },
+          { title: '資訊', url: getURL(SITE.info, null, { stockId: stock.id }) },
+          { title: 'News', url: getURL(SITE.news_24hrs, { q: stock.name }) },
+          { title: 'Ptt', url: getURL(SITE.ptt, { q: stock.name }) },
         ];
     }
   }

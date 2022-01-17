@@ -1,20 +1,11 @@
-import getURL from '~/utils/getURL';
+import getURL, { SITE } from '~/utils/getURL';
 
 export const PATH_TYPE = {
-  PE: 'PE',
-  EPS: 'EPS',
-  TECHNICAL: 'TECHNICAL',
+  PE: SITE.pe,
+  EPS: SITE.eps,
+  TECHNICAL: SITE.technical,
 };
 
 export default function gwURL(type, stockId) {
-  switch (type) {
-    case PATH_TYPE.PE:
-      return getURL('pe', null, { stockId });
-
-    case PATH_TYPE.EPS:
-      return getURL('eps', null, { stockId });
-
-    case PATH_TYPE.TECHNICAL:
-      return getURL('technical', null, { stockId });
-  }
+  return getURL(type, null, { stockId });
 }
