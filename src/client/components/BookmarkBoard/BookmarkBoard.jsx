@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Icon, Input, Button } from 'semantic-ui-react';
 
-import getURL from '@/utils/getURL';
+import getURL, { SITE } from '@/utils/getURL';
 import openURL from '@/utils/openURL';
 import StockLinks from '@/components/StockLinks';
 import ClickableComponent from '@/components/subcomponents/ClickableComponent';
@@ -16,9 +16,9 @@ export class PttUsersBookmark extends ClickableComponent {
     this.urlsOf = id => {
       const urls = [];
       if (id === '標的') {
-        urls.push(getURL('pttpost', { q: id }));
+        urls.push(getURL(SITE.pttpost, { q: id }));
       } else {
-        urls.push(getURL('ptt', { q: id }), getURL('pttuser', { q: id }));
+        urls.push(getURL(SITE.ptt, { q: id }), getURL(SITE.pttuser, { q: id }));
       }
       return urls;
     };

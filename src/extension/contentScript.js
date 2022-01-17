@@ -1,3 +1,5 @@
+import getURL, { SITE } from '~/utils/getURL';
+
 import localVarsOf from './utils/localVarsOf';
 import messageBackground from './utils/messageBackground';
 
@@ -51,22 +53,31 @@ hotKeysManager.hotKeys.push({
     return true;
   },
   exec() {
-    let cmd = null;
-    let [ instruction, stockId ] = window.prompt('Enter id').split(' ');
+    const input = (window.prompt('Enter id') || '').trim();
+    if (!input) {
+      return;
+    }
+
+    let url = null;
+    let [ instruction, stockId ] = input.split(' ');
     switch (instruction) {
       case 'h':
-        cmd = 'CM_STOCK_HOLDERS';
+        url = getURL(SITE.big_holder, { stockId });
+        break;
+
+      case 'i':
+        url = getURL(SITE.info, null, { stockId });
         break;
 
       default:
         stockId = instruction;
-        cmd = 'CMD_STOCK_TECHNICAL';
+        url = getURL(SITE.technical, null, { stockId });
         break;
     }
-    if (cmd && stockId) {
+    if (url) {
       messageBackground({
-        cmd,
-        params: { stockId },
+        cmd: 'CMD_OPEN_URL',
+        params: { url },
       });
     }
   },

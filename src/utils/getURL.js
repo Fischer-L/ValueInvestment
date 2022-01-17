@@ -1,47 +1,63 @@
 import DOMAINS from './domains';
 
-export default function getURL(site, query, pathParams, hash) {
+export const SITE = {
+  pe: 'pe',
+  eps: 'eps',
+  technical: 'technical',
+  forum: 'forum',
+  ptt: 'ptt',
+  pttuser: 'pttuser',
+  pttpost: 'pttpost',
+  chips: 'chips',
+  info: 'info',
+  news_24hrs: 'news_24hrs',
+  us_finance: 'us_finance',
+  margin: 'margin',
+  big_holder: 'big_holder',
+};
+
+export default function getURL(site, query, params, hash) {
   switch (site) {
-    case 'pe':
-      return [ DOMAINS.gw, '/', 'stock', '/', pathParams.stockId, '/', 'enterprise', '-', 'value', '/', 'price', '-', 'to', '-', 'earning', '-', 'ratio' ].join('');
+    case SITE.pe:
+      return [ DOMAINS.gw, '/', 'stock', '/', params.stockId, '/', 'enterprise', '-', 'value', '/', 'price', '-', 'to', '-', 'earning', '-', 'ratio' ].join('');
 
-    case 'eps':
-      return [ DOMAINS.gw, '/', 'stock', '/', pathParams.stockId, '/', 'financial', '-', 'statements', '/', 'eps' ].join('');
+    case SITE.eps:
+      return [ DOMAINS.gw, '/', 'stock', '/', params.stockId, '/', 'financial', '-', 'statements', '/', 'eps' ].join('');
 
-    case 'technical': case 'gw':
+    case SITE.technical: case 'gw':
       if (site === 'gw') {
         console.warn('Deprecated: getURL of gw');
       }
-      return `${DOMAINS.gw}/stock/${pathParams.stockId}/technical-chart`;
+      return `${DOMAINS.gw}/stock/${params.stockId}/technical-chart`;
 
-    case 'cmy':
-      return `${DOMAINS.cmy}/follow/channel/stock-${pathParams.stockId}`;
+    case SITE.forum:
+      return `${DOMAINS.cmy}/forum/stock/${params.stockId}`;
 
-    case 'ptt':
+    case SITE.ptt:
       return `https://www.google.com/search?tbs=qdr:w&q=${encodeURIComponent(query.q)}+site:www.ptt.cc/bbs/Stock`;
 
-    case 'pttuser':
+    case SITE.pttuser:
       return `https://www.ptt.cc/bbs/Stock/search?q=author%3A${encodeURIComponent(query.q)}`;
 
-    case 'pttpost':
+    case SITE.pttpost:
       return `https://www.ptt.cc/bbs/Stock/search?q=${encodeURIComponent(query.q)}`;
 
-    case 'chips':
+    case SITE.chips:
       return [ DOMAINS.gi, '/t', 'w/Show', 'BuySal', 'eChart.a', 'sp?CHT_', 'CAT=DAT', 'E&STO', 'CK_ID=', encodeURIComponent(query.stockId) ].join('');
 
-    case 'info':
-      return `${DOMAINS.fg}/ai/${pathParams.stockId}`;
+    case SITE.info:
+      return `${DOMAINS.fg}/ai/${params.stockId}`;
 
-    case '24hrs_news':
+    case SITE.news_24hrs:
       return `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${encodeURIComponent(query.q)}`;
 
-    case 'ya_us':
-      return `${DOMAINS.yFinance}/quote/${pathParams.stockId}/chart?p=${encodeURIComponent(query.stockId)}#${hash}`;
+    case SITE.us_finance:
+      return `${DOMAINS.yFinance}/quote/${params.stockId}/chart?p=${encodeURIComponent(query.stockId)}#${hash}`;
 
-    case 'hi_margin':
+    case SITE.margin:
       return `${DOMAINS.hi}/stock/chips.aspx?no=${encodeURIComponent(query.stockId)}&m=mg`;
 
-    case 'big_holder':
+    case SITE.big_holder:
       return `${DOMAINS.nt}/StockHolders.aspx?stock=${encodeURIComponent(query.stockId)}`;
   }
   return '';
