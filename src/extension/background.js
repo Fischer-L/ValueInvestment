@@ -61,8 +61,8 @@ const gwServer = {
       url: gwURL(PATH_TYPE.EPS, this._id),
       index: currentTab.index + 2,
       active: true,
-    }, tab => {
-      this._tabs.push(tab);
+    }, () => {
+      // Don't push the EPS tab for closing so that we can browse it later
     });
 
     await delay(50);
