@@ -52,7 +52,7 @@ export default function getURL(site, query, params, hash) {
       return `https://www.google.com/search?tbm=nws&tbs=qdr:d&q=${encodeURIComponent(query.q)}`;
 
     case SITE.us_finance:
-      return `${DOMAINS.yFinance}/quote/${params.stockId}/chart?p=${encodeURIComponent(query.stockId)}#${hash}`;
+      return `${DOMAINS.yFinance}/quote/${params.stockId}/financials?p=${encodeURIComponent(query.stockId)}`;
 
     case SITE.margin:
       return `${DOMAINS.hi}/stock/chips.aspx?no=${encodeURIComponent(query.stockId)}&m=mg`;
