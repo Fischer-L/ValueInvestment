@@ -16,7 +16,7 @@ export const SITE = {
   big_holder: 'big_holder',
 };
 
-export default function getURL(site, query, params, hash) {
+export default function getURL(site, query, params) {
   switch (site) {
     case SITE.pe:
       return [ DOMAINS.gw, '/', 'stock', '/', params.stockId, '/', 'enterprise', '-', 'value', '/', 'price', '-', 'to', '-', 'earning', '-', 'ratio' ].join('');
