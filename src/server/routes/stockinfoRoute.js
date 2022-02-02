@@ -31,7 +31,7 @@ const infoFetcher = {
         ...this.headers,
         'user-agent': this.UAs[Date.now() % this.UAs.length],
       };
-      const resp = await axios.get(`${DOMAINS.gi}/StockInfo/StockDetail.asp?STOCK_ID=${id}`, { headers });
+      const resp = await axios.get(`${DOMAINS.gi}/tw/StockDetail.asp?STOCK_ID=${id}`, { headers });
       if (resp.status !== 200) {
         throw new Error(resp.status + ':' + resp.statusText);
       }
