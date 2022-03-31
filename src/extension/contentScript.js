@@ -86,7 +86,4 @@ hotKeysManager.hotKeys.push({
     }
   },
 });
-
-window.addEventListener('load', async function () {
-  hotKeysManager.init();
-});
+hotKeysManager.init();
