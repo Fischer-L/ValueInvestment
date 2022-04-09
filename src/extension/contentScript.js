@@ -73,6 +73,10 @@ hotKeysManager.hotKeys.push({
         url = getURL(SITE.margin, { stockId });
         break;
 
+      case 'f':
+        url = getURL(SITE.forum, null, { stockId });
+        break;
+
       default:
         stockId = instruction;
         url = getURL(SITE.technical, null, { stockId });
