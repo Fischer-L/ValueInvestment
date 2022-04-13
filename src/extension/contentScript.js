@@ -58,36 +58,44 @@ hotKeysManager.hotKeys.push({
       return;
     }
 
-    let url = null;
-    let [ instruction, stockId ] = input.split(' ');
-    switch (instruction) {
-      case 'h':
-        url = getURL(SITE.big_holder, { stockId });
-        break;
+    const urls = [];
+    let [ instructions, stockId ] = input.split(' ');
 
-      case 'i':
-        url = getURL(SITE.info, null, { stockId });
-        break;
-
-      case 'm':
-        url = getURL(SITE.margin, { stockId });
-        break;
-
-      case 'f':
-        url = getURL(SITE.forum, null, { stockId });
-        break;
-
-      default:
-        stockId = instruction;
-        url = getURL(SITE.technical, null, { stockId });
-        break;
+    if (!stockId && instructions) {
+      stockId = instructions;
+      instructions = 't';
     }
-    if (url) {
-      messageBackground({
-        cmd: 'CMD_OPEN_URL',
-        params: { url },
-      });
+
+    if (instructions) {
+      for (let i = 0; i < instructions.length; i++) {
+        switch (instructions[i]) {
+          case 'h':
+            urls.push(getURL(SITE.big_holder, { stockId }));
+            break;
+
+          case 'i':
+            urls.push(getURL(SITE.info, null, { stockId }));
+            break;
+
+          case 'm':
+            urls.push(getURL(SITE.margin, { stockId }));
+            break;
+
+          case 'f':
+            urls.push(getURL(SITE.forum, null, { stockId }));
+            break;
+
+          case 't': default:
+            urls.push(getURL(SITE.technical, null, { stockId }));
+            break;
+        }
+      }
     }
+
+    urls.forEach(url => messageBackground({
+      cmd: 'CMD_OPEN_URL',
+      params: { url },
+    }));
   },
 });
 hotKeysManager.init();
