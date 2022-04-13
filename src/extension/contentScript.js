@@ -58,7 +58,7 @@ hotKeysManager.hotKeys.push({
       return;
     }
 
-    let urls = [];
+    const urls = [];
     let [ instructions, stockId ] = input.split(' ');
 
     if (!stockId && instructions) {
