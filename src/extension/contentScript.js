@@ -67,7 +67,7 @@ hotKeysManager.hotKeys.push({
     }
 
     if (instructions) {
-      for (let i = 0; i < instructions.length; i++) {
+      for (let i = instructions.length - 1; i >= 0; i--) {
         switch (instructions[i]) {
           case 'h':
             urls.push(getURL(SITE.big_holder, { stockId }));
