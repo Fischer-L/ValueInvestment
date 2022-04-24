@@ -14,6 +14,7 @@ export const SITE = {
   us_finance: 'us_finance',
   margin: 'margin',
   big_holder: 'big_holder',
+  detail_holders: 'detail_holders',
 };
 
 export default function getURL(site, query, params) {
@@ -59,6 +60,9 @@ export default function getURL(site, query, params) {
 
     case SITE.big_holder:
       return `${DOMAINS.nt}/StockHolders.aspx?stock=${encodeURIComponent(query.stockId)}`;
+
+    case SITE.detail_holders:
+      return [ DOMAINS.gi, '/t', 'w/Equit', 'yDistri', 'butionCl', 'assHis.asp?', 'STOCK', '_ID=', encodeURIComponent(query.stockId) ].join('');
   }
   return '';
 }
