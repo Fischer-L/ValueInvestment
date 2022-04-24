@@ -66,11 +66,15 @@ hotKeysManager.hotKeys.push({
       instructions = 't';
     }
 
-    if (instructions) {
+    if (stockId && instructions) {
       for (let i = instructions.length - 1; i >= 0; i--) {
         switch (instructions[i]) {
           case 'h':
             urls.push(getURL(SITE.big_holder, { stockId }));
+            break;
+
+          case 'd':
+            urls.push(getURL(SITE.detail_holders, { stockId }));
             break;
 
           case 'i':
