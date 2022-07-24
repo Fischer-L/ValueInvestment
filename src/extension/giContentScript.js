@@ -1,33 +1,47 @@
 import giURL, { PATH_TYPE } from './utils/giURL';
 import localVarsOf from './utils/localVarsOf';
-import messageBackground from './utils/messageBackground';
 
 const stockListTable = {
   _localVars: null,
 
-  _id: [ 'tx', 'tStoc', 'kList', 'Data' ].join(''),
+  _dataElemId: [ 'tx', 'tStoc', 'kList', 'Data' ].join(''),
 
   _autoEnlarge() {
     const localVars = this._localVars;
-    if (localVars.observer) {
+    if (localVars._autoEnlargeObserver) {
       return;
+    }
+    if (!localVars._autoEnlargeTrialCounts) {
+      localVars._autoEnlargeTrialCounts = 0;
     }
 
-    const root = document.querySelector(`#${this._id}`);
-    if (!root && localVars.trialCounts < 10) {
-      setTimeout(() => this.autoEnlarge(), 330);
-      localVars.trialCounts++;
+    const root = document.querySelector(`#${this._dataElemId}`);
+    if (!root && localVars._autoEnlargeTrialCounts < 10) {
+      setTimeout(() => this._autoEnlarge(), 330);
+      localVars._autoEnlargeTrialCounts++;
       return;
     }
-    localVars.trialCounts = 0;
+    localVars._autoEnlargeTrialCounts = 0;
 
     if (root) {
       root.querySelector('div').style.width = 'auto';
-      localVars.observer = new MutationObserver(() => {
+      localVars._autoEnlargeObserver = new MutationObserver(() => {
         root.querySelector('div').style.width = 'auto';
       });
-      localVars.observer.observe(root, { childList: true, subtree: true });
+      localVars._autoEnlargeObserver.observe(root, { childList: true, subtree: true });
     }
+  },
+
+  _rmAds() {
+    const localVars = this._localVars;
+    if (localVars._rmAdsObserver) {
+      return;
+    }
+
+    localVars._rmAdsObserver = new MutationObserver(() => {
+      Array.from(document.querySelectorAll('.adsbygoogle')).forEach(elem => elem.remove());
+    });
+    localVars._rmAdsObserver.observe(document.body, { childList: true, subtree: true });
   },
 
   isTargetPage() {
@@ -35,77 +49,18 @@ const stockListTable = {
   },
 
   init() {
-    this._localVars = localVarsOf('stockListTableLocalVars', {
-      trialCounts: 0,
-      observer: null,
-    });
+    this._localVars = localVarsOf('stockListTableLocalVars', {});
     if (this._localVars.init) {
       return;
     }
     if (this.isTargetPage()) {
       this._localVars.init = true;
       this._autoEnlarge();
+      this._rmAds();
     }
   },
 };
-
-const hotKeysManager = {
-  _localVars: null,
-
-  _activeKeys: {},
-
-  hotKeys: [],
-
-  _execHotKey() {
-    for (let i = 0; i < this.hotKeys.length; i++) {
-      const hotKey = this.hotKeys[i];
-      if (hotKey.targetKeys.every(key => this._activeKeys[key])) {
-        this._activeKeys = {};
-        hotKey.exec();
-        return;
-      }
-    }
-  },
-
-  init() {
-    this._localVars = localVarsOf('hotKeysManagerLocalVars');
-    if (this._localVars.init) {
-      return;
-    }
-
-    if (this.hotKeys.some(hotKey => hotKey.isTargetPage())) {
-
-      this._localVars.init = true;
-
-      document.addEventListener('keydown', e => {
-        const key = e.key.toLowerCase();
-        this._activeKeys[key] = true;
-        this._execHotKey();
-      });
-      document.addEventListener('keyup', e => {
-        const key = e.key.toLowerCase();
-        this._activeKeys[key] = false;
-      });
-    }
-  },
-};
-hotKeysManager.hotKeys.push({
-  targetKeys: [ 'meta', '\'', 'enter' ],
-  isTargetPage() {
-    return window.location.href.startsWith(giURL(PATH_TYPE.LIST));
-  },
-  exec() {
-    const stockId = window.prompt('Enter id');
-    if (stockId) {
-      messageBackground({
-        cmd: 'CMD_STOCK_TECHNICAL',
-        params: { stockId },
-      });
-    }
-  },
-});
 
 window.addEventListener('load', async function () {
   stockListTable.init();
-  hotKeysManager.init();
 });
