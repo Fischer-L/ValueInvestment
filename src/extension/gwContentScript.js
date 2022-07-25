@@ -1,4 +1,5 @@
 import { PATH_TYPE } from './utils/gwURL';
+import localVarsOf from './utils/localVarsOf';
 import messageBackground from './utils/messageBackground';
 
 const MS_EXTRACT_WAITING_TIME = 330;
@@ -68,9 +69,48 @@ const epsExtractor = {
   },
 };
 
+const rmAdsOperation = {
+
+  _rmAds() {
+    const localVars = this._localVars;
+    if (localVars.observer) {
+      return;
+    }
+
+    localVars.observer = new MutationObserver(() => {
+      const ad = document.querySelector('.technical-shortcut-wrap');
+      if (ad) {
+        ad.remove();
+        localVars.observer.disconnect();
+        localVars.observer = null;
+      }
+    });
+    localVars.observer.observe(document.body, { childList: true, subtree: true });
+  },
+
+  isTargetPage() {
+    return true;
+  },
+
+  init() {
+    this._localVars = localVarsOf('gw-rmAdsOperation', {
+      observer: null,
+    });
+    if (this._localVars.init) {
+      return;
+    }
+    if (this.isTargetPage()) {
+      this._localVars.init = true;
+      this._rmAds();
+    }
+  },
+};
+
 window.addEventListener('load', async function () {
   let resp;
   let id;
+
+  rmAdsOperation.init();
 
   resp = await messageBackground({
     cmd: 'CMD_GW_SHOULD_EXTRACT',
