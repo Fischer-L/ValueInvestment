@@ -1,8 +1,8 @@
 export default function localVarsOf(key, defaultVars = {}) {
-  if (!window.giContentScript) {
-    window.giContentScript = {};
+  if (!window._valueInvestmentContentScript) {
+    window._valueInvestmentContentScript = {};
   }
-  const localVars = window.giContentScript[key] || defaultVars;
-  window.giContentScript[key] = localVars;
+  const localVars = window._valueInvestmentContentScript[key] || defaultVars;
+  window._valueInvestmentContentScript[key] = localVars;
   return localVars;
 }
