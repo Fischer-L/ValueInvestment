@@ -92,7 +92,7 @@
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.4",
     "copy-webpack-plugin": "5.1.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "font-awesome": "^4.7.0",
     "mongodb": "^3.3.4",
     "prop-types": "^15.7.2",
