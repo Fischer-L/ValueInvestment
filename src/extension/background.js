@@ -1,7 +1,10 @@
 /* eslint react/no-this-in-sfc: off */
 import DOMAINS from '~/utils/domains';
 import delay from '~/utils/delay';
+import getURL, { SITE } from '~/utils/getURL';
 import CacheProvider from '~/utils/cacheProvider';
+import getStockProfile from '~/api/getStockProfile';
+
 import gwURL, { PATH_TYPE } from './utils/gwURL';
 import getCurrentTab from './utils/getCurrentTab';
 import openTabs from './utils/openTabs';
@@ -171,6 +174,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResp) => {
         index: 0,
         active: true,
       });
+      sendResp(true);
+      break;
+
+    case 'CMD_WHAT_IS_STOCK':
+      getStockProfile(params.stockId).then(({ name }) => chrome.tabs.create({
+        url: getURL(SITE.what_is, { name }),
+        index: 0,
+        active: true,
+      }));
       sendResp(true);
       break;
   }

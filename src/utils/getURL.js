@@ -15,6 +15,7 @@ export const SITE = {
   margin: 'margin',
   big_holder: 'big_holder',
   detail_holders: 'detail_holders',
+  what_is: 'what_is',
 };
 
 export default function getURL(site, query, params) {
@@ -63,6 +64,9 @@ export default function getURL(site, query, params) {
 
     case SITE.detail_holders:
       return [ DOMAINS.gi, '/t', 'w/Equit', 'yDistri', 'butionCl', 'assHis.asp?', 'STOCK', '_ID=', encodeURIComponent(query.stockId) ].join('');
+
+    case SITE.what_is:
+      return 'https://www.google.com/search?q=' + encodeURIComponent(query.name + '做什麼');
   }
   return '';
 }
