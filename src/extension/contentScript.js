@@ -58,7 +58,7 @@ hotKeysManager.hotKeys.push({
       return;
     }
 
-    const urls = [];
+    const cmds = [];
     let [ instructions, stockId ] = input.split(' ');
 
     if (!stockId && instructions) {
@@ -69,37 +69,73 @@ hotKeysManager.hotKeys.push({
     if (stockId && instructions) {
       for (let i = instructions.length - 1; i >= 0; i--) {
         switch (instructions[i]) {
+          case '?':
+            cmds.push({
+              cmd: 'CMD_WHAT_IS_STOCK',
+              params: {
+                stockId,
+              },
+            });
+            break;
+
           case 'h':
-            urls.push(getURL(SITE.big_holder, { stockId }));
+            cmds.push({
+              cmd: 'CMD_OPEN_URL',
+              params: {
+                url: getURL(SITE.big_holder, { stockId }),
+              },
+            });
             break;
 
           case 'd':
-            urls.push(getURL(SITE.detail_holders, { stockId }));
+            cmds.push({
+              cmd: 'CMD_OPEN_URL',
+              params: {
+                url: getURL(SITE.detail_holders, { stockId }),
+              },
+            });
             break;
 
           case 'i':
-            urls.push(getURL(SITE.info, null, { stockId }));
+            cmds.push({
+              cmd: 'CMD_OPEN_URL',
+              params: {
+                url: getURL(SITE.info, null, { stockId }),
+              },
+            });
             break;
 
           case 'm':
-            urls.push(getURL(SITE.margin, { stockId }));
+            cmds.push({
+              cmd: 'CMD_OPEN_URL',
+              params: {
+                url: getURL(SITE.margin, { stockId }),
+              },
+            });
             break;
 
           case 'f':
-            urls.push(getURL(SITE.forum, null, { stockId }));
+            cmds.push({
+              cmd: 'CMD_OPEN_URL',
+              params: {
+                url: getURL(SITE.forum, null, { stockId }),
+              },
+            });
             break;
 
           case 't': default:
-            urls.push(getURL(SITE.technical, null, { stockId }));
+            cmds.push({
+              cmd: 'CMD_OPEN_URL',
+              params: {
+                url: getURL(SITE.technical, null, { stockId }),
+              },
+            });
             break;
         }
       }
     }
 
-    urls.forEach(url => messageBackground({
-      cmd: 'CMD_OPEN_URL',
-      params: { url },
-    }));
+    cmds.forEach(cmd => messageBackground(cmd));
   },
 });
 hotKeysManager.init();
