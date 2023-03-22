@@ -15,6 +15,7 @@ describe('CacheProvider', () => {
 
     await after(maxAge + 2);
     expect(cache.get(key)).toBeNull();
+    cache.destroy();
   });
 
   it('should remove cache', async () => {
@@ -24,6 +25,7 @@ describe('CacheProvider', () => {
     expect(cache.get(key)).toBe(1);
     cache.remove(key);
     expect(cache.get(key)).toBeNull();
+    cache.destroy();
   });
 
   it('should not invalidate cache if maxAge < 0', async () => {
@@ -33,5 +35,6 @@ describe('CacheProvider', () => {
     expect(cache.get(key)).toBe(1);
     await after(10);
     expect(cache.get(key)).toBe(1);
+    cache.destroy();
   });
 });
