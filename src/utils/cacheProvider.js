@@ -12,6 +12,13 @@ class CacheProvider {
     this._maxAge = this._options.maxAge;
   }
 
+  destroy() {
+    if (this._cleanUpTimer) {
+      clearTimeout(this._cleanUpTimer);
+    }
+    this._cleanUpTimer = this._cache = this._options = this._maxAge = undefined;
+  }
+
   get(key) {
     this._removeCacheIfExpired(key);
     const cache = this._cache[key];

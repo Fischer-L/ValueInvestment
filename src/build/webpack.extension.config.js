@@ -59,7 +59,7 @@ const webpackConfig = {
     minimize: false,
   },
 
-  watch: true,
+  watch: process.env.ENV !== 'production',
 };
 
 module.exports = webpackConfig;

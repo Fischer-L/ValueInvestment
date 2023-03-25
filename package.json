@@ -14,6 +14,7 @@
     "build-local": "yarn clean-public; webpack --config src/build/webpack.client.config.js",
     "build-prod": "yarn clean-public; ENV=production webpack --config src/build/webpack.client.config.js",
     "build-extension": "yarn clean-extension; webpack --config src/build/webpack.extension.config.js",
+    "build-extension:prod": "ENV=production yarn build-extension",
     "run-svr": "nodemon ./src/server/server.js",
     "docker-build-latest": "docker build --force-rm -t registry.heroku.com/value-investment/web:latest .",
     "docker-test-latest": "docker run -p 9000:9000 -e=TEST_INIT=TEST_INIT --name value-investment registry.heroku.com/value-investment/web:latest",
