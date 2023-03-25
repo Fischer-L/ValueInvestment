@@ -87,11 +87,11 @@ hotKeysManager.hotKeys.push({
             });
             break;
 
-          case 'd':
+          case 'f':
             cmds.push({
               cmd: 'CMD_OPEN_URL',
               params: {
-                url: getURL(SITE.detail_holders, { stockId }),
+                url: getURL(SITE.tw_finance, null, { stockId }),
               },
             });
             break;
@@ -114,7 +114,7 @@ hotKeysManager.hotKeys.push({
             });
             break;
 
-          case 'f':
+          case 'd':
             cmds.push({
               cmd: 'CMD_OPEN_URL',
               params: {

@@ -12,6 +12,7 @@ export const SITE = {
   info: 'info',
   news_24hrs: 'news_24hrs',
   us_finance: 'us_finance',
+  tw_finance: 'tw_finance',
   margin: 'margin',
   big_holder: 'big_holder',
   detail_holders: 'detail_holders',
@@ -55,6 +56,10 @@ export default function getURL(site, query, params) {
 
     case SITE.us_finance:
       return `${DOMAINS.yFinance}/quote/${params.stockId}/financials?p=${encodeURIComponent(query.stockId)}`;
+
+    case SITE.tw_finance:
+      const path = 'financial' + '-' + 'statements' + '/' + 'monthly' + '-' + 'revenue';
+      return `${DOMAINS.gw}/stock/${params.stockId}/${path}`;
 
     case SITE.margin:
       return `${DOMAINS.hi}/stock/chips.aspx?no=${encodeURIComponent(query.stockId)}&m=mg`;
