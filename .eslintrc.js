@@ -14,6 +14,7 @@ module.exports = {
     "no-multi-assign": "off",
     "prefer-template": "off",
     "no-return-assign": "off",
+    "no-useless-concat": "off",
     "consistent-return": "off",
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
