@@ -66,6 +66,10 @@ hotKeysManager.hotKeys.push({
       instructions = 't';
     }
 
+    if (instructions === '`') {
+      instructions = '?tif';
+    }
+
     if (stockId && instructions) {
       for (let i = instructions.length - 1; i >= 0; i--) {
         switch (instructions[i]) {
