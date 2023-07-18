@@ -1,7 +1,10 @@
 import giURL, { PATH_TYPE } from './utils/giURL';
 import localVarsOf from './utils/localVarsOf';
+import runJobs from './utils/runJobs';
 
-const autoEnlargeOperation = {
+const autoEnlargeJob = {
+  id: 'gi-autoEnlargeJob',
+
   _localVars: null,
 
   _rootElemId: [ 'tx', 'tStoc', 'kList', 'Data' ].join(''),
@@ -34,7 +37,7 @@ const autoEnlargeOperation = {
   },
 
   init() {
-    this._localVars = localVarsOf('gi-autoEnlargeOperation', {
+    this._localVars = localVarsOf(this.id, {
       observer: null,
       trialCounts: 0,
     });
@@ -48,54 +51,4 @@ const autoEnlargeOperation = {
   },
 };
 
-const rmAdsOperation = {
-
-  _rmAds() {
-    const localVars = this._localVars;
-    if (localVars.observer) {
-      return;
-    }
-
-    localVars.observer = new MutationObserver(() => {
-      const ads = Array.from(document.querySelectorAll('.adsbygoogle'));
-      if (!ads.length) {
-        return;
-      }
-
-      localVars.observer.disconnect();
-      localVars.observer = null;
-
-      ads.forEach(ad => ad.remove());
-      // We don not know how many ad containers are out there so chose a magic number, 30.
-      for (let i = 0; i < 30; i++) {
-        const adContainer = document.querySelector(`#AD${i}`);
-        if (adContainer) {
-          adContainer.remove();
-        }
-      }
-    });
-    localVars.observer.observe(document.body, { childList: true, subtree: true });
-  },
-
-  isTargetPage() {
-    return true;
-  },
-
-  init() {
-    this._localVars = localVarsOf('gi-rmAdsOperation', {
-      observer: null,
-    });
-    if (this._localVars.init) {
-      return;
-    }
-    if (this.isTargetPage()) {
-      this._localVars.init = true;
-      this._rmAds();
-    }
-  },
-};
-
-window.addEventListener('load', async function () {
-  rmAdsOperation.init();
-  autoEnlargeOperation.init();
-});
+runJobs(autoEnlargeJob);

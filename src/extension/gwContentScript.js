@@ -1,3 +1,4 @@
+import runJobs from './utils/runJobs';
 import { PATH_TYPE } from './utils/gwURL';
 import localVarsOf from './utils/localVarsOf';
 import messageBackground from './utils/messageBackground';
@@ -5,6 +6,7 @@ import messageBackground from './utils/messageBackground';
 const MS_EXTRACT_WAITING_TIME = 330;
 
 const peExtractor = {
+  id: 'gw-peExtractor',
 
   _extractPrice() {
     console.log('_extractPrice...');
@@ -38,9 +40,34 @@ const peExtractor = {
         this._promise = null;
       });
   },
+
+  isTargetPage() {
+    return true;
+  },
+
+  async init() {
+    const resp = await messageBackground({
+      cmd: 'CMD_GW_SHOULD_EXTRACT',
+      params: {
+        type: PATH_TYPE.PE,
+        url: window.location.href,
+      },
+    });
+
+    const id = resp.result;
+    if (id) {
+      const data = await this.extractPEs();
+      await messageBackground({
+        cmd: 'CMD_GW_RETURN_DATA',
+        params: { data },
+      });
+
+    }
+  },
 };
 
 const epsExtractor = {
+  id: 'gw-epsExtractor',
 
   _extractEPS(callback) {
     const table = document.querySelector('table');
@@ -67,9 +94,33 @@ const epsExtractor = {
       this._promise = null;
     });
   },
+
+  isTargetPage() {
+    return true;
+  },
+
+  async init() {
+    const resp = await messageBackground({
+      cmd: 'CMD_GW_SHOULD_EXTRACT',
+      params: {
+        type: PATH_TYPE.EPS,
+        url: window.location.href,
+      },
+    });
+
+    const id = resp.result;
+    if (id) {
+      const data = await this.extractEPS();
+      messageBackground({
+        cmd: 'CMD_GW_RETURN_DATA',
+        params: { data },
+      });
+    }
+  },
 };
 
-const rmAdsOperation = {
+const rmBottomBannerJob = {
+  id: 'gw-rmBottomBannerJob',
 
   _rmAds() {
     const localVars = this._localVars;
@@ -93,7 +144,7 @@ const rmAdsOperation = {
   },
 
   init() {
-    this._localVars = localVarsOf('gw-rmAdsOperation', {
+    this._localVars = localVarsOf('gw-rmBottomBannerJob', {
       observer: null,
     });
     if (this._localVars.init) {
@@ -106,42 +157,4 @@ const rmAdsOperation = {
   },
 };
 
-window.addEventListener('load', async function () {
-  let resp;
-  let id;
-
-  rmAdsOperation.init();
-
-  resp = await messageBackground({
-    cmd: 'CMD_GW_SHOULD_EXTRACT',
-    params: {
-      type: PATH_TYPE.PE,
-      url: window.location.href,
-    },
-  });
-  id = resp.result;
-  if (id) {
-    const data = await peExtractor.extractPEs();
-    await messageBackground({
-      cmd: 'CMD_GW_RETURN_DATA',
-      params: { data },
-    });
-    return;
-  }
-
-  resp = await messageBackground({
-    cmd: 'CMD_GW_SHOULD_EXTRACT',
-    params: {
-      type: PATH_TYPE.EPS,
-      url: window.location.href,
-    },
-  });
-  id = resp.result;
-  if (id) {
-    const data = await epsExtractor.extractEPS();
-    messageBackground({
-      cmd: 'CMD_GW_RETURN_DATA',
-      params: { data },
-    });
-  }
-});
+runJobs(peExtractor, epsExtractor, rmBottomBannerJob);
