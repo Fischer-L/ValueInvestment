@@ -9,6 +9,7 @@ const middleName = {
   cmy: [ 'c', 'a', 'm', 'p', 'o', 'q', 'n', '3', 'e', '1', 'y'],
   hi: [ 'h', 'n', 'i', 'p', 's', 'r', 't', 'z', 'o', 'a', 'c', 'q', 'k' ],
   nt: [ 'n', 'b', 'o', 'd', 'r', 'l', 'w', 'r', 'a', 'a', 'y', '5', '.', '8', 't', 'y', 'w', '0', 's', 'e', 't', 'g', 'h', '1', 'r' ],
+  mdj: [ 'm', '1', 'o', '2', 'n', '3', 'e', '4', 'y', '5', 'd', '6', 'j' ],
 };
 
 const DOMAINS = {
@@ -19,6 +20,7 @@ const DOMAINS = {
   fg: `https://www.${middleName.of('fg')}.tw`,
   cmy: `https://www.${middleName.of('cmy')}.tw`,
   yFinance: `https://finance.${middleName.of('ya')}.com`,
+  mdj: `https://www.${middleName.of('mdj')}.com/`,
 };
 
 module.exports = DOMAINS;
