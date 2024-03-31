@@ -42,6 +42,11 @@ const manifest = {
       run_at: 'document_idle',
       js: [ 'giContentScript.js' ],
     },
+    {
+      matches: [ DOMAINS.fg + '/*' ],
+      run_at: 'document_idle',
+      js: [ 'fgContentScript.js' ],
+    },
   ],
   permissions: [
     'activeTab',
