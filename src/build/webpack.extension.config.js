@@ -20,6 +20,7 @@ const webpackConfig = {
   entry: {
     backgroundScript: resolve('./src/extension/background.js'),
     contentScript: resolve('./src/extension/contentScript.js'),
+    fgContentScript: resolve('./src/extension/fgContentScript.js'),
     gwContentScript: resolve('./src/extension/gwContentScript.js'),
     giContentScript: resolve('./src/extension/giContentScript.js'),
   },
