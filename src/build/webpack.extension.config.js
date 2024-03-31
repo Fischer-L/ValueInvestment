@@ -1,4 +1,3 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const exec = require('child_process').exec;
 
 const utils = require('./utils');
@@ -19,12 +18,10 @@ const webpackConfig = {
   mode: 'production',
 
   entry: {
-    popup: resolve('./src/extension/popup.js'),
     backgroundScript: resolve('./src/extension/background.js'),
     contentScript: resolve('./src/extension/contentScript.js'),
     gwContentScript: resolve('./src/extension/gwContentScript.js'),
     giContentScript: resolve('./src/extension/giContentScript.js'),
-    appContentScript: resolve('./src/extension/appContentScript.js'),
   },
 
   resolve: {
@@ -48,11 +45,6 @@ const webpackConfig = {
 
   plugins: [
     new ManifestMakerPlugin(),
-
-    new CopyWebpackPlugin([
-      { from: resolve('./src/extension/popup.js'), to: resolve(config.EXTENSION_DIR) },
-      { from: resolve('./src/extension/popup.html'), to: resolve(config.EXTENSION_DIR) },
-    ]),
   ],
 
   optimization: {
