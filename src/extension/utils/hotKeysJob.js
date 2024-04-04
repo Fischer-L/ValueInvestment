@@ -1,5 +1,6 @@
 import getURL, { SITE } from '~/utils/getURL';
 
+import gwHotkeys from './gwHotkeys';
 import localVarsOf from './localVarsOf';
 import messageBackground from './messageBackground';
 
@@ -10,17 +11,22 @@ const hotKeysJob = {
 
   _activeKeys: {},
 
-  hotKeys: [],
+  _hotKeys: [],
 
   _execHotKey() {
-    for (let i = 0; i < this.hotKeys.length; i++) {
-      const hotKey = this.hotKeys[i];
+    for (let i = 0; i < this._hotKeys.length; i++) {
+      const hotKey = this._hotKeys[i];
       if (hotKey.targetKeys.every(key => this._activeKeys[key])) {
         this._activeKeys = {};
         hotKey.exec();
         return;
       }
     }
+  },
+
+  addHotkeys(hotkeys) {
+    hotkeys = hotkeys.filter(key => key.isTargetPage());
+    this._hotKeys.push(...hotkeys);
   },
 
   isTargetPage() {
@@ -33,7 +39,7 @@ const hotKeysJob = {
       return;
     }
 
-    if (this.hotKeys.some(hotKey => hotKey.isTargetPage())) {
+    if (this._hotKeys.length) {
 
       this._localVars.init = true;
 
@@ -54,7 +60,7 @@ const hotKeysJob = {
   },
 };
 
-hotKeysJob.hotKeys.push({
+hotKeysJob.addHotkeys([{
   targetKeys: [ 'meta', '\'', 'enter' ],
 
   isTargetPage() {
@@ -152,6 +158,7 @@ hotKeysJob.hotKeys.push({
 
     cmds.forEach(cmd => messageBackground(cmd));
   },
-});
+}]);
+hotKeysJob.addHotkeys(gwHotkeys);
 
 export default hotKeysJob;

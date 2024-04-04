@@ -1,8 +1,9 @@
 import DOMAINS from './domains';
 
 export const SITE = {
-  pe: 'pe',
   eps: 'eps',
+  epsRiver: 'epsRiver',
+  profit: 'profit',
   technical: 'technical',
   forum: 'forum',
   ptt: 'ptt',
@@ -21,11 +22,14 @@ export const SITE = {
 
 export default function getURL(site, query, params) {
   switch (site) {
-    case SITE.pe:
-      return [ DOMAINS.gw, '/', 'stock', '/', params.stockId, '/', 'enterprise', '-', 'value', '/', 'price', '-', 'to', '-', 'earning', '-', 'ratio' ].join('');
+    case SITE.epsRiver:
+      return [ DOMAINS.gw, '/', 'stock', '/', params.stockId, '/', 'enterprise', '-', 'value', '/', 'price', '-', 'to', '-', 'earning', '-', 'river' ].join('');
 
     case SITE.eps:
       return [ DOMAINS.gw, '/', 'stock', '/', params.stockId, '/', 'financial', '-', 'statements', '/', 'eps' ].join('');
+
+    case SITE.profit:
+      return [ DOMAINS.gw, '/', 'stock', '/', params.stockId, '/', 'profitability', '/', 'profit', '-margin' ].join('');
 
     case SITE.technical: case 'gw':
       if (site === 'gw') {
