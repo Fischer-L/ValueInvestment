@@ -20,6 +20,7 @@ module.exports = {
     "no-underscore-dangle": "off",
     "no-case-declarations": "off",
     "no-unused-expressions": "off",
+    "no-useless-computed-key": "off",
     "object-curly-newline": "off",
     "prefer-destructuring": "off",
     "prefer-arrow-callback": "off",
