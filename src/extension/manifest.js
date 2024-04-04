@@ -10,13 +10,12 @@ const DOMAINS = require(resolve('./src/utils/domains'));
 const config = require(resolve('./src/build/config_extension'));
 
 const manifest = {
-  version: '1.0',
-  manifest_version: 2,
+  version: '2.0',
+  manifest_version: 3,
   name: 'iValue',
   description: 'iValue',
   background: {
-    scripts: [ 'backgroundScript.js' ],
-    persistent: false,
+    service_worker: 'backgroundScript.js',
   },
   content_scripts: [
     {
@@ -38,6 +37,8 @@ const manifest = {
   permissions: [
     'activeTab',
     'storage',
+  ],
+  host_permissions: [
     'https://*/',
   ],
 };
