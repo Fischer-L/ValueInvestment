@@ -77,7 +77,7 @@ hotKeysJob.addHotkeys([{
 
     if (instructions === '`') {
       // case: '` 5678' or '` 5678 8765'
-      instructions = '?tif';
+      instructions = '?itf';
     } else if (!Number.isNaN(parseInt(instructions, 10))) {
       // case: '5678' or '5678 8765'
       stockIds = input.split(' ');
