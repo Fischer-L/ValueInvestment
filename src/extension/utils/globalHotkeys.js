@@ -16,13 +16,10 @@ const globalHotkeys = [{
 
     let [ instructions, ...stockIds ] = input.split(' ');
 
-    if (instructions === '`') {
-      // case: '` 5678' or '` 5678 8765'
-      instructions = '?tf';
-    } else if (!Number.isNaN(parseInt(instructions, 10))) {
+    if (!Number.isNaN(parseInt(instructions, 10))) {
       // case: '5678' or '5678 8765'
       stockIds = input.split(' ');
-      instructions = 't';
+      instructions = '?tf';
     }
     stockIds.forEach(stockId => this._exec(stockId, instructions));
   },
