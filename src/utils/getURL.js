@@ -76,6 +76,9 @@ export default function getURL(site, query, params) {
 
     case SITE.what_is:
       return 'https://www.google.com/search?q=' + encodeURIComponent(query.name + '做什麼');
+
+    case SITE.what_story:
+      return 'https://www.google.com/search?q=' + encodeURIComponent(query.name + '題材');
   }
   return '';
 }
